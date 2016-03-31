@@ -1,19 +1,50 @@
 package ar.edu.itba.paw.models;
 
-public class User {
-	private String username;
-	private String password;
+import java.util.Date;
 
-	public User(String username, String password) {
-		this.username = username;
+public class User {
+	private Long id;
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String password;
+	private Date createdAt;
+	
+	public User(Long id, String firstName, String lastName, String email, String password, Date createdAt) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 		this.password = password;
+		this.createdAt = createdAt;
 	}
-	
-	public String getUsername(){
-		return username;
+
+	public Long getId() {
+		return id;
 	}
-	
-	public String getPassword(){
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
 		return password;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	
+	@Override
+	public String toString(){
+		return firstName + " " + lastName + " (email: " + email + ", id: " + id.toString() + ")";
 	}
 }

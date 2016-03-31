@@ -26,14 +26,14 @@ public class WebConfig {
 		return viewResolver;
 	}
 
-	@Bean
-	public DataSource dataSource() {
-		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
-		ds.setDriverClass(JDBCDriver.class);
-		ds.setUrl("jdbc:hsqldb:mem:paw");
-		ds.setUsername("hq");
-		ds.setPassword("");
-
-		return ds;
-	}
+	// @Bean
+	// public DataSource dataSource() {
+	// 	final SimpleDriverDataSource ds = new SimpleDriverDataSource();
+	// 	ds.setDriverClass(JDBCDriver.class);
+	// 	ds.setUrl("jdbc:hsqldb:mem:paw");
+	// 	ds.setUsername("hq");
+	// 	ds.setPassword("");
+	//
+	// 	return ds;
+	// }
 }

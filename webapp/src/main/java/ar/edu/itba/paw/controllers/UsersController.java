@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.controllers;
 
+import java.sql.SQLException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,19 +19,20 @@ public class UsersController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(path = "/create/{username}", method = RequestMethod.GET)
+	@RequestMapping(path = "/create/{email}", method = RequestMethod.GET)
 	public ModelAndView createUser(@RequestParam(required = true, value = "password") final String password,
-			@PathVariable(value = "username") final String username) {
+			@PathVariable(value = "email") final String email) throws SQLException {
 		final ModelAndView mav = new ModelAndView("create_user");
-		User user = userService.create(username, password);
+		userService.createTable();
+		User user = userService.create(email, password);
 		mav.addObject("user", user);
 		return mav;
 	}
 
-	@RequestMapping(path = "/{username}", method = RequestMethod.GET)
-	public ModelAndView getUser(@PathVariable final String username) {
+	@RequestMapping(path = "/{email}", method = RequestMethod.GET)
+	public ModelAndView getUser(@PathVariable final String email) throws SQLException {
 		final ModelAndView mav = new ModelAndView("user");
-		mav.addObject("user", userService.getByUsername(username));
+		mav.addObject("user", userService.getByEmail(email));
 		return mav;
 	}
 }

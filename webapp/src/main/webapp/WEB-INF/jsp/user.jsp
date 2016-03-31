@@ -3,6 +3,6 @@
 <html>
 <body>
 <h2>Hello</h2>
-<h2>Username: ${user.username}</h2>
+<h2>Email: ${user.email}</h2>
 </body>
 </html>
