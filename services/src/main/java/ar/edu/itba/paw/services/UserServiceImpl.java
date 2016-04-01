@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,8 @@ public class UserServiceImpl implements UserService {
 		userDao.delete(id);
 	}
 
-	public void update(String firstName, String lastName, String email, String password) {
-		userDao.update(firstName, lastName, email, password);
+	public void update(Long id, String firstName, String lastName, String email, String password) {
+		userDao.update(id, firstName, lastName, email, password);
 	}
 
 	public User findByEmail(String email) {
@@ -39,5 +41,9 @@ public class UserServiceImpl implements UserService {
 
 	public User find(Long id) {
 		return userDao.find(id);
+	}
+
+	public List<User> all() {
+		return userDao.all();
 	}
 }

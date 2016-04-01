@@ -44,4 +44,22 @@ public class UsersController {
 		mav.addObject("count", userService.count());
 		return mav;
 	}
+	
+	@RequestMapping(path = "update/{id}", method = RequestMethod.GET)
+	public ModelAndView updateUser(@PathVariable final Long id,
+								   @RequestParam(required = false, value = "first_name") final String first_name,
+								   @RequestParam(required = false, value = "last_name") final String last_name,
+								   @RequestParam(required = false, value = "email") final String email,
+								   @RequestParam(required = false, value = "password") final String password) {
+		final ModelAndView mav = new ModelAndView("update_user");
+		userService.update(id, first_name, last_name, email, password);
+		return mav;
+	}
+	
+	@RequestMapping(path = "", method = RequestMethod.GET)
+	public ModelAndView listUser() {
+		final ModelAndView mav = new ModelAndView("users");
+		mav.addObject("users", userService.all());
+		return mav;
+	}
 }

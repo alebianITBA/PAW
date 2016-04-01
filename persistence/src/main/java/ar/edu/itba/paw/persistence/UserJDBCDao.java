@@ -2,6 +2,7 @@ package ar.edu.itba.paw.persistence;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -40,7 +41,11 @@ public class UserJDBCDao implements UserDao {
 		jdbcTemplate.update("DELETE FROM users WHERE id = ?", id);
 	}
 
-	public void update(String firstName, String lastName, String email, String password) {
+	public void update(Long id, String firstName, String lastName, String email, String password) {
+		jdbcTemplate.update(
+				"UPDATE users SET first_name = COALESCE(?, first_name), last_name = COALESCE(?, last_name), "
+						+ "email = COALESCE(?, email), password = COALESCE(?, password) WHERE id = ?;",
+				firstName, lastName, email, password, id);
 	}
 
 	public User findByEmail(String email) {
@@ -53,6 +58,10 @@ public class UserJDBCDao implements UserDao {
 
 	public User find(Long id) {
 		return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id = ?;", userRowMapper, id);
+	}
+	
+	public List<User> all() {
+		return jdbcTemplate.query("SELECT * FROM users;", userRowMapper);
 	}
 
 	private static class UserRowMapper implements RowMapper<User> {
