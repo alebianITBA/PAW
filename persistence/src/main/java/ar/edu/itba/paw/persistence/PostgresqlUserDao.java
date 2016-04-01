@@ -12,6 +12,7 @@ import ar.edu.itba.paw.models.User;
 
 @Repository
 public class PostgresqlUserDao implements UserDao {
+	private static final String tableName = "users";
 
 	public User create(String email, String password) throws SQLException {
 		String statement = "INSERT INTO users (email, password, created_at) VALUES ('" + email + "', '" + password
@@ -21,9 +22,7 @@ public class PostgresqlUserDao implements UserDao {
 	}
 
 	public void delete(Long id) {
-		String statement = "DELETE FROM users WHERE id = " + id.toString() + ";";
-		PostgresqlAdapter.executeInsertDeleteOrUpdateSql(statement);
-		return;
+		PostgresqlAdapter.delete(id, tableName);
 	}
 
 	public void update(String firstName, String lastName, String email, String password) {
@@ -56,12 +55,12 @@ public class PostgresqlUserDao implements UserDao {
 		return new User(id, firstName, lastName, email, password, createdAt);
 	}
 
-	public Long count() {
-		return null;
+	public Long count() throws SQLException {
+		return PostgresqlAdapter.count(tableName);
 	}
 
 	public User find(Long id) throws SQLException {
-		String sqlStatement = "SELECT * FROM users WHERE id = '" + id.toString() + "';";
+		String sqlStatement = "SELECT * FROM users WHERE id = " + id.toString() + ";";
 
 		Connection connection = PostgresqlAdapter.getNewConnection();
 		if (connection == null) {

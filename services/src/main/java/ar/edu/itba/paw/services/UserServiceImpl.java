@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.findByEmail(email);
 	}
 
-	public Long count() {
+	public Long count() throws SQLException {
 		return userDao.count();
 	}
 

@@ -29,10 +29,11 @@ public class UsersController {
 		return mav;
 	}
 
-	@RequestMapping(path = "/{email}", method = RequestMethod.GET)
-	public ModelAndView getUser(@PathVariable final String email) throws SQLException {
+	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
+	public ModelAndView getUser(@PathVariable final Long id) throws SQLException {
 		final ModelAndView mav = new ModelAndView("user");
-		mav.addObject("user", userService.getByEmail(email));
+		mav.addObject("user", userService.find(id));
+		mav.addObject("count", userService.count());
 		return mav;
 	}
 }
