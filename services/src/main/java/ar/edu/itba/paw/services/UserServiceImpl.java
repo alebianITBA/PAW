@@ -1,9 +1,8 @@
 package ar.edu.itba.paw.services;
 
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import ar.edu.itba.paw.interfaces.UserDao;
 import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.models.User;
@@ -18,8 +17,8 @@ public class UserServiceImpl implements UserService {
 		this.userDao = userDao;
 	}
 
-	public User create(String email, String password) throws SQLException {
-		return userDao.create(email, password);
+	public void create(String email, String password) {
+		userDao.create(email, password);
 	}
 
 	public void delete(Long id) {
@@ -30,19 +29,15 @@ public class UserServiceImpl implements UserService {
 		userDao.update(firstName, lastName, email, password);
 	}
 
-	public User getByEmail(String email) throws SQLException {
+	public User findByEmail(String email) {
 		return userDao.findByEmail(email);
 	}
 
-	public Long count() throws SQLException {
+	public Long count() {
 		return userDao.count();
 	}
 
-	public User find(Long id) throws SQLException {
+	public User find(Long id) {
 		return userDao.find(id);
-	}
-
-	public void createTable() {
-		userDao.createTable();
 	}
 }

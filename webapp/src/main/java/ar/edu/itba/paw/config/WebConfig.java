@@ -1,8 +1,6 @@
 package ar.edu.itba.paw.config;
 
 import javax.sql.DataSource;
-
-import org.hsqldb.jdbc.JDBCDriver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,14 +24,13 @@ public class WebConfig {
 		return viewResolver;
 	}
 
-	// @Bean
-	// public DataSource dataSource() {
-	// 	final SimpleDriverDataSource ds = new SimpleDriverDataSource();
-	// 	ds.setDriverClass(JDBCDriver.class);
-	// 	ds.setUrl("jdbc:hsqldb:mem:paw");
-	// 	ds.setUsername("hq");
-	// 	ds.setPassword("");
-	//
-	// 	return ds;
-	// }
+	 @Bean
+	 public DataSource dataSource() throws ClassNotFoundException {
+	 	final SimpleDriverDataSource ds = new SimpleDriverDataSource();
+	 	ds.setDriverClass(org.postgresql.Driver.class);
+	 	ds.setUrl("jdbc:postgresql://localhost:5432/paw");
+	 	ds.setUsername("paw");
+	 	ds.setPassword("paw");
+	 	return ds;
+	 }
 }
