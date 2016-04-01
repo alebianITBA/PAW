@@ -10,7 +10,7 @@ public class User {
 	private String password;
 	private Date createdAt;
 	private static User nullUser;
-	
+
 	public User(Long id, String firstName, String lastName, String email, String password, Date createdAt) {
 		this.id = id;
 		this.firstName = firstName;
@@ -19,10 +19,10 @@ public class User {
 		this.password = password;
 		this.createdAt = new Date(createdAt.getTime());
 	}
-	
+
 	public static User nullUser() {
 		if (nullUser == null) {
-		 nullUser = new User(0L, "Null", "User", "null@null.com", "nullpassword", new Date());
+			nullUser = new User(0L, "Null", "User", "null@null.com", "nullpassword", new Date());
 		}
 		return nullUser;
 	}
@@ -50,9 +50,9 @@ public class User {
 	public Date getCreatedAt() {
 		return new Date(createdAt.getTime());
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return firstName + " " + lastName + " (email: " + email + ", id: " + id.toString() + ")";
 	}
 }

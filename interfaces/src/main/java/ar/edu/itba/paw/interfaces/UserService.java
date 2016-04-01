@@ -17,6 +17,7 @@ public interface UserService {
 	public Long count();
 
 	public User find(Long id);
-	
+
 	public List<User> all();
+
 }
