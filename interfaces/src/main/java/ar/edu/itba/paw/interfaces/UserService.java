@@ -11,6 +11,6 @@ public interface UserService {
 	public void update(String firstName, String lastName, String email, String password);
 	public User getByEmail(String email) throws SQLException;
 	public Long count();
-	public User find(Long id);
+	public User find(Long id) throws SQLException;
 	public void createTable();
 }

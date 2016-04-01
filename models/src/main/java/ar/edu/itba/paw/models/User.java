@@ -9,6 +9,7 @@ public class User {
 	private String email;
 	private String password;
 	private Date createdAt;
+	private static User nullUser;
 	
 	public User(Long id, String firstName, String lastName, String email, String password, Date createdAt) {
 		this.id = id;
@@ -17,6 +18,13 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.createdAt = new Date(createdAt.getTime());
+	}
+	
+	public static User nullUser() {
+		if (nullUser == null) {
+		 nullUser = new User(0L, "Null", "User", "null@null.com", "nullpassword", new Date());
+		}
+		return nullUser;
 	}
 
 	public Long getId() {

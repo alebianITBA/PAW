@@ -31,14 +31,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User getByEmail(String email) throws SQLException {
-		return userDao.getByEmail(email);
+		return userDao.findByEmail(email);
 	}
 
 	public Long count() {
 		return userDao.count();
 	}
 
-	public User find(Long id) {
+	public User find(Long id) throws SQLException {
 		return userDao.find(id);
 	}
 
