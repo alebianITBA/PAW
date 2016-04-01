@@ -21,7 +21,7 @@ public class UsersController {
 	@RequestMapping(path = "/create/{email}", method = RequestMethod.GET)
 	public ModelAndView createUser(@RequestParam(required = true, value = "password") final String password,
 			@PathVariable(value = "email") final String email) {
-		final ModelAndView mav = new ModelAndView("create_user");
+		final ModelAndView mav = new ModelAndView("users/create");
 		userService.create(email, password);
 		User user = userService.findByEmail(email);
 		mav.addObject("user", user);
@@ -30,7 +30,7 @@ public class UsersController {
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
 	public ModelAndView getUser(@PathVariable final Long id) {
-		final ModelAndView mav = new ModelAndView("user");
+		final ModelAndView mav = new ModelAndView("users/show");
 		mav.addObject("user", userService.find(id));
 		mav.addObject("count", userService.count());
 		return mav;
@@ -38,7 +38,7 @@ public class UsersController {
 	
 	@RequestMapping(path = "delete/{id}", method = RequestMethod.GET)
 	public ModelAndView deleteUser(@PathVariable final Long id) {
-		final ModelAndView mav = new ModelAndView("delete_user");
+		final ModelAndView mav = new ModelAndView("users/delete");
 		userService.delete(id);
 		mav.addObject("id", id);
 		mav.addObject("count", userService.count());
@@ -51,14 +51,14 @@ public class UsersController {
 								   @RequestParam(required = false, value = "last_name") final String last_name,
 								   @RequestParam(required = false, value = "email") final String email,
 								   @RequestParam(required = false, value = "password") final String password) {
-		final ModelAndView mav = new ModelAndView("update_user");
+		final ModelAndView mav = new ModelAndView("users/update");
 		userService.update(id, first_name, last_name, email, password);
 		return mav;
 	}
 	
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public ModelAndView listUser() {
-		final ModelAndView mav = new ModelAndView("users");
+		final ModelAndView mav = new ModelAndView("users/index");
 		mav.addObject("users", userService.all());
 		return mav;
 	}
