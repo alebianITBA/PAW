@@ -16,7 +16,7 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.createdAt = createdAt;
+		this.createdAt = new Date(createdAt.getTime());
 	}
 
 	public Long getId() {
@@ -40,7 +40,7 @@ public class User {
 	}
 
 	public Date getCreatedAt() {
-		return createdAt;
+		return new Date(createdAt.getTime());
 	}
 	
 	@Override

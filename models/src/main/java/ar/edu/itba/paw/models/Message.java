@@ -28,6 +28,6 @@ public class Message {
 	}
 
 	public Date getCreatedAt() {
-		return createdAt;
+		return new Date(createdAt.getTime());
 	}
 }
