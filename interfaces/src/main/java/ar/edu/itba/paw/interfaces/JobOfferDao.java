@@ -19,4 +19,5 @@ public interface JobOfferDao {
 	List<JobOffer> all();
 
 	List<JobOffer> userJobOffers(Long userId);
+
 }

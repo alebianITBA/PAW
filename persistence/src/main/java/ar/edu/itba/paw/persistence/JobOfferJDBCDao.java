@@ -29,8 +29,8 @@ public class JobOfferJDBCDao implements JobOfferDao {
 	}
 
 	public void create(String title, String description, Long userId) {
-		jdbcTemplate.update("INSERT INTO job_offers (title, description, user_id, created_at) VALUES"+
-				            "(?, ?, ?, current_timestamp);", title, description, userId);
+		jdbcTemplate.update("INSERT INTO job_offers (title, description, user_id, created_at) VALUES"
+				+ "(?, ?, ?, current_timestamp);", title, description, userId);
 	}
 
 	public void delete(Long id) {
@@ -65,5 +65,4 @@ public class JobOfferJDBCDao implements JobOfferDao {
 					rs.getLong("user_id"), rs.getDate("created_at"));
 		}
 	}
-
 }
