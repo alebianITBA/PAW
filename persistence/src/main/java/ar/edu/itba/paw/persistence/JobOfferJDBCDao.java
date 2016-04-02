@@ -25,10 +25,6 @@ public class JobOfferJDBCDao implements JobOfferDao {
 	public JobOfferJDBCDao(final DataSource ds) {
 		jdbcTemplate = new JdbcTemplate(ds);
 		new SimpleJdbcInsert(jdbcTemplate).withTableName("users");
-
-		jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS job_offers (id serial PRIMARY KEY,"
-				+ "title varchar(255) NOT NULL, description text NOT NULL, user_id integer NOT NULL,"
-				+ "created_at timestamp NOT NULL);");
 		jobOfferRowMapper = new JobOfferRowMapper();
 	}
 

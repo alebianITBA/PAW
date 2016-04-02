@@ -25,10 +25,6 @@ public class UserJDBCDao implements UserDao {
 	public UserJDBCDao(final DataSource ds) {
 		jdbcTemplate = new JdbcTemplate(ds);
 		new SimpleJdbcInsert(jdbcTemplate).withTableName("users");
-
-		jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users (id serial PRIMARY KEY,"
-				+ "email varchar(255) NOT NULL UNIQUE, first_name varchar(255), last_name varchar(255),"
-				+ "password varchar(255) NOT NULL, created_at timestamp NOT NULL);");
 		userRowMapper = new UserRowMapper();
 	}
 
@@ -59,7 +55,7 @@ public class UserJDBCDao implements UserDao {
 	public User find(Long id) {
 		return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id = ?;", userRowMapper, id);
 	}
-	
+
 	public List<User> all() {
 		return jdbcTemplate.query("SELECT * FROM users;", userRowMapper);
 	}
