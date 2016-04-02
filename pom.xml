@@ -16,6 +16,12 @@
 
   <properties>
     <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
+    <findbugs-maven-plugin.version>3.0.3</findbugs-maven-plugin.version>
+    <findsecbugs-plugin.version>LATEST</findsecbugs-plugin.version>
+    <maven-pmd-plugin.version>3.6</maven-pmd-plugin.version>
+    <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+    <flyway-maven-plugin.version>4.0</flyway-maven-plugin.version>
+
     <org.springframework.version>4.2.5.RELEASE</org.springframework.version>
     <org.hsqldb.version>2.3.1</org.hsqldb.version>
     <org.postgresql.version>9.4-1206-jdbc42</org.postgresql.version>
@@ -38,7 +44,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-        <version>3.0.3</version>
+        <version>${findbugs-maven-plugin.version}</version>
         <configuration>
           <failOnError>false</failOnError>
           <effort>Max</effort>
@@ -51,7 +57,7 @@
             <plugin>
               <groupId>com.h3xstream.findsecbugs</groupId>
               <artifactId>findsecbugs-plugin</artifactId>
-              <version>LATEST</version>
+              <version>${findsecbugs-plugin.version}</version>
             </plugin>
           </plugins>
         </configuration>
@@ -60,13 +66,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.6</version>
+        <version>${maven-pmd-plugin.version}</version>
       </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.17</version>
+        <version>${maven-checkstyle-plugin.version}</version>
         <configuration>
           <configLocation>google_checks.xml</configLocation>
         </configuration>
@@ -75,7 +81,7 @@
       <plugin>
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-maven-plugin</artifactId>
-        <version>4.0</version>
+        <version>${flyway-maven-plugin.version}</version>
         <configuration>
           <driver>org.postgresql.Driver</driver>
           <url>jdbc:postgresql://localhost:5432/paw</url>

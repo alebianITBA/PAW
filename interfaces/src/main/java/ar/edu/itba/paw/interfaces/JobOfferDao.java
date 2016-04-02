@@ -5,18 +5,18 @@ import java.util.List;
 import ar.edu.itba.paw.models.JobOffer;
 
 public interface JobOfferDao {
-	
-	public void create(String title, String description, Long userId);
 
-	public void delete(Long id);
+	void create(String title, String description, Long userId);
 
-	public void update(Long id, String title, String description);
+	void delete(Long id);
 
-	public Long count();
+	void update(Long id, String title, String description);
 
-	public JobOffer find(Long id);
-	
-	public List<JobOffer> all();
-	
-	public List<JobOffer> userJobOffers(Long userId);
+	Long count();
+
+	JobOffer find(Long id);
+
+	List<JobOffer> all();
+
+	List<JobOffer> userJobOffers(Long userId);
 }

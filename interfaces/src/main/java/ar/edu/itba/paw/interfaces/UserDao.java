@@ -6,18 +6,18 @@ import ar.edu.itba.paw.models.User;
 
 public interface UserDao {
 
-	public void create(String email, String password);
+	void create(String email, String password);
 
-	public void delete(Long id);
+	void delete(Long id);
 
-	public void update(Long id, String firstName, String lastName, String email, String password);
+	void update(Long id, String firstName, String lastName, String email, String password);
 
-	public User findByEmail(String email);
+	User findByEmail(String email);
 
-	public Long count();
+	Long count();
 
-	public User find(Long id);
-	
-	public List<User> all();
+	User find(Long id);
+
+	List<User> all();
 
 }
