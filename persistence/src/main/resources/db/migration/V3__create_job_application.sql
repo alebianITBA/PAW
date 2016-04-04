@@ -7,5 +7,5 @@ CREATE TABLE job_applications (
   UNIQUE(user_id, job_offer_id)
 );
 
-CREATE UNIQUE INDEX index_job_applications_on_user_id ON job_applications(user_id);
-CREATE UNIQUE INDEX index_job_applications_on_job_offer_id ON job_applications(job_offer_id);
+CREATE INDEX index_job_applications_on_user_id ON job_applications(user_id);
+CREATE INDEX index_job_applications_on_job_offer_id ON job_applications(job_offer_id);
