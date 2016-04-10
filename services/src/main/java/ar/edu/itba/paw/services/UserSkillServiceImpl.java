@@ -31,10 +31,6 @@ public class UserSkillServiceImpl implements UserSkillService {
 		userSkillDao.removeUserSkill(userId, skillId);
 	}
 
-	public void removeUserSkill(Long userId, String skillName) {
-		userSkillDao.removeUserSkill(userId, skillName);
-	}
-
 	public List<Skill> userSkills(Long userId) {
 		return userSkillDao.userSkills(userId);
 	}
