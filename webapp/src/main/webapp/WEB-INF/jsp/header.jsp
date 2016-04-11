@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>NGRNetwork</title>
+		<title>WebApp</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<link rel="shortcut icon" href="/img/favicon.png">
@@ -36,30 +36,29 @@
 		<div class="container-fluid custom-container">
 			<div class="row no_row row-header">
 				<div class="brand-be">
-					<a href="index.html">
+					<a href="/">
 						<img class="logo-c active be_logo" src="/img/logo.png" alt="logo">
 					</a>
 				</div>
 				<div class="header-menu-block">
 					<button class="cmn-toggle-switch cmn-toggle-switch__htx"><span></span></button>
 					<ul class="header-menu" id="one">
-						<li><a href="activity.html">Activity</a></li>
-						<li><a href="search.html">Job Offers</a>
-							<ul>
-								<li><a href="search.html">Filter 1</a></li>
-								<li><a href="people.html">Filter 2</a></li>
-								<li><a href="gallery.html">Filter 3</a></li>
-							</ul>
-						</li>
-						<li><a href="author-login.html">My Portfolio</a></li>
-						<li id="ad-work-li"><a id="add-work-btn" class="btn color-1" href="work.html">Add Work </a></li>
+						<li><a href="/users/">Our Users</a></li>
+						<li><a href="/job_offers">Job Offers</a></li>
 					</ul>
 				</div>
 				<div class="login-header-block">
 					<div class="login_block">
+						<a class="be-register btn color-1 size-2 hover-2" href="" ><i class="fa fa-lock"></i>
+						Sign up</a>
+					</div>	
+					<!-- 
+					<div class="login_block">
 						<a class="btn-login btn color-1 size-2 hover-2" href="" ><i class="fa fa-user"></i>
 						Log in</a>
 					</div>	
+					-->
+
 				</div>
 			</div>
 		</div>
