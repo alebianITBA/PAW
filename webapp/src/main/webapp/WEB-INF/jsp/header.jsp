@@ -43,7 +43,7 @@
 				<div class="header-menu-block">
 					<button class="cmn-toggle-switch cmn-toggle-switch__htx"><span></span></button>
 					<ul class="header-menu" id="one">
-						<li><a href="/users/">Our Users</a></li>
+						<li><a href="/users">Our Users</a></li>
 						<li><a href="/job_offers">Job Offers</a></li>
 					</ul>
 				</div>
@@ -51,12 +51,12 @@
 					<div class="login_block">
 						<a class="be-register btn color-1 size-2 hover-2" href="" ><i class="fa fa-lock"></i>
 						Sign up</a>
-					</div>	
-					<!-- 
+					</div>
+					<!--
 					<div class="login_block">
 						<a class="btn-login btn color-1 size-2 hover-2" href="" ><i class="fa fa-user"></i>
 						Log in</a>
-					</div>	
+					</div>
 					-->
 
 				</div>
