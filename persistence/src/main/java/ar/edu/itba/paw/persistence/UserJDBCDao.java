@@ -28,9 +28,9 @@ public class UserJDBCDao implements UserDao {
 		userRowMapper = new UserRowMapper();
 	}
 
-	public void create(String email, String password) {
-		jdbcTemplate.update("INSERT INTO users (email, password, created_at) VALUES (?, ?, current_timestamp);", email,
-				password);
+	public void create(String firstName, String lastName, String email, String password) {
+		jdbcTemplate.update("INSERT INTO users (first_name, last_name, email, password, created_at) VALUES (?, ?, ?, ?, current_timestamp);", 
+				firstName, lastName, email, password);
 	}
 
 	public void delete(Long id) {

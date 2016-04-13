@@ -1,14 +1,20 @@
 package ar.edu.itba.paw.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.User;
 
 @Controller
@@ -33,15 +39,37 @@ public class UsersController {
 		return mav;
 	}
 
-	@RequestMapping(path = "/create/{email}", method = RequestMethod.GET)
-	public ModelAndView createUser(@RequestParam(required = true, value = "password") final String password,
-			@PathVariable(value = "email") final String email) {
-		final ModelAndView mav = new ModelAndView("users/create");
-		userService.create(email, password);
-		User user = userService.findByEmail(email);
+	@RequestMapping(path = "/register", method = RequestMethod.GET)
+	public ModelAndView showJobOfferForm() {
+		final ModelAndView mav = new ModelAndView("users/register");
+		User user= new User();
 		mav.addObject("user", user);
 		return mav;
 	}
+	
+	@RequestMapping(path = "/post", method = RequestMethod.POST)
+	@ResponseStatus(value=HttpStatus.OK)
+	public ModelAndView addJobOffer(@ModelAttribute("user") User user,
+            Map<String, Object> model) 
+	{
+	    userService.create(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
+	    return listUser();
+    }
+	
+	
+	/*
+	 * Creo que no deberiamos usar esto.
+	 * Quizas si queremos un login rapido.
+	 * 
+	 * @RequestMapping(path = "/create/{email}", method = RequestMethod.GET)
+	public ModelAndView createUser(@RequestParam(required = true, value = "password") final String password,
+			@PathVariable(value = "email") final String email) {
+		final ModelAndView mav = new ModelAndView("users/create");
+		userService.create(nulemail, password);
+		User user = userService.findByEmail(email);
+		mav.addObject("user", user);
+		return mav;
+	}*/
 
 	@RequestMapping(path = "delete/{id}", method = RequestMethod.GET)
 	public ModelAndView deleteUser(@PathVariable final Long id) {

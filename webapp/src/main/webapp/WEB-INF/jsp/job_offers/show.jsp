@@ -1,5 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <jsp:include page="../header.jsp" />
 
@@ -19,7 +21,10 @@
               </ul>
 
                 <div class="be-user-statistic">
-              <div class="stat-row clearfix"><i class="stat-icon icon-followers-b"></i>Applicants so far<span class="stat-counter">${applications.length}</span></div>
+              <div class="stat-row clearfix">
+              	<i class="stat-icon icon-followers-b"></i>Applicants so far
+              	<span class="stat-counter">${quantityApplications}</span>
+              </div>
             </div>
             </div>
           </div>
@@ -40,7 +45,7 @@
               </div>
             </div>
           </div>
-          <div class="sec" data-sec="skills-required">
+          <!-- <div class="sec" data-sec="skills-required">
             <div class="be-large-post">
               <div class="info-block style-2">
                 <div class="be-large-post-align "><h3 class="info-block-label">SKILLS REQUIRED</h3></div>
@@ -53,9 +58,11 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
           <div class=" sec" data-sec="apply-now">
-            <div class="be-large-post">
+            <spring:url value="/job_offers/${job.id}/apply" var="actionUrl" />
+			<form:form method="post" modelAttribute="userApply" action="${actionUrl}">
+				<div class="be-large-post">
               <div class="info-block style-2">
                 <div class="be-large-post-align"><h3 class="info-block-label">APPLY FOR THIS POSITION</h3></div>
               </div>
@@ -64,15 +71,16 @@
                   <div class="input-col col-xs-12 col-sm-10">
                     <div class="form-group focus-2">
                       <div class="form-label">Email</div>
-                      <input class="form-input" type="text" placeholder="Enter email">
+                      <form:input class="form-input" path="email" type="text" placeholder="Enter email" />
                     </div>
                   </div>
                   <div class="col-xs-12 col-sm-2">
-                    <a href="blog-detail-2.html" class="btn full btn-input color-1 size-4 hover-1">APPLY</a>
+                    <input type="submit" class="btn full btn-input color-1 size-4 hover-1" value="APPLY">
                   </div>
                 </div>
               </div>
             </div>
+            </form:form>
           </div>
         </div>
       </div>

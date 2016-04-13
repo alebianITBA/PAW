@@ -9,6 +9,10 @@ public class JobOffer {
 	private Long userId;
 	private Date createdAt;
 
+	public JobOffer() {
+		
+	}
+	
 	public JobOffer(Long id, String title, String description, Long userId, Date createdAt) {
 		this.id = id;
 		this.title = title;
@@ -36,4 +40,25 @@ public class JobOffer {
 	public Date getCreatedAt() {
 		return createdAt;
 	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
 }

@@ -11,6 +11,10 @@ public class User {
 	private Date createdAt;
 	private static User nullUser;
 
+	public User() {
+		
+	}
+	
 	public User(Long id, String firstName, String lastName, String email, String password, Date createdAt) {
 		this.id = id;
 		this.firstName = firstName;
@@ -49,6 +53,38 @@ public class User {
 
 	public Date getCreatedAt() {
 		return new Date(createdAt.getTime());
+	}
+	
+	public static User getNullUser() {
+		return nullUser;
+	}
+
+	public static void setNullUser(User nullUser) {
+		User.nullUser = nullUser;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	@Override

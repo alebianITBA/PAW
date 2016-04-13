@@ -6,7 +6,7 @@ import ar.edu.itba.paw.models.User;
 
 public interface UserDao {
 
-	void create(String email, String password);
+	void create(String firstName, String lastName, String email, String password);
 
 	void delete(Long id);
 

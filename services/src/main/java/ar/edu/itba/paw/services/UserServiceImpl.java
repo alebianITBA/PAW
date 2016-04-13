@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService {
 		this.userDao = userDao;
 	}
 
-	public void create(String email, String password) {
-		userDao.create(email, password);
+	public void create(String firstName, String lastName, String email, String password) {
+		userDao.create(firstName, lastName, email, password);
 	}
 
 	public void delete(Long id) {

@@ -9,6 +9,10 @@ public class JobApplication {
 	private Long jobOfferId;
 	private Date createdAt;
 
+	public JobApplication() {
+		
+	}
+	
 	public JobApplication(Long id, String description, Long userId, Long jobOfferId, Date createdAt) {
 		this.id = id;
 		this.description = description;
@@ -35,6 +39,27 @@ public class JobApplication {
 
 	public Date getCreatedAt() {
 		return createdAt;
+	}
+
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public void setJobOfferId(Long jobOfferId) {
+		this.jobOfferId = jobOfferId;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 }
