@@ -24,18 +24,18 @@
                   <div class="input-col col-xs-12 col-sm-12">
                     <div class="form-group fg_icon focus-2">
                       <div class="form-label">Title</div>
-                      <form:input path="title" required="true" />
+                      <form:input path="title" class="form-input" required="true" placeholder="Title"/>
                     </div>
                   </div>
                   
                   <div class="input-col col-xs-12 col-sm-12">
                     <div class="form-group focus-2">
                       <div class="form-label">Description</div>
-                      <form:input path="description" required="true"/>
+                      <form:textarea path="description" class="form-input" required="true" placeholder="Job offer description..."/>
                     </div>
                   </div>
                   
-                  <div class="input-col col-xs-12 col-sm-6">
+                  <!--  <div class="input-col col-xs-12 col-sm-6">
                     <div class="form-label">Skills required</div>
                     <div class="be-drop-down icon-none">
                       <span class="be-dropdown-content"> Select a skill</span>
@@ -47,10 +47,10 @@
                         <li><a>Skill</a></li>
                       </ul>
                     </div>
-                  </div>
+                  </div>-->
                 </div>
                 <div class="row">
-                	<input type="submit" value="CREATE"/>
+                	<input type="submit" class="btn full btn-input color-1 size-4 hover-1" value="CREATE">
                 </div>
               </div>
               </form:form>
