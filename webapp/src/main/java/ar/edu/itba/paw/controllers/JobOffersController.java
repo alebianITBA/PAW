@@ -5,7 +5,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
@@ -33,10 +30,10 @@ public class JobOffersController {
 
 	@Autowired
 	private JobApplicationService jobApplicationService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping(path = "/list", method = RequestMethod.GET)
 	public ModelAndView jobOffers() {
 		final ModelAndView mav = new ModelAndView("job_offers/index");
@@ -53,24 +50,23 @@ public class JobOffersController {
 		mav.addObject("quantityApplications", applications != null ? applications.size() : 0);
 		return mav;
 	}
-	
+
 	@RequestMapping(path = "/{id}/apply", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public ModelAndView applyJobOfferByEmail(@PathVariable final Long id,
-			@ModelAttribute("userApply") User userApply,
-            Map<String, Object> model) {
+	public ModelAndView applyJobOfferByEmail(@PathVariable final Long id, @ModelAttribute("userApply") User userApply,
+			Map<String, Object> model) {
 		User user = userService.findByEmail(userApply.getEmail());
 		if (user != null) {
-			jobApplicationService.create("Email application", user.getId(), id);	
+			jobApplicationService.create("Email application", user.getId(), id);
 		} else {
-			
+
 			// TODO: MOSTRAR ERROR DE USUARIO NO ENCONTRADO
-			
+
 		}
-		
+
 		return getJobOffer(id);
 	}
-	
+
 	@RequestMapping(path = "/add", method = RequestMethod.GET)
 	public ModelAndView showJobOfferForm() {
 		final ModelAndView mav = new ModelAndView("job_offers/create");
@@ -78,13 +74,11 @@ public class JobOffersController {
 		mav.addObject("jobOffer", jobOffer);
 		return mav;
 	}
-	
+
 	@RequestMapping(path = "/post", method = RequestMethod.POST)
-	@ResponseStatus(value=HttpStatus.OK)
-	public ModelAndView addJobOffer(@ModelAttribute("jobOffer") JobOffer jobOffer,
-            Map<String, Object> model) 
-	{
-	    jobOfferService.create(jobOffer.getTitle(), jobOffer.getDescription(), jobOffer.getUserId());
-	    return jobOffers();
-    }
+	@ResponseStatus(value = HttpStatus.OK)
+	public ModelAndView addJobOffer(@ModelAttribute("jobOffer") JobOffer jobOffer, Map<String, Object> model) {
+		jobOfferService.create(jobOffer.getTitle(), jobOffer.getDescription(), jobOffer.getUserId());
+		return jobOffers();
+	}
 }
