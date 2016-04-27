@@ -24,4 +24,5 @@ public class Skill {
 	public Date getCreatedAt() {
 		return createdAt;
 	}
+	
 }

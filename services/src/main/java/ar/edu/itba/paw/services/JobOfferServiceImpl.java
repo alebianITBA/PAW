@@ -19,8 +19,8 @@ public class JobOfferServiceImpl implements JobOfferService {
 		this.jobOfferDao = jobOfferDao;
 	}
 
-	public void create(String title, String description, Long userId) {
-		jobOfferDao.create(title, description, userId);
+	public Long create(String title, String description, Long userId) {
+		return jobOfferDao.create(title, description, userId);
 	}
 
 	public void delete(Long id) {

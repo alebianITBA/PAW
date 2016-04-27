@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="/style/jquery-ui.css">
 		<link rel="stylesheet" href="/style/stylesheet.css">
 	    <link rel="stylesheet" href="/style/loader.css">
+	    <link rel="stylesheet" href="/style/chosen.css">
 
 </head>
 <body >

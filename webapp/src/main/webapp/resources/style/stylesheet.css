@@ -4034,3 +4034,24 @@ td {
 th,td {
     padding: 0.4em;
 }
+
+
+.form-error {
+	color: red;
+	padding-top: 10px; 
+	padding-bottom:10px;
+	font-size: 12px;
+}
+
+.skill {
+	position: relative;
+  margin: 3px 5px 3px 0;
+  padding: 3px 20px 3px 5px;
+  background: #0d58c8; 
+  border: 1px solid #0d58c8;
+  max-width: 100%;
+  border-radius: 3px;
+  color: #fff;
+  line-height: 13px;
+}
+

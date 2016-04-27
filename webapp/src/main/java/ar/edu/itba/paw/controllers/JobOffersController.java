@@ -1,11 +1,14 @@
 package ar.edu.itba.paw.controllers;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +17,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
+import ar.edu.itba.paw.forms.JobOfferForm;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
+import ar.edu.itba.paw.interfaces.JobOfferSkillService;
+import ar.edu.itba.paw.interfaces.SkillService;
 import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.models.JobApplication;
-import ar.edu.itba.paw.models.JobOffer;
+import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 
 @Controller
@@ -35,7 +39,13 @@ public class JobOffersController {
 	private JobApplicationService jobApplicationService;
 	
 	@Autowired
+	private SkillService skillService;
+	
+	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private JobOfferSkillService jobOfferSkillService;
 	
 	@RequestMapping(path = "/list", method = RequestMethod.GET)
 	public ModelAndView jobOffers() {
@@ -44,12 +54,14 @@ public class JobOffersController {
 		return mav;
 	}
 
-	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
-	public ModelAndView getJobOffer(@PathVariable final Long id) {
+	@RequestMapping(path = "/{jobOfferId}", method = RequestMethod.GET)
+	public ModelAndView getJobOffer(@PathVariable final Long jobOfferId) {
 		final ModelAndView mav = new ModelAndView("job_offers/show");
-		mav.addObject("job", jobOfferService.find(id));
+		mav.addObject("job", jobOfferService.find(jobOfferId));
 		mav.addObject("userApply", new User());
-		java.util.List<JobApplication> applications = jobApplicationService.jobOfferApplications(id);
+		java.util.List<JobApplication> applications = jobApplicationService.jobOfferApplications(jobOfferId);
+		java.util.List<Skill> jobOfferSkills = jobOfferSkillService.jobOfferSkills(jobOfferId);
+		mav.addObject("jobOfferSkills", jobOfferSkills);
 		mav.addObject("quantityApplications", applications != null ? applications.size() : 0);
 		return mav;
 	}
@@ -72,19 +84,30 @@ public class JobOffersController {
 	}
 	
 	@RequestMapping(path = "/add", method = RequestMethod.GET)
-	public ModelAndView showJobOfferForm() {
+	public ModelAndView showJobOfferForm(@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
+			Map<String, Object> model) {
 		final ModelAndView mav = new ModelAndView("job_offers/create");
-		JobOffer jobOffer = new JobOffer();
-		mav.addObject("jobOffer", jobOffer);
+		java.util.ArrayList<Skill> skills = (java.util.ArrayList<Skill>) skillService.all();
+		model.put("skills", skills);
 		return mav;
 	}
 	
 	@RequestMapping(path = "/post", method = RequestMethod.POST)
 	@ResponseStatus(value=HttpStatus.OK)
-	public ModelAndView addJobOffer(@ModelAttribute("jobOffer") JobOffer jobOffer,
-            Map<String, Object> model) 
+	public ModelAndView addJobOffer(@Valid @ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
+			final BindingResult errors) 
 	{
-	    jobOfferService.create(jobOffer.getTitle(), jobOffer.getDescription(), jobOffer.getUserId());
-	    return jobOffers();
+		if (errors.hasErrors()) {
+            return showJobOfferForm(jobOfferForm, new HashMap<String, Object>());
+        } else {
+        	Long jobOfferId = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(), 2L);
+        	if (jobOfferForm.getSelectedSkillIds() != null && !jobOfferForm.getSelectedSkillIds().isEmpty()) {
+        		String[] skillIds = jobOfferForm.getSelectedSkillIds().split(",");
+        		for(String skillId : skillIds) {
+        			jobOfferSkillService.create(jobOfferId, new Long(skillId));
+        		}
+        	}
+        	return jobOffers();
+        }
     }
 }

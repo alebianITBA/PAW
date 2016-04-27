@@ -6,7 +6,7 @@ import ar.edu.itba.paw.models.JobOffer;
 
 public interface JobOfferService {
 
-	void create(String title, String description, Long userId);
+	Long create(String title, String description, Long userId);
 
 	void delete(Long id);
 

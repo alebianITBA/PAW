@@ -15,7 +15,6 @@
 	            <a class="gallery-a" href="#"><img src="/img/job_offer_placeholder.png" alt="img"></a>
 	            <div class="gallery-info">
 	              <h3>${job.title}<base></base></h3>
-	              <p>TODO: SKILLS</p>
 	            </div>
 	            <div class="gallery-btn">
 	              <a class="btn-login btn color-1 size-2 hover-2" href="/job_offers/${job.id}">+ INFO</a>

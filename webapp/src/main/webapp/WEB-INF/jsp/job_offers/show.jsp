@@ -38,27 +38,29 @@
               </div>
               <div class="be-large-post-align">
                 <div class="row">
-                  <div class="input-col col-xs-12 col-sm-6">
+                  <div class="input-col col-xs-12">
                     ${job.description}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- <div class="sec" data-sec="skills-required">
+          <div class="sec" data-sec="skills-required">
             <div class="be-large-post">
               <div class="info-block style-2">
                 <div class="be-large-post-align "><h3 class="info-block-label">SKILLS REQUIRED</h3></div>
               </div>
               <div class="be-large-post-align">
-                <div class="tags_block clearfix">
+                <div>
                   <ul>
-                    <li><a href="blog-detail-2.html">Llenar esto</a></li>
+                  	<c:forEach items="${jobOfferSkills}" var="skill">
+                    	<li class="skill"><span>${skill.name}<span></li>
+                    </c:forEach>
                   </ul>
                 </div>
               </div>
             </div>
-          </div>-->
+          </div>
           <div class=" sec" data-sec="apply-now">
             <spring:url value="/job_offers/${job.id}/apply" var="actionUrl" />
 			<form:form method="post" modelAttribute="userApply" action="${actionUrl}">

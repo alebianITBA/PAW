@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.persistence;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -8,8 +10,11 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.interfaces.JobOfferDao;
@@ -28,9 +33,25 @@ public class JobOfferJDBCDao implements JobOfferDao {
 		jobOfferRowMapper = new JobOfferRowMapper();
 	}
 
-	public void create(String title, String description, Long userId) {
-		jdbcTemplate.update("INSERT INTO job_offers (title, description, user_id, created_at) VALUES"
-				+ "(?, ?, ?, current_timestamp);", title, description, userId);
+	public Long create(final String title, final String description, final Long userId) {
+		
+		// Cambio esto para probar de tener el ID generado
+		final String sql = "INSERT INTO job_offers (title, description, user_id, created_at) VALUES" + "(?, ?, ?, current_timestamp);";
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+    	jdbcTemplate.update(
+    	    new PreparedStatementCreator() {
+				
+				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+					PreparedStatement pst =
+	    	                con.prepareStatement(sql, new String[] {"id"});
+	    	            pst.setString(1, title);
+	    	            pst.setString(2, description);
+	    	            pst.setLong(3, userId);
+	    	            return pst;
+				}
+			}, keyHolder);
+    	return new Long(keyHolder.getKey().toString());
 	}
 
 	public void delete(Long id) {
