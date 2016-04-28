@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.models;
 
 import java.util.Date;
+import java.util.List;
 
 public class JobOffer {
 	private Long id;
@@ -8,6 +9,7 @@ public class JobOffer {
 	private String description;
 	private Long userId;
 	private Date createdAt;
+	private List<Skill> skills;
 
 	public JobOffer() {
 		
@@ -59,6 +61,14 @@ public class JobOffer {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+	
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+	
+	public List<Skill> getSkills() {
+		return this.skills;
 	}
 
 }

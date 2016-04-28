@@ -27,8 +27,8 @@ public class HomeController {
 	private PostService postService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public ModelAndView register(@Valid @ModelAttribute("registerForm") final RegisterForm registerForm,
-			final BindingResult errors) {
+	public ModelAndView register(/*@Valid @ModelAttribute("registerForm") final RegisterForm registerForm,
+			final BindingResult errors*/) {
 		final ModelAndView mav = new ModelAndView("register");
 		return mav;
 	}

@@ -2,34 +2,26 @@
 
 <jsp:include page="../header.jsp" />
 
-  <!-- MAIN CONTENT -->
-  <div id="content-block">
-    <div class="container-fluid custom-container be-detail-container">
-      <div class="isotope-grid row">
-
-        <c:forEach items="${users}" var="user">
-
-          <div class="isotope-item col-ml-12 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2">
-            <div class="be-post style-5">
-              <a href="/users/${user.id}" class="be-img-block">
-              <img src="/img/user_placeholder.jpg" alt="omg">
+<div class="col-md-10 col-md-offset-1">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-6 col-md-4">
+          <c:forEach items="${users}" var="user">
+            <div class="thumbnail">
+              <a href="/users/${user.id}">
+                <img class="user-placeholder-index" src="/img/user-placeholder.png">
               </a>
-              <div class="be-rowline">
-                <div class="rowline-text"><a href="/users/${user.id}">${user.firstName} ${user.lastName}</a></div>
-              </div>
-              <div class="author-post">
-                <i class="fa fa-envelope"></i>
-                <span>${user.email}</span>
-                <span class="rowline-icon"><i class="fa fa-comment-o"></i></span>
+              <div class="caption">
+                <h3><a href="/users/${user.id}">${user.firstName} ${user.lastName}</a></h3>
+                <p><a href="/users/${user.id}">${user.email}</a></p>
               </div>
             </div>
-          </div>
-
-        </c:forEach>
-
+          </c:forEach>
+        </div>
       </div>
     </div>
   </div>
-
+</div>
 
 <jsp:include page="../footer.jsp" />

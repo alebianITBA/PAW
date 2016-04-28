@@ -28,16 +28,6 @@ public class JobApplicationsController {
 	@Autowired
 	private JobOfferService jobOfferService;
 
-	@RequestMapping(path = "/new", method = RequestMethod.GET)
-	public ModelAndView newJobApplication(@RequestParam(required = true, value = "jobOfferId") final Long jobOfferId) {
-		final ModelAndView mav = new ModelAndView("job_applications/new");
-		JobApplication jobApplication = new JobApplication();
-		jobApplication.setJobOfferId(jobOfferId);
-		mav.addObject("jobApplication", jobApplication);
-		mav.addObject("jobOfferId", jobOfferId);
-		return mav;
-	}
-
 	@RequestMapping(path = "/create", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public ModelAndView createJobApplication(@ModelAttribute("jobApplication") JobApplication jobApplication,

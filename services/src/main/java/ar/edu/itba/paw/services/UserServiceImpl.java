@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.interfaces.UserDao;
 import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.interfaces.UserSkillService;
+import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 
 @Service
@@ -14,6 +16,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private UserSkillService userSkillService;
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -32,7 +37,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User findByEmail(String email) {
-		return userDao.findByEmail(email);
+		User user = userDao.findByEmail(email);
+		addSkillsToUser(user);
+		return user;
 	}
 
 	public Long count() {
@@ -40,10 +47,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User find(Long id) {
-		return userDao.find(id);
+		User user = userDao.find(id);
+		addSkillsToUser(user);
+		return user;
 	}
 
 	public List<User> all() {
-		return userDao.all();
+		List<User> users = userDao.all();
+		for (User user : users) {
+			addSkillsToUser(user);
+		}
+		return users;
+	}
+
+	private void addSkillsToUser(User user) {
+		List<Skill> skills = userSkillService.userSkills(user.getId());
+		user.setSkills(skills);
 	}
 }

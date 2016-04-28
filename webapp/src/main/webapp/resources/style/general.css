@@ -3,7 +3,39 @@
   padding-bottom: 10px;
 }
 
+.header-navbar {
+  margin-bottom: 0px;
+}
+
 .user-placeholder {
   height: 100px;
   width: 100px;
+}
+
+.user-placeholder-header {
+  margin-top: 10px;
+  height: 30px;
+  width: 30px;
+}
+
+.user-placeholder-index {
+  height: 200px;
+  width: 242px;
+}
+
+.user-placeholder-show {
+  height: 400px;
+  width: 400px;
+}
+
+.post-user-image {
+  width: 64px;
+  height: 64px;
+}
+
+.line-separator{
+  margin-top: 10px;
+  height:1px;
+  background:#717171;
+  border-bottom:1px solid #313030;
 }

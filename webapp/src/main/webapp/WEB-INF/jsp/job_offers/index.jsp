@@ -3,35 +3,53 @@
 
 <jsp:include page="../header.jsp" />
 
-  <!-- MAIN CONTENT -->
-<div id="content-block" class="gallery-block">
-    <div class="container custom-container be-detail-container">
-      <div class="row">
-
-    <c:choose>
-      <c:when test="${fn:length(job_offers) gt 0}">
-        <c:forEach items="${job_offers}" var="job">
-            <div class="gallery-box clearfix">
-              <a class="gallery-a" href="#"><img src="/img/job_offer_placeholder.png" alt="img"></a>
-              <div class="gallery-info">
-                <h3>${job.title}<base></base></h3>
-              </div>
-              <div class="gallery-btn">
-                <a class="btn-login btn color-1 size-2 hover-2" href="/job_offers/${job.id}">+ INFO</a>
-                <a class="btn-login btn color-1 size-2 hover-2" href="/job_applications/new?jobOfferId=${job.id}">Apply</a>
-              </div>
+<div class="col-md-6 col-md-offset-1">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <c:forEach items="${job_offers}" var="offer">
+        <a href="/users/1">
+          <div class="media">
+            <div class="media-left">
+              <a href="/users/${offer.userId}">
+                <img class="user-placeholder" src="/img/user-placeholder.png">
+              </a>
             </div>
-          </c:forEach>
-        </c:when>
-        <c:otherwise>
-          <p align="center"><b>We don't have job offers loaded into our system. <br />Be the first to upload a job offer!</b></b></p>
-      </c:otherwise>
-    </c:choose>
-    <br />
-    <p align="center"><a href="/job_offers/add" class="btn color-1">CREATE JOB OFFER</a></p>
-      </div>
+            <div class="media-body">
+              <h2 class="media-heading"><a href="/job_offers/${offer.userId}">${offer.title}</a></h2>
+              <p><a href="/job_offers/${offer.userId}">${offer.description}</a></p>
+              <c:forEach items="${offer.skills}" var="skill">
+                <span class="label label-info">${skill.name}</span>
+              </c:forEach>
+            </div>
+            <div class="media-right">
+              <button class="btn btn-primary">Apply</button>
+            </div>
+          </div>
+        </a>
+        <div class="line-separator"></div>
+      </c:forEach>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <form>
+        <div class="input-group">
+          <select name="skills">
+            <option value="skill_1">Skill 1</option>
+            <option value="skill_2">Skill 2</option>
+            <option value="skill_3">Skill 3</option>
+            <option value="skill_4">Skill 4</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </form>
     </div>
   </div>
 
+  <jsp:include page="../hire.jsp" />
+</div>
 
 <jsp:include page="../footer.jsp" />

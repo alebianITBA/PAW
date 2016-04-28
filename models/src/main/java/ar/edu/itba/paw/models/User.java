@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.models;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
 	private Long id;
@@ -9,12 +10,13 @@ public class User {
 	private String email;
 	private String password;
 	private Date createdAt;
+	private List<Skill> skills;
 	private static User nullUser;
 
 	public User() {
-		
+
 	}
-	
+
 	public User(Long id, String firstName, String lastName, String email, String password, Date createdAt) {
 		this.id = id;
 		this.firstName = firstName;
@@ -54,7 +56,7 @@ public class User {
 	public Date getCreatedAt() {
 		return new Date(createdAt.getTime());
 	}
-	
+
 	public static User getNullUser() {
 		return nullUser;
 	}
@@ -85,6 +87,14 @@ public class User {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
+	public List<Skill> getSkills() {
+		return this.skills;
 	}
 
 	@Override
