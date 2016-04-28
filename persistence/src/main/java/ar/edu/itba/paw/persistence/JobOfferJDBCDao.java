@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.interfaces.JobOfferDao;
 import ar.edu.itba.paw.models.JobOffer;
+import ar.edu.itba.paw.models.Skill;
 
 @Repository
 public class JobOfferJDBCDao implements JobOfferDao {
@@ -78,6 +79,11 @@ public class JobOfferJDBCDao implements JobOfferDao {
 
 	public List<JobOffer> userJobOffers(Long userId) {
 		return jdbcTemplate.query("SELECT * FROM job_offers WHERE user_id = ?;", jobOfferRowMapper, userId);
+	}
+	
+	public List<JobOffer> withSkills(List<Skill> userSkills) {
+		// TODO: Make the real query
+		return jdbcTemplate.query("SELECT * FROM job_offers;", jobOfferRowMapper);
 	}
 
 	private static class JobOfferRowMapper implements RowMapper<JobOffer> {

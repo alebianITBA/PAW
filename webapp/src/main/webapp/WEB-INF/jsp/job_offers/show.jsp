@@ -22,8 +22,8 @@
 
                 <div class="be-user-statistic">
               <div class="stat-row clearfix">
-              	<i class="stat-icon icon-followers-b"></i>Applicants so far
-              	<span class="stat-counter">${quantityApplications}</span>
+                <i class="stat-icon icon-followers-b"></i>Applicants so far
+                <span class="stat-counter">${quantityApplications}</span>
               </div>
             </div>
             </div>
@@ -53,8 +53,8 @@
               <div class="be-large-post-align">
                 <div>
                   <ul>
-                  	<c:forEach items="${jobOfferSkills}" var="skill">
-                    	<li class="skill"><span>${skill.name}<span></li>
+                    <c:forEach items="${jobOfferSkills}" var="skill">
+                      <li class="skill"><span>${skill.name}<span></li>
                     </c:forEach>
                   </ul>
                 </div>
@@ -63,8 +63,8 @@
           </div>
           <div class=" sec" data-sec="apply-now">
             <spring:url value="/job_offers/${job.id}/apply" var="actionUrl" />
-			<form:form method="post" modelAttribute="userApply" action="${actionUrl}">
-				<div class="be-large-post">
+      <form:form method="post" modelAttribute="userApply" action="${actionUrl}">
+        <div class="be-large-post">
               <div class="info-block style-2">
                 <div class="be-large-post-align"><h3 class="info-block-label">APPLY FOR THIS POSITION</h3></div>
               </div>

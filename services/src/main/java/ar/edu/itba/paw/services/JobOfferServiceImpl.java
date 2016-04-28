@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ar.edu.itba.paw.interfaces.JobOfferDao;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.models.JobOffer;
+import ar.edu.itba.paw.models.Skill;
 
 @Service
 public class JobOfferServiceImpl implements JobOfferService {
@@ -45,6 +46,10 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 	public List<JobOffer> userJobOffers(Long userId) {
 		return jobOfferDao.userJobOffers(userId);
+	}
+	
+	public List<JobOffer> withSkills(List<Skill> userSkills) {
+		return jobOfferDao.withSkills(userSkills);
 	}
 
 }

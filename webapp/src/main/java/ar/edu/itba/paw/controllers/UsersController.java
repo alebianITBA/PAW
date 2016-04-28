@@ -1,12 +1,7 @@
 package ar.edu.itba.paw.controllers;
 
-import java.util.Map;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,11 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.paw.forms.RegisterForm;
 import ar.edu.itba.paw.interfaces.UserService;
-import ar.edu.itba.paw.models.JobOffer;
-import ar.edu.itba.paw.models.User;
-import ar.edu.itba.paw.validators.PasswordValidator;
 
 @Controller
 @RequestMapping("/users")
