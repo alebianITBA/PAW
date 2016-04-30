@@ -35,17 +35,14 @@
 <div class="col-md-4">
   <div class="panel panel-default">
     <div class="panel-body">
-      <form>
-        <div class="input-group">
-          <select name="skills">
-            <option value="skill_1">Skill 1</option>
-            <option value="skill_2">Skill 2</option>
-            <option value="skill_3">Skill 3</option>
-            <option value="skill_4">Skill 4</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Filter</button>
-      </form>
+      <div class="input-group">
+        <select name="skills" id="skills-select">
+          <c:forEach items="${skills}" var="skill">
+            <option value="${skill.id}">${skill.name}</option>
+          </c:forEach>
+        </select>
+      </div>
+      <button id="filter-offers" class="btn btn-primary">Filter</button>
     </div>
   </div>
 
@@ -53,3 +50,4 @@
 </div>
 
 <jsp:include page="../footer.jsp" />
+<script type="text/javascript" src="/script/job_offers.js"></script>

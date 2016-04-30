@@ -16,7 +16,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 	@Autowired
 	private JobOfferDao jobOfferDao;
-	
+
 	@Autowired
 	private JobOfferSkillService jobOfferSkillService;
 
@@ -24,28 +24,34 @@ public class JobOfferServiceImpl implements JobOfferService {
 		this.jobOfferDao = jobOfferDao;
 	}
 
+	@Override
 	public Long create(String title, String description, Long userId) {
 		return jobOfferDao.create(title, description, userId);
 	}
 
+	@Override
 	public void delete(Long id) {
 		jobOfferDao.delete(id);
 	}
 
+	@Override
 	public void update(Long id, String title, String description) {
 		jobOfferDao.update(id, title, description);
 	}
 
+	@Override
 	public Long count() {
 		return jobOfferDao.count();
 	}
 
+	@Override
 	public JobOffer find(Long id) {
 		JobOffer offer = jobOfferDao.find(id);
 		addSkillsToOffer(offer);
 		return offer;
 	}
 
+	@Override
 	public List<JobOffer> all() {
 		List<JobOffer> offers = jobOfferDao.all();
 		for (JobOffer offer : offers) {
@@ -54,6 +60,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		return offers;
 	}
 
+	@Override
 	public List<JobOffer> userJobOffers(Long userId) {
 		List<JobOffer> offers = jobOfferDao.userJobOffers(userId);
 		for (JobOffer offer : offers) {
@@ -61,15 +68,20 @@ public class JobOfferServiceImpl implements JobOfferService {
 		}
 		return offers;
 	}
-	
-	public List<JobOffer> withSkills(List<Skill> userSkills) {
-		List<JobOffer> offers = jobOfferDao.withSkills(userSkills);
+
+	@Override
+	public List<JobOffer> withSkills(List<Skill> skills) {
+		if (skills == null || skills.isEmpty()){
+			return all();
+		}
+		
+		List<JobOffer> offers = jobOfferDao.withSkills(skills);
 		for (JobOffer offer : offers) {
 			addSkillsToOffer(offer);
 		}
 		return offers;
 	}
-	
+
 	private void addSkillsToOffer(JobOffer offer) {
 		List<Skill> skills = jobOfferSkillService.jobOfferSkills(offer.getId());
 		offer.setSkills(skills);

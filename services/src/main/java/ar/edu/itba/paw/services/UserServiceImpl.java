@@ -24,34 +24,41 @@ public class UserServiceImpl implements UserService {
 		this.userDao = userDao;
 	}
 
+	@Override
 	public void create(String firstName, String lastName, String email, String password) {
 		userDao.create(firstName, lastName, email, password);
 	}
 
+	@Override
 	public void delete(Long id) {
 		userDao.delete(id);
 	}
 
+	@Override
 	public void update(Long id, String firstName, String lastName, String email, String password) {
 		userDao.update(id, firstName, lastName, email, password);
 	}
 
+	@Override
 	public User findByEmail(String email) {
 		User user = userDao.findByEmail(email);
 		addSkillsToUser(user);
 		return user;
 	}
 
+	@Override
 	public Long count() {
 		return userDao.count();
 	}
 
+	@Override
 	public User find(Long id) {
 		User user = userDao.find(id);
 		addSkillsToUser(user);
 		return user;
 	}
 
+	@Override
 	public List<User> all() {
 		List<User> users = userDao.all();
 		for (User user : users) {

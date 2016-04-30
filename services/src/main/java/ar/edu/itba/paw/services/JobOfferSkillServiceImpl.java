@@ -19,18 +19,22 @@ public class JobOfferSkillServiceImpl implements JobOfferSkillService {
 		this.jobOfferSkillDao = jobOfferSkillDao;
 	}
 
+	@Override
 	public void create(Long jobOfferId, Long skillId) {
 		jobOfferSkillDao.create(jobOfferId, skillId);
 	}
 
+	@Override
 	public void delete(Long id) {
 		jobOfferSkillDao.delete(id);
 	}
 
+	@Override
 	public void removeJobOfferSkill(Long jobOfferId, Long skillId) {
 		jobOfferSkillDao.removeJobOfferSkill(jobOfferId, skillId);
 	}
 
+	@Override
 	public List<Skill> jobOfferSkills(Long jobOfferId) {
 		return jobOfferSkillDao.jobOfferSkills(jobOfferId);
 	}

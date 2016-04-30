@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.forms.RegisterForm;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.PostService;
 import ar.edu.itba.paw.models.Skill;
@@ -27,8 +28,8 @@ public class HomeController {
 	private PostService postService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public ModelAndView register(/*@Valid @ModelAttribute("registerForm") final RegisterForm registerForm,
-			final BindingResult errors*/) {
+	public ModelAndView register(@Valid @ModelAttribute("registerForm") final RegisterForm registerForm,
+			final BindingResult errors) {
 		final ModelAndView mav = new ModelAndView("register");
 		return mav;
 	}

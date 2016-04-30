@@ -1,6 +1,8 @@
 package ar.edu.itba.paw.controllers;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -13,10 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.forms.JobOfferForm;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.JobOfferSkillService;
@@ -39,17 +43,24 @@ public class JobOffersController {
 
 	@Autowired
 	private SkillService skillService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private JobOfferSkillService jobOfferSkillService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public ModelAndView jobOffers() {
+	public ModelAndView jobOffers(@RequestParam(required = false, value = "skill_id") final Long skillId) {
 		final ModelAndView mav = new ModelAndView("job_offers/index");
-		mav.addObject("job_offers", jobOfferService.all());
+		if (skillId != null) {
+			List<Skill> skills = new LinkedList<Skill>();
+			skills.add(new Skill(skillId, "", null)); // Solo me importa el ID para la query
+			mav.addObject("job_offers", jobOfferService.withSkills(skills));
+		} else {
+			mav.addObject("job_offers", jobOfferService.all());
+		}
+		mav.addObject("skills", skillService.all());
 		return mav;
 	}
 
@@ -62,6 +73,8 @@ public class JobOffersController {
 		java.util.List<Skill> jobOfferSkills = jobOfferSkillService.jobOfferSkills(jobOfferId);
 		mav.addObject("jobOfferSkills", jobOfferSkills);
 		mav.addObject("quantityApplications", applications != null ? applications.size() : 0);
+		// TODO: Show this only for the logged user
+		mav.addObject("applications", applications);
 		return mav;
 	}
 
@@ -81,24 +94,31 @@ public class JobOffersController {
 		return getJobOffer(id);
 	}
 
+	@RequestMapping(path = "/add", method = RequestMethod.GET)
+	public ModelAndView showJobOfferForm(@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
+			Map<String, Object> model) {
+		final ModelAndView mav = new ModelAndView("job_offers/create");
+		java.util.ArrayList<Skill> skills = (java.util.ArrayList<Skill>) skillService.all();
+		model.put("skills", skills);
+		return mav;
+	}
+
 	@RequestMapping(path = "/post", method = RequestMethod.POST)
-	@ResponseStatus(value=HttpStatus.OK)
-	public ModelAndView addJobOffer(/*@Valid @ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,*/
-			final BindingResult errors) 
-	{
+	@ResponseStatus(value = HttpStatus.OK)
+	public ModelAndView addJobOffer(@Valid @ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
+			final BindingResult errors) {
 		if (errors.hasErrors()) {
-            //return showJobOfferForm(jobOfferForm, new HashMap<String, Object>());
-			return null; // TODO: Delete this
-        } else {
-        	/*Long jobOfferId = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(), 2L);
-        	if (jobOfferForm.getSelectedSkillIds() != null && !jobOfferForm.getSelectedSkillIds().isEmpty()) {
-        		String[] skillIds = jobOfferForm.getSelectedSkillIds().split(",");
-        		for(String skillId : skillIds) {
-        			jobOfferSkillService.create(jobOfferId, new Long(skillId));
-        		}
-        	}*/
-        	return jobOffers();
-        }
-    }
+			return showJobOfferForm(jobOfferForm, new HashMap<String, Object>());
+		} else {
+			Long jobOfferId = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(), 2L);
+			if (jobOfferForm.getSelectedSkillIds() != null && !jobOfferForm.getSelectedSkillIds().isEmpty()) {
+				String[] skillIds = jobOfferForm.getSelectedSkillIds().split(",");
+				for (String skillId : skillIds) {
+					jobOfferSkillService.create(jobOfferId, new Long(skillId));
+				}
+			}
+			return jobOffers(null);
+		}
+	}
 
 }

@@ -21,6 +21,6 @@ public interface JobOfferDao {
 
 	List<JobOffer> userJobOffers(Long userId);
 	
-	List<JobOffer> withSkills(List<Skill> userSkills);
+	List<JobOffer> withSkills(List<Skill> skills);
 
 }

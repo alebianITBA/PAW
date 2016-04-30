@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <jsp:include page="../header.jsp" />
 
 <div class="col-md-10 col-md-offset-1">
@@ -11,12 +12,8 @@
           <div class="media-body">
             <h1 class="media-heading">${user.firstName} ${user.lastName}</h1>
             <h3 class="media-heading">${user.email}</h3>
-            <h2><span class="label label-info">Skill</span></h2>
-            <h2><span class="label label-info">Skill</span></h2>
-            <h2><span class="label label-info">Skill</span></h2>
-            <h2><span class="label label-info">Skill</span></h2>
             <c:forEach items="${user.skills}" var="skill">
-              <span class="label label-info">${skill}</span>
+              <span class="label label-info">${skill.name}</span>
             </c:forEach>
           </div>
         </div>
@@ -53,12 +50,7 @@
               <div class="media-right">
                 <button class="btn btn-primary">Apply</button>
               </div>
-              <div class="media">
-                <div class="media-body">
-                  <h4 class="media-heading">${offer.title}</h4>
-                  <p>${offer.description}</p>
-                </div>
-              </div>
+              <br>
             </c:forEach>
           </div>
         </div>

@@ -8,11 +8,8 @@ public class JobApplication {
 	private Long userId;
 	private Long jobOfferId;
 	private Date createdAt;
+	private User user;
 
-	public JobApplication() {
-		
-	}
-	
 	public JobApplication(Long id, String description, Long userId, Long jobOfferId, Date createdAt) {
 		this.id = id;
 		this.description = description;
@@ -41,7 +38,6 @@ public class JobApplication {
 		return createdAt;
 	}
 
-	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -60,6 +56,14 @@ public class JobApplication {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public User getUser() {
+		return this.user;
 	}
 
 }

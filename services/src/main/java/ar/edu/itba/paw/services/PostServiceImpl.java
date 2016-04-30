@@ -19,30 +19,37 @@ public class PostServiceImpl implements PostService {
 		this.postDao = postDao;
 	}
 
+	@Override
 	public void create(String title, String description, Long userId) {
 		postDao.create(title, description, userId);
 	}
 
+	@Override
 	public void delete(Long id) {
 		postDao.delete(id);
 	}
 
+	@Override
 	public void update(Long id, String title, String description) {
 		postDao.update(id, title, description);
 	}
 
+	@Override
 	public Long count() {
 		return postDao.count();
 	}
 
+	@Override
 	public Post find(Long id) {
 		return postDao.find(id);
 	}
 
+	@Override
 	public List<Post> all() {
 		return postDao.all();
 	}
 
+	@Override
 	public List<Post> userPosts(Long userId) {
 		return postDao.userPosts(userId);
 	}

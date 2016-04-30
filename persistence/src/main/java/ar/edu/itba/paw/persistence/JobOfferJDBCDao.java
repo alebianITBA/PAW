@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -35,24 +36,23 @@ public class JobOfferJDBCDao implements JobOfferDao {
 	}
 
 	public Long create(final String title, final String description, final Long userId) {
-		
+
 		// Cambio esto para probar de tener el ID generado
-		final String sql = "INSERT INTO job_offers (title, description, user_id, created_at) VALUES" + "(?, ?, ?, current_timestamp);";
-		
+		final String sql = "INSERT INTO job_offers (title, description, user_id, created_at) VALUES"
+				+ "(?, ?, ?, current_timestamp);";
+
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-    	jdbcTemplate.update(
-    	    new PreparedStatementCreator() {
-				
-				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-					PreparedStatement pst =
-	    	                con.prepareStatement(sql, new String[] {"id"});
-	    	            pst.setString(1, title);
-	    	            pst.setString(2, description);
-	    	            pst.setLong(3, userId);
-	    	            return pst;
-				}
-			}, keyHolder);
-    	return new Long(keyHolder.getKey().toString());
+		jdbcTemplate.update(new PreparedStatementCreator() {
+
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pst = con.prepareStatement(sql, new String[] { "id" });
+				pst.setString(1, title);
+				pst.setString(2, description);
+				pst.setLong(3, userId);
+				return pst;
+			}
+		}, keyHolder);
+		return new Long(keyHolder.getKey().toString());
 	}
 
 	public void delete(Long id) {
@@ -80,10 +80,12 @@ public class JobOfferJDBCDao implements JobOfferDao {
 	public List<JobOffer> userJobOffers(Long userId) {
 		return jdbcTemplate.query("SELECT * FROM job_offers WHERE user_id = ?;", jobOfferRowMapper, userId);
 	}
-	
-	public List<JobOffer> withSkills(List<Skill> userSkills) {
-		// TODO: Make the real query
-		return jdbcTemplate.query("SELECT * FROM job_offers;", jobOfferRowMapper);
+
+	public List<JobOffer> withSkills(List<Skill> skills) {
+		return jdbcTemplate.query(
+				"SELECT DISTINCT job_offers.* FROM job_offers INNER JOIN job_offer_skills ON job_offers.id = job_offer_skills.job_offer_id "
+						+ "WHERE job_offer_skills.skill_id IN (?) ORDER BY job_offers.created_at DESC LIMIT 10;",
+				jobOfferRowMapper, skillsToObjectArray(skills));
 	}
 
 	private static class JobOfferRowMapper implements RowMapper<JobOffer> {
@@ -91,5 +93,14 @@ public class JobOfferJDBCDao implements JobOfferDao {
 			return new JobOffer(rs.getLong("id"), rs.getString("title"), rs.getString("description"),
 					rs.getLong("user_id"), rs.getDate("created_at"));
 		}
+	}
+	
+	// Hack TODO: find a better way to do it
+	private Object[] skillsToObjectArray(List<Skill> skills) {
+		Object[] list = new Object[skills.size()];
+		for (int i = 0; i < skills.size(); i++) {
+			list[i] = skills.get(i).getId();
+		}
+		return list;
 	}
 }

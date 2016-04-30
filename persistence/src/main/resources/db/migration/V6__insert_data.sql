@@ -156,3 +156,31 @@ INSERT INTO user_skills (user_id, skill_id, created_at) VALUES (4, 1, current_ti
 INSERT INTO user_skills (user_id, skill_id, created_at) VALUES (4, 2, current_timestamp);
 INSERT INTO user_skills (user_id, skill_id, created_at) VALUES (4, 3, current_timestamp);
 INSERT INTO user_skills (user_id, skill_id, created_at) VALUES (4, 4, current_timestamp);
+
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (1, 3, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (1, 4, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (1, 5, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (1, 6, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (1, 7, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (1, 8, 'nada', current_timestamp);
+
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (2, 1, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (2, 2, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (2, 5, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (2, 6, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (2, 7, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (2, 8, 'nada', current_timestamp);
+
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (3, 3, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (3, 4, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (3, 1, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (3, 2, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (3, 7, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (3, 8, 'nada', current_timestamp);
+
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (4, 3, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (4, 4, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (4, 5, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (4, 6, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (4, 1, 'nada', current_timestamp);
+INSERT INTO job_applications (user_id, job_offer_id, description, created_at) VALUES (4, 2, 'nada', current_timestamp);
