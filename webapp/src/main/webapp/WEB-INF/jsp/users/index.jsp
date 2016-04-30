@@ -15,6 +15,9 @@
               <div class="caption">
                 <h3><a href="/users/${user.id}">${user.firstName} ${user.lastName}</a></h3>
                 <p><a href="/users/${user.id}">${user.email}</a></p>
+                <c:forEach items="${user.skills}" var="skill">
+                  <span class="label label-info">${skill.name}</span>
+                </c:forEach>
               </div>
             </div>
           </c:forEach>
