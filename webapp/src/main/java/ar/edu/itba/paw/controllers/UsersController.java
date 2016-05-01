@@ -49,12 +49,7 @@ public class UsersController {
 		return mav;
 	}
 
-	@RequestMapping(path = "/register", method = RequestMethod.GET)
-	public ModelAndView showRegisterForm(@ModelAttribute("registerForm") final RegisterForm registerForm) {
-		return new ModelAndView("users/register");
-	}
-
-	@RequestMapping(path = "/post", method = RequestMethod.POST)
+	@RequestMapping(path = "/create", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public ModelAndView addUser(@Valid @ModelAttribute("registerForm") final RegisterForm registerForm,
 			final BindingResult errors) {
@@ -66,7 +61,7 @@ public class UsersController {
 		passwordValidator.validate(registerForm, errors);
 
 		if (errors.hasErrors()) {
-			return showRegisterForm(registerForm);
+			return new ModelAndView("redirect:/");
 		} else {
 			/*
 			 * TODO: registerForm.getUser() o convertir en algun lugar. Para
@@ -78,7 +73,7 @@ public class UsersController {
 
 			userService.create(registerForm.getFirstName(), registerForm.getLastName(), registerForm.getEmail(),
 					hashedPassword);
-			return listUser();
+			return new ModelAndView("redirect:/index");
 		}
 	}
 

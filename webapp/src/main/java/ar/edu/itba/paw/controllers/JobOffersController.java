@@ -86,9 +86,7 @@ public class JobOffersController {
 		if (user != null) {
 			jobApplicationService.create("Email application", user.getId(), id);
 		} else {
-
 			// TODO: MOSTRAR ERROR DE USUARIO NO ENCONTRADO
-
 		}
 
 		return getJobOffer(id);
