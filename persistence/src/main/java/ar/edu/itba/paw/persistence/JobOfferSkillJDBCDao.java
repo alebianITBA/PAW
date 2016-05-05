@@ -28,19 +28,25 @@ public class JobOfferSkillJDBCDao implements JobOfferSkillDao {
 		skillRowMapper = new SkillRowMapper();
 	}
 
+	@Override
 	public void create(Long jobOfferId, Long skillId) {
-		jdbcTemplate.update("INSERT INTO job_offer_skills (job_offer_id, skill_id, created_at) VALUES (?, ?, current_timestamp);",
+		jdbcTemplate.update(
+				"INSERT INTO job_offer_skills (job_offer_id, skill_id, created_at) VALUES (?, ?, current_timestamp);",
 				jobOfferId, skillId);
 	}
 
+	@Override
 	public void delete(Long id) {
 		jdbcTemplate.update("DELETE FROM job_offer_skills WHERE id = ?", id);
 	}
 
+	@Override
 	public void removeJobOfferSkill(Long jobOfferId, Long skillId) {
-		jdbcTemplate.update("DELETE FROM job_offer_skills WHERE job_offer_id = ? AND skill_id = ?", jobOfferId, skillId);
+		jdbcTemplate.update("DELETE FROM job_offer_skills WHERE job_offer_id = ? AND skill_id = ?", jobOfferId,
+				skillId);
 	}
 
+	@Override
 	public List<Skill> jobOfferSkills(Long jobOfferId) {
 		return jdbcTemplate.query(
 				"SELECT skills.id as id, skills.name as name, skills.created_at as created_at FROM "

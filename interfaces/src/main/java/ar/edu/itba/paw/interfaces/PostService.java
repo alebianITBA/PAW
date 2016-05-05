@@ -17,7 +17,11 @@ public interface PostService {
 	Post find(Long id);
 
 	List<Post> all();
+	
+	List<Post> all(Integer page, Integer perPage);
 
 	List<Post> userPosts(Long userId);
+	
+	List<Post> userPosts(Long userId, Integer page, Integer perPage);
 
 }

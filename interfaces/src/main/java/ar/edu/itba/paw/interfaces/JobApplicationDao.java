@@ -17,9 +17,15 @@ public interface JobApplicationDao {
 	JobApplication find(Long id);
 
 	List<JobApplication> all();
+	
+	List<JobApplication> all(Integer page, Integer perPage);
 
 	List<JobApplication> userJobApplications(Long userId);
+	
+	List<JobApplication> userJobApplications(Long userId, Integer page, Integer perPage);
 
 	List<JobApplication> jobOfferApplications(Long jobOfferId);
+	
+	List<JobApplication> jobOfferApplications(Long jobOfferId, Integer page, Integer perPage);
 
 }

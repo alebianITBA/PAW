@@ -19,5 +19,7 @@ public interface UserService {
 	User find(Long id);
 
 	List<User> all();
+	
+	List<User> all(Integer page, Integer perPage);
 
 }

@@ -67,8 +67,18 @@ public class UserServiceImpl implements UserService {
 		return users;
 	}
 
+	@Override
+	public List<User> all(Integer page, Integer perPage) {
+		List<User> users = userDao.all(page, perPage);
+		for (User user : users) {
+			addSkillsToUser(user);
+		}
+		return users;
+	}
+
 	private void addSkillsToUser(User user) {
 		List<Skill> skills = userSkillService.userSkills(user.getId());
 		user.setSkills(skills);
 	}
+
 }

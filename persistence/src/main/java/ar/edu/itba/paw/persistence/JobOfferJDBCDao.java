@@ -34,6 +34,7 @@ public class JobOfferJDBCDao implements JobOfferDao {
 		jobOfferRowMapper = new JobOfferRowMapper();
 	}
 
+	@Override
 	public Long create(final String title, final String description, final Long userId) {
 
 		// Cambio esto para probar de tener el ID generado
@@ -54,37 +55,63 @@ public class JobOfferJDBCDao implements JobOfferDao {
 		return new Long(keyHolder.getKey().toString());
 	}
 
+	@Override
 	public void delete(Long id) {
 		jdbcTemplate.update("DELETE FROM job_offers WHERE id = ?", id);
 	}
 
+	@Override
 	public void update(Long id, String title, String description) {
 		jdbcTemplate.update(
 				"UPDATE job_offers SET title = COALESCE(?, title), description = COALESCE(?, description), WHERE id = ?;",
 				title, description, id);
 	}
 
+	@Override
 	public Long count() {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM job_offers;", Long.class);
 	}
 
+	@Override
 	public JobOffer find(Long id) {
 		return jdbcTemplate.queryForObject("SELECT * FROM job_offers WHERE id = ?;", jobOfferRowMapper, id);
 	}
 
+	@Override
 	public List<JobOffer> all() {
 		return jdbcTemplate.query("SELECT * FROM job_offers;", jobOfferRowMapper);
 	}
 
+	@Override
+	public List<JobOffer> all(Integer page, Integer perPage) {
+		return jdbcTemplate.query("SELECT * FROM job_offers ORDER BY created_at DESC LIMIT ? OFFSET ?;", jobOfferRowMapper, perPage, page - 1);
+	}
+
+	@Override
 	public List<JobOffer> userJobOffers(Long userId) {
 		return jdbcTemplate.query("SELECT * FROM job_offers WHERE user_id = ?;", jobOfferRowMapper, userId);
 	}
 
+	@Override
+	public List<JobOffer> userJobOffers(Long userId, Integer page, Integer perPage) {
+		return jdbcTemplate.query("SELECT * FROM job_offers WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?;", jobOfferRowMapper,
+				userId, perPage, page - 1);
+	}
+
+	@Override
 	public List<JobOffer> withSkills(List<Skill> skills) {
 		return jdbcTemplate.query(
 				"SELECT DISTINCT job_offers.* FROM job_offers INNER JOIN job_offer_skills ON job_offers.id = job_offer_skills.job_offer_id "
-						+ "WHERE job_offer_skills.skill_id IN (?) ORDER BY job_offers.created_at DESC LIMIT 10;",
+						+ "WHERE job_offer_skills.skill_id IN (?) ORDER BY job_offers.created_at DESC;",
 				jobOfferRowMapper, skillsToObjectArray(skills));
+	}
+
+	@Override
+	public List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage) {
+		return jdbcTemplate.query(
+				"SELECT DISTINCT job_offers.* FROM job_offers INNER JOIN job_offer_skills ON job_offers.id = job_offer_skills.job_offer_id "
+						+ "WHERE job_offer_skills.skill_id IN (?) ORDER BY job_offers.created_at DESC LIMIT ? OFFSET ?;",
+				jobOfferRowMapper, skillsToObjectArray(skills), perPage, page -1 );
 	}
 
 	private static class JobOfferRowMapper implements RowMapper<JobOffer> {
@@ -93,7 +120,7 @@ public class JobOfferJDBCDao implements JobOfferDao {
 					rs.getLong("user_id"), rs.getDate("created_at"));
 		}
 	}
-	
+
 	// Hack TODO: find a better way to do it
 	private Object[] skillsToObjectArray(List<Skill> skills) {
 		Object[] list = new Object[skills.size()];
@@ -102,4 +129,5 @@ public class JobOfferJDBCDao implements JobOfferDao {
 		}
 		return list;
 	}
+
 }

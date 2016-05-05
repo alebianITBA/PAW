@@ -28,19 +28,23 @@ public class UserSkillJDBCDao implements UserSkillDao {
 		skillRowMapper = new SkillRowMapper();
 	}
 
+	@Override
 	public void create(Long userId, Long skillId) {
 		jdbcTemplate.update("INSERT INTO user_skills (user_id, skill_id, created_at) VALUES (?, ?, current_timestamp);",
 				userId, skillId);
 	}
 
+	@Override
 	public void delete(Long id) {
 		jdbcTemplate.update("DELETE FROM user_skills WHERE id = ?", id);
 	}
 
+	@Override
 	public void removeUserSkill(Long userId, Long skillId) {
 		jdbcTemplate.update("DELETE FROM user_skills WHERE user_id = ? AND skill_id = ?", userId, skillId);
 	}
 
+	@Override
 	public List<Skill> userSkills(Long userId) {
 		return jdbcTemplate.query(
 				"SELECT skills.id as id, skills.name as name, skills.created_at as created_at FROM "

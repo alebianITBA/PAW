@@ -56,7 +56,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public DataSource dataSource() throws ClassNotFoundException {
 		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
-		if (System.getenv("PAW_ENVIRONMENT").equals("development")) {
+		if (System.getenv().containsKey("PAW_ENVIRONMENT") && System.getenv("PAW_ENVIRONMENT").equals("development")) {
 			ds.setDriverClass(org.postgresql.Driver.class);
 			ds.setUrl("jdbc:postgresql://localhost:5432/paw");
 			ds.setUsername("paw");

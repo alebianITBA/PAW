@@ -36,7 +36,7 @@ public class UsersController {
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public ModelAndView listUser() {
 		final ModelAndView mav = new ModelAndView("users/index");
-		mav.addObject("users", userService.all());
+		mav.addObject("users", userService.all(1, 50));
 		return mav;
 	}
 

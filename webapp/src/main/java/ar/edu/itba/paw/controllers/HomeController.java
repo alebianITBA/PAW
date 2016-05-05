@@ -37,9 +37,9 @@ public class HomeController {
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public ModelAndView index() {
 		final ModelAndView mav = new ModelAndView("index");
-		mav.addObject("posts", postService.all());
+		mav.addObject("posts", postService.all(1, 50));
 		List<Skill> userSkills = null; // TODO Get the logged user skills
-		mav.addObject("offers", jobOfferService.withSkills(userSkills));
+		mav.addObject("offers", jobOfferService.withSkills(userSkills, 1, 10));
 		return mav;
 	}
 

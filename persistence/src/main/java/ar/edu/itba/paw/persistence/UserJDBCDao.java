@@ -28,15 +28,19 @@ public class UserJDBCDao implements UserDao {
 		userRowMapper = new UserRowMapper();
 	}
 
+	@Override
 	public void create(String firstName, String lastName, String email, String password) {
-		jdbcTemplate.update("INSERT INTO users (first_name, last_name, email, password, created_at) VALUES (?, ?, ?, ?, current_timestamp);", 
+		jdbcTemplate.update(
+				"INSERT INTO users (first_name, last_name, email, password, created_at) VALUES (?, ?, ?, ?, current_timestamp);",
 				firstName, lastName, email, password);
 	}
 
+	@Override
 	public void delete(Long id) {
 		jdbcTemplate.update("DELETE FROM users WHERE id = ?", id);
 	}
 
+	@Override
 	public void update(Long id, String firstName, String lastName, String email, String password) {
 		jdbcTemplate.update(
 				"UPDATE users SET first_name = COALESCE(?, first_name), last_name = COALESCE(?, last_name), "
@@ -44,20 +48,30 @@ public class UserJDBCDao implements UserDao {
 				firstName, lastName, email, password, id);
 	}
 
+	@Override
 	public User findByEmail(String email) {
 		return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email = ?;", userRowMapper, email);
 	}
 
+	@Override
 	public Long count() {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users;", Long.class);
 	}
 
+	@Override
 	public User find(Long id) {
 		return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id = ?;", userRowMapper, id);
 	}
 
+	@Override
 	public List<User> all() {
 		return jdbcTemplate.query("SELECT * FROM users;", userRowMapper);
+	}
+
+	@Override
+	public List<User> all(Integer page, Integer perPage) {
+		return jdbcTemplate.query("SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?;", userRowMapper,
+				perPage, page - 1);
 	}
 
 	private static class UserRowMapper implements RowMapper<User> {

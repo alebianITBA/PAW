@@ -57,6 +57,15 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 	}
 
 	@Override
+	public List<JobApplication> all(Integer page, Integer perPage) {
+		List<JobApplication> applications = jobApplicationDao.all(page, perPage);
+		for (JobApplication application : applications) {
+			addUserToApplication(application);
+		}
+		return applications;
+	}
+
+	@Override
 	public List<JobApplication> userJobApplications(Long userId) {
 		List<JobApplication> applications = jobApplicationDao.userJobApplications(userId);
 		for (JobApplication application : applications) {
@@ -66,8 +75,26 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 	}
 
 	@Override
+	public List<JobApplication> userJobApplications(Long userId, Integer page, Integer perPage) {
+		List<JobApplication> applications = jobApplicationDao.userJobApplications(userId, page, perPage);
+		for (JobApplication application : applications) {
+			addUserToApplication(application);
+		}
+		return applications;
+	}
+
+	@Override
 	public List<JobApplication> jobOfferApplications(Long jobOfferId) {
 		List<JobApplication> applications = jobApplicationDao.jobOfferApplications(jobOfferId);
+		for (JobApplication application : applications) {
+			addUserToApplication(application);
+		}
+		return applications;
+	}
+
+	@Override
+	public List<JobApplication> jobOfferApplications(Long jobOfferId, Integer page, Integer perPage) {
+		List<JobApplication> applications = jobApplicationDao.jobOfferApplications(jobOfferId, page, perPage);
 		for (JobApplication application : applications) {
 			addUserToApplication(application);
 		}

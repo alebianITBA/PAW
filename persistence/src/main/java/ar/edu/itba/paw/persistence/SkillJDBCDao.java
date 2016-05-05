@@ -28,30 +28,37 @@ public class SkillJDBCDao implements SkillDao {
 		skillRowMapper = new SkillRowMapper();
 	}
 
+	@Override
 	public void create(String name) {
 		jdbcTemplate.update("INSERT INTO skills (name, created_at) VALUES (?, current_timestamp);", name);
 	}
 
+	@Override
 	public void delete(Long id) {
 		jdbcTemplate.update("DELETE FROM skills WHERE id = ?", id);
 	}
 
+	@Override
 	public void update(Long id, String name) {
 		jdbcTemplate.update("UPDATE skills SET name = COALESCE(?, name) WHERE id = ?;", name, id);
 	}
 
+	@Override
 	public Long count() {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM skills;", Long.class);
 	}
 
+	@Override
 	public Skill find(Long id) {
 		return jdbcTemplate.queryForObject("SELECT * FROM skills WHERE id = ?;", skillRowMapper, id);
 	}
 
+	@Override
 	public Skill findByName(String name) {
 		return jdbcTemplate.queryForObject("SELECT * FROM skills WHERE name = ?;", skillRowMapper, name);
 	}
 
+	@Override
 	public List<Skill> all() {
 		return jdbcTemplate.query("SELECT * FROM skills;", skillRowMapper);
 	}

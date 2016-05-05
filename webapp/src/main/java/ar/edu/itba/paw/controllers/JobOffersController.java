@@ -55,10 +55,11 @@ public class JobOffersController {
 		final ModelAndView mav = new ModelAndView("job_offers/index");
 		if (skillId != null) {
 			List<Skill> skills = new LinkedList<Skill>();
-			skills.add(new Skill(skillId, "", null)); // Solo me importa el ID para la query
-			mav.addObject("job_offers", jobOfferService.withSkills(skills));
+			skills.add(new Skill(skillId, "", null)); // Solo me importa el ID
+														// para la query
+			mav.addObject("job_offers", jobOfferService.withSkills(skills, 1, 50));
 		} else {
-			mav.addObject("job_offers", jobOfferService.all());
+			mav.addObject("job_offers", jobOfferService.all(1, 50));
 		}
 		mav.addObject("skills", skillService.all());
 		return mav;

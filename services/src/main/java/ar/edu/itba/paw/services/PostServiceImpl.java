@@ -50,7 +50,17 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
+	public List<Post> all(Integer page, Integer perPage) {
+		return postDao.all(page, perPage);
+	}
+
+	@Override
 	public List<Post> userPosts(Long userId) {
 		return postDao.userPosts(userId);
+	}
+
+	@Override
+	public List<Post> userPosts(Long userId, Integer page, Integer perPage) {
+		return postDao.userPosts(userId, page, perPage);
 	}
 }

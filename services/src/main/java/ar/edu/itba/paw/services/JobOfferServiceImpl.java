@@ -61,6 +61,15 @@ public class JobOfferServiceImpl implements JobOfferService {
 	}
 
 	@Override
+	public List<JobOffer> all(Integer page, Integer perPage) {
+		List<JobOffer> offers = jobOfferDao.all(page, perPage);
+		for (JobOffer offer : offers) {
+			addSkillsToOffer(offer);
+		}
+		return offers;
+	}
+
+	@Override
 	public List<JobOffer> userJobOffers(Long userId) {
 		List<JobOffer> offers = jobOfferDao.userJobOffers(userId);
 		for (JobOffer offer : offers) {
@@ -70,12 +79,34 @@ public class JobOfferServiceImpl implements JobOfferService {
 	}
 
 	@Override
+	public List<JobOffer> userJobOffers(Long userId, Integer page, Integer perPage) {
+		List<JobOffer> offers = jobOfferDao.userJobOffers(userId, page, perPage);
+		for (JobOffer offer : offers) {
+			addSkillsToOffer(offer);
+		}
+		return offers;
+	}
+
+	@Override
 	public List<JobOffer> withSkills(List<Skill> skills) {
-		if (skills == null || skills.isEmpty()){
+		if (skills == null || skills.isEmpty()) {
 			return all();
 		}
-		
+
 		List<JobOffer> offers = jobOfferDao.withSkills(skills);
+		for (JobOffer offer : offers) {
+			addSkillsToOffer(offer);
+		}
+		return offers;
+	}
+
+	@Override
+	public List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage) {
+		if (skills == null || skills.isEmpty()) {
+			return all();
+		}
+
+		List<JobOffer> offers = jobOfferDao.withSkills(skills, page, perPage);
 		for (JobOffer offer : offers) {
 			addSkillsToOffer(offer);
 		}
