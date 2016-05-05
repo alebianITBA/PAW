@@ -19,42 +19,47 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="media">
-          <div class="media-body">
-            <h1 class="media-heading">Posts</h1>
-            <c:forEach items="${posts}" var="post">
-              <div class="media">
-                <div class="media-body">
-                  <h4 class="media-heading">${post.title}</h4>
-                  <p>${post.description}</p>
+      <c:if test="${posts[0] != null}">
+        <div class="row">
+          <div class="media">
+            <div class="media-body">
+              <h1 class="media-heading">Posts</h1>
+              <c:forEach items="${posts}" var="post">
+                <div class="media">
+                  <div class="media-body">
+                    <h4 class="media-heading">${post.title}</h4>
+                    <p>${post.description}</p>
+                  </div>
                 </div>
-              </div>
-            </c:forEach>
+              </c:forEach>
+            </div>
           </div>
         </div>
-      </div>
+      </c:if>
 
-      <div class="row">
-        <div class="media">
-          <div class="media-body">
-            <h1 class="media-heading">Job offers created</h1>
-            <c:forEach items="${offers}" var="offer">
-              <div class="media-body">
-                <h2 class="media-heading"><a href="/job_offers/${offer.userId}">${offer.title}</a></h2>
-                <p><a href="/job_offers/${offer.userId}">${offer.description}</a></p>
-                <c:forEach items="${offer.skills}" var="skill">
-                  <span class="label label-info">Skill</span>
-                </c:forEach>
-              </div>
-              <div class="media-right">
-                <button class="btn btn-primary">Apply</button>
-              </div>
-              <br>
-            </c:forEach>
+      <c:if test="${posts[0] != null}">
+        <div class="row">
+          <div class="media">
+            <div class="media-body">
+              <h1 class="media-heading">Job offers created</h1>
+              <c:forEach items="${offers}" var="offer">
+                <div class="media-body">
+                  <h2 class="media-heading"><a href="/job_offers/${offer.userId}">${offer.title}</a></h2>
+                  <p><a href="/job_offers/${offer.userId}">${offer.description}</a></p>
+                  <c:forEach items="${offer.skills}" var="skill">
+                    <span class="label label-info">Skill</span>
+                  </c:forEach>
+                </div>
+                <div class="media-right">
+                  <button class="btn btn-primary">Apply</button>
+                </div>
+                <br>
+              </c:forEach>
+            </div>
           </div>
         </div>
-      </div>
+      </c:if>
+
     </div>
   </div>
 </div>
