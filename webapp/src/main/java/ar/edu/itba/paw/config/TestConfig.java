@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
-@ComponentScan({ "ar.edu.itba.paw.persistence", })
+@ComponentScan({ "ar.edu.itba.paw.persistence" })
 @Configuration
 public class TestConfig {
 
@@ -17,7 +17,7 @@ public class TestConfig {
 		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
 		ds.setDriverClass(JDBCDriver.class);
 		ds.setUrl("jdbc:hsqldb:mem:paw");
-		ds.setUsername("ha");
+		ds.setUsername("paw");
 		ds.setPassword("");
 		return ds;
 	}
