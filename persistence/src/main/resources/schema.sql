@@ -15,8 +15,6 @@ CREATE TABLE IF NOT EXISTS job_offers (
   user_id integer REFERENCES users(id)
 );
 
-CREATE INDEX IF NOT EXISTS index_job_offers_on_user_id ON job_offers(user_id);
-
 CREATE TABLE IF NOT EXISTS job_applications (
   id serial PRIMARY KEY,
   description text NOT NULL,
@@ -26,9 +24,6 @@ CREATE TABLE IF NOT EXISTS job_applications (
   UNIQUE(user_id, job_offer_id)
 );
 
-CREATE INDEX IF NOT EXISTS index_job_applications_on_user_id ON job_applications(user_id);
-CREATE INDEX IF NOT EXISTS index_job_applications_on_job_offer_id ON job_applications(job_offer_id);
-
 CREATE TABLE IF NOT EXISTS posts (
   id serial PRIMARY KEY,
   title text NOT NULL,
@@ -36,8 +31,6 @@ CREATE TABLE IF NOT EXISTS posts (
   created_at timestamp NOT NULL,
   user_id integer REFERENCES users(id)
 );
-
-CREATE INDEX IF NOT EXISTS index_posts_on_user_id ON posts(user_id);
 
 CREATE TABLE IF NOT EXISTS skills (
   id serial PRIMARY KEY,
@@ -52,9 +45,6 @@ CREATE TABLE IF NOT EXISTS user_skills (
   created_at timestamp NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS index_user_skills_on_user_id ON user_skills(user_id);
-CREATE INDEX IF NOT EXISTS index_user_skills_on_skill_id ON user_skills(user_id);
-
 CREATE TABLE IF NOT EXISTS job_offer_skills (
   id serial PRIMARY KEY,
   job_offer_id integer REFERENCES job_offers(id),
@@ -62,5 +52,3 @@ CREATE TABLE IF NOT EXISTS job_offer_skills (
   created_at timestamp NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS index_job_offer_skills_on_job_offer_id ON job_offer_skills(job_offer_id);
-CREATE INDEX IF NOT EXISTS index_job_offer_skills_on_skill_id ON job_offer_skills(skill_id);

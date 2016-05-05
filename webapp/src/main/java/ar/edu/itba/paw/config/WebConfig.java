@@ -1,10 +1,7 @@
 package ar.edu.itba.paw.config;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -29,9 +26,9 @@ import org.springframework.web.servlet.view.JstlView;
 // @Import({ SecurityConfig.class })
 public class WebConfig extends WebMvcConfigurerAdapter {
 	static final String RESOURCES_DIR = "/resources/";
-	
+
 	@Value("classpath:schema.sql")
-    private Resource schemaSql;
+	private Resource schemaSql;
 
 	@Bean
 	public ViewResolver viewResolver() {
@@ -59,16 +56,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public DataSource dataSource() throws ClassNotFoundException {
 		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
-		if(System.getenv("PAW_ENVIRONMENT").equals("development")) {
+		if (System.getenv("PAW_ENVIRONMENT").equals("development")) {
 			ds.setDriverClass(org.postgresql.Driver.class);
 			ds.setUrl("jdbc:postgresql://localhost:5432/paw");
-			ds.setUsername(System.getenv("paw"));
-			ds.setPassword(System.getenv("paw"));
+			ds.setUsername("paw");
+			ds.setPassword("paw");
 		} else {
 			ds.setDriverClass(org.postgresql.Driver.class);
 			ds.setUrl("jdbc:postgresql://10.16.1.110:5432/grupo5");
-			ds.setUsername(System.getenv("grupo5"));
-			ds.setPassword(System.getenv("yoo9oTh0"));
+			ds.setUsername("grupo5");
+			ds.setPassword("yoo9oTh0");
 		}
 		return ds;
 	}

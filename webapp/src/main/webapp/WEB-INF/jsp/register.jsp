@@ -8,8 +8,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
-
-      <form>
+      <form:form method="post" modelAttribute="registerForm" action="${actionUrl}">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Email">
         </div>
@@ -20,11 +19,10 @@
           <input type="text" class="form-control" placeholder="Last name">
         </div>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
-      </form>
-
+      </form:form>
     </div>
   </div>
 </div>

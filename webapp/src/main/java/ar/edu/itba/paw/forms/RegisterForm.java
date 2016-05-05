@@ -1,14 +1,10 @@
 package ar.edu.itba.paw.forms;
 
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Pattern;
-import javax.validation.Constraint;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-
-import ar.edu.itba.paw.validators.PasswordValidator;
 
 public class RegisterForm {
 
@@ -16,20 +12,20 @@ public class RegisterForm {
 	@Length(max = 255)
 	@Pattern(regexp = "[a-zA-Z]+")
 	private String firstName;
-	
+
 	@NotBlank
 	@Length(max = 255)
 	@Pattern(regexp = "[a-zA-Z]+")
 	private String lastName;
-	
+
 	@NotBlank
 	@Email
 	private String email;
-	
+
 	@NotBlank
 	@Length(min = 6, max = 20)
 	private String password;
-	 
+
 	private String confirmPassword;
 
 	public String getFirstName() {
@@ -71,7 +67,5 @@ public class RegisterForm {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-	
-	
-	
+
 }
