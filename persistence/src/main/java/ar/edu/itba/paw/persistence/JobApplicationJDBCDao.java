@@ -41,7 +41,7 @@ public class JobApplicationJDBCDao implements JobApplicationDao {
 
 	@Override
 	public void update(Long id, String description) {
-		jdbcTemplate.update("UPDATE job_applications SET description = COALESCE(?, title), WHERE id = ?;", description,
+		jdbcTemplate.update("UPDATE job_applications SET description = COALESCE(?, description) WHERE id = ?;", description,
 				id);
 	}
 

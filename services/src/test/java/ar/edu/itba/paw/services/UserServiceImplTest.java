@@ -1,17 +1,12 @@
 package ar.edu.itba.paw.services;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import ar.edu.itba.paw.interfaces.UserDao;
-import ar.edu.itba.paw.models.User;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = TestConfig.class)
 public class UserServiceImplTest {
 
 	private UserServiceImpl userService;

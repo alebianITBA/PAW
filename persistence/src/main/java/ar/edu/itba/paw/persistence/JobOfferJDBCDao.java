@@ -63,7 +63,7 @@ public class JobOfferJDBCDao implements JobOfferDao {
 	@Override
 	public void update(Long id, String title, String description) {
 		jdbcTemplate.update(
-				"UPDATE job_offers SET title = COALESCE(?, title), description = COALESCE(?, description), WHERE id = ?;",
+				"UPDATE job_offers SET title = COALESCE(?, title), description = COALESCE(?, description) WHERE id = ?;",
 				title, description, id);
 	}
 
@@ -84,7 +84,8 @@ public class JobOfferJDBCDao implements JobOfferDao {
 
 	@Override
 	public List<JobOffer> all(Integer page, Integer perPage) {
-		return jdbcTemplate.query("SELECT * FROM job_offers ORDER BY created_at DESC LIMIT ? OFFSET ?;", jobOfferRowMapper, perPage, page - 1);
+		return jdbcTemplate.query("SELECT * FROM job_offers ORDER BY created_at DESC LIMIT ? OFFSET ?;",
+				jobOfferRowMapper, perPage, page - 1);
 	}
 
 	@Override
@@ -94,8 +95,9 @@ public class JobOfferJDBCDao implements JobOfferDao {
 
 	@Override
 	public List<JobOffer> userJobOffers(Long userId, Integer page, Integer perPage) {
-		return jdbcTemplate.query("SELECT * FROM job_offers WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?;", jobOfferRowMapper,
-				userId, perPage, page - 1);
+		return jdbcTemplate.query(
+				"SELECT * FROM job_offers WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?;",
+				jobOfferRowMapper, userId, perPage, page - 1);
 	}
 
 	@Override
@@ -111,7 +113,7 @@ public class JobOfferJDBCDao implements JobOfferDao {
 		return jdbcTemplate.query(
 				"SELECT DISTINCT job_offers.* FROM job_offers INNER JOIN job_offer_skills ON job_offers.id = job_offer_skills.job_offer_id "
 						+ "WHERE job_offer_skills.skill_id IN (?) ORDER BY job_offers.created_at DESC LIMIT ? OFFSET ?;",
-				jobOfferRowMapper, skillsToObjectArray(skills), perPage, page -1 );
+				jobOfferRowMapper, skillsToObjectArray(skills), perPage, page - 1);
 	}
 
 	private static class JobOfferRowMapper implements RowMapper<JobOffer> {

@@ -13,6 +13,12 @@ public class Skill {
 		this.createdAt = createdAt;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		Skill otherSkill = (Skill) other;
+		return (this.id.equals(otherSkill.getId())) && (this.name.equals(otherSkill.getName()));
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -24,5 +30,5 @@ public class Skill {
 	public Date getCreatedAt() {
 		return createdAt;
 	}
-	
+
 }

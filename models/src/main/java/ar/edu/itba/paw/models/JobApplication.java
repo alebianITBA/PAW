@@ -18,6 +18,15 @@ public class JobApplication {
 		this.createdAt = createdAt;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		JobApplication otherApplication = (JobApplication) other;
+		return (this.id.equals(otherApplication.getId()))
+				&& (this.description.equals(otherApplication.getDescription()))
+				&& (this.userId.equals(otherApplication.getUserId()))
+				&& (this.jobOfferId.equals(otherApplication.getJobOfferId()));
+	}
+
 	public Long getId() {
 		return id;
 	}

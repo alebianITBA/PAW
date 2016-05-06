@@ -43,7 +43,7 @@ public class PostJDBCDao implements PostDao {
 	@Override
 	public void update(Long id, String title, String description) {
 		jdbcTemplate.update(
-				"UPDATE posts SET title = COALESCE(?, title), description = COALESCE(?, description), WHERE id = ?;",
+				"UPDATE posts SET title = COALESCE(?, title), description = COALESCE(?, description) WHERE id = ?;",
 				title, description, id);
 	}
 

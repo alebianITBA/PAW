@@ -12,15 +12,23 @@ public class JobOffer {
 	private List<Skill> skills;
 
 	public JobOffer() {
-		
+
 	}
-	
+
 	public JobOffer(Long id, String title, String description, Long userId, Date createdAt) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.userId = userId;
 		this.createdAt = createdAt;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		JobOffer otherOffer = (JobOffer) other;
+		return (this.id.equals(otherOffer.getId())) && (this.title.equals(otherOffer.getTitle()))
+				&& (this.description.equals(otherOffer.getDescription()))
+				&& (this.userId.equals(otherOffer.getUserId()));
 	}
 
 	public Long getId() {
@@ -62,11 +70,11 @@ public class JobOffer {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	
+
 	public void setSkills(List<Skill> skills) {
 		this.skills = skills;
 	}
-	
+
 	public List<Skill> getSkills() {
 		return this.skills;
 	}

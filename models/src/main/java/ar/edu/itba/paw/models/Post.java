@@ -17,6 +17,14 @@ public class Post {
 		this.createdAt = createdAt;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		Post otherOffer = (Post) other;
+		return (this.id.equals(otherOffer.getId())) && (this.title.equals(otherOffer.getTitle()))
+				&& (this.description.equals(otherOffer.getDescription()))
+				&& (this.userId.equals(otherOffer.getUserId()));
+	}
+
 	public Long getId() {
 		return id;
 	}

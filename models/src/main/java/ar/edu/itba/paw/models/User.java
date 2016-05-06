@@ -14,7 +14,6 @@ public class User {
 	private static User nullUser;
 
 	public User() {
-
 	}
 
 	public User(Long id, String firstName, String lastName, String email, String password, Date createdAt) {
@@ -31,6 +30,13 @@ public class User {
 			nullUser = new User(0L, "Null", "User", "null@null.com", "nullpassword", new Date());
 		}
 		return nullUser;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		User otherUser = (User) other;
+		return (this.id.equals(otherUser.getId())) && (this.firstName.equals(otherUser.getFirstName()))
+				&& (this.lastName.equals(otherUser.getLastName())) && (this.email.equals(otherUser.getEmail()));
 	}
 
 	public Long getId() {
