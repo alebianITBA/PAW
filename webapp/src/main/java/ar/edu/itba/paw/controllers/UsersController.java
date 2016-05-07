@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.config.LoggedUser;
 import ar.edu.itba.paw.forms.RegisterForm;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.PostService;
@@ -36,6 +38,7 @@ public class UsersController {
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public ModelAndView listUser() {
 		final ModelAndView mav = new ModelAndView("users/index");
+		mav.addObject("loggedUser", LoggedUser.getLoggedUser(SecurityContextHolder.getContext(), userService));
 		mav.addObject("users", userService.all(1, 50));
 		return mav;
 	}
@@ -43,6 +46,7 @@ public class UsersController {
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
 	public ModelAndView getUser(@PathVariable final Long id) {
 		final ModelAndView mav = new ModelAndView("users/show");
+		mav.addObject("loggedUser", LoggedUser.getLoggedUser(SecurityContextHolder.getContext(), userService));
 		mav.addObject("user", userService.find(id));
 		mav.addObject("posts", postService.userPosts(id));
 		mav.addObject("offers", jobOfferService.userJobOffers(id));

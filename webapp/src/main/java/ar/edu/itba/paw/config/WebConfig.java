@@ -1,7 +1,9 @@
 package ar.edu.itba.paw.config;
 
 import java.nio.charset.StandardCharsets;
+
 import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +25,6 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @ComponentScan({ "ar.edu.itba.paw.controllers", "ar.edu.itba.paw.services", "ar.edu.itba.paw.persistence" })
 @Configuration
-// @Import({ SecurityConfig.class })
 public class WebConfig extends WebMvcConfigurerAdapter {
 	static final String RESOURCES_DIR = "/resources/";
 

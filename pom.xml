@@ -32,7 +32,7 @@
 		<javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
 		<org.hibernate.validator>4.3.1.Final</org.hibernate.validator>
 
-		<spring.security.version>3.2.3.RELEASE</spring.security.version>
+		<spring-security.version>4.0.4.RELEASE</spring-security.version>
 
 	</properties>
 
@@ -141,16 +141,22 @@
 
 			<!-- Spring Security -->
 			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-web</artifactId>
-				<version>${spring.security.version}</version>
-			</dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-core</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
 
 			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-config</artifactId>
-				<version>${spring.security.version}</version>
-			</dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+
+			<dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
 
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -163,6 +169,7 @@
 				<artifactId>validation-api</artifactId>
 				<version>${javax.validation-api.version}</version>
 			</dependency>
+
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
@@ -182,13 +189,21 @@
 				<version>${mockito.version}</version>
 				<scope>test</scope>
 			</dependency>
-			
+
 			<dependency>
-		      <groupId>org.springframework</groupId>
-		      <artifactId>spring-test</artifactId>
-		      <version>${org.springframework.version}</version>
-		      <scope>test</scope>
-		    </dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-test</artifactId>
+	      <version>${org.springframework.version}</version>
+	      <scope>test</scope>
+	    </dependency>
+
+			<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.0.1</version>
+		    <scope>provided</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 </project>

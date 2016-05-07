@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.config.LoggedUser;
 import ar.edu.itba.paw.forms.JobOfferForm;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
@@ -53,6 +55,7 @@ public class JobOffersController {
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public ModelAndView jobOffers(@RequestParam(required = false, value = "skill_id") final Long skillId) {
 		final ModelAndView mav = new ModelAndView("job_offers/index");
+		mav.addObject("loggedUser", LoggedUser.getLoggedUser(SecurityContextHolder.getContext(), userService));
 		if (skillId != null) {
 			List<Skill> skills = new LinkedList<Skill>();
 			skills.add(new Skill(skillId, "", null)); // Solo me importa el ID
@@ -68,6 +71,7 @@ public class JobOffersController {
 	@RequestMapping(path = "/{jobOfferId}", method = RequestMethod.GET)
 	public ModelAndView getJobOffer(@PathVariable final Long jobOfferId) {
 		final ModelAndView mav = new ModelAndView("job_offers/show");
+		mav.addObject("loggedUser", LoggedUser.getLoggedUser(SecurityContextHolder.getContext(), userService));
 		mav.addObject("job", jobOfferService.find(jobOfferId));
 		mav.addObject("userApply", new User());
 		java.util.List<JobApplication> applications = jobApplicationService.jobOfferApplications(jobOfferId);
@@ -97,6 +101,7 @@ public class JobOffersController {
 	public ModelAndView showJobOfferForm(@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
 			Map<String, Object> model) {
 		final ModelAndView mav = new ModelAndView("job_offers/create");
+		mav.addObject("loggedUser", LoggedUser.getLoggedUser(SecurityContextHolder.getContext(), userService));
 		java.util.ArrayList<Skill> skills = (java.util.ArrayList<Skill>) skillService.all();
 		model.put("skills", skills);
 		return mav;
