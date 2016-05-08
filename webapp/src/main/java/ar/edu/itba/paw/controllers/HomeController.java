@@ -46,8 +46,7 @@ public class HomeController extends ApplicationController {
 		final ModelAndView mav = new ModelAndView("index");
 		mav.addObject("loggedUser", getLoggedUser());
 		mav.addObject("posts", postService.all(1, 50));
-		List<Skill> userSkills = null; // TODO Get the logged user skills
-		mav.addObject("offers", jobOfferService.withSkills(userSkills, 1, 10));
+		mav.addObject("offers", jobOfferService.withSkills(getLoggedUser().getSkills(), 1, 10));
 		return mav;
 	}
 	

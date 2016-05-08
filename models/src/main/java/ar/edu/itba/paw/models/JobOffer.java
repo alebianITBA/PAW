@@ -10,6 +10,7 @@ public class JobOffer {
 	private Long userId;
 	private Date createdAt;
 	private List<Skill> skills;
+	private User user;
 
 	public JobOffer() {
 
@@ -77,6 +78,14 @@ public class JobOffer {
 
 	public List<Skill> getSkills() {
 		return this.skills;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

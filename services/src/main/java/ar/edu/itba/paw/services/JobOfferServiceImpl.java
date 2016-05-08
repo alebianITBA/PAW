@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ar.edu.itba.paw.interfaces.JobOfferDao;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.JobOfferSkillService;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
 
@@ -19,6 +20,9 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 	@Autowired
 	private JobOfferSkillService jobOfferSkillService;
+
+	@Autowired
+	private UserService userService;
 
 	public void setJobOfferDao(JobOfferDao jobOfferDao) {
 		this.jobOfferDao = jobOfferDao;
@@ -48,6 +52,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 	public JobOffer find(Long id) {
 		JobOffer offer = jobOfferDao.find(id);
 		addSkillsToOffer(offer);
+		addUserToOffer(offer);
 		return offer;
 	}
 
@@ -56,6 +61,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		List<JobOffer> offers = jobOfferDao.all();
 		for (JobOffer offer : offers) {
 			addSkillsToOffer(offer);
+			addUserToOffer(offer);
 		}
 		return offers;
 	}
@@ -65,6 +71,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		List<JobOffer> offers = jobOfferDao.all(page, perPage);
 		for (JobOffer offer : offers) {
 			addSkillsToOffer(offer);
+			addUserToOffer(offer);
 		}
 		return offers;
 	}
@@ -74,6 +81,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		List<JobOffer> offers = jobOfferDao.userJobOffers(userId);
 		for (JobOffer offer : offers) {
 			addSkillsToOffer(offer);
+			addUserToOffer(offer);
 		}
 		return offers;
 	}
@@ -83,6 +91,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		List<JobOffer> offers = jobOfferDao.userJobOffers(userId, page, perPage);
 		for (JobOffer offer : offers) {
 			addSkillsToOffer(offer);
+			addUserToOffer(offer);
 		}
 		return offers;
 	}
@@ -96,6 +105,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		List<JobOffer> offers = jobOfferDao.withSkills(skills);
 		for (JobOffer offer : offers) {
 			addSkillsToOffer(offer);
+			addUserToOffer(offer);
 		}
 		return offers;
 	}
@@ -103,12 +113,13 @@ public class JobOfferServiceImpl implements JobOfferService {
 	@Override
 	public List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage) {
 		if (skills == null || skills.isEmpty()) {
-			return all();
+			return all(page, perPage);
 		}
 
 		List<JobOffer> offers = jobOfferDao.withSkills(skills, page, perPage);
 		for (JobOffer offer : offers) {
 			addSkillsToOffer(offer);
+			addUserToOffer(offer);
 		}
 		return offers;
 	}
@@ -116,6 +127,10 @@ public class JobOfferServiceImpl implements JobOfferService {
 	private void addSkillsToOffer(JobOffer offer) {
 		List<Skill> skills = jobOfferSkillService.jobOfferSkills(offer.getId());
 		offer.setSkills(skills);
+	}
+
+	private void addUserToOffer(JobOffer offer) {
+		offer.setUser(userService.find(offer.getUserId()));
 	}
 
 }

@@ -18,6 +18,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.interfaces.JobOfferDao;
+import ar.edu.itba.paw.interfaces.SkillService;
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
 
@@ -26,6 +27,9 @@ public class JobOfferJDBCDao implements JobOfferDao {
 
 	private final JdbcTemplate jdbcTemplate;
 	private final JobOfferRowMapper jobOfferRowMapper;
+
+	@Autowired
+	private SkillService skillService;
 
 	@Autowired
 	public JobOfferJDBCDao(final DataSource ds) {
@@ -102,18 +106,19 @@ public class JobOfferJDBCDao implements JobOfferDao {
 
 	@Override
 	public List<JobOffer> withSkills(List<Skill> skills) {
-		return jdbcTemplate.query(
-				"SELECT DISTINCT job_offers.* FROM job_offers INNER JOIN job_offer_skills ON job_offers.id = job_offer_skills.job_offer_id "
-						+ "WHERE job_offer_skills.skill_id IN (?) ORDER BY job_offers.created_at DESC;",
-				jobOfferRowMapper, skillsToObjectArray(skills));
+		return jdbcTemplate
+				.query("SELECT DISTINCT job_offers.* FROM job_offers INNER JOIN job_offer_skills ON job_offers.id = job_offer_skills.job_offer_id "
+						+ "WHERE job_offer_skills.skill_id IN (" + skillsToString(skills)
+						+ ") ORDER BY job_offers.created_at DESC;", jobOfferRowMapper);
 	}
 
 	@Override
 	public List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage) {
 		return jdbcTemplate.query(
 				"SELECT DISTINCT job_offers.* FROM job_offers INNER JOIN job_offer_skills ON job_offers.id = job_offer_skills.job_offer_id "
-						+ "WHERE job_offer_skills.skill_id IN (?) ORDER BY job_offers.created_at DESC LIMIT ? OFFSET ?;",
-				jobOfferRowMapper, skillsToObjectArray(skills), perPage, page - 1);
+						+ "WHERE job_offer_skills.skill_id IN (" + skillsToString(skills)
+						+ ") ORDER BY job_offers.created_at DESC LIMIT ? OFFSET ?;",
+				jobOfferRowMapper, perPage, page - 1);
 	}
 
 	private static class JobOfferRowMapper implements RowMapper<JobOffer> {
@@ -124,12 +129,20 @@ public class JobOfferJDBCDao implements JobOfferDao {
 	}
 
 	// Hack TODO: find a better way to do it
-	private Object[] skillsToObjectArray(List<Skill> skills) {
-		Object[] list = new Object[skills.size()];
-		for (int i = 0; i < skills.size(); i++) {
-			list[i] = skills.get(i).getId();
+	private String skillsToString(List<Skill> skills) {
+		List<Skill> listToUse;
+		if (skills.size() > 0) {
+			listToUse = skills;
+		} else {
+			listToUse = skillService.all();
 		}
-		return list;
+		StringBuilder answer = new StringBuilder();
+		for (Skill skill : listToUse) {
+			answer.append(skill.getId().toString());
+			answer.append(",");
+		}
+		answer.setLength(answer.length() - 1);
+		return answer.toString();
 	}
 
 }
