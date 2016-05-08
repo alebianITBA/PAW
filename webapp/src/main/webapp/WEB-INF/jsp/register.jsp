@@ -8,21 +8,34 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
+
+      <spring:url value="/create" var="actionUrl" />
       <form:form method="post" modelAttribute="registerForm" action="${actionUrl}">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Email">
-        </div>
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="First name">
-        </div>
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Last name">
-        </div>
-        <div class="input-group">
-          <input type="password" class="form-control" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary">Register</button>
+        <form class="form-horizontal">
+          <div class="input-group">
+            <form:input type="text" class="form-control" required="" placeholder="Email*" path="email" id="email" />
+            <form:errors path="email" />
+          </div>
+          <div class="input-group">
+            <form:input type="text" class="form-control" required="" placeholder="First name*" path="firstName" id="firstName" />
+            <form:errors path="firstName"/>
+          </div>
+          <div class="input-group">
+            <form:input type="text" class="form-control" required="" placeholder="Last name*" path="lastName" id="lastName" />
+            <form:errors path="lastName"/>
+          </div>
+          <div class="input-group">
+            <form:input type="password" class="form-control" required="" placeholder="Password*" path="password" id="password" />
+            <form:errors path="password" />
+          </div>
+          <div class="input-group">
+            <form:input type="password" class="form-control" required="" placeholder="Confirm password*" path="confirmPassword" id="confirmPassword" />
+            <form:errors path="confirmPassword" />
+          </div>
+          <input type="submit" class="btn btn-primary" value="Register">
+        </form>
       </form:form>
+
     </div>
   </div>
 </div>
