@@ -12,70 +12,47 @@
     <link rel="stylesheet" type="text/css" href="/style/general.css">
   </head>
   <body >
-    <c:url value="/" var="loginUrl" />
-		<nav class="navbar navbar-default header-navbar">
-		  <div class="container-fluid">
-				<div class="row">
-					<div class="col-md-2 col-md-offset-1">
-				    <div class="navbar-header">
-							<a class="navbar-brand" href="/index">
-				        <img id="logo" src="/img/logo.png"/>
-				      </a>
-				    </div>
-					</div>
-					<div class="col-md-5 col-md-offset-1">
-						<div class="collapse navbar-collapse">
 
-              <c:if test="${loggedUser == null}">
+    <div class="header-top">
+      <div class="container">
+        <div id="logo">
+          <a href="index.html"><img src="/img/logo.png" title="logo" height=50 width=250></a>
+        </div>
+        <span class="menu"></span>
+        <div class="top-menu">
+          <ul class="cl-effect-16">
+            
+            <c:if test="${loggedUser == null}">
+              <li>
                 <form class="navbar-form navbar-left" action="${loginUrl}" method="post" enctype="application/x-www-form-urlencoded">
                   <div class="form-group">
                     <input type="text" name="j_email" class="form-control" placeholder="Email" />
                   </div>
                   <div class="form-group">
-  									<input type="password" name="j_password" class="form-control" placeholder="Password" />
-  								</div>
-                  <button type="submit" class="btn btn-primary" value="Login!">Log in</button>
+                    <input type="password" name="j_password" class="form-control" placeholder="Password" />
+                  </div>
+                  <button type="submit" class="submit-button" value="Login!">LOG IN</button>
                 </form>
-              </c:if>
+              </li>
+            </c:if>
 
-            </div>
-					</div>
+            <c:if test="${loggedUser != null}">
+               <li><a href="/users" data-hover="USERS">USERS</a></li>
+               <li><a href="/job_offers" data-hover="JOB OFFERS">JOB OFFERS</a></li>
+               <li><a href="/users/${loggedUser.id}" data-hover="MY PROFILE">MY PROFILE</a></li>
+            </c:if>
 
-          <c:if test="${loggedUser != null}">
-            <div class="col-md-2">
-              <div class="collapse navbar-collapse">
-                <div class="media">
-                  <div class="media-body">
-                    <c:if test="${loggedUser == null}">
-                     <p>nadie logueado</p>
-                    </c:if>
-                    <c:if test="${loggedUser != null}">
-                     <p>se logueo ${loggedUser.email}</p>
-                    </c:if>
-                  </div>
-                  <div class="media-right">
-                    <a href="/users/1">
-                      <img class="user-placeholder-header" src="/img/user-placeholder.png">
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </c:if>
-
+          </ul>
         </div>
-			</div>
-		</nav>
-
-    <c:if test="${loggedUser != null}">
-      <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-2 col-md-offset-5">
-              <a href="/users" class="navbar-text navbar-left">Users</a>
-              <a href="/job_offers" class="navbar-text navbar-right">Job offers</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </c:if>
+        <!-- script for menu -->
+        <script>
+        $( "span.menu" ).click(function() {
+          $( ".top-menu" ).slideToggle( "slow", function() {
+            // Animation complete.
+          });
+        });
+      </script>
+      <!-- script for menu -->
+        <div class="clearfix"></div>
+      </div>
+    </div>

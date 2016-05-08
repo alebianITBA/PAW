@@ -5,39 +5,41 @@
 
 <jsp:include page="./header.jsp" />
 
+
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
+  <div class="row register-background">
 
+    <div class="col-md-4 col-md-offset-4" >
       <spring:url value="/create" var="actionUrl" />
-      <form:form method="post" modelAttribute="registerForm" action="${actionUrl}">
-        <form class="form-horizontal">
-          <div class="input-group">
-            <form:input type="text" class="form-control" required="" placeholder="Email*" path="email" id="email" />
-            <form:errors path="email" />
-          </div>
-          <div class="input-group">
-            <form:input type="text" class="form-control" required="" placeholder="First name*" path="firstName" id="firstName" />
-            <form:errors path="firstName"/>
-          </div>
-          <div class="input-group">
-            <form:input type="text" class="form-control" required="" placeholder="Last name*" path="lastName" id="lastName" />
-            <form:errors path="lastName"/>
-          </div>
-          <div class="input-group">
-            <form:input type="password" class="form-control" required="" placeholder="Password*" path="password" id="password" />
-            <form:errors path="password" />
-          </div>
-          <div class="input-group">
-            <form:input type="password" class="form-control" required="" placeholder="Confirm password*" path="confirmPassword" id="confirmPassword" />
-            <form:errors path="confirmPassword" />
-          </div>
-          <input type="submit" class="btn btn-primary" value="Register">
-        </form>
-      </form:form>
 
-    </div>
+      <div class="register-panel">
+        <h3 class="form-title text-center white-text">GET STARTED</h3>
+        <form:form method="post" modelAttribute="registerForm" action="${actionUrl}" class="form-header" role="form"id="#">
+        <div class="form-group">
+          <form:input type="text" class="form-control input-lg" required="" placeholder="First name*" path="firstName" id="firstName" />
+        </div>
+        <div class="form-group">
+          <form:input type="text" class="form-control input-lg" required="" placeholder="Last name*" path="lastName" id="lastName" />
+        </div>
+        <div class="form-group">
+          <form:input type="text" class="form-control input-lg" required="" placeholder="Email*" path="email" id="email" />
+        </div>
+        <div class="form-group">
+          <form:input type="password" class="form-control input-lg" required="" placeholder="Password*" path="password" id="password" />
+        </div>
+        <div class="form-group">
+          <form:input type="password" class="form-control input-lg" required="" placeholder="Confirm password*" path="confirmPassword" id="confirmPassword" />
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btn btn-primary btn-block btn-lg" value="REGISTER">
+        </div>
+        <p class="privacy text-left white-text">* required fields</a>.</p>
+      </form:form>
+    </div>        
+
   </div>
+
+</div>
 </div>
 
 <jsp:include page="./footer.jsp" />

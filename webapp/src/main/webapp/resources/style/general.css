@@ -1,6 +1,6 @@
 #logo {
-  height: 30px;
-  padding-bottom: 10px;
+  height: 50px;
+  float:left;
 }
 
 .header-navbar {
@@ -38,4 +38,116 @@
   height:1px;
   background:#717171;
   border-bottom:1px solid #313030;
+}
+/* GENERAL */
+.white-text{
+  color: #ffffff;
+}
+
+/* HEADER */
+
+.header-top {
+  padding: 1.6em 0;
+}
+
+.top-menu {
+  text-align: center;
+  float:right;
+}
+
+.cl-effect-16 {
+  margin-bottom: 0px;
+}
+
+.cl-effect-16 a {
+  color: #6f8686;
+  text-shadow: 0 0 1px rgba(111,134,134,0.3);
+}
+
+.cl-effect-16 a::before {
+  color: #E06D1A;
+  content: attr(data-hover);
+  position: absolute;
+  opacity: 0;
+  text-shadow: 0 0 1px rgba(255,255,255,0.3);
+  -webkit-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+  -moz-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+  transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  pointer-events: none;
+}
+
+.cl-effect-16 a:hover::before,
+.cl-effect-16 a:focus::before {
+  -webkit-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+  -moz-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+  transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+  opacity: 1;
+}
+.top-menu ul li{
+  display:inline-block;
+    margin-right: 1.1em;
+}
+.top-menu ul li a{
+  display: inline-block;
+  font-weight: 400;
+  font-size: 1em;
+  text-decoration: none;
+  color: #34495E;
+  text-transform: uppercase;
+  transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+  padding: 0;
+      margin-top: 20px;
+}
+.top-menu ul li.active a span{
+  background:#e74c3c;
+  width:100%;
+  height:1px;
+  display:block;
+  position:absolute;
+  top:0px;
+  left:0px;
+}
+.top-menu ul li a:hover,.top-menu ul li a.active {
+ color: #EF6D15;
+}
+.top-menu ul li:nth-child(5) a{
+  margin:0;
+}
+.top-menu ul li button {
+  background: #1ABC9C;
+  padding:0.8em 2em;
+  outline: none;
+  border: none;
+  color:#fff;
+  -webkit-appearance: none;
+  border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  -moz-border-radius: 0.4em;
+  -o-border-radius: 0.4em;
+}
+
+.form-control{
+      height: 43px !important;
+}
+
+/* REGISTER */
+.register-background{
+  background-image: url("/img/register-background.jpg");
+  background-size: cover;
+  background-color: #808080;
+}
+
+.register-panel{
+  padding: 20px;
+  margin: 50px 0 50px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  padding-left: 20px;
+  padding-right: 20px;  
 }
