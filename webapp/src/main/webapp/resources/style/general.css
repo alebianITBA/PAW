@@ -54,6 +54,10 @@ body{
   margin-bottom: 15px;
 }
 
+.center{
+    text-align: center;
+}
+
 /* HEADER */
 
 .header-top {
@@ -174,7 +178,6 @@ body{
   border-radius: 0.3em;
 }
 .content h2 {
-  text-align: center;
   font-size: 1.1em;
   font-weight: 600;
   color: #556a7f;
@@ -222,7 +225,6 @@ a.link:hover{
 }
 
 .praesent {
-  text-align: center;
   margin-bottom: 15px;
 }
 
@@ -258,6 +260,21 @@ a.link:hover{
   margin-bottom: 0.5em;
   font-weight: 700;
 }
+
+.biography-into h4 a{
+  color: #556a7f;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+
+.biography-into h2 {
+  color: #556a7f;
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+
 .biography-into p {
   color: #868f98;
   font-weight: 400;
@@ -288,4 +305,20 @@ a.link:hover{
 
 .post-textarea{
   height: 150px !important;
+}
+
+.skill-container{
+  line-height: 3em !important;
+  text-align: center !important;
+}
+
+/* USERS */
+.user-image{
+    height: 150;
+    width: auto;
+}
+
+.apply-button{
+  float: right;
+  margin-top: -65px;
 }
