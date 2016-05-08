@@ -1,14 +1,14 @@
-<div class="panel panel-default">
-  <div class="panel-body">
-    <h3>Need to hire?</h3>
+<div class="l_g_r">
+  <div class="dapibus biography-into">
+  <h4>NEED TO HIRE?</h4>
     <form>
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Title">
+      <div class="form-group">
+        <input type="email" class="form-control input-lg" id="title" placeholder="Job offer title">
       </div>
-      <div class="input-group">
-        <input type="textarea" class="form-control" placeholder="Description">
+      <div class="form-group">
+        <textarea class="form-control input-lg post-textarea" placeholder="description"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Create offer</button>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">Submit</button>
     </form>
   </div>
 </div>
