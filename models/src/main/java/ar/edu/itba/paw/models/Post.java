@@ -8,6 +8,7 @@ public class Post {
 	private String description;
 	private Long userId;
 	private Date createdAt;
+	private User user;
 
 	public Post(Long id, String title, String description, Long userId, Date createdAt) {
 		this.id = id;
@@ -43,6 +44,14 @@ public class Post {
 
 	public Date getCreatedAt() {
 		return createdAt;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

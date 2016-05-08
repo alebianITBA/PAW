@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.interfaces.PostDao;
 import ar.edu.itba.paw.interfaces.PostService;
+import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.models.Post;
 
 @Service
@@ -14,6 +15,9 @@ public class PostServiceImpl implements PostService {
 
 	@Autowired
 	private PostDao postDao;
+
+	@Autowired
+	private UserService userService;
 
 	public void setPostDao(PostDao postDao) {
 		this.postDao = postDao;
@@ -41,17 +45,27 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public Post find(Long id) {
-		return postDao.find(id);
+		Post post = postDao.find(id);
+		addUserToPost(post);
+		return post;
 	}
 
 	@Override
 	public List<Post> all() {
-		return postDao.all();
+		List<Post> posts = postDao.all();
+		for (Post post : posts) {
+			addUserToPost(post);
+		}
+		return posts;
 	}
 
 	@Override
 	public List<Post> all(Integer page, Integer perPage) {
-		return postDao.all(page, perPage);
+		List<Post> posts = postDao.all(page, perPage);
+		for (Post post : posts) {
+			addUserToPost(post);
+		}
+		return posts;
 	}
 
 	@Override
@@ -62,5 +76,9 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<Post> userPosts(Long userId, Integer page, Integer perPage) {
 		return postDao.userPosts(userId, page, perPage);
+	}
+
+	private void addUserToPost(Post post) {
+		post.setUser(userService.find(post.getUserId()));
 	}
 }
