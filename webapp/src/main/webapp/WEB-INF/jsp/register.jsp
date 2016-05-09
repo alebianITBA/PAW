@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <jsp:include page="./header.jsp" />
 
@@ -12,7 +13,7 @@
 
       <div class="register-panel">
         <h3 class="form-title text-center white-text">GET STARTED</h3>
-        <spring:url value="/create" var="actionUrl" />
+        <spring:url value="/create_user" var="actionUrl" />
         <form:form method="post" modelAttribute="registerForm" action="${actionUrl}" class="form-header" role="form" id="#">
           <div class="form-group">
             <form:input type="text" class="form-control input-lg" required="" placeholder="First name*" path="firstName" id="firstName" />
@@ -54,8 +55,6 @@
           </div>
           <p class="privacy text-left white-text">* required fields</a>.</p>
         </form:form>
-        <form class="form-horizontal">
-        </form>
       </div>
 
     </div>
