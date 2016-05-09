@@ -44,7 +44,7 @@
                       <tr><td>${descriptionErrors}</td></tr>
                     </c:if>
                   </div>
-                  <input type="submit" class="btn btn-primary btn-block btn-lg" value="Submit" />
+                  <input type="submit" class="btn btn-info btn-block btn-lg" value="Submit" />
                </form:form>
                <c:choose>
                   <c:when test="${fn:length(posts) gt 0}">

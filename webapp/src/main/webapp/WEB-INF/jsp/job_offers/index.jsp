@@ -70,12 +70,10 @@
                     <tr><td>${descriptionErrors}</td></tr>
                   </c:if>
                 </div>
-                <input type="submit" class="btn btn-primary btn-block btn-lg" value="Submit" />
+                <input type="submit" class="btn btn-info btn-block btn-lg" value="Submit" />
              </form:form>
            </div>
          </div>
-
->>>>>>> 3829e35c5767fb5c96b5c90d30f0b871d4e692a5
       </div>
    </div>
 </div>
