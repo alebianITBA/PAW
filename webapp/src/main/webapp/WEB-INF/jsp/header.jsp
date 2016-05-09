@@ -39,15 +39,6 @@
                   </c:if>
                </ul>
             </div>
-            <!-- script for menu -->
-            <script>
-               $( "span.menu" ).click(function() {
-                 $( ".top-menu" ).slideToggle( "slow", function() {
-                   // Animation complete.
-                 });
-               });
-            </script>
-            <!-- script for menu -->
             <div class="clearfix"></div>
          </div>
       </div>

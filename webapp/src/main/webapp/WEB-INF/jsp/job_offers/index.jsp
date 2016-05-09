@@ -1,5 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <jsp:include page="../header.jsp" />
 <div class="content">
    <div class="container">
@@ -46,8 +50,32 @@
                <button id="filter-offers" class="btn btn-info btn-block btn-lg form-control ">FILTER</button>
             </div>
          </div>
-         <jsp:include page="../hire.jsp" />
-         <div class="clearfix"></div>
+
+         <div class="l_g_r">
+           <div class="dapibus biography-into">
+             <h4>NEED TO HIRE?</h4>
+             <spring:url value="job_offers/create_offer" var="offerUrl" />
+             <form:form method="post" modelAttribute="jobOfferForm" action="${offerUrl}" class="form-header" role="form" id="#">
+                <div class="form-group">
+                   <form:input type="text" class="form-control input-lg" required="" placeholder="Job offer title*" path="title" />
+                   <c:set var="titleErrors"><form:errors path="title" /></c:set>
+                   <c:if test="${not empty titleErrors}">
+                     <tr><td>${titleErrors}</td></tr>
+                   </c:if>
+                </div>
+                <div class="form-group">
+                  <form:textarea class="form-control input-lg post-textarea" required="" placeholder="Content*" path="description" />
+                  <c:set var="descriptionErrors"><form:errors path="description" /></c:set>
+                  <c:if test="${not empty descriptionErrors}">
+                    <tr><td>${descriptionErrors}</td></tr>
+                  </c:if>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block btn-lg" value="Submit" />
+             </form:form>
+           </div>
+         </div>
+
+>>>>>>> 3829e35c5767fb5c96b5c90d30f0b871d4e692a5
       </div>
    </div>
 </div>

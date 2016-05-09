@@ -1,7 +1,5 @@
 package ar.edu.itba.paw.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.forms.PostForm;
 import ar.edu.itba.paw.forms.RegisterForm;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.PostService;
 import ar.edu.itba.paw.interfaces.UserService;
-import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.validators.PasswordValidator;
 
 @Controller
@@ -35,14 +33,15 @@ public class HomeController extends ApplicationController {
 	private UserService userService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public ModelAndView home(@Valid @ModelAttribute("registerForm") final RegisterForm registerForm,
+	public ModelAndView home(@ModelAttribute("registerForm") final RegisterForm registerForm,
 			final BindingResult errors) {
 		final ModelAndView mav = new ModelAndView("register");
 		return mav;
 	}
 
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(@ModelAttribute("postForm") final PostForm postForm,
+			final BindingResult errors) {
 		final ModelAndView mav = new ModelAndView("index");
 		mav.addObject("loggedUser", getLoggedUser());
 		mav.addObject("posts", postService.all(1, 50));
@@ -50,8 +49,18 @@ public class HomeController extends ApplicationController {
 		return mav;
 	}
 	
-	@RequestMapping(path = "/create", method = RequestMethod.POST)
-	@ResponseStatus(value = HttpStatus.CREATED)
+	@RequestMapping(path = "/create_post", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ModelAndView createPost(@Valid @ModelAttribute("postForm") final PostForm postForm,
+			final BindingResult errors) {
+		if (!errors.hasErrors()) {
+			postService.create(postForm.getTitle(), postForm.getDescription(), getLoggedUser().getId());
+		}
+		return index(postForm, errors);
+	}
+	
+	@RequestMapping(path = "/create_user", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
 	public ModelAndView createUser(@Valid @ModelAttribute("registerForm") final RegisterForm registerForm,
 			final BindingResult errors) {
 

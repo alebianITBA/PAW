@@ -1,5 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <jsp:include page="./header.jsp" />
 <div class="content">
    <div class="container">
@@ -24,15 +28,24 @@
          <div class="l_g_r biography-into">
             <div class="dapibus">
                <h4>SHARE A POST!</h4>
-               <form>
+               <spring:url value="/create_post" var="postUrl" />
+               <form:form method="post" modelAttribute="postForm" action="${postUrl}" class="form-header" role="form" id="#">
                   <div class="form-group">
-                     <input type="email" class="form-control input-lg" id="exampleInputEmail1" placeholder="Title">
+                     <form:input type="text" class="form-control input-lg" required="" placeholder="Title*" path="title" />
+                     <c:set var="titleErrors"><form:errors path="title" /></c:set>
+                     <c:if test="${not empty titleErrors}">
+                       <tr><td>${titleErrors}</td></tr>
+                     </c:if>
                   </div>
                   <div class="form-group">
-                     <textarea class="form-control input-lg post-textarea" placeholder="content"></textarea>
+                    <form:textarea class="form-control input-lg post-textarea" required="" placeholder="Content*" path="description" />
+                    <c:set var="descriptionErrors"><form:errors path="description" /></c:set>
+                    <c:if test="${not empty descriptionErrors}">
+                      <tr><td>${descriptionErrors}</td></tr>
+                    </c:if>
                   </div>
-                  <button type="submit" class="btn btn-info btn-block btn-lg">Submit</button>
-               </form>
+                  <input type="submit" class="btn btn-primary btn-block btn-lg" value="Submit" />
+               </form:form>
                <c:choose>
                   <c:when test="${fn:length(posts) gt 0}">
                      <c:forEach items="${posts}" var="post">
@@ -50,9 +63,6 @@
                </c:choose>
             </div>
          </div>
-      </div>
-      <div class="col-md-4 praesent f-right">
-         <jsp:include page="./hire.jsp" />
       </div>
    </div>
 </div>

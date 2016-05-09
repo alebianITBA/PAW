@@ -1,6 +1,5 @@
 package ar.edu.itba.paw.controllers;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -51,13 +50,13 @@ public class JobOffersController extends ApplicationController {
 	private JobOfferSkillService jobOfferSkillService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public ModelAndView jobOffers(@RequestParam(required = false, value = "skill_id") final Long skillId) {
+	public ModelAndView jobOffers(@RequestParam(required = false, value = "skill_id") final Long skillId,
+			@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm, final BindingResult errors) {
 		final ModelAndView mav = new ModelAndView("job_offers/index");
 		mav.addObject("loggedUser", getLoggedUser());
 		if (skillId != null) {
 			List<Skill> skills = new LinkedList<Skill>();
-			skills.add(new Skill(skillId, "", null)); // Solo me importa el ID
-														// para la query
+			skills.add(new Skill(skillId, "", null));
 			mav.addObject("job_offers", jobOfferService.withSkills(skills, 1, 50));
 		} else {
 			mav.addObject("job_offers", jobOfferService.all(1, 50));
@@ -95,31 +94,22 @@ public class JobOffersController extends ApplicationController {
 		return getJobOffer(id);
 	}
 
-	@RequestMapping(path = "/add", method = RequestMethod.GET)
-	public ModelAndView showJobOfferForm(@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
-			Map<String, Object> model) {
-		final ModelAndView mav = new ModelAndView("job_offers/create");
-		mav.addObject("loggedUser", getLoggedUser());
-		java.util.ArrayList<Skill> skills = (java.util.ArrayList<Skill>) skillService.all();
-		model.put("skills", skills);
-		return mav;
-	}
-
-	@RequestMapping(path = "/post", method = RequestMethod.POST)
+	@RequestMapping(path = "/create_offer", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public ModelAndView addJobOffer(@Valid @ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
+	public ModelAndView createJobOffer(@Valid @ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
 			final BindingResult errors) {
 		if (errors.hasErrors()) {
-			return showJobOfferForm(jobOfferForm, new HashMap<String, Object>());
+			return jobOffers(null, jobOfferForm, errors);
 		} else {
-			Long jobOfferId = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(), 2L);
+			Long jobOfferId = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(),
+					getLoggedUser().getId());
 			if (jobOfferForm.getSelectedSkillIds() != null && !jobOfferForm.getSelectedSkillIds().isEmpty()) {
 				String[] skillIds = jobOfferForm.getSelectedSkillIds().split(",");
 				for (String skillId : skillIds) {
 					jobOfferSkillService.create(jobOfferId, new Long(skillId));
 				}
 			}
-			return jobOffers(null);
+			return jobOffers(null, null, null);
 		}
 	}
 
