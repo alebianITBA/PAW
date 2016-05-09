@@ -28,14 +28,17 @@
                            <div class="form-group">
                               <input type="password" name="j_password" class="form-control" placeholder="Password" />
                            </div>
-                           <button type="submit" class="submit-button" value="Login!">LOG IN</button>
+                           <button type="submit" class="submit-button" value="Login!"><spring:message code="LogIn"/></button>
                         </form>
                      </li>
                   </c:if>
                   <c:if test="${loggedUser != null}">
-                     <li><a href="/users" data-hover="USERS">USERS</a></li>
-                     <li><a href="/job_offers" data-hover="JOB OFFERS">JOB OFFERS</a></li>
-                     <li><a href="/users/${loggedUser.id}" data-hover="MY PROFILE">MY PROFILE</a></li>
+                   <spring:message code="Users" var="Users"/>
+                   <spring:message code="JobOffers" var="JobOffers"/>
+                   <spring:message code="MyProfile" var="MyProfile"/>
+                     <li><a href="/users" data-hover="${Users}">${Users}</a></li>
+                     <li><a href="/job_offers" data-hover="${JobOffers}">${JobOffers}</a></li>
+                     <li><a href="/users/${loggedUser.id}" data-hover="${MyProfile}">${MyProfile}</a></li>
                   </c:if>
                </ul>
             </div>

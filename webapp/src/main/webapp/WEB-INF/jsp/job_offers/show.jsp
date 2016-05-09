@@ -14,7 +14,7 @@
             <h4>${job.user.firstName} ${job.user.lastName}</h4>
             <p class="center">${job.user.email}</p>
             <c:if test="${job.user.id == loggedUser.id}">
-               <h3><span class="label label-info">${quantityApplications} applications</span></h3>
+               <h3><span class="label label-info">${quantityApplications} <spring:message code="Applications"/></span></h3>
             </c:if>
          </div>
       </div>
@@ -34,7 +34,7 @@
       <c:if test="${job.user.id == loggedUser.id}">
             <div class="l_g_r">
                <div class="dapibus biography-into">
-                  <h2 class="media-heading">APPLICATIONS</h2>
+                  <h2 class="media-heading"><spring:message code="Applications"/></h2>
                   <c:forEach items="${applications}" var="application">
                      <div class="media">
                         <div class="media-left">
@@ -58,8 +58,8 @@
       <c:if test="${job.user.id != loggedUser.id}">
             <div class="l_g_r">
                <div class="dapibus biography-into">
-                    <h4>APPLY NOW!</h4>
-                     <button type="submit" class="btn btn-info btn-block btn-lg">APPLY</button>
+                    <h4><spring:message code="ApplyNow"/></h4>
+                     <button type="submit" class="btn btn-info btn-block btn-lg"><spring:message code="Apply"/></button>
                </div>
             </div>
       </c:if>

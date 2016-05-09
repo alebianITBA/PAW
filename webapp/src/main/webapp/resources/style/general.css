@@ -206,11 +206,7 @@ p.adm {
   font-style: italic;
   margin: 0 0 5px;
 }
-p.adm a {
-  color: #dc8e7f;
-  font-weight: 700;
-  text-decoration: underline;
-}
+
 p.adm a:hover {
   color: #868f98;
 }
@@ -351,4 +347,8 @@ a.link:hover{
   height: 60px;
   background-color: #737c85;
   color:white;
+}
+
+.grey-bg{
+    background-color: #737c85;
 }

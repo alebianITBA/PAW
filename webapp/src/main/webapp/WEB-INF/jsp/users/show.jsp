@@ -1,3 +1,5 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <jsp:include page="../header.jsp" />
 <div class="content">
@@ -20,7 +22,7 @@
       <div class="l_g_r biography-into">
          <div class="dapibus">
             <c:if test="${posts[0] != null}">
-               <h3>POSTS</h3>
+               <h3><spring:message code="RecentPosts"/></h3>
                <c:forEach items="${posts}" var="post">
                   <hr>
                   <h4>${post.title}</h4>
@@ -34,7 +36,7 @@
       <div class="l_g_r biography-into">
          <div class="dapibus">
             <c:if test="${posts[0] != null}">
-               <h3>JOB OFFERS CREATED</h3>
+               <h3><spring:message code="JobOffersCreated"/></h3>
                <c:forEach items="${offers}" var="offer">
                   <hr>
                   <div class="media">

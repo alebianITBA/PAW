@@ -27,7 +27,7 @@
                         </div>
                         <div>
                            <div class="apply-button">
-                              <button class="btn btn-info">APPLY</button>
+                              <button class="btn btn-info"><spring:message code="Apply"/></button>
                            </div>
                         </div>
                      </div>
@@ -47,30 +47,33 @@
                      </c:forEach>
                   </select>
                </div>
-               <button id="filter-offers" class="btn btn-info btn-block btn-lg form-control ">FILTER</button>
+               <button id="filter-offers" class="btn btn-info btn-block btn-lg form-control "><spring:message code="Filter"/></button>
             </div>
          </div>
 
          <div class="l_g_r">
            <div class="dapibus biography-into">
-             <h4>NEED TO HIRE?</h4>
+             <h4><spring:message code="NeedToHire"/></h4>
              <spring:url value="job_offers/create_offer" var="offerUrl" />
              <form:form method="post" modelAttribute="jobOfferForm" action="${offerUrl}" class="form-header" role="form" id="#">
                 <div class="form-group">
-                   <form:input type="text" class="form-control input-lg" required="" placeholder="Job offer title*" path="title" />
+                   <spring:message code="JobOfferTitle" var="jobOfferTitle"/>
+                   <form:input type="text" class="form-control input-lg" required="" placeholder="${jobOfferTitle}*" path="title" />
                    <c:set var="titleErrors"><form:errors path="title" /></c:set>
                    <c:if test="${not empty titleErrors}">
                      <tr><td>${titleErrors}</td></tr>
                    </c:if>
                 </div>
                 <div class="form-group">
-                  <form:textarea class="form-control input-lg post-textarea" required="" placeholder="Content*" path="description" />
+                  <spring:message code="Content" var="content"/>
+                  <form:textarea class="form-control input-lg post-textarea" required="" placeholder="${content}*" path="description" />
                   <c:set var="descriptionErrors"><form:errors path="description" /></c:set>
                   <c:if test="${not empty descriptionErrors}">
                     <tr><td>${descriptionErrors}</td></tr>
                   </c:if>
                 </div>
-                <input type="submit" class="btn btn-info btn-block btn-lg" value="Submit" />
+                <spring:message code="Submit" var="submit"/>
+                <input type="submit" class="btn btn-info btn-block btn-lg" value="${submit}" />
              </form:form>
            </div>
          </div>

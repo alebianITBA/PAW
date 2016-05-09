@@ -1,9 +1,10 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
 <footer class="footer">
       <div class="container" style="margin-top:20px;">
       	<div class="f-left">
-        <p>Group 5</p>
+        <p><spring:message code="Group"/> 5</p>
     </div>
 </footer>
 
