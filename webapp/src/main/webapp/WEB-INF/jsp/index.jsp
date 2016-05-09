@@ -15,7 +15,7 @@
                         <span class="label label-info">${skill.name}</span>
                      </c:forEach>
                   </p>
-                  <button class="btn btn-primary btn-block btn-lg">Apply</button>
+                  <button class="btn btn-info btn-block btn-lg">Apply</button>
                </div>
             </div>
          </div>
@@ -31,13 +31,13 @@
                   <div class="form-group">
                      <textarea class="form-control input-lg post-textarea" placeholder="content"></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary btn-block btn-lg">Submit</button>
+                  <button type="submit" class="btn btn-info btn-block btn-lg">Submit</button>
                </form>
                <c:choose>
                   <c:when test="${fn:length(posts) gt 0}">
                      <c:forEach items="${posts}" var="post">
                         <hr>
-                        <h2>${post.title}</h2>
+                        <h4>${post.title}</h4>
                         <p class="adm">Posted by <a href="/users/${post.userId}">${post.user.firstName} ${post.user.lastName}</a></p>
                         <p>${post.description}</p>
                         <!--<a href="details.html" class="link">Read More</a>-->

@@ -1,8 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <jsp:include page="../header.jsp" />
+<div class="content">
 <div class="container">
    <c:forEach items="${users}" var="user">
-      <div class="col-md-3 praesent center">
+      <div class="col-md-3 praesent center biography-into">
          <div class="l_g_r">
             <div class="dapibus">
                <a href="/users/${user.id}">
@@ -10,7 +11,7 @@
                </a>
                <div class="caption">
                   <h3><a href="/users/${user.id}">${user.firstName} ${user.lastName}</a></h3>
-                  <p><a href="/users/${user.id}">${user.email}</a></p>
+                  <p class="center"><i>${user.email}</i></p>
                   <p class="skill-container">
                      <c:forEach items="${user.skills}" var="skill">
                         <span class="label label-info">${skill.name}</span>
@@ -21,5 +22,6 @@
          </div>
       </div>
    </c:forEach>
+</div>
 </div>
 <jsp:include page="../footer.jsp" />

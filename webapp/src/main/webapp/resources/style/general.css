@@ -1,8 +1,14 @@
-body{
-  background: #f5f6f7;
+html {
+  position: relative;
+  min-height: 100%;
 }
 
-  #logo {
+body{
+  background: #f5f6f7;
+  margin-bottom: 60px;
+}
+
+#logo {
   height: 50px;
   float:left;
 }
@@ -55,13 +61,18 @@ body{
 }
 
 .center{
-    text-align: center;
+    text-align: center !important;
+}
+
+.in-block{
+  display: inline-block;
 }
 
 /* HEADER */
 
 .header-top {
   padding: 1.6em 0;
+  background-color: #737c85;
 }
 
 .top-menu {
@@ -74,12 +85,12 @@ body{
 }
 
 .cl-effect-16 a {
-  color: #6f8686;
+  color: #5bc0de;
   text-shadow: 0 0 1px rgba(111,134,134,0.3);
 }
 
 .cl-effect-16 a::before {
-  color: #E06D1A;
+  color: #5bc0de;
   content: attr(data-hover);
   position: absolute;
   opacity: 0;
@@ -109,7 +120,7 @@ body{
   font-weight: 400;
   font-size: 1em;
   text-decoration: none;
-  color: #34495E;
+  color: #ffffff;
   text-transform: uppercase;
   transition: 0.5s all;
   -webkit-transition: 0.5s all;
@@ -134,7 +145,7 @@ body{
   margin:0;
 }
 .top-menu ul li button {
-  background: #1ABC9C;
+  background: #5bc0de;
   padding:0.8em 2em;
   outline: none;
   border: none;
@@ -261,6 +272,13 @@ a.link:hover{
   font-weight: 700;
 }
 
+.biography-into h3 {
+  color: #556a7f;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+
 .biography-into h4 a{
   color: #556a7f;
   font-size: 1em;
@@ -318,7 +336,19 @@ a.link:hover{
     width: auto;
 }
 
+/* JOB OFFERS*/
 .apply-button{
   float: right;
   margin-top: -65px;
+}
+
+/* FOOTER*/
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #737c85;
+  color:white;
 }

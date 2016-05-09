@@ -4,7 +4,7 @@
 <div class="content">
    <div class="container">
       <c:if test="${skills[0] != null}">
-         <div class="col-md-8 praesent f-left">
+         <div class="col-md-8 praesent">
             <div class="l_g_r biography-into">
                <div class="dapibus">
                   <c:forEach items="${job_offers}" var="offer">
@@ -23,7 +23,7 @@
                         </div>
                         <div>
                            <div class="apply-button">
-                              <button class="btn btn-primary">APPLY</button>
+                              <button class="btn btn-info">APPLY</button>
                            </div>
                         </div>
                      </div>
@@ -33,7 +33,7 @@
             </div>
          </div>
       </c:if>
-      <div class="col-md-4 praesent f-right">
+      <div class="col-md-4 praesent">
          <div class="l_g_r b-margin">
             <div class="dapibus biography-into">
                <div class="input-group b-margin">
@@ -43,10 +43,11 @@
                      </c:forEach>
                   </select>
                </div>
-               <button id="filter-offers" class="btn btn-primary btn-block btn-lg form-control ">FILTER</button>
+               <button id="filter-offers" class="btn btn-info btn-block btn-lg form-control ">FILTER</button>
             </div>
          </div>
          <jsp:include page="../hire.jsp" />
+         <div class="clearfix"></div>
       </div>
    </div>
 </div>

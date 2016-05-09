@@ -50,7 +50,7 @@
             </c:if>
           </div>
           <div class="form-group">
-            <input type="submit" class="btn btn-primary btn-block btn-lg" value="REGISTER">
+            <input type="submit" class="btn btn-info btn-block btn-lg" value="REGISTER">
           </div>
           <p class="privacy text-left white-text">* required fields</a>.</p>
         </form:form>

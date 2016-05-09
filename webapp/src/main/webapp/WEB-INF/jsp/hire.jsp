@@ -8,7 +8,7 @@
       <div class="form-group">
         <textarea class="form-control input-lg post-textarea" placeholder="description"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary btn-block btn-lg">SUBMIT</button>
+      <button type="submit" class="btn btn-info btn-block btn-lg">SUBMIT</button>
     </form>
   </div>
 </div>

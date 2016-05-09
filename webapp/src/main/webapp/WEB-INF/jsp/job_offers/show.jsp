@@ -3,22 +3,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="../header.jsp" />
+<div class="content">
 <div class="container">
-   <div class="col-md-3 praesent f-left">
+   <div class="col-md-3 praesent">
       <div class="l_g_r">
          <div class="dapibus biography-into center">
             <a href="/users/${job.user.id}">
             <img class="user-placeholder" src="/img/user-placeholder.png">
             </a>
             <h4>${job.user.firstName} ${job.user.lastName}</h4>
-            <p>${job.user.email}</p>
+            <p class="center">${job.user.email}</p>
             <c:if test="${job.user.id == loggedUser.id}">
                <h3><span class="label label-info">${quantityApplications} applications</span></h3>
             </c:if>
          </div>
       </div>
    </div>
-   <div class="col-md-9 praesent f-right ">
+   <div class="col-md-9 praesent">
       <div class="l_g_r b-margin" >
          <div class="dapibus biography-into">
             <h2 class="media-heading">${job.title} </h2>
@@ -58,9 +59,11 @@
             <div class="l_g_r">
                <div class="dapibus biography-into">
                     <h4>APPLY NOW!</h4>
-                     <button type="submit" class="btn btn-primary btn-block btn-lg">APPLY</button>
+                     <button type="submit" class="btn btn-info btn-block btn-lg">APPLY</button>
                </div>
             </div>
       </c:if>
+</div>
+</div>
 </div>
 <jsp:include page="../footer.jsp" />
