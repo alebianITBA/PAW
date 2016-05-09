@@ -18,7 +18,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.interfaces.JobOfferDao;
-import ar.edu.itba.paw.interfaces.SkillService;
+import ar.edu.itba.paw.interfaces.SkillDao;
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
 
@@ -29,7 +29,7 @@ public class JobOfferJDBCDao implements JobOfferDao {
 	private final JobOfferRowMapper jobOfferRowMapper;
 
 	@Autowired
-	private SkillService skillService;
+	private SkillDao skillDao;
 
 	@Autowired
 	public JobOfferJDBCDao(final DataSource ds) {
@@ -134,7 +134,7 @@ public class JobOfferJDBCDao implements JobOfferDao {
 		if (skills.size() > 0) {
 			listToUse = skills;
 		} else {
-			listToUse = skillService.all();
+			listToUse = skillDao.all();
 		}
 		StringBuilder answer = new StringBuilder();
 		for (Skill skill : listToUse) {
