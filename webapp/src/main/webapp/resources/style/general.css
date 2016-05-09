@@ -163,7 +163,7 @@ body{
 
 /* REGISTER */
 .register-background{
-  background-image: url("/img/register-background.jpg");
+  background-image: url("/grupo5/img/register-background.jpg");
   background-size: cover;
   background-color: #808080;
 }
@@ -174,7 +174,7 @@ body{
   background: rgba(255,255,255,0.2);
   border-radius: 4px;
   padding-left: 20px;
-  padding-right: 20px;  
+  padding-right: 20px;
 }
 
 /* INDEX */
@@ -259,7 +259,7 @@ a.link:hover{
 }
 .biography {
   padding: 1em 0;
-} 
+}
 
 .biography-into h4 {
   color: #556a7f;

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<jsp:include page="./header.jsp" />
+<jsp:include page="header.jsp" />
 
 <div class="container-fluid">
 
@@ -23,35 +23,35 @@
            <spring:message code="Register" var="Register"/>
 
           <div class="form-group">
-            <form:input type="text" class="form-control input-lg" required="" placeholder="${FirstName}*" path="firstName" id="firstName" />
+            <form:input type="text" class="form-control input-lg" placeholder="${FirstName}*" path="firstName" id="firstName" />
             <c:set var="firstNameErrors"><form:errors path="firstName" /></c:set>
             <c:if test="${not empty firstNameErrors}">
               <tr><td>${firstNameErrors}</td></tr>
             </c:if>
           </div>
           <div class="form-group">
-            <form:input type="text" class="form-control input-lg" required="" placeholder="${LastName}*" path="lastName" id="lastName" />
+            <form:input type="text" class="form-control input-lg" placeholder="${LastName}*" path="lastName" id="lastName" />
             <c:set var="lastNameErrors"><form:errors path="lastName" /></c:set>
             <c:if test="${not empty lastNameErrors}">
               <tr><td>${lastNameErrors}</td></tr>
             </c:if>
           </div>
           <div class="form-group">
-            <form:input type="text" class="form-control input-lg" required="" placeholder="${Mail}*" path="email" id="email" />
+            <form:input type="text" class="form-control input-lg" placeholder="${Mail}*" path="email" id="email" />
             <c:set var="emailErrors"><form:errors path="email" /></c:set>
             <c:if test="${not empty emailErrors}">
               <tr><td>${emailErrors}</td></tr>
             </c:if>
           </div>
           <div class="form-group">
-            <form:input type="password" class="form-control input-lg" required="" placeholder="${Password}*" path="password" id="password" />
+            <form:input type="password" class="form-control input-lg" placeholder="${Password}*" path="password" id="password" />
             <c:set var="passwordErrors"><form:errors path="password" /></c:set>
             <c:if test="${not empty passwordErrors}">
               <tr><td>${passwordErrors}</td></tr>
             </c:if>
           </div>
           <div class="form-group">
-            <form:input type="password" class="form-control input-lg" required="" placeholder="${ConfirmPassword}*" path="confirmPassword" id="confirmPassword" />
+            <form:input type="password" class="form-control input-lg" placeholder="${ConfirmPassword}*" path="confirmPassword" id="confirmPassword" />
             <c:set var="confirmPasswordErrors"><form:errors path="confirmPassword" /></c:set>
             <c:if test="${not empty confirmPasswordErrors}">
               <tr><td>${confirmPasswordErrors}</td></tr>
@@ -69,7 +69,4 @@
 
 </div>
 
-<jsp:include page="./footer.jsp" />
-<script type="text/javascript" src="/script/strength.js"></script>
-<link rel="stylesheet" href="/style/strength.css">
-<script type="text/javascript">$("#password").strength();</script>
+<jsp:include page="footer.jsp" />

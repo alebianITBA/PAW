@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*" %>
 
 <jsp:include page="../header.jsp" />
 <div class="content">
@@ -14,12 +15,12 @@
                   <c:forEach items="${job_offers}" var="offer">
                      <div class="media">
                         <div class="media-left">
-                           <a href="/users/${offer.userId}">
+                           <a href="<c:url value='/users/${offer.userId}'/>">
                            <img class="user-placeholder" src="/img/user-placeholder.png">
                            </a>
                         </div>
                         <div class="media-body">
-                           <h4><a href="/job_offers/${offer.id}">${offer.title}</a></h4>
+                           <h4><a href="<c:url value='/job_offers/${offer.id}'/>">${offer.title}</a></h4>
                            <p>${offer.description}</p>
                            <c:forEach items="${offer.skills}" var="skill">
                               <span class="label label-info">${skill.name}</span>
@@ -58,7 +59,7 @@
              <form:form method="post" modelAttribute="jobOfferForm" action="${offerUrl}" class="form-header" role="form" id="#">
                 <div class="form-group">
                    <spring:message code="JobOfferTitle" var="jobOfferTitle"/>
-                   <form:input type="text" class="form-control input-lg" required="" placeholder="${jobOfferTitle}*" path="title" />
+                   <form:input type="text" class="form-control input-lg"  placeholder="${jobOfferTitle}*" path="title" />
                    <c:set var="titleErrors"><form:errors path="title" /></c:set>
                    <c:if test="${not empty titleErrors}">
                      <tr><td>${titleErrors}</td></tr>
@@ -66,7 +67,7 @@
                 </div>
                 <div class="form-group">
                   <spring:message code="Content" var="content"/>
-                  <form:textarea class="form-control input-lg post-textarea" required="" placeholder="${content}*" path="description" />
+                  <form:textarea class="form-control input-lg post-textarea"  placeholder="${content}*" path="description" />
                   <c:set var="descriptionErrors"><form:errors path="description" /></c:set>
                   <c:if test="${not empty descriptionErrors}">
                     <tr><td>${descriptionErrors}</td></tr>
@@ -81,4 +82,4 @@
    </div>
 </div>
 <jsp:include page="../footer.jsp" />
-<script type="text/javascript" src="/script/job_offers.js"></script>
+<script type="text/javascript" src="<c:url value='/script/job_offers.js'/>"></script>

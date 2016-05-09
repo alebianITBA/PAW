@@ -2,13 +2,15 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*" %>
+
 <jsp:include page="../header.jsp" />
 <div class="content">
 <div class="container">
    <div class="col-md-3 praesent">
       <div class="l_g_r">
          <div class="dapibus biography-into center">
-            <a href="/users/${job.user.id}">
+            <a href="<c:url value='/users/${job.user.id}'/>">
             <img class="user-placeholder" src="/img/user-placeholder.png">
             </a>
             <h4>${job.user.firstName} ${job.user.lastName}</h4>
@@ -38,7 +40,7 @@
                   <c:forEach items="${applications}" var="application">
                      <div class="media">
                         <div class="media-left">
-                           <a href="/users/${job.userId}">
+                           <a href="<c:url value='/users/${job.userId}'/>">
                            <img class="user-placeholder" src="/img/user-placeholder.png">
                            </a>
                         </div>

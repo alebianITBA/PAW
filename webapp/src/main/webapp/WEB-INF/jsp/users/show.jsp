@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ page import="java.util.*" %>
+
 <jsp:include page="../header.jsp" />
 <div class="content">
 <div class="container">
@@ -41,7 +42,7 @@
                   <hr>
                   <div class="media">
                      <div class="media-body">
-                        <h4><a href="/job_offers/${offer.id}">${offer.title}</a></h4>
+                        <h4><a href="<c:url value='/job_offers/${offer.id}'/>">${offer.title}</a></h4>
                         <p>${offer.description}</p>
                         <c:forEach items="${offer.skills}" var="skill">
                            <span class="label label-info">${skill.name}</span>
