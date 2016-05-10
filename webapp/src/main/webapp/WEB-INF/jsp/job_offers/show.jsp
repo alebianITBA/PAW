@@ -40,7 +40,7 @@
                   <c:forEach items="${applications}" var="application">
                      <div class="media">
                         <div class="media-left">
-                           <a href="<c:url value='/users/${job.userId}'/>">
+                           <a href="<c:url value='/users/${application.user.id}'/>">
                            <img class="user-placeholder" src="/img/user-placeholder.png">
                            </a>
                         </div>
@@ -61,7 +61,14 @@
             <div class="l_g_r">
                <div class="dapibus biography-into">
                     <h4><spring:message code="ApplyNow"/></h4>
-                     <button type="submit" class="btn btn-info btn-block btn-lg"><spring:message code="Apply"/></button>
+                    <c:choose>
+					    <c:when test="${alreadyApplied == false}">
+					        <button type="submit" class="btn btn-info btn-block btn-lg"><spring:message code="Apply"/></button>
+					    </c:when>    
+					    <c:otherwise>
+					        <p>No puedes aplicar dos veces a la misma oferta.</p>
+					    </c:otherwise>
+					</c:choose>
                </div>
             </div>
       </c:if>

@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,13 +21,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.apple.eawt.Application;
+
+import ar.edu.itba.paw.dto.JobOfferDTO;
+import ar.edu.itba.paw.enums.JobOfferStatus;
 import ar.edu.itba.paw.forms.JobOfferForm;
+import ar.edu.itba.paw.forms.PostForm;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.JobOfferSkillService;
 import ar.edu.itba.paw.interfaces.SkillService;
 import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.models.JobApplication;
+import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 
@@ -52,17 +60,7 @@ public class JobOffersController extends ApplicationController {
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public ModelAndView jobOffers(@RequestParam(required = false, value = "skill_id") final Long skillId,
 			@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm, final BindingResult errors) {
-		final ModelAndView mav = new ModelAndView("job_offers/index");
-		mav.addObject("loggedUser", getLoggedUser());
-		if (skillId != null) {
-			List<Skill> skills = new LinkedList<Skill>();
-			skills.add(new Skill(skillId, "", null));
-			mav.addObject("job_offers", jobOfferService.withSkills(skills, 1, 50));
-		} else {
-			mav.addObject("job_offers", jobOfferService.all(1, 50));
-		}
-		mav.addObject("skills", skillService.all());
-		return mav;
+		return getJobOffersView(skillId);
 	}
 
 	@RequestMapping(path = "/{jobOfferId}", method = RequestMethod.GET)
@@ -70,28 +68,33 @@ public class JobOffersController extends ApplicationController {
 		final ModelAndView mav = new ModelAndView("job_offers/show");
 		mav.addObject("loggedUser", getLoggedUser());
 		mav.addObject("job", jobOfferService.find(jobOfferId));
+		
 		mav.addObject("userApply", new User());
+		
 		java.util.List<JobApplication> applications = jobApplicationService.jobOfferApplications(jobOfferId);
 		java.util.List<Skill> jobOfferSkills = jobOfferSkillService.jobOfferSkills(jobOfferId);
+		
+		boolean alreadyApplied = false;
+		for (JobApplication application : applications) {
+			if (application.getUserId() == getLoggedUser().getId()) {
+				alreadyApplied = true;
+				break;
+			}
+		}
+		
 		mav.addObject("jobOfferSkills", jobOfferSkills);
 		mav.addObject("quantityApplications", applications != null ? applications.size() : 0);
-		// TODO: Show this only for the logged user
 		mav.addObject("applications", applications);
+		mav.addObject("alreadyApplied", alreadyApplied);
 		return mav;
 	}
 
 	@RequestMapping(path = "/{id}/apply", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public ModelAndView applyJobOfferByEmail(@PathVariable final Long id, @ModelAttribute("userApply") User userApply,
-			Map<String, Object> model) {
-		User user = userService.findByEmail(userApply.getEmail());
-		if (user != null) {
-			jobApplicationService.create("Email application", user.getId(), id);
-		} else {
-			// TODO: MOSTRAR ERROR DE USUARIO NO ENCONTRADO
-		}
-
-		return getJobOffer(id);
+	public ModelAndView applyJobOffer(@PathVariable final Long id) {
+		User loggedUser = getLoggedUser();
+		jobApplicationService.create("Basic application", loggedUser.getId(), id);
+		return getJobOffersView(null);
 	}
 
 	@RequestMapping(path = "/create_offer", method = RequestMethod.POST)
@@ -109,8 +112,61 @@ public class JobOffersController extends ApplicationController {
 					jobOfferSkillService.create(jobOfferId, new Long(skillId));
 				}
 			}
-			return jobOffers(null, null, null);
+			return getJobOffersView(null);
 		}
 	}
 
+	private Map<String, Object> getJobOffersMap(Long skillId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		User loggedUser = getLoggedUser();
+		
+		List<JobOfferDTO> jobOfferListDTO = new ArrayList<JobOfferDTO>(); 
+		List<JobOffer> jobOfferList = new ArrayList<JobOffer>();
+		List<JobApplication> alreadyApplies = jobApplicationService.userJobApplications(loggedUser.getId());
+		
+		if (skillId != null) {
+			List<Skill> skills = new LinkedList<Skill>();
+			skills.add(new Skill(skillId, "", null));
+			jobOfferList = jobOfferService.withSkills(skills, 1, 50);
+		} else {
+			jobOfferList = jobOfferService.all(1, 50);
+		}
+		
+		// Deberia ir a un helper
+		for (JobOffer offer : jobOfferList) {
+			JobOfferDTO offerDTO = JobOfferDTO.fromModel(offer);
+			if (offerDTO.getUserId() == loggedUser.getId()) {
+				offerDTO.setStatus(JobOfferStatus.OFFER_OWNER);
+			} else {
+				boolean alreadyApply = false;
+				for (JobApplication application : alreadyApplies) {
+					if (application.getJobOfferId() == offerDTO.getId()) {
+						alreadyApply = true;
+						break;
+					}
+				}
+				
+				if (alreadyApply) {
+					offerDTO.setStatus(JobOfferStatus.ALREADY_APPLIED);	
+				} else {
+					offerDTO.setStatus(JobOfferStatus.READY_TO_APPLY);
+				}
+			}
+			jobOfferListDTO.add(offerDTO);
+		}
+		
+		map.put("jobOfferForm", new JobOfferForm());
+		map.put("job_offers", jobOfferListDTO);
+		map.put("skills", skillService.all());
+		map.put("loggedUser", loggedUser);
+		return map;
+	}
+	
+	private ModelAndView getJobOffersView(Long skillId) {
+		final ModelAndView mav = new ModelAndView("job_offers/index");
+		mav.addAllObjects(getJobOffersMap(skillId));
+		return mav;
+	}
+	
 }

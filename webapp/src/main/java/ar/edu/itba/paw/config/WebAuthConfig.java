@@ -3,8 +3,10 @@ package ar.edu.itba.paw.config;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,6 +24,9 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.userDetailsService(userDetailsService)
         	.authorizeRequests()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/create_user").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
             .and().formLogin()
@@ -29,12 +34,14 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("j_password")
                 .defaultSuccessUrl("/index", false)
                 .loginPage("/")
+                .loginPage("/login")
             .and().rememberMe()
                 .userDetailsService(userDetailsService)
                 .key("mysupersecretketthatnobodyknowsabout")
                 .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30))
             .and().logout()
                 .logoutUrl("/logout")
+                .logoutUrl("/users/me/logout")
                 .logoutSuccessUrl("/")
             .and().exceptionHandling()
                 .accessDeniedPage("/403")
@@ -45,5 +52,11 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
     public void configure(final WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/style/**", "/script/**", "/img/**", "/favicon.ico", "/403");
 	}
+    
+    @Bean(name="authenticationManager")
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
 }

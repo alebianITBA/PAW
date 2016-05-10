@@ -19,10 +19,11 @@
             </div>
             <span class="menu"></span>
             <div class="top-menu">
+            
                <ul class="cl-effect-16">
                   <c:if test="${loggedUser == null}">
                      <li>
-                        <form class="navbar-form navbar-left" action="${loginUrl}" method="post" enctype="application/x-www-form-urlencoded">
+                        <form class="navbar-form navbar-left" method="post" enctype="application/x-www-form-urlencoded">
                            <div class="form-group">
                               <input type="text" name="j_email" class="form-control" placeholder="Email" />
                            </div>
@@ -37,9 +38,11 @@
                    <spring:message code="Users" var="Users"/>
                    <spring:message code="JobOffers" var="JobOffers"/>
                    <spring:message code="MyProfile" var="MyProfile"/>
+                   <spring:message code="LogOut" var="LogOut"/>
                      <li><a href="<c:url value='/users'/>" data-hover="${Users}">${Users}</a></li>
                      <li><a href="<c:url value='/job_offers'/>" data-hover="${JobOffers}">${JobOffers}</a></li>
-                     <li><a href="<c:url value='/users/${loggedUser.id}'/>" data-hover="${MyProfile}">${MyProfile}</a></li>
+                     <li><a href="<c:url value='/users/me'/>" data-hover="${MyProfile}">${MyProfile}</a></li>
+                     <li><a href="<c:url value='/users/me/logout'/>" data-hover="${LogOut}">${LogOut}</a></li>
                   </c:if>
                </ul>
             </div>

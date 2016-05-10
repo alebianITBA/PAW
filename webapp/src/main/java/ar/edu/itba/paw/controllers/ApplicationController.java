@@ -16,10 +16,16 @@ public class ApplicationController {
 	protected User loggedUser;
 
 	protected User getLoggedUser() {
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
 		if (loggedUser == null) {
 			loggedUser = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		}
 		return loggedUser;
 	}
 
+	protected void logout() {
+		SecurityContextHolder.getContext().setAuthentication(null);
+		loggedUser = null;
+	}
+	
 }
