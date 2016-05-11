@@ -37,6 +37,7 @@ import ar.edu.itba.paw.interfaces.PostService;
 import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.JobOffer;
+import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.validators.PasswordValidator;
 
 @Controller
@@ -117,7 +118,8 @@ public class HomeController extends ApplicationController {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(registerForm.getEmail());
 
 			try {
-				logout();
+				SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+				SecurityContextHolder.getContext().setAuthentication(null);
 				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, registerForm.getPassword(), userDetails.getAuthorities());
 				request.getSession();
 				token.setDetails(new WebAuthenticationDetails(request));
@@ -145,6 +147,8 @@ public class HomeController extends ApplicationController {
 		map.put("postForm", new PostForm());
 		map.put("loggedUser", getLoggedUser());
 		map.put("posts", postService.all(1, 50));
+		
+		User loggedUser = getLoggedUser();
 
 		List<JobOffer> jobOfferList = jobOfferService.withSkills(getLoggedUser().getSkills(), 1, 10);
 		jobOfferList.subList(0, Math.max(jobOfferList.size(), (int) Math.floor(Math.random() * jobOfferList.size())));

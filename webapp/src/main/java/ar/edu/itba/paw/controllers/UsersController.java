@@ -3,6 +3,7 @@ package ar.edu.itba.paw.controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,8 +52,9 @@ public class UsersController extends ApplicationController {
 
 	@RequestMapping(path = "/me/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
-		logout();
-		return new ModelAndView("forward:/");
+		SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+		SecurityContextHolder.getContext().setAuthentication(null);
+		return new ModelAndView("redirect:/");
 	}
 
 }
