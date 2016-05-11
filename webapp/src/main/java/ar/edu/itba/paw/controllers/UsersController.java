@@ -3,7 +3,6 @@ package ar.edu.itba.paw.controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +43,7 @@ public class UsersController extends ApplicationController {
 		mav.addObject("offers", jobOfferService.userJobOffers(id));
 		return mav;
 	}
-	
+
 	@RequestMapping(path = "/me", method = RequestMethod.GET)
 	public ModelAndView me() {
 		return getUser(getLoggedUser().getId());
@@ -52,8 +51,8 @@ public class UsersController extends ApplicationController {
 
 	@RequestMapping(path = "/me/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
-	    logout();
-	    return new ModelAndView("forward:/");
+		logout();
+		return new ModelAndView("forward:/");
 	}
-	
+
 }

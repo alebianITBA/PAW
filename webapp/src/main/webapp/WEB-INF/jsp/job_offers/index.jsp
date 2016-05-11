@@ -33,7 +33,7 @@
 									<div class="apply-button">
 										<c:choose>
 											<c:when test="${offer.status == 'OFFER_OWNER'}">
-												<spring:message code="OfferOwner" />
+												<span class="glyphicon glyphicon-user" />
 											</c:when>
 											<c:when test="${offer.status == 'READY_TO_APPLY'}">
 												<spring:url value="/job_offers/${offer.id}/apply"
@@ -45,7 +45,7 @@
 												</form:form>
 											</c:when>
 											<c:otherwise>
-												<spring:message code="AlreadyApplied" />
+												<span class="glyphicon glyphicon-ok" />
 											</c:otherwise>
 										</c:choose>
 
@@ -62,7 +62,7 @@
 			<div class="l_g_r b-margin">
 				<div class="dapibus biography-into">
 					<div class="input-group b-margin">
-						
+
 						<select name="skills-filter" id="skills-select-filter"
 							class="form-control input-lg" >
 							<c:forEach items="${skills}" var="skill">
@@ -111,7 +111,7 @@
 								</tr>
 							</c:if>
 						</div>
-						
+
 						<div class="form-group">
 						<spring:message code="ChooseSkills" var="ChooseSkills" />
 						<form:select id="skills-select" path="selectedSkillIds"
@@ -119,7 +119,7 @@
 							itemLabel="name" data-placeholder="${ChooseSkills}"
 							class="form-control" />
 						</div>
-						
+
 						<spring:message code="Submit" var="submit" />
 						<input type="submit" class="btn btn-info btn-block btn-lg"
 							value="${submit}" />

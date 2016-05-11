@@ -21,17 +21,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.apple.eawt.Application;
-
 import ar.edu.itba.paw.dto.JobOfferDTO;
 import ar.edu.itba.paw.enums.JobOfferStatus;
 import ar.edu.itba.paw.forms.JobOfferForm;
-import ar.edu.itba.paw.forms.PostForm;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.JobOfferSkillService;
 import ar.edu.itba.paw.interfaces.SkillService;
-import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
@@ -52,9 +48,6 @@ public class JobOffersController extends ApplicationController {
 	private SkillService skillService;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
 	private JobOfferSkillService jobOfferSkillService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET)
@@ -68,12 +61,12 @@ public class JobOffersController extends ApplicationController {
 		final ModelAndView mav = new ModelAndView("job_offers/show");
 		mav.addObject("loggedUser", getLoggedUser());
 		mav.addObject("job", jobOfferService.find(jobOfferId));
-		
+
 		mav.addObject("userApply", new User());
-		
+
 		java.util.List<JobApplication> applications = jobApplicationService.jobOfferApplications(jobOfferId);
 		java.util.List<Skill> jobOfferSkills = jobOfferSkillService.jobOfferSkills(jobOfferId);
-		
+
 		boolean alreadyApplied = false;
 		for (JobApplication application : applications) {
 			if (application.getUserId() == getLoggedUser().getId()) {
@@ -81,7 +74,7 @@ public class JobOffersController extends ApplicationController {
 				break;
 			}
 		}
-		
+
 		mav.addObject("jobOfferSkills", jobOfferSkills);
 		mav.addObject("quantityApplications", applications != null ? applications.size() : 0);
 		mav.addObject("applications", applications);
@@ -120,11 +113,11 @@ public class JobOffersController extends ApplicationController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		User loggedUser = getLoggedUser();
-		
-		List<JobOfferDTO> jobOfferListDTO = new ArrayList<JobOfferDTO>(); 
+
+		List<JobOfferDTO> jobOfferListDTO = new ArrayList<JobOfferDTO>();
 		List<JobOffer> jobOfferList = new ArrayList<JobOffer>();
 		List<JobApplication> alreadyApplies = jobApplicationService.userJobApplications(loggedUser.getId());
-		
+
 		if (skillId != null) {
 			List<Skill> skills = new LinkedList<Skill>();
 			skills.add(new Skill(skillId, "", null));
@@ -132,7 +125,7 @@ public class JobOffersController extends ApplicationController {
 		} else {
 			jobOfferList = jobOfferService.all(1, 50);
 		}
-		
+
 		// Deberia ir a un helper
 		for (JobOffer offer : jobOfferList) {
 			JobOfferDTO offerDTO = JobOfferDTO.fromModel(offer);
@@ -146,27 +139,27 @@ public class JobOffersController extends ApplicationController {
 						break;
 					}
 				}
-				
+
 				if (alreadyApply) {
-					offerDTO.setStatus(JobOfferStatus.ALREADY_APPLIED);	
+					offerDTO.setStatus(JobOfferStatus.ALREADY_APPLIED);
 				} else {
 					offerDTO.setStatus(JobOfferStatus.READY_TO_APPLY);
 				}
 			}
 			jobOfferListDTO.add(offerDTO);
 		}
-		
+
 		map.put("jobOfferForm", new JobOfferForm());
 		map.put("job_offers", jobOfferListDTO);
 		map.put("skills", skillService.all());
 		map.put("loggedUser", loggedUser);
 		return map;
 	}
-	
+
 	private ModelAndView getJobOffersView(Long skillId) {
 		final ModelAndView mav = new ModelAndView("job_offers/index");
 		mav.addAllObjects(getJobOffersMap(skillId));
 		return mav;
 	}
-	
+
 }

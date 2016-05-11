@@ -27,5 +27,5 @@ public class ApplicationController {
 		SecurityContextHolder.getContext().setAuthentication(null);
 		loggedUser = null;
 	}
-	
+
 }

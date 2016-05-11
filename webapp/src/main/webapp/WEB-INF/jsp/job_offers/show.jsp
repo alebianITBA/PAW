@@ -64,7 +64,7 @@
                     <c:choose>
 					    <c:when test="${alreadyApplied == false}">
 					        <button type="submit" class="btn btn-info btn-block btn-lg"><spring:message code="Apply"/></button>
-					    </c:when>    
+					    </c:when>
 					    <c:otherwise>
 					        <p>No puedes aplicar dos veces a la misma oferta.</p>
 					    </c:otherwise>
