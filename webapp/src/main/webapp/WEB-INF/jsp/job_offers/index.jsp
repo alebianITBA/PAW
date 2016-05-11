@@ -16,7 +16,7 @@
 							<div class="media">
 								<div class="media-left">
 									<a href="<c:url value='/users/${offer.userId}'/>"> <img
-										class="user-placeholder" src="/img/user-placeholder.png">
+										class="user-placeholder" src="/grupo5/img/user-placeholder.png">
 									</a>
 								</div>
 								<div class="media-body">

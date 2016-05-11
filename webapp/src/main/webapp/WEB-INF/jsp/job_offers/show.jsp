@@ -11,7 +11,7 @@
       <div class="l_g_r">
          <div class="dapibus biography-into center">
             <a href="<c:url value='/users/${job.user.id}'/>">
-            <img class="user-placeholder" src="/img/user-placeholder.png">
+            <img class="user-placeholder" src="/grupo5/img/user-placeholder.png">
             </a>
             <h4>${job.user.firstName} ${job.user.lastName}</h4>
             <p class="center">${job.user.email}</p>
@@ -41,7 +41,7 @@
                      <div class="media">
                         <div class="media-left">
                            <a href="<c:url value='/users/${application.user.id}'/>">
-                           <img class="user-placeholder" src="/img/user-placeholder.png">
+                           <img class="user-placeholder" src="/grupo5/img/user-placeholder.png">
                            </a>
                         </div>
                         <div class="media-body">

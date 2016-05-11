@@ -9,7 +9,7 @@
          <div class="l_g_r">
             <div class="dapibus">
                <a href="<c:url value='/users/${user.id}'/>">
-               <img class="user-image" src="/img/user-placeholder.png">
+               <img class="user-image" src="/grupo5/img/user-placeholder.png">
                </a>
                <div class="caption">
                   <h3><a href="<c:url value='/users/${user.id}'/>">${user.firstName} ${user.lastName}</a></h3>

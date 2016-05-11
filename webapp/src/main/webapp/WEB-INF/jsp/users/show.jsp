@@ -9,7 +9,7 @@
     <div class="col-md-12 praesent">
       <div class="l_g_r biography-into">
         <div class="dapibus center">
-          <img class="user-image" src="/img/user-placeholder.png">
+          <img class="user-image" src="/grupo5/img/user-placeholder.png">
           <div >
             <h1>${user.firstName} ${user.lastName}</h1>
             <h3>${user.email}</h3>
