@@ -133,7 +133,7 @@
 
 <script type="text/javascript" src="<c:url value='/script/job_offers.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/script/chosen/chosen.jquery.js'/>"></script>
-<link rel="stylesheet" href="/style/chosen.css">
+<link rel="stylesheet" href="<c:url value='/style/chosen.css'/>">
 <script type="text/javascript">
 	$('#skills-select').chosen({
 		no_results_text : "Oops, no skills found!",
