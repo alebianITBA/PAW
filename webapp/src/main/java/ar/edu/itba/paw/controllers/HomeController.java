@@ -132,7 +132,7 @@ public class HomeController extends ApplicationController {
 				
 			}
 
-			return new ModelAndView("register");
+			return new ModelAndView("redirect:/index");
 		}
 	}
 	
