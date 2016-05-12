@@ -1,7 +1,12 @@
 package ar.edu.itba.paw.models;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
+
+import ar.edu.itba.paw.utils.MD5Util;
 
 public class User {
 	private Long id;
@@ -103,8 +108,13 @@ public class User {
 		return this.skills;
 	}
 
+	public String getGravatar() {
+		return "http://www.gravatar.com/avatar/" + MD5Util.md5Hex(getEmail());
+	}
+
 	@Override
 	public String toString() {
 		return firstName + " " + lastName + " (email: " + email + ", id: " + id.toString() + ")";
 	}
+
 }

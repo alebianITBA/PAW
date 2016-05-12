@@ -3,6 +3,7 @@
 
 ### Java ###
 *.class
+*.lst
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -130,4 +131,3 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-

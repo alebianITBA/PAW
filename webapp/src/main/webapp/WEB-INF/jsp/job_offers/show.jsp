@@ -4,75 +4,76 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*" %>
 
-<jsp:include page="../header.jsp" />
+<jsp:include page="../header.jsp"/>
 <div class="content">
-<div class="container">
-   <div class="col-md-3 praesent">
-      <div class="l_g_r">
-         <div class="dapibus biography-into center">
-            <a href="<c:url value='/users/${job.user.id}'/>">
-            <img class="user-placeholder" src="/grupo5/img/user-placeholder.png">
-            </a>
-            <h4>${job.user.firstName} ${job.user.lastName}</h4>
-            <p class="center">${job.user.email}</p>
-            <c:if test="${job.user.id == loggedUser.id}">
-               <h3><span class="label label-info">${quantityApplications} <spring:message code="Applications"/></span></h3>
-            </c:if>
-         </div>
-      </div>
-   </div>
-   <div class="col-md-9 praesent">
-      <div class="l_g_r b-margin" >
-         <div class="dapibus biography-into">
-            <h2 class="media-heading">${job.title} </h2>
-            <p>${job.description}</p>
-            <h3>
-               <c:forEach items="${job.skills}" var="skill">
-                  <span class="label label-info">${skill.name}</span>
-               </c:forEach>
-            </h3>
-         </div>
-      </div>
-      <c:if test="${job.user.id == loggedUser.id}">
+    <div class="container">
+        <div class="col-md-3 praesent">
             <div class="l_g_r">
-               <div class="dapibus biography-into">
-                  <h2 class="media-heading"><spring:message code="Applications"/></h2>
-                  <c:forEach items="${applications}" var="application">
-                     <div class="media">
-                        <div class="media-left">
-                           <a href="<c:url value='/users/${application.user.id}'/>">
-                           <img class="user-placeholder" src="/grupo5/img/user-placeholder.png">
-                           </a>
-                        </div>
-                        <div class="media-body">
-                           <h3 class="media-heading">${application.user.firstName} ${application.user.lastName}</h3>
-                           <h4 class="media-heading">${application.user.email}</h4>
-                           <c:forEach items="${application.user.skills}" var="skill">
-                              <span class="label label-info">${skill.name}</span>
-                           </c:forEach>
-                        </div>
-                        <hr>
-                     </div>
-                  </c:forEach>
-               </div>
+                <div class="dapibus biography-into center">
+                    <a href="<c:url value='/users/${job.user.id}'/>">
+                        <img class="user-placeholder" src="${job.user.gravatar}"></a>
+                        <h4>${job.user.firstName} ${job.user.lastName}</h4>
+                        <p class="center">${job.user.email}</p>
+                        <c:if test="${job.user.id == loggedUser.id}">
+                            <h3>
+                                <span class="label label-info">${quantityApplications}
+                                    <spring:message code="Applications"/></span>
+                            </h3>
+                        </c:if>
+                    </div>
+                </div>
             </div>
-      </c:if>
-      <c:if test="${job.user.id != loggedUser.id}">
-            <div class="l_g_r">
-               <div class="dapibus biography-into">
-                    <h4><spring:message code="ApplyNow"/></h4>
-                    <c:choose>
-					    <c:when test="${alreadyApplied == false}">
-					        <button type="submit" class="btn btn-info btn-block btn-lg"><spring:message code="Apply"/></button>
-					    </c:when>
-					    <c:otherwise>
-					        <p>No puedes aplicar dos veces a la misma oferta.</p>
-					    </c:otherwise>
-					</c:choose>
-               </div>
+            <div class="col-md-9 praesent">
+                <div class="l_g_r b-margin">
+                    <div class="dapibus biography-into">
+                        <h2 class="media-heading">${job.title}
+                        </h2>
+                        <p>${job.description}</p>
+                        <h3>
+                            <c:forEach items="${job.skills}" var="skill">
+                                <span class="label label-info">${skill.name}</span>
+                            </c:forEach>
+                        </h3>
+                    </div>
+                </div>
+                <c:if test="${job.user.id == loggedUser.id}">
+                    <div class="l_g_r">
+                        <div class="dapibus biography-into">
+                            <h2 class="media-heading"><spring:message code="Applications"/></h2>
+                            <c:forEach items="${applications}" var="application">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="<c:url value='/users/${application.user.id}'/>">
+                                            <img class="user-placeholder" src="/grupo5/img/user-placeholder.png"></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h3 class="media-heading">${application.user.firstName} ${application.user.lastName}</h3>
+                                            <h4 class="media-heading">${application.user.email}</h4>
+                                            <c:forEach items="${application.user.skills}" var="skill">
+                                                <span class="label label-info">${skill.name}</span>
+                                            </c:forEach>
+                                        </div>
+                                        <hr></div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </c:if>
+                        <c:if test="${job.user.id != loggedUser.id}">
+                            <div class="l_g_r">
+                                <div class="dapibus biography-into">
+                                    <h4><spring:message code="ApplyNow"/></h4>
+                                    <c:choose>
+                                        <c:when test="${alreadyApplied == false}">
+                                            <button type="submit" class="btn btn-info btn-block btn-lg"><spring:message code="Apply"/></button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p><spring:message code="AlreadyApplied"/></p>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
             </div>
-      </c:if>
-</div>
-</div>
-</div>
-<jsp:include page="../footer.jsp" />
+            <jsp:include page="../footer.jsp"/>
