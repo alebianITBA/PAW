@@ -24,11 +24,11 @@
 										</h4>
 										<p>${offer.description}</p>
 										<c:forEach items="${offer.skills}" var="skill">
-											<span class="label label-info">${skill.name}</span>
+											<a class="no-underline" href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span class="label label-info">${skill.name}</span></a>
 										</c:forEach>
 									</div>
-									<div>
 
+									<div>
 										<div class="apply-button">
 											<c:choose>
 												<c:when test="${offer.status == 'OFFER_OWNER'}">
@@ -46,9 +46,9 @@
 													<span class="glyphicon glyphicon-ok"/>
 												</c:otherwise>
 											</c:choose>
-
 										</div>
 									</div>
+
 								</div>
 								<hr>
 								</c:forEach>
@@ -128,6 +128,7 @@
 		<script type="text/javascript" src="<c:url value='/script/job_offers.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/script/chosen/chosen.jquery.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/script/pagination.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/script/general.js'/>"></script>
 		<link rel="stylesheet" href="<c:url value='/style/chosen.css'/>">
 			<script type="text/javascript">
 				$('#skills-select').chosen({no_results_text: "Oops, no skills found!", max_selected_options: 5});

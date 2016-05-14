@@ -352,3 +352,7 @@ a.link:hover{
 .grey-bg{
     background-color: #737c85;
 }
+
+.no-underline a:hover {
+  text-decoration: none;
+}

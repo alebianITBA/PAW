@@ -21,7 +21,7 @@
                                 </p>
                                 <p class="skill-container">
                                     <c:forEach items="${user.skills}" var="skill">
-                                        <span class="label label-info">${skill.name}</span>
+                                      <a class="no-underline" href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span class="label label-info">${skill.name}</span></a>
                                     </c:forEach>
                                 </p>
                             </div>
@@ -41,3 +41,4 @@
     <jsp:include page="../footer.jsp" />
 
     <script type="text/javascript" src="<c:url value='/script/pagination.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/script/general.js'/>"></script>

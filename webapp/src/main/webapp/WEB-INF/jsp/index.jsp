@@ -26,7 +26,7 @@
 								<p>${offers[0].description}</p>
 								<p class="skill-container">
 									<c:forEach items="${offer.skills}" var="skill">
-										<span class="label label-info">${skill.name}</span>
+										<a class="no-underline" href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span class="label label-info">${skill.name}</span></a>
 									</c:forEach>
 								</p>
 								<spring:url value="/job_offers/${offer.id}/apply" var="actionUrl"/>
@@ -107,3 +107,4 @@
 </div>
 
 <jsp:include page="./footer.jsp"/>
+<script type="text/javascript" src="<c:url value='/script/general.js'/>"></script>

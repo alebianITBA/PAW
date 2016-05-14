@@ -11,9 +11,9 @@
             <div class="l_g_r">
                 <div class="dapibus biography-into center">
                     <a href="<c:url value='/users/${job.user.id}'/>">
-                        <img class="user-placeholder" src="${job.user.gravatar}"></a>
+                        <img class="user-placeholder" src="${job.user.gravatar}">
                         <h4>${job.user.firstName} ${job.user.lastName}</h4>
-                        <p class="center">${job.user.email}</p>
+                        <p class="center">${job.user.email}</p></a>
                         <c:if test="${job.user.id == loggedUser.id}">
                             <h3>
                                 <span class="label label-info">${quantityApplications}
@@ -26,12 +26,22 @@
             <div class="col-md-9 praesent">
                 <div class="l_g_r b-margin">
                     <div class="dapibus biography-into">
+                      <div>
+                          <c:if test="${job.userId == loggedUser.id}">
+                            <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>">
+                              <span class="glyphicon glyphicon-pencil"/>
+                            </div>
+                            <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Delete"/>">
+                              <span class="glyphicon glyphicon-remove"/>
+                            </div>
+                          </c:if>
+                      </div>
                         <h2 class="media-heading">${job.title}
                         </h2>
                         <p>${job.description}</p>
                         <h3>
                             <c:forEach items="${job.skills}" var="skill">
-                                <span class="label label-info">${skill.name}</span>
+                                <a class="no-underline" href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span class="label label-info">${skill.name}</span></a>
                             </c:forEach>
                         </h3>
                     </div>
@@ -77,3 +87,4 @@
                 </div>
             </div>
             <jsp:include page="../footer.jsp"/>
+            <script type="text/javascript" src="<c:url value='/script/general.js'/>"></script>

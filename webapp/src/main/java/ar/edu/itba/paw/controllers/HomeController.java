@@ -143,13 +143,12 @@ public class HomeController extends ApplicationController {
 	}
 	
 	private Map<String, Object> getIndexAttributes() {
+		User loggedUser = getLoggedUser();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("postForm", new PostForm());
-		map.put("loggedUser", getLoggedUser());
+		map.put("loggedUser", loggedUser);
 		map.put("posts", postService.all(1, 50));
-		
-		User loggedUser = getLoggedUser();
-
+	
 		List<JobOffer> jobOfferList = jobOfferService.withSkills(getLoggedUser().getSkills(), 1, 10);
 		jobOfferList.subList(0, Math.max(jobOfferList.size(), (int) Math.floor(Math.random() * jobOfferList.size())));
 

@@ -11,11 +11,16 @@
                 <div class="dapibus center">
                     <img class="user-image" src="${user.gravatar}">
                         <div >
-                            <h1>${user.firstName} ${user.lastName}</h1>
+                            <h1>${user.firstName} ${user.lastName} <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>"/></h1>
+                        </div>
+                        <div>
                             <h3>${user.email}</h3>
+                        </div>
+                        <div>
                             <c:forEach items="${user.skills}" var="skill">
-                                <span class="label label-info">${skill.name}</span>
+                              <a class="no-underline" href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span class="label label-info">${skill.name}</span></a>
                             </c:forEach>
+                            <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>"/>
                         </div>
                     </div>
                 </div>
@@ -30,6 +35,18 @@
                                 <hr>
                                     <h4>${post.title}</h4>
                                     <p>${post.description}</p>
+                                    <div>
+                                      <div class="apply-button">
+                                        <c:if test="${post.userId == loggedUser.id}">
+                                          <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>">
+                                            <span class="glyphicon glyphicon-pencil"/>
+                                          </div>
+                                          <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Delete"/>">
+                                            <span class="glyphicon glyphicon-remove"/>
+                                          </div>
+                                        </c:if>
+                                      </div>
+                                    </div>
                                 </c:forEach>
                             </div>
                         </div>
@@ -53,6 +70,21 @@
                                                     <span class="label label-info">${skill.name}</span>
                                                 </c:forEach>
                                             </div>
+                                            <div>
+                                              <div class="apply-button">
+                                                <c:if test="${offer.userId == loggedUser.id}">
+                                                  <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>">
+                                                    <span class="glyphicon glyphicon-pencil"/>
+                                                  </div>
+                                                  <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Delete"/>">
+                                                    <span class="glyphicon glyphicon-remove"/>
+                                                  </div>
+                                                  <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Finish"/>">
+                                                    <span class="glyphicon glyphicon-briefcase"/>
+                                                  </div>
+                                                </c:if>
+                                              </div>
+                                            </div>
                                         </div>
                                     </c:forEach>
                                 </div>
@@ -64,3 +96,4 @@
             </div>
 
             <jsp:include page="../footer.jsp"/>
+            <script type="text/javascript" src="<c:url value='/script/general.js'/>"></script>
