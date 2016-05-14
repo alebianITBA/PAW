@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.interfaces.JobOfferService;
@@ -28,10 +29,16 @@ public class UsersController extends ApplicationController {
 	private JobOfferService jobOfferService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public ModelAndView listUser() {
+	public ModelAndView listUser(@RequestParam(required = false, value = "page") final Integer pageParam) {
 		final ModelAndView mav = new ModelAndView("users/index");
 		mav.addObject("loggedUser", getLoggedUser());
-		mav.addObject("users", userService.all(1, 50));
+		
+		Integer page = (pageParam == null) ? 1 : pageParam;
+		Integer perPage = 20;
+		
+		mav.addObject("item_count", userService.count());
+		mav.addObject("users", userService.all(page, perPage));
+		
 		return mav;
 	}
 

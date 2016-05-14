@@ -50,7 +50,13 @@
 										</div>
 									</div>
 								</div>
-								<hr></c:forEach>
+								<hr>
+								</c:forEach>
+
+								<div class="row">
+			            <div id="pagination" data-value="${item_count}"></div>
+			          </div>
+
 							</div>
 						</div>
 					</div>
@@ -121,6 +127,7 @@
 
 		<script type="text/javascript" src="<c:url value='/script/job_offers.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/script/chosen/chosen.jquery.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/script/pagination.js'/>"></script>
 		<link rel="stylesheet" href="<c:url value='/style/chosen.css'/>">
 			<script type="text/javascript">
 				$('#skills-select').chosen({no_results_text: "Oops, no skills found!", max_selected_options: 5});

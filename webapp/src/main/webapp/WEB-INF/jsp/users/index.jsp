@@ -5,6 +5,7 @@
 
 <div class="content">
     <div class="container">
+      <div class="row">
         <c:forEach items="${users}" var="user">
             <div class="col-md-3 praesent center biography-into">
                 <div class="l_g_r">
@@ -28,7 +29,15 @@
                     </div>
                 </div>
             </c:forEach>
+          </div>
+
+          <div class="row">
+            <div id="pagination" data-value="${item_count}"></div>
+          </div>
+
         </div>
     </div>
 
-    <jsp:include page="../footer.jsp"/>
+    <jsp:include page="../footer.jsp" />
+
+    <script type="text/javascript" src="<c:url value='/script/pagination.js'/>"></script>
