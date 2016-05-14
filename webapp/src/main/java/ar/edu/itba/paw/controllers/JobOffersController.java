@@ -81,6 +81,15 @@ public class JobOffersController extends ApplicationController {
 		mav.addObject("alreadyApplied", alreadyApplied);
 		return mav;
 	}
+	
+	@RequestMapping(path = "/{jobOfferId}", method = RequestMethod.DELETE)
+	public ModelAndView deleteJobOffer(@PathVariable final Long jobOfferId) {
+		JobOffer offer = jobOfferService.find(jobOfferId);
+		if(offer.getUserId() == getLoggedUser().getId()) {
+			jobOfferService.delete(jobOfferId);
+		}
+		return new ModelAndView("redirect:/users/me");
+	}
 
 	@RequestMapping(path = "/{id}/apply", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)

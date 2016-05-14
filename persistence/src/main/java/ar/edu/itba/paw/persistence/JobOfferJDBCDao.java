@@ -78,7 +78,7 @@ public class JobOfferJDBCDao implements JobOfferDao {
 
 	@Override
 	public JobOffer find(Long id) {
-		return jdbcTemplate.queryForObject("SELECT * FROM job_offers WHERE id = ?;", jobOfferRowMapper, id);
+		return jdbcTemplate.query("SELECT * FROM job_offers WHERE id = ?;", jobOfferRowMapper, id).get(0);
 	}
 
 	@Override

@@ -9,6 +9,8 @@ public interface JobOfferSkillService {
 	void create(Long jobOfferId, Long skillId);
 
 	void delete(Long id);
+	
+	void removeJobOfferSkills(Long jobOfferId);
 
 	void removeJobOfferSkill(Long jobOfferId, Long skillId);
 

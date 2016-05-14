@@ -26,6 +26,8 @@ public interface JobApplicationDao {
 
 	List<JobApplication> jobOfferApplications(Long jobOfferId);
 	
+	void removeJobOfferApplications(Long jobOfferId);
+	
 	List<JobApplication> jobOfferApplications(Long jobOfferId, Integer page, Integer perPage);
 
 }

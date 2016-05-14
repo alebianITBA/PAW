@@ -91,6 +91,11 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 		}
 		return applications;
 	}
+	
+	@Override
+	public void removeJobOfferApplications(Long jobOfferId) {
+		jobApplicationDao.removeJobOfferApplications(jobOfferId);
+	}
 
 	@Override
 	public List<JobApplication> jobOfferApplications(Long jobOfferId, Integer page, Integer perPage) {

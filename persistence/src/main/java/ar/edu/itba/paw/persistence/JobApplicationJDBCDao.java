@@ -83,6 +83,11 @@ public class JobApplicationJDBCDao implements JobApplicationDao {
 		return jdbcTemplate.query("SELECT * FROM job_applications WHERE job_offer_id = ? ORDER BY created_at DESC;", jobApplicationRowMapper,
 				jobOfferId);
 	}
+	
+	@Override
+	public void removeJobOfferApplications(Long jobOfferId) {
+		jdbcTemplate.update("DELETE FROM job_applications WHERE job_offer_id = ?", jobOfferId);
+	}
 
 	@Override
 	public List<JobApplication> jobOfferApplications(Long jobOfferId, Integer page, Integer perPage) {

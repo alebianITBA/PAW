@@ -28,6 +28,11 @@ public class JobOfferSkillServiceImpl implements JobOfferSkillService {
 	public void delete(Long id) {
 		jobOfferSkillDao.delete(id);
 	}
+	
+	@Override
+	public void removeJobOfferSkills(Long jobOfferId) {
+		jobOfferSkillDao.removeJobOfferSkills(jobOfferId);
+	}
 
 	@Override
 	public void removeJobOfferSkill(Long jobOfferId, Long skillId) {

@@ -42,7 +42,7 @@
                                             <span class="glyphicon glyphicon-pencil"/>
                                           </div>
                                           <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Delete"/>">
-                                            <span class="glyphicon glyphicon-remove"/>
+                                            <span class="glyphicon glyphicon-remove remove-button" data-href="<c:url value='/posts/${post.id}'/>"/>
                                           </div>
                                         </c:if>
                                       </div>
@@ -77,7 +77,7 @@
                                                     <span class="glyphicon glyphicon-pencil"/>
                                                   </div>
                                                   <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Delete"/>">
-                                                    <span class="glyphicon glyphicon-remove"/>
+                                                    <span class="glyphicon glyphicon-remove remove-button" data-href="<c:url value='/job_offers/${offer.id}'/>"/>
                                                   </div>
                                                   <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Finish"/>">
                                                     <span class="glyphicon glyphicon-briefcase"/>

@@ -39,6 +39,11 @@ public class JobOfferSkillJDBCDao implements JobOfferSkillDao {
 	public void delete(Long id) {
 		jdbcTemplate.update("DELETE FROM job_offer_skills WHERE id = ?", id);
 	}
+	
+	@Override
+	public void removeJobOfferSkills(Long jobOfferId) {
+		jdbcTemplate.update("DELETE FROM job_offer_skills WHERE job_offer_id = ?;", jobOfferId);
+	}
 
 	@Override
 	public void removeJobOfferSkill(Long jobOfferId, Long skillId) {

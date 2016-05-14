@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferDao;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.JobOfferSkillService;
@@ -17,6 +18,9 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 	@Autowired
 	private JobOfferDao jobOfferDao;
+	
+	@Autowired
+	private JobApplicationService jobApplicationService;
 
 	@Autowired
 	private JobOfferSkillService jobOfferSkillService;
@@ -35,6 +39,8 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 	@Override
 	public void delete(Long id) {
+		jobOfferSkillService.removeJobOfferSkills(id);
+		jobApplicationService.removeJobOfferApplications(id);
 		jobOfferDao.delete(id);
 	}
 
