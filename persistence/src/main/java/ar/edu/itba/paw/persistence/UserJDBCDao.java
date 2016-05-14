@@ -65,12 +65,12 @@ public class UserJDBCDao implements UserDao {
 
 	@Override
 	public List<User> all() {
-		return jdbcTemplate.query("SELECT * FROM users;", userRowMapper);
+		return jdbcTemplate.query("SELECT * FROM users ORDER BY lower(last_name) ASC;", userRowMapper);
 	}
 
 	@Override
 	public List<User> all(Integer page, Integer perPage) {
-		return jdbcTemplate.query("SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?;", userRowMapper,
+		return jdbcTemplate.query("SELECT * FROM users ORDER BY lower(last_name) ASC LIMIT ? OFFSET ?;", userRowMapper,
 				perPage, page - 1);
 	}
 

@@ -60,7 +60,7 @@ public class SkillJDBCDao implements SkillDao {
 
 	@Override
 	public List<Skill> all() {
-		return jdbcTemplate.query("SELECT * FROM skills;", skillRowMapper);
+		return jdbcTemplate.query("SELECT * FROM skills ORDER BY name ASC;", skillRowMapper);
 	}
 
 	private static class SkillRowMapper implements RowMapper<Skill> {

@@ -83,7 +83,7 @@ public class JobOfferJDBCDao implements JobOfferDao {
 
 	@Override
 	public List<JobOffer> all() {
-		return jdbcTemplate.query("SELECT * FROM job_offers;", jobOfferRowMapper);
+		return jdbcTemplate.query("SELECT * FROM job_offers ORDER BY created_at DESC;", jobOfferRowMapper);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class JobOfferJDBCDao implements JobOfferDao {
 
 	@Override
 	public List<JobOffer> userJobOffers(Long userId) {
-		return jdbcTemplate.query("SELECT * FROM job_offers WHERE user_id = ?;", jobOfferRowMapper, userId);
+		return jdbcTemplate.query("SELECT * FROM job_offers WHERE user_id = ? ORDER BY created_at DESC;", jobOfferRowMapper, userId);
 	}
 
 	@Override

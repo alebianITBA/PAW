@@ -59,7 +59,7 @@ public class PostJDBCDao implements PostDao {
 
 	@Override
 	public List<Post> all() {
-		return jdbcTemplate.query("SELECT * FROM posts;", postRowMapper);
+		return jdbcTemplate.query("SELECT * FROM posts ORDER BY created_at DESC;", postRowMapper);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class PostJDBCDao implements PostDao {
 
 	@Override
 	public List<Post> userPosts(Long userId) {
-		return jdbcTemplate.query("SELECT * FROM posts WHERE user_id = ?;", postRowMapper, userId);
+		return jdbcTemplate.query("SELECT * FROM posts WHERE user_id = ? ORDER BY created_at DESC;", postRowMapper, userId);
 	}
 
 	@Override
