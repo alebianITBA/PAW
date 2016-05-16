@@ -2,6 +2,8 @@
 # Created by https://www.gitignore.io/api/java,intellij,eclipse,maven
 
 ### Java ###
+.settings/
+.settings/**/*
 *.class
 *.lst
 
@@ -22,6 +24,8 @@ hs_err_pid*
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
+.idea/
+.idea/**/*
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/dictionaries
