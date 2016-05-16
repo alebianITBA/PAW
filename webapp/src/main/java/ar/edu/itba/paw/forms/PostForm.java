@@ -5,26 +5,26 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class PostForm {
 
-	@NotBlank
-	@Length(max = 255)
-	private String title;
+  @NotBlank
+  @Length(max = 255)
+  private String title;
 
-	@NotBlank
-	private String description;
+  @NotBlank
+  private String description;
 
-	public String getTitle() {
-		return title;
-	}
+  public String getTitle() {
+    return title;
+  }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public String getDescription() {
+    return description;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

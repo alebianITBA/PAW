@@ -1,19 +1,19 @@
 package ar.edu.itba.paw.interfaces;
 
-import java.util.List;
-
 import ar.edu.itba.paw.models.Skill;
+
+import java.util.List;
 
 public interface JobOfferSkillDao {
 
-	void create(Long jobOfferId, Long skillId);
+  void create(Long jobOfferId, Long skillId);
 
-	void delete(Long id);
-	
-	void removeJobOfferSkills(Long jobOfferId);
+  void delete(Long id);
 
-	void removeJobOfferSkill(Long jobOfferId, Long skillId);
+  void removeJobOfferSkills(Long jobOfferId);
 
-	List<Skill> jobOfferSkills(Long jobOfferId);
+  void removeJobOfferSkill(Long jobOfferId, Long skillId);
+
+  List<Skill> jobOfferSkills(Long jobOfferId);
 
 }

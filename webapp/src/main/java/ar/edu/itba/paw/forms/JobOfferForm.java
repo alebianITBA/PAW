@@ -5,37 +5,37 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class JobOfferForm {
 
-	@NotBlank
-	@Length(max = 255)
-	private String title;
+  @NotBlank
+  @Length(max = 255)
+  private String title;
 
-	@NotBlank
-	private String description;
+  @NotBlank
+  private String description;
 
-	private String selectedSkillIds;
+  private String selectedSkillIds;
 
-	public String getTitle() {
-		return title;
-	}
+  public String getTitle() {
+    return title;
+  }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public String getDescription() {
+    return description;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-	public String getSelectedSkillIds() {
-		return selectedSkillIds;
-	}
+  public String getSelectedSkillIds() {
+    return selectedSkillIds;
+  }
 
-	public void setSelectedSkillIds(String selectedSkillIds) {
-		this.selectedSkillIds = selectedSkillIds;
-	}
+  public void setSelectedSkillIds(String selectedSkillIds) {
+    this.selectedSkillIds = selectedSkillIds;
+  }
 
 }

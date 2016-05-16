@@ -1,23 +1,23 @@
 package ar.edu.itba.paw.interfaces;
 
-import java.util.List;
-
 import ar.edu.itba.paw.models.Skill;
+
+import java.util.List;
 
 public interface SkillService {
 
-	void create(String name);
+  void create(String name);
 
-	void delete(Long id);
+  void delete(Long id);
 
-	void update(Long id, String name);
+  void update(Long id, String name);
 
-	Long count();
+  Long count();
 
-	Skill find(Long id);
+  Skill find(Long id);
 
-	Skill findByName(String name);
+  Skill findByName(String name);
 
-	List<Skill> all();
+  List<Skill> all();
 
 }

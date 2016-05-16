@@ -8,23 +8,23 @@ import ar.edu.itba.paw.forms.RegisterForm;
 
 public class PasswordValidator implements Validator {
 
-	@Override
-	public boolean supports(Class clazz) {
-		return RegisterForm.class.isAssignableFrom(clazz);
-	}
+  @Override
+  public boolean supports(Class clazz) {
+    return RegisterForm.class.isAssignableFrom(clazz);
+  }
 
-	@Override
-	public void validate(Object target, Errors errors) {
-		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword",
-				"NotBlank.registerForm.confirmPassword");
-		
-		RegisterForm form = (RegisterForm)target;
-		
-		if(!(form.getPassword().equals(form.getConfirmPassword()))){
-			errors.rejectValue("confirmPassword", "NotMatch.password");
-		}
-		
-	}
-	
+  @Override
+  public void validate(Object target, Errors errors) {
+
+    ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword",
+        "NotBlank.registerForm.confirmPassword");
+
+    RegisterForm form = (RegisterForm)target;
+
+    if(!(form.getPassword().equals(form.getConfirmPassword()))) {
+      errors.rejectValue("confirmPassword", "NotMatch.password");
+    }
+
+  }
+
 }
