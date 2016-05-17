@@ -8,7 +8,7 @@
 
 <div class="container-fluid">
 
-    <div class="row register-background">
+    <div class="row register-background" style="background-image: url('<c:url value='/img/register-background.jpg'/>');">
         <div class="col-md-4 col-md-offset-4">
 
             <div class="register-panel">

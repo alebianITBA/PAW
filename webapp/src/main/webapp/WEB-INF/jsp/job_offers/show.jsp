@@ -54,7 +54,8 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="<c:url value='/users/${application.user.id}'/>">
-                                            <img class="user-placeholder" src="/grupo5/img/user-placeholder.png"></a>
+                                          <img class="user-placeholder" src="${application.user.gravatar}">
+                                        </a>
                                         </div>
                                         <div class="media-body">
                                             <h3 class="media-heading">${application.user.firstName} ${application.user.lastName}</h3>

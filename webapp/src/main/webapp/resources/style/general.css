@@ -163,7 +163,6 @@ body{
 
 /* REGISTER */
 .register-background{
-  background-image: url("/grupo5/img/register-background.jpg");
   background-size: cover;
   background-color: #808080;
 }
