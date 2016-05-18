@@ -3,26 +3,82 @@ package ar.edu.itba.paw.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "job_offers")
 public class JobOffer {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "job_offers_id_seq")
+	@SequenceGenerator(sequenceName = "job_offers_id_seq", name = "job_offers_id_seq", allocationSize = 1)
+	@Column(name = "id")
 	private Long id;
+
+	@Column(name = "title", length = 255)
 	private String title;
+
+	@Column(name = "description", length = 2048)
 	private String description;
-	private Long userId;
+
+	@Column(name = "created_at")
 	private Date createdAt;
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@JoinTable(name = "job_offer_skills", joinColumns = {
+			@JoinColumn(name = "job_offer_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "skill_id", referencedColumnName = "id") })
+	@OrderBy("name ASC")
 	private List<Skill> skills;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
 	private User user;
 
-	public JobOffer() {
-
+	protected JobOffer() {
+		/* Just for Hibernate */
 	}
 
-	public JobOffer(Long id, String title, String description, Long userId, Date createdAt) {
+	public JobOffer(Long id, String title, String description, User user, Date createdAt) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.userId = userId;
+		this.user = user;
 		this.createdAt = createdAt;
 	}
+	
+	public JobOffer(String title, String description, User user, List<Skill> skills, Date createdAt) {
+		this.title = title;
+		this.description = description;
+		this.user = user;
+		this.skills = skills;
+		this.createdAt = createdAt;
+	}
+
+	public JobOffer(String title, String description, User user, Date createdAt) {
+		this.title = title;
+		this.description = description;
+		this.user = user;
+		this.createdAt = createdAt;
+	}
+	
+	@Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 
 	@Override
 	public boolean equals(Object other) {
@@ -50,11 +106,22 @@ public class JobOffer {
 			return false;
 		}
 
-		if (!(userId == otherOffer.userId)) {
-			return false;
+		if (user != null) {
+			if (!(user.equals(otherOffer.user))) {
+				return false;
+			}
+		} else {
+			if (otherOffer.user != null) {
+				return false;
+			}
 		}
 
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "[ JOB OFFER: " + title + " OF USER: " + user.getId() + " ]";
 	}
 
 	public Long getId() {
@@ -67,10 +134,6 @@ public class JobOffer {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public Long getUserId() {
-		return userId;
 	}
 
 	public Date getCreatedAt() {
@@ -87,10 +150,6 @@ public class JobOffer {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	public void setCreatedAt(Date createdAt) {

@@ -31,6 +31,13 @@ public class UserTest {
     }
 	
 	@Test
+    public void userHashCode() {
+        User user = new User(ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        
+        assertEquals(1, user.hashCode());
+    }
+	
+	@Test
 	public void userEquals() {
 		User fullUser = new User(ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
 		User differentUser = new User(ID, LAST_NAME, FIRST_NAME, EMAIL, PASSWORD);

@@ -1,12 +1,14 @@
 package ar.edu.itba.paw.interfaces;
 
-import ar.edu.itba.paw.models.JobApplication;
-
 import java.util.List;
+
+import ar.edu.itba.paw.models.JobApplication;
+import ar.edu.itba.paw.models.JobOffer;
+import ar.edu.itba.paw.models.User;
 
 public interface JobApplicationService {
 
-  void create(String description, Long userId, Long jobOfferId);
+  void create(String description, User user, JobOffer jobOffer);
 
   void delete(Long id);
 

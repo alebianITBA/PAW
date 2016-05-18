@@ -122,11 +122,11 @@ public class JobApplicationJDBCDaoTest extends DaoTest {
 		jobOfferCreator = userDao.findByEmail("pepe@pepe.com");
 		jobApplicator = userDao.findByEmail("tito@pepe.com");
 		
-		jobOfferDao.create(TITLE, DESCRIPTION, jobOfferCreator.getId());
+		//jobOfferDao.create(TITLE, DESCRIPTION, jobOfferCreator.getId());
 		
 		offer = jobOfferDao.userJobOffers(jobOfferCreator.getId()).get(0);
 		
-		jobApplicationDao.create(DESCRIPTION, jobApplicator.getId(), offer.getId());
+		//jobApplicationDao.create(DESCRIPTION, jobApplicator.getId(), offer.getId());
 	}
 
 }

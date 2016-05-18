@@ -24,21 +24,25 @@ public class PostsController extends ApplicationController {
 
 	@RequestMapping(path = "/posts/{id}", method = RequestMethod.DELETE)
 	public ModelAndView deletePost(@PathVariable final Long id) {
+		
 		Post post = postService.find(id);
-		if (post.getUserId() == getLoggedUser().getId()) {
+		if (post.getUser().equals(getLoggedUser())) {
 			postService.delete(id);
 		}
+		
 		return new ModelAndView("redirect:/users/me");
 	}
 
 	@RequestMapping(path = "/posts", method = RequestMethod.POST)
 	public String createPost(@Valid @ModelAttribute("postForm") final PostForm postForm, final BindingResult binding,
 			RedirectAttributes attr) {
+		
 		if (binding.hasErrors()) {
 			attr.addFlashAttribute("postForm", postForm);
 		} else {
-			postService.create(postForm.getTitle(), postForm.getDescription(), getLoggedUser().getId());
+			postService.create(postForm.getTitle(), postForm.getDescription(), getLoggedUser());
 		}
+		
 		return "redirect:/index";
 	}
 

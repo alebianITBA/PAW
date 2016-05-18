@@ -1,154 +1,127 @@
 package ar.edu.itba.paw.services;
 
-import ar.edu.itba.paw.interfaces.JobApplicationService;
-import ar.edu.itba.paw.interfaces.JobOfferDao;
-import ar.edu.itba.paw.interfaces.JobOfferService;
-import ar.edu.itba.paw.interfaces.JobOfferSkillService;
-import ar.edu.itba.paw.interfaces.UserService;
-import ar.edu.itba.paw.models.JobOffer;
-import ar.edu.itba.paw.models.Skill;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import ar.edu.itba.paw.interfaces.JobOfferDao;
+import ar.edu.itba.paw.interfaces.JobOfferService;
+import ar.edu.itba.paw.interfaces.SkillService;
+import ar.edu.itba.paw.models.JobOffer;
+import ar.edu.itba.paw.models.Skill;
+import ar.edu.itba.paw.models.User;
 
 @Service
 public class JobOfferServiceImpl implements JobOfferService {
 
-  @Autowired
-  private JobOfferDao jobOfferDao;
+	@Autowired
+	private JobOfferDao jobOfferDao;
 
-  @Autowired
-  private JobApplicationService jobApplicationService;
+	@Autowired
+	private SkillService skillService;
 
-  @Autowired
-  private JobOfferSkillService jobOfferSkillService;
+	public void setJobOfferDao(JobOfferDao jobOfferDao) {
+		this.jobOfferDao = jobOfferDao;
+	}
 
-  @Autowired
-  private UserService userService;
+	@Override
+	@Transactional
+	public void create(String title, String description, User user) {
+		jobOfferDao.create(title, description, user);
+	}
 
-  public void setJobOfferDao(JobOfferDao jobOfferDao) {
-    this.jobOfferDao = jobOfferDao;
-  }
+	@Override
+	@Transactional
+	public void create(String title, String description, User user, String skills) {
+		List<Skill> skillList = new ArrayList<Skill>();
+		if (skills != null && !skills.isEmpty()) {
+			String[] skillIds = skills.split(",");
+			for (String skillId : skillIds) {
+				skillList.add(skillService.find(Long.getLong(skillId)));
+			}
+		}
+		jobOfferDao.create(title, description, user, skillList);
+	}
 
-  @Override
-  public Long create(String title, String description, Long userId) {
-    return jobOfferDao.create(title, description, userId);
-  }
-  
-  @Override
-  public Long create(String title, String description, Long userId, String skills) {
-    Long id = jobOfferDao.create(title, description, userId);
-    if (skills != null && !skills.isEmpty()) {
-        String[] skillIds = skills.split(",");
-        for (String skillId : skillIds) {
-          jobOfferSkillService.create(id, new Long(skillId));
-        }
-      }
-    return id;
-  }
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		jobOfferDao.delete(id);
+	}
 
-  @Override
-  public void delete(Long id) {
-    jobOfferSkillService.removeJobOfferSkills(id);
-    jobApplicationService.removeJobOfferApplications(id);
-    jobOfferDao.delete(id);
-  }
+	@Override
+	@Transactional
+	public void update(Long id, String title, String description) {
+		jobOfferDao.update(id, title, description);
+	}
 
-  @Override
-  public void update(Long id, String title, String description) {
-    jobOfferDao.update(id, title, description);
-  }
+	@Override
+	@Transactional
+	public Long count() {
+		return jobOfferDao.count();
+	}
 
-  @Override
-  public Long count() {
-    return jobOfferDao.count();
-  }
+	@Override
+	@Transactional
+	public JobOffer find(Long id) {
+		return jobOfferDao.find(id);
+	}
 
-  @Override
-  public JobOffer find(Long id) {
-    JobOffer offer = jobOfferDao.find(id);
-    addSkillsToOffer(offer);
-    addUserToOffer(offer);
-    return offer;
-  }
+	@Override
+	@Transactional
+	public List<JobOffer> all() {
+		return jobOfferDao.all();
+	}
 
-  @Override
-  public List<JobOffer> all() {
-    List<JobOffer> offers = jobOfferDao.all();
-    for (JobOffer offer : offers) {
-      addSkillsToOffer(offer);
-      addUserToOffer(offer);
-    }
-    return offers;
-  }
+	@Override
+	@Transactional
+	public List<JobOffer> all(Integer page, Integer perPage) {
+		return jobOfferDao.all(page, perPage);
+	}
 
-  @Override
-  public List<JobOffer> all(Integer page, Integer perPage) {
-    List<JobOffer> offers = jobOfferDao.all(page, perPage);
-    for (JobOffer offer : offers) {
-      addSkillsToOffer(offer);
-      addUserToOffer(offer);
-    }
-    return offers;
-  }
+	@Override
+	@Transactional
+	public List<JobOffer> userJobOffers(Long userId) {
+		return jobOfferDao.userJobOffers(userId);
+	}
 
-  @Override
-  public List<JobOffer> userJobOffers(Long userId) {
-    List<JobOffer> offers = jobOfferDao.userJobOffers(userId);
-    for (JobOffer offer : offers) {
-      addSkillsToOffer(offer);
-      addUserToOffer(offer);
-    }
-    return offers;
-  }
+	@Override
+	@Transactional
+	public List<JobOffer> userJobOffers(Long userId, Integer page, Integer perPage) {
+		return jobOfferDao.userJobOffers(userId, page, perPage);
+	}
 
-  @Override
-  public List<JobOffer> userJobOffers(Long userId, Integer page, Integer perPage) {
-    List<JobOffer> offers = jobOfferDao.userJobOffers(userId, page, perPage);
-    for (JobOffer offer : offers) {
-      addSkillsToOffer(offer);
-      addUserToOffer(offer);
-    }
-    return offers;
-  }
+	@Override
+	@Transactional
+	public List<JobOffer> withSkills(List<Skill> skills) {
+		if (skills == null || skills.isEmpty()) {
+			return all();
+		}
+		return jobOfferDao.withSkills(skills);
+	}
 
-  @Override
-  public List<JobOffer> withSkills(List<Skill> skills) {
-    if (skills == null || skills.isEmpty()) {
-      return all();
-    }
+	@Override
+	@Transactional
+	public List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage) {
+		if (skills == null || skills.isEmpty()) {
+			return all(page, perPage);
+		}
+		return jobOfferDao.withSkills(skills, page, perPage);
+	}
 
-    List<JobOffer> offers = jobOfferDao.withSkills(skills);
-    for (JobOffer offer : offers) {
-      addSkillsToOffer(offer);
-      addUserToOffer(offer);
-    }
-    return offers;
-  }
+	@Override
+	@Transactional
+	public List<JobOffer> notFromUser(Long userId) {
+		return jobOfferDao.notFromUser(userId);
+	}
 
-  @Override
-  public List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage) {
-    if (skills == null || skills.isEmpty()) {
-      return all(page, perPage);
-    }
-
-    List<JobOffer> offers = jobOfferDao.withSkills(skills, page, perPage);
-    for (JobOffer offer : offers) {
-      addSkillsToOffer(offer);
-      addUserToOffer(offer);
-    }
-    return offers;
-  }
-
-  private void addSkillsToOffer(JobOffer offer) {
-    List<Skill> skills = jobOfferSkillService.jobOfferSkills(offer.getId());
-    offer.setSkills(skills);
-  }
-
-  private void addUserToOffer(JobOffer offer) {
-    offer.setUser(userService.find(offer.getUserId()));
-  }
+	@Override
+	@Transactional
+	public List<JobOffer> notFromUser(Long userId, Integer page, Integer perPage) {
+		return jobOfferDao.notFromUser(userId, page, perPage);
+	}
 
 }

@@ -1,34 +1,39 @@
 package ar.edu.itba.paw.interfaces;
 
+import java.util.List;
+
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
-
-import java.util.List;
+import ar.edu.itba.paw.models.User;
 
 public interface JobOfferService {
 
-  Long create(String title, String description, Long userId);
-  
-  Long create(String title, String description, Long userId, String skills);
+	void create(String title, String description, User user);
 
-  void delete(Long id);
+	void create(String title, String description, User user, String skills);
 
-  void update(Long id, String title, String description);
+	void delete(Long id);
 
-  Long count();
+	void update(Long id, String title, String description);
 
-  JobOffer find(Long id);
+	Long count();
 
-  List<JobOffer> all();
+	JobOffer find(Long id);
 
-  List<JobOffer> all(Integer page, Integer perPage);
+	List<JobOffer> all();
 
-  List<JobOffer> userJobOffers(Long userId);
+	List<JobOffer> all(Integer page, Integer perPage);
 
-  List<JobOffer> userJobOffers(Long userId, Integer page, Integer perPage);
+	List<JobOffer> userJobOffers(Long userId);
 
-  List<JobOffer> withSkills(List<Skill> skills);
+	List<JobOffer> userJobOffers(Long userId, Integer page, Integer perPage);
 
-  List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage);
+	List<JobOffer> withSkills(List<Skill> skills);
+
+	List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage);
+
+	List<JobOffer> notFromUser(Long userId);
+
+	List<JobOffer> notFromUser(Long userId, Integer page, Integer perPage);
 
 }

@@ -27,7 +27,7 @@
                 <div class="l_g_r b-margin">
                     <div class="dapibus biography-into">
                       <div>
-                          <c:if test="${job.userId == loggedUser.id}">
+                          <c:if test="${job.user.id == loggedUser.id}">
                             <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>">
                               <span class="glyphicon glyphicon-pencil"/>
                             </div>

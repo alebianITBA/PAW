@@ -25,7 +25,6 @@ import ar.edu.itba.paw.enums.JobOfferStatus;
 import ar.edu.itba.paw.forms.JobOfferForm;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
-import ar.edu.itba.paw.interfaces.JobOfferSkillService;
 import ar.edu.itba.paw.interfaces.SkillService;
 import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.JobOffer;
@@ -45,67 +44,79 @@ public class JobOffersController extends ApplicationController {
 	@Autowired
 	private SkillService skillService;
 
-	@Autowired
-	private JobOfferSkillService jobOfferSkillService;
-
 	@RequestMapping(path = "/job_offers", method = RequestMethod.GET)
 	public ModelAndView jobOffers(@RequestParam(required = false, value = "skill_id") final Long skillId,
 			@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm, final BindingResult binding) {
+		
 		ModelAndView mav = new ModelAndView("job_offers/index");
+		
 		mav.addAllObjects(getJobOffersMap(skillId));
 		mav.addObject("jobOfferForm", jobOfferForm);
 		// TODO: This doesn't work
 		mav.addObject("errors", binding);
+		
 		return mav;
 	}
 
 	@RequestMapping(path = "/job_offers", method = RequestMethod.POST)
 	public String createJobOffer(@Valid @ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
 			final BindingResult binding, RedirectAttributes attr) {
+		
 		if (!binding.hasErrors()) {
-			jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(), getLoggedUser().getId(),
+			jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(), getLoggedUser(),
 					jobOfferForm.getSelectedSkillIds());
 		}
 		attr.addFlashAttribute("org.springframework.validation.BindingResult.jobOfferForm", binding);
 		attr.addFlashAttribute("jobOfferForm", jobOfferForm);
+		
 		return "redirect:/job_offers";
 	}
 
 	@RequestMapping(path = "/job_offers/{id}", method = RequestMethod.GET)
 	public ModelAndView getJobOffer(@PathVariable final Long id) {
+		
+		JobOffer offer = jobOfferService.find(id);
+		
+		if (offer == null) {
+			return new ModelAndView("redirect:/not_found");
+		}
+		
 		final ModelAndView mav = new ModelAndView("job_offers/show");
-		mav.addObject("job", jobOfferService.find(id));
+		
+		mav.addObject("job", offer);
+		mav.addObject("userApply", null);
 
-		mav.addObject("userApply", new User());
-
-		java.util.List<JobApplication> applications = jobApplicationService.jobOfferApplications(id);
-		java.util.List<Skill> jobOfferSkills = jobOfferSkillService.jobOfferSkills(id);
+		List<JobApplication> applications = jobApplicationService.jobOfferApplications(id);
 
 		boolean alreadyApplied = false;
 		for (JobApplication application : applications) {
-			if (application.getUserId() == getLoggedUser().getId()) {
+			if (application.getUser().getId() == getLoggedUser().getId()) {
 				alreadyApplied = true;
 				break;
 			}
 		}
 
-		mav.addObject("jobOfferSkills", jobOfferSkills);
-		mav.addObject("quantityApplications", applications != null ? applications.size() : 0);
+		mav.addObject("jobOfferSkills", offer.getSkills());
+		mav.addObject("quantityApplications", applications.size());
 		mav.addObject("applications", applications);
 		mav.addObject("alreadyApplied", alreadyApplied);
+		
 		return mav;
 	}
 
 	@RequestMapping(path = "/job_offers/{id}", method = RequestMethod.DELETE)
 	public String deleteJobOffer(@PathVariable final Long id) {
+		
 		JobOffer offer = jobOfferService.find(id);
-		if (offer.getUserId() == getLoggedUser().getId()) {
+		if (offer.getUser().getId() == getLoggedUser().getId()) {
 			jobOfferService.delete(id);
 		}
+		
 		return "redirect:/users/me";
 	}
 
 	private Map<String, Object> getJobOffersMap(Long skillId) {
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		User loggedUser = getLoggedUser();
@@ -130,7 +141,7 @@ public class JobOffersController extends ApplicationController {
 			} else {
 				boolean alreadyApply = false;
 				for (JobApplication application : alreadyApplies) {
-					if (application.getJobOfferId() == offerDTO.getId()) {
+					if (application.getJobOffer().getId() == offerDTO.getId()) {
 						alreadyApply = true;
 						break;
 					}
@@ -148,6 +159,7 @@ public class JobOffersController extends ApplicationController {
 		map.put("jobOfferForm", new JobOfferForm());
 		map.put("job_offers", jobOfferListDTO);
 		map.put("skills", skillService.all());
+		
 		return map;
 	}
 

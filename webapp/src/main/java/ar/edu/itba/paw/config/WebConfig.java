@@ -1,5 +1,11 @@
 package ar.edu.itba.paw.config;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Properties;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -8,9 +14,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -18,15 +26,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import java.nio.charset.StandardCharsets;
-
-import javax.sql.DataSource;
-
 @EnableWebMvc
 @ComponentScan({ "ar.edu.itba.paw.controllers", "ar.edu.itba.paw.services", "ar.edu.itba.paw.persistence" })
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
-	
+
 	private static final int CACHE_DURATION_SECONDS = 5;
 	private static final String RESOURCES_DIR = "/resources/";
 	private static final String RESOURCES_PATH = "/**";
@@ -46,20 +50,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	public DataSourceInitializer dataSourceInitializer(final DataSource ds) {
-		final DataSourceInitializer dsi = new DataSourceInitializer();
-		dsi.setDataSource(ds);
-		dsi.setDatabasePopulator(databasePopulator());
-		return dsi;
-	}
-
-	private DatabasePopulator databasePopulator() {
-		final ResourceDatabasePopulator dbp = new ResourceDatabasePopulator();
-		dbp.addScript(schemaSql);
-		return dbp;
-	}
-
-	@Bean
 	public DataSource dataSource() throws ClassNotFoundException {
 		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
 		if (System.getenv().containsKey("PAW_ENVIRONMENT") && System.getenv("PAW_ENVIRONMENT").equals("development")) {
@@ -74,6 +64,29 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 			ds.setPassword("yoo9oTh0");
 		}
 		return ds;
+	}
+
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
+		final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+		factoryBean.setPackagesToScan("ar.edu.itba.paw.models");
+		factoryBean.setDataSource(dataSource());
+
+		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		factoryBean.setJpaVendorAdapter(vendorAdapter);
+
+		final Properties properties = new Properties();
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
+
+		factoryBean.setJpaProperties(properties);
+
+		return factoryBean;
+	}
+
+	@Bean
+	public PlatformTransactionManager transactionManager(final EntityManagerFactory emf) {
+		return new JpaTransactionManager(emf);
 	}
 
 	@Bean

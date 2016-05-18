@@ -37,7 +37,7 @@
                                     <p>${post.description}</p>
                                     <div>
                                       <div class="apply-button">
-                                        <c:if test="${post.userId == loggedUser.id}">
+                                        <c:if test="${post.user.id == loggedUser.id}">
                                           <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>">
                                             <span class="glyphicon glyphicon-pencil"/>
                                           </div>
@@ -72,7 +72,7 @@
                                             </div>
                                             <div>
                                               <div class="apply-button">
-                                                <c:if test="${offer.userId == loggedUser.id}">
+                                                <c:if test="${offer.user.id == loggedUser.id}">
                                                   <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>">
                                                     <span class="glyphicon glyphicon-pencil"/>
                                                   </div>

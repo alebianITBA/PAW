@@ -27,6 +27,7 @@ import ar.edu.itba.paw.helpers.PaginationHelper;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.PostService;
 import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.validators.PasswordValidator;
 
 @Controller
@@ -50,23 +51,36 @@ public class UsersController extends ApplicationController {
 
 	@RequestMapping(path = "/users", method = RequestMethod.GET)
 	public ModelAndView listUser(@RequestParam(required = false, value = "page") final Integer pageParam) {
+		
 		final ModelAndView mav = new ModelAndView("users/index");
+		
 		mav.addObject("users",
-				userService.all(PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.INSTANCE.perPage()));
+				userService.all(PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.DEFAULT_PER_PAGE));
+		mav.addObject("item_count", userService.count());
+		
 		return mav;
 	}
 
 	@RequestMapping(path = "/users/{id}", method = RequestMethod.GET)
 	public ModelAndView getUser(@PathVariable final Long id) {
+		
+		User user = userService.find(id);
+		if (user == null) {
+			return new ModelAndView("redirect:/not_found");
+		}
+		
 		final ModelAndView mav = new ModelAndView("users/show");
-		mav.addObject("user", userService.find(id));
+		
+		mav.addObject("user", user);
 		mav.addObject("posts", postService.userPosts(id));
 		mav.addObject("offers", jobOfferService.userJobOffers(id));
+		
 		return mav;
 	}
 
 	@RequestMapping(path = "/users/me", method = RequestMethod.GET)
 	public String me() {
+		
 		return "forward:/users/" + getLoggedUser().getId().toString();
 	}
 
@@ -88,6 +102,7 @@ public class UsersController extends ApplicationController {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(registerForm.getEmail());
 
 			try {
+				// TODO: See if this line is useful, else remove it
 				SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 				SecurityContextHolder.getContext().setAuthentication(null);
 				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails,
@@ -99,7 +114,6 @@ public class UsersController extends ApplicationController {
 					SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 				}
 			} catch (Exception ex) {
-
 			}
 
 			return "redirect:/index";

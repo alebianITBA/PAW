@@ -1,24 +1,46 @@
 package ar.edu.itba.paw.models;
 
-import ar.edu.itba.paw.utils.MD5Util;
-
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
-public class User {
-	private Long id;
-	private String firstName;
-	private String lastName;
-	private String email;
-	private String password;
-	private Date createdAt;
-	private List<Skill> skills;
-	private static User nullUser;
+import javax.persistence.*;
 
-	public User() {
+import ar.edu.itba.paw.utils.MD5Util;
+
+@Entity
+@Table(name = "users")
+public class User {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
+	@SequenceGenerator(sequenceName = "users_id_seq", name = "users_id_seq", allocationSize = 1)
+	@Column(name = "id")
+	private Long id;
+
+	@Column(name = "first_name", length = 255)
+	private String firstName;
+
+	@Column(name = "last_name", length = 255)
+	private String lastName;
+
+	@Column(name = "email", nullable = false, unique = true, length = 255)
+	private String email;
+
+	@Column(name = "password", nullable = false, length = 255)
+	private String password;
+
+	@Column(name = "created_at")
+	private Date createdAt;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@JoinTable(name = "user_skills", joinColumns = {
+			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "skill_id", referencedColumnName = "id") })
+	@OrderBy("name ASC")
+	private List<Skill> skills;
+
+	protected User() {
+		/* Just for Hibernate */
 	}
 
 	public User(Long id, String firstName, String lastName, String email, String password, Date createdAt) {
@@ -29,7 +51,7 @@ public class User {
 		this.password = password;
 		this.createdAt = new Date(createdAt.getTime());
 	}
-	
+
 	public User(Long id, String firstName, String lastName, String email, String password) {
 		this.id = id;
 		this.firstName = firstName;
@@ -38,12 +60,18 @@ public class User {
 		this.password = password;
 	}
 
-	public static User nullUser() {
-		if (nullUser == null) {
-			nullUser = new User(0L, "Null", "User", "null@null.com", "nullpassword", new Date());
-		}
-		return nullUser;
+	public User(String firstName, String lastName, String email, String password, Date createdAt) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.createdAt = createdAt;
 	}
+	
+	@Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 
 	@Override
 	public boolean equals(Object other) {
@@ -62,19 +90,19 @@ public class User {
 		if (!(id == otherUser.id)) {
 			return false;
 		}
-		
+
 		if (!(firstName == otherUser.firstName)) {
 			return false;
 		}
-		
+
 		if (!(lastName == otherUser.lastName)) {
 			return false;
 		}
-		
+
 		if (!(email == otherUser.email)) {
 			return false;
 		}
-		
+
 		if (!(password == otherUser.password)) {
 			return false;
 		}
@@ -104,14 +132,6 @@ public class User {
 
 	public Date getCreatedAt() {
 		return new Date(createdAt.getTime());
-	}
-
-	public static User getNullUser() {
-		return nullUser;
-	}
-
-	public static void setNullUser(User nullUser) {
-		User.nullUser = nullUser;
 	}
 
 	public void setId(Long id) {

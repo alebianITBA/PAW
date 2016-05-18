@@ -40,11 +40,19 @@ public class HomeController extends ApplicationController {
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public ModelAndView home(@ModelAttribute("registerForm") final RegisterForm registerForm,
 			final BindingResult binding) {
+		
 		final ModelAndView mav = new ModelAndView("register");
+		
 		mav.addObject("registerForm", registerForm);
 		// TODO: This doesn't work
 		mav.addObject("errors", binding);
+		
 		return mav;
+	}
+	
+	@RequestMapping(path = "/not_found", method = RequestMethod.GET)
+	public String notFound() {
+		return "404";
 	}
 
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
@@ -57,14 +65,15 @@ public class HomeController extends ApplicationController {
 		return mav;
 	}
 
+	// TODO: put this somewhere else
 	private Map<String, Object> getIndexAttributes() {
 		User loggedUser = getLoggedUser();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("postForm", new PostForm());
 		map.put("loggedUser", loggedUser);
-		map.put("posts", postService.all(1, 50));
+		map.put("posts", postService.all());
 
-		List<JobOffer> jobOfferList = jobOfferService.withSkills(getLoggedUser().getSkills(), 1, 10);
+		List<JobOffer> jobOfferList = jobOfferService.notFromUser(getLoggedUser().getId(), 1, 10);
 		jobOfferList.subList(0, Math.max(jobOfferList.size(), (int) Math.floor(Math.random() * jobOfferList.size())));
 
 		List<JobApplication> alreadyApplies = jobApplicationService.userJobApplications(loggedUser.getId());
@@ -77,7 +86,7 @@ public class HomeController extends ApplicationController {
 			} else {
 				boolean alreadyApply = false;
 				for (JobApplication application : alreadyApplies) {
-					if (application.getJobOfferId() == offerDTO.getId()) {
+					if (application.getJobOffer().getId() == offerDTO.getId()) {
 						alreadyApply = true;
 						break;
 					}

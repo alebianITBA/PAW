@@ -1,114 +1,93 @@
 package ar.edu.itba.paw.services;
 
-import ar.edu.itba.paw.interfaces.JobApplicationDao;
-import ar.edu.itba.paw.interfaces.JobApplicationService;
-import ar.edu.itba.paw.interfaces.UserService;
-import ar.edu.itba.paw.models.JobApplication;
-import ar.edu.itba.paw.models.User;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import ar.edu.itba.paw.interfaces.JobApplicationDao;
+import ar.edu.itba.paw.interfaces.JobApplicationService;
+import ar.edu.itba.paw.models.JobApplication;
+import ar.edu.itba.paw.models.JobOffer;
+import ar.edu.itba.paw.models.User;
 
 @Service
 public class JobApplicationServiceImpl implements JobApplicationService {
 
-  @Autowired
-  private JobApplicationDao jobApplicationDao;
+	@Autowired
+	private JobApplicationDao jobApplicationDao;
 
-  @Autowired
-  private UserService userService;
+	@Override
+	@Transactional
+	public void create(String description, User user, JobOffer jobOffer) {
+		jobApplicationDao.create(description, user, jobOffer);
+	}
 
-  @Override
-  public void create(String description, Long userId, Long jobOfferId) {
-    jobApplicationDao.create(description, userId, jobOfferId);
-  }
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		jobApplicationDao.delete(id);
+	}
 
-  @Override
-  public void delete(Long id) {
-    jobApplicationDao.delete(id);
-  }
+	@Override
+	@Transactional
+	public void update(Long id, String description) {
+		jobApplicationDao.update(id, description);
+	}
 
-  @Override
-  public void update(Long id, String description) {
-    jobApplicationDao.update(id, description);
-  }
+	@Override
+	@Transactional
+	public Long count() {
+		return jobApplicationDao.count();
+	}
 
-  @Override
-  public Long count() {
-    return jobApplicationDao.count();
-  }
+	@Override
+	@Transactional
+	public JobApplication find(Long id) {
+		return jobApplicationDao.find(id);
+	}
 
-  @Override
-  public JobApplication find(Long id) {
-    JobApplication application = jobApplicationDao.find(id);
-    addUserToApplication(application);
-    return application;
-  }
+	@Override
+	@Transactional
+	public List<JobApplication> all() {
+		return jobApplicationDao.all();
+	}
 
-  @Override
-  public List<JobApplication> all() {
-    List<JobApplication> applications = jobApplicationDao.all();
-    for (JobApplication application : applications) {
-      addUserToApplication(application);
-    }
-    return applications;
-  }
+	@Override
+	@Transactional
+	public List<JobApplication> all(Integer page, Integer perPage) {
+		return jobApplicationDao.all(page, perPage);
+	}
 
-  @Override
-  public List<JobApplication> all(Integer page, Integer perPage) {
-    List<JobApplication> applications = jobApplicationDao.all(page, perPage);
-    for (JobApplication application : applications) {
-      addUserToApplication(application);
-    }
-    return applications;
-  }
+	@Override
+	@Transactional
+	public List<JobApplication> userJobApplications(Long userId) {
+		return jobApplicationDao.userJobApplications(userId);
+	}
 
-  @Override
-  public List<JobApplication> userJobApplications(Long userId) {
-    List<JobApplication> applications = jobApplicationDao.userJobApplications(userId);
-    for (JobApplication application : applications) {
-      addUserToApplication(application);
-    }
-    return applications;
-  }
+	@Override
+	@Transactional
+	public List<JobApplication> userJobApplications(Long userId, Integer page, Integer perPage) {
+		return jobApplicationDao.userJobApplications(userId, page, perPage);
+	}
 
-  @Override
-  public List<JobApplication> userJobApplications(Long userId, Integer page, Integer perPage) {
-    List<JobApplication> applications = jobApplicationDao.userJobApplications(userId, page, perPage);
-    for (JobApplication application : applications) {
-      addUserToApplication(application);
-    }
-    return applications;
-  }
+	@Override
+	@Transactional
+	public List<JobApplication> jobOfferApplications(Long jobOfferId) {
+		return jobApplicationDao.jobOfferApplications(jobOfferId);
+	}
 
-  @Override
-  public List<JobApplication> jobOfferApplications(Long jobOfferId) {
-    List<JobApplication> applications = jobApplicationDao.jobOfferApplications(jobOfferId);
-    for (JobApplication application : applications) {
-      addUserToApplication(application);
-    }
-    return applications;
-  }
+	@Override
+	@Transactional
+	public List<JobApplication> jobOfferApplications(Long jobOfferId, Integer page, Integer perPage) {
+		return jobApplicationDao.jobOfferApplications(jobOfferId, page, perPage);
+	}
 
-  @Override
-  public List<JobApplication> jobOfferApplications(Long jobOfferId, Integer page, Integer perPage) {
-    List<JobApplication> applications = jobApplicationDao.jobOfferApplications(jobOfferId, page, perPage);
-    for (JobApplication application : applications) {
-      addUserToApplication(application);
-    }
-    return applications;
-  }
-
-  @Override
-  public void removeJobOfferApplications(Long jobOfferId) {
-    jobApplicationDao.removeJobOfferApplications(jobOfferId);
-  }
-
-  private void addUserToApplication(JobApplication application) {
-    User user = userService.find(application.getUserId());
-    application.setUser(user);
-  }
+	@Override
+	@Transactional
+	public void removeJobOfferApplications(Long jobOfferId) {
+		jobApplicationDao.removeJobOfferApplications(jobOfferId);
+	}
 
 }

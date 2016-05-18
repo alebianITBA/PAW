@@ -2,21 +2,63 @@ package ar.edu.itba.paw.models;
 
 import java.util.Date;
 
-public class Post {
-	private Long id;
-	private String title;
-	private String description;
-	private Long userId;
-	private Date createdAt;
-	private User user;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-	public Post(Long id, String title, String description, Long userId, Date createdAt) {
+@Entity
+@Table(name = "posts")
+public class Post {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "posts_id_seq")
+	@SequenceGenerator(sequenceName = "posts_id_seq", name = "posts_id_seq", allocationSize = 1)
+	@Column(name = "id")
+	private Long id;
+
+	@Column(name = "title", length = 255)
+	private String title;
+
+	@Column(name = "description", length = 2048)
+	private String description;
+
+	@Column(name = "created_at")
+	private Date createdAt;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	private User user;
+	
+	protected Post(){
+		/* Just for Hibernate */
+	}
+
+	public Post(Long id, String title, String description, User user, Date createdAt) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.userId = userId;
+		this.user = user;
 		this.createdAt = createdAt;
 	}
+
+	public Post(String title, String description, User user, Date createdAt) {
+		this.title = title;
+		this.description = description;
+		this.user = user;
+		this.createdAt = createdAt;
+	}
+	
+	@Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 
 	@Override
 	public boolean equals(Object other) {
@@ -30,25 +72,36 @@ public class Post {
 			return false;
 		}
 
-		Post otherSkill = (Post) other;
+		Post otherPost = (Post) other;
 
-		if (!(id == otherSkill.id)) {
+		if (!(id == otherPost.id)) {
 			return false;
 		}
 
-		if (!(title == otherSkill.title)) {
+		if (!(title == otherPost.title)) {
 			return false;
 		}
 
-		if (!(description == otherSkill.description)) {
+		if (!(description == otherPost.description)) {
 			return false;
 		}
 
-		if (!(userId == otherSkill.userId)) {
-			return false;
+		if (user != null) {
+			if (!(user.equals(otherPost.user))) {
+				return false;
+			}
+		} else {
+			if (otherPost.user != null) {
+				return false;
+			}
 		}
 
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "[ POST: " + title + " OF USER: " + user.getId() + " ]";
 	}
 
 	public Long getId() {
@@ -63,16 +116,12 @@ public class Post {
 		return description;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
 	public Date getCreatedAt() {
 		return createdAt;
-	}
-
-	public User getUser() {
-		return user;
 	}
 
 	public void setUser(User user) {

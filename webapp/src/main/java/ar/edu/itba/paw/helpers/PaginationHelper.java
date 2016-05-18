@@ -3,19 +3,21 @@ package ar.edu.itba.paw.helpers;
 public enum PaginationHelper {
 	INSTANCE;
 
-	private static final Integer DEFAULT_PER_PAGE = 20;
-	private static final Integer DEFAULT_PAGE = 1;
+	public static final Integer DEFAULT_PER_PAGE = 20;
+	public static final Integer DEFAULT_PAGE = 0;
 
 	public Integer page(Integer pageParam) {
-		return (pageParam == null) ? DEFAULT_PAGE : pageParam;
+		if (pageParam == null || pageParam <= 0) {
+			return DEFAULT_PAGE;
+		}
+		return pageParam -1;
 	}
 
 	public Integer perPage(Integer perPage) {
-		return DEFAULT_PER_PAGE;
-	}
-
-	public Integer perPage() {
-		return DEFAULT_PER_PAGE;
+		if (perPage == null || perPage <= 0) {
+			return DEFAULT_PER_PAGE;
+		}
+		return perPage;
 	}
 
 }
