@@ -4,88 +4,113 @@ import java.util.Date;
 import java.util.List;
 
 public class JobOffer {
-  private Long id;
-  private String title;
-  private String description;
-  private Long userId;
-  private Date createdAt;
-  private List<Skill> skills;
-  private User user;
+	private Long id;
+	private String title;
+	private String description;
+	private Long userId;
+	private Date createdAt;
+	private List<Skill> skills;
+	private User user;
 
-  public JobOffer() {
+	public JobOffer() {
 
-  }
+	}
 
-  public JobOffer(Long id, String title, String description, Long userId, Date createdAt) {
-    this.id = id;
-    this.title = title;
-    this.description = description;
-    this.userId = userId;
-    this.createdAt = createdAt;
-  }
+	public JobOffer(Long id, String title, String description, Long userId, Date createdAt) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.userId = userId;
+		this.createdAt = createdAt;
+	}
 
-  @Override
-  public boolean equals(Object other) {
-    JobOffer otherOffer = (JobOffer) other;
-    return (this.id.equals(otherOffer.getId())) && (this.title.equals(otherOffer.getTitle()))
-        && (this.description.equals(otherOffer.getDescription()))
-        && (this.userId.equals(otherOffer.getUserId()));
-  }
+	@Override
+	public boolean equals(Object other) {
+		if (other == null) {
+			return false;
+		}
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof JobOffer)) {
+			return false;
+		}
 
-  public Long getId() {
-    return id;
-  }
+		JobOffer otherOffer = (JobOffer) other;
 
-  public String getTitle() {
-    return title;
-  }
+		if (!(id == otherOffer.id)) {
+			return false;
+		}
 
-  public String getDescription() {
-    return description;
-  }
+		if (!(title == otherOffer.title)) {
+			return false;
+		}
 
-  public Long getUserId() {
-    return userId;
-  }
+		if (!(description == otherOffer.description)) {
+			return false;
+		}
 
-  public Date getCreatedAt() {
-    return createdAt;
-  }
+		if (!(userId == otherOffer.userId)) {
+			return false;
+		}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+		return true;
+	}
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	public String getTitle() {
+		return title;
+	}
 
-  public void setUserId(Long userId) {
-    this.userId = userId;
-  }
+	public String getDescription() {
+		return description;
+	}
 
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
+	public Long getUserId() {
+		return userId;
+	}
 
-  public void setSkills(List<Skill> skills) {
-    this.skills = skills;
-  }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-  public List<Skill> getSkills() {
-    return this.skills;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public User getUser() {
-    return user;
-  }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-  public void setUser(User user) {
-    this.user = user;
-  }
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
+	public List<Skill> getSkills() {
+		return this.skills;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 }

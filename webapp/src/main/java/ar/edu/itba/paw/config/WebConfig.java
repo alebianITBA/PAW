@@ -26,62 +26,67 @@ import javax.sql.DataSource;
 @ComponentScan({ "ar.edu.itba.paw.controllers", "ar.edu.itba.paw.services", "ar.edu.itba.paw.persistence" })
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
-  static final String RESOURCES_DIR = "/resources/";
+	
+	private static final int CACHE_DURATION_SECONDS = 5;
+	private static final String RESOURCES_DIR = "/resources/";
+	private static final String RESOURCES_PATH = "/**";
+	private final static String PREFIX_VIEW_RESOLVER = "/WEB-INF/jsp/";
+	private final static String SUFFIX_VIEW_RESOLVER = ".jsp";
 
-  @Value("classpath:schema.sql")
-  private Resource schemaSql;
+	@Value("classpath:schema.sql")
+	private Resource schemaSql;
 
-  @Bean
-  public ViewResolver viewResolver() {
-    final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-    viewResolver.setViewClass(JstlView.class);
-    viewResolver.setPrefix("/WEB-INF/jsp/");
-    viewResolver.setSuffix(".jsp");
-    return viewResolver;
-  }
+	@Bean
+	public ViewResolver viewResolver() {
+		final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setViewClass(JstlView.class);
+		viewResolver.setPrefix(PREFIX_VIEW_RESOLVER);
+		viewResolver.setSuffix(SUFFIX_VIEW_RESOLVER);
+		return viewResolver;
+	}
 
-  @Bean
-  public DataSourceInitializer dataSourceInitializer(final DataSource ds) {
-    final DataSourceInitializer dsi = new DataSourceInitializer();
-    dsi.setDataSource(ds);
-    dsi.setDatabasePopulator(databasePopulator());
-    return dsi;
-  }
+	@Bean
+	public DataSourceInitializer dataSourceInitializer(final DataSource ds) {
+		final DataSourceInitializer dsi = new DataSourceInitializer();
+		dsi.setDataSource(ds);
+		dsi.setDatabasePopulator(databasePopulator());
+		return dsi;
+	}
 
-  private DatabasePopulator databasePopulator() {
-    final ResourceDatabasePopulator dbp = new ResourceDatabasePopulator();
-    dbp.addScript(schemaSql);
-    return dbp;
-  }
+	private DatabasePopulator databasePopulator() {
+		final ResourceDatabasePopulator dbp = new ResourceDatabasePopulator();
+		dbp.addScript(schemaSql);
+		return dbp;
+	}
 
-  @Bean
-  public DataSource dataSource() throws ClassNotFoundException {
-    final SimpleDriverDataSource ds = new SimpleDriverDataSource();
-    if (System.getenv().containsKey("PAW_ENVIRONMENT") && System.getenv("PAW_ENVIRONMENT").equals("development")) {
-      ds.setDriverClass(org.postgresql.Driver.class);
-      ds.setUrl("jdbc:postgresql://localhost:5432/paw");
-      ds.setUsername("paw");
-      ds.setPassword("paw");
-    } else {
-      ds.setDriverClass(org.postgresql.Driver.class);
-      ds.setUrl("jdbc:postgresql://10.16.1.110:5432/grupo5");
-      ds.setUsername("grupo5");
-      ds.setPassword("yoo9oTh0");
-    }
-    return ds;
-  }
+	@Bean
+	public DataSource dataSource() throws ClassNotFoundException {
+		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
+		if (System.getenv().containsKey("PAW_ENVIRONMENT") && System.getenv("PAW_ENVIRONMENT").equals("development")) {
+			ds.setDriverClass(org.postgresql.Driver.class);
+			ds.setUrl("jdbc:postgresql://localhost:5432/paw");
+			ds.setUsername("paw");
+			ds.setPassword("paw");
+		} else {
+			ds.setDriverClass(org.postgresql.Driver.class);
+			ds.setUrl("jdbc:postgresql://10.16.1.110:5432/grupo5");
+			ds.setUsername("grupo5");
+			ds.setPassword("yoo9oTh0");
+		}
+		return ds;
+	}
 
-  @Bean
-  public MessageSource messageSource() {
-    final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-    messageSource.setBasename("/WEB-INF/i18n/messages");
-    messageSource.setDefaultEncoding(StandardCharsets.UTF_8.displayName());
-    messageSource.setCacheSeconds(5);
-    return messageSource;
-  }
+	@Bean
+	public MessageSource messageSource() {
+		final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("/WEB-INF/i18n/messages");
+		messageSource.setDefaultEncoding(StandardCharsets.UTF_8.displayName());
+		messageSource.setCacheSeconds(CACHE_DURATION_SECONDS);
+		return messageSource;
+	}
 
-  @Override
-  public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/**").addResourceLocations(RESOURCES_DIR);
-  }
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler(RESOURCES_PATH).addResourceLocations(RESOURCES_DIR);
+	}
 }
