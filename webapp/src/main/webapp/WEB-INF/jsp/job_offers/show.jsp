@@ -75,7 +75,12 @@
                                     <h4><spring:message code="ApplyNow"/></h4>
                                     <c:choose>
                                         <c:when test="${alreadyApplied == false}">
-                                            <button type="submit" class="btn btn-info btn-block btn-lg"><spring:message code="Apply"/></button>
+                                          <spring:url value="/job_offers/${job.id}/apply" var="actionUrl"/>
+                                          <form:form method="post" action="${actionUrl}">
+                														<button class="btn btn-info" type="submit">
+                															<spring:message code="Apply"/>
+                														</button>
+                													</form:form>
                                         </c:when>
                                         <c:otherwise>
                                             <p><spring:message code="AlreadyApplied"/></p>

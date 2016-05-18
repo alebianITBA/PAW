@@ -8,6 +8,8 @@ import java.util.List;
 public interface JobOfferService {
 
   Long create(String title, String description, Long userId);
+  
+  Long create(String title, String description, Long userId, String skills);
 
   void delete(Long id);
 

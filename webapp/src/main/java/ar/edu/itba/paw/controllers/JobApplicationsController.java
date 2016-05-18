@@ -1,40 +1,23 @@
 package ar.edu.itba.paw.controllers;
 
-import ar.edu.itba.paw.interfaces.JobApplicationService;
-import ar.edu.itba.paw.interfaces.JobOfferService;
-import ar.edu.itba.paw.models.JobApplication;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Map;
+import ar.edu.itba.paw.interfaces.JobApplicationService;
 
 @Controller
-@RequestMapping("/job_applications")
 public class JobApplicationsController extends ApplicationController {
 
-  @Autowired
-  private JobApplicationService jobApplicationService;
+	@Autowired
+	private JobApplicationService jobApplicationService;
 
-  @Autowired
-  private JobOfferService jobOfferService;
-
-  @RequestMapping(path = "/create", method = RequestMethod.POST)
-  @ResponseStatus(value = HttpStatus.OK)
-  public ModelAndView createJobApplication(@ModelAttribute("jobApplication") JobApplication jobApplication,
-      Map<String, Object> model) {
-    final ModelAndView mav = new ModelAndView("job_offers/index");
-    mav.addObject("loggedUser", getLoggedUser());
-    jobApplicationService.create(jobApplication.getDescription(), jobApplication.getUserId(),
-        jobApplication.getJobOfferId());
-    mav.addObject("job_offers", jobOfferService.all());
-    return mav;
-  }
+	@RequestMapping(path = "/job_offers/{id}/apply", method = RequestMethod.POST)
+	public String applyJobOffer(@PathVariable final Long id) {
+		jobApplicationService.create("Basic application", getLoggedUser().getId(), id);
+		return "redirect:/job_offers";
+	}
 
 }

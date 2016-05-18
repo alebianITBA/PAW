@@ -11,12 +11,12 @@ import ar.edu.itba.paw.models.User;
 @Controller
 public class ApplicationController {
 
-  @Autowired
-  private UserService userService;
+	@Autowired
+	private UserService userService;
 
-  @ModelAttribute("loggedUser")
-  protected User getLoggedUser() {
-    return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-  }
+	@ModelAttribute("loggedUser")
+	protected User getLoggedUser() {
+		return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+	}
 
 }

@@ -42,7 +42,9 @@ public class UserServiceImpl implements UserService {
   @Override
   public User findByEmail(String email) {
     User user = userDao.findByEmail(email);
-    addSkillsToUser(user);
+    if(user != null) {
+    	addSkillsToUser(user);
+    }
     return user;
   }
 

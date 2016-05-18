@@ -1,67 +1,109 @@
 package ar.edu.itba.paw.controllers;
 
-import ar.edu.itba.paw.interfaces.JobOfferService;
-import ar.edu.itba.paw.interfaces.PostService;
-import ar.edu.itba.paw.interfaces.UserService;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
+import ar.edu.itba.paw.forms.RegisterForm;
+import ar.edu.itba.paw.helpers.PaginationHelper;
+import ar.edu.itba.paw.interfaces.JobOfferService;
+import ar.edu.itba.paw.interfaces.PostService;
+import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.validators.PasswordValidator;
 
 @Controller
-@RequestMapping("/users")
 public class UsersController extends ApplicationController {
 
-  @Autowired
-  private UserService userService;
+	@Autowired
+	private UserService userService;
 
-  @Autowired
-  private PostService postService;
+	@Autowired
+	private PostService postService;
 
-  @Autowired
-  private JobOfferService jobOfferService;
+	@Autowired
+	private JobOfferService jobOfferService;
 
-  @RequestMapping(path = "", method = RequestMethod.GET)
-  public ModelAndView listUser(@RequestParam(required = false, value = "page") final Integer pageParam) {
-    final ModelAndView mav = new ModelAndView("users/index");
-    mav.addObject("loggedUser", getLoggedUser());
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-    Integer page = (pageParam == null) ? 1 : pageParam;
-    Integer perPage = 20;
+	@Autowired
+	@Qualifier("authenticationManager")
+	private AuthenticationManager authenticationManager;
 
-    mav.addObject("item_count", userService.count());
-    mav.addObject("users", userService.all(page, perPage));
+	@RequestMapping(path = "/users", method = RequestMethod.GET)
+	public ModelAndView listUser(@RequestParam(required = false, value = "page") final Integer pageParam) {
+		final ModelAndView mav = new ModelAndView("users/index");
+		mav.addObject("users",
+				userService.all(PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.INSTANCE.perPage()));
+		return mav;
+	}
 
-    return mav;
-  }
+	@RequestMapping(path = "/users/{id}", method = RequestMethod.GET)
+	public ModelAndView getUser(@PathVariable final Long id) {
+		final ModelAndView mav = new ModelAndView("users/show");
+		mav.addObject("user", userService.find(id));
+		mav.addObject("posts", postService.userPosts(id));
+		mav.addObject("offers", jobOfferService.userJobOffers(id));
+		return mav;
+	}
 
-  @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-  public ModelAndView getUser(@PathVariable final Long id) {
-    final ModelAndView mav = new ModelAndView("users/show");
-    mav.addObject("loggedUser", getLoggedUser());
-    mav.addObject("user", userService.find(id));
-    mav.addObject("posts", postService.userPosts(id));
-    mav.addObject("offers", jobOfferService.userJobOffers(id));
-    return mav;
-  }
+	@RequestMapping(path = "/users/me", method = RequestMethod.GET)
+	public String me() {
+		return "forward:/users/" + getLoggedUser().getId().toString();
+	}
 
-  @RequestMapping(path = "/me", method = RequestMethod.GET)
-  public ModelAndView me() {
-    return getUser(getLoggedUser().getId());
-  }
+	@RequestMapping(path = "/users", method = RequestMethod.POST)
+	public String createUser(@Valid @ModelAttribute("registerForm") final RegisterForm registerForm,
+			final BindingResult binding, HttpServletRequest request, RedirectAttributes attr) {
 
-  @RequestMapping(path = "/me/logout", method = RequestMethod.GET)
-  public ModelAndView logout(HttpSession session) {
-    SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
-    SecurityContextHolder.getContext().setAuthentication(null);
-    return new ModelAndView("redirect:/");
-  }
+		PasswordValidator passwordValidator = new PasswordValidator();
+		passwordValidator.validate(registerForm, binding);
+
+		if (binding.hasErrors()) {
+			attr.addFlashAttribute("registerForm", registerForm);
+			return "redirect:/";
+		} else {
+
+			userService.create(registerForm.getFirstName(), registerForm.getLastName(), registerForm.getEmail(),
+					registerForm.getPassword());
+
+			UserDetails userDetails = userDetailsService.loadUserByUsername(registerForm.getEmail());
+
+			try {
+				SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+				SecurityContextHolder.getContext().setAuthentication(null);
+				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails,
+						registerForm.getPassword(), userDetails.getAuthorities());
+				request.getSession();
+				token.setDetails(new WebAuthenticationDetails(request));
+				Authentication authenticatedUser = authenticationManager.authenticate(token);
+				if (token.isAuthenticated()) {
+					SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+				}
+			} catch (Exception ex) {
+
+			}
+
+			return "redirect:/index";
+		}
+	}
 
 }

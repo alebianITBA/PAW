@@ -49,7 +49,7 @@
                                                             <a href="<c:url value='/users/me'/>" data-hover="${MyProfile}">${MyProfile}</a>
                                                         </li>
                                                         <li>
-                                                            <a href="<c:url value='/users/me/logout'/>" data-hover="${LogOut}">${LogOut}</a>
+                                                            <a href="<c:url value='/logout'/>" data-hover="${LogOut}">${LogOut}</a>
                                                         </li>
                                                     </c:if>
                                                 </ul>

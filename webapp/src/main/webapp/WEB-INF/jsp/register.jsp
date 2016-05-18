@@ -13,7 +13,7 @@
 
             <div class="register-panel">
                 <h3 class="form-title text-center white-text"><spring:message code="GetStarted"/></h3>
-                <spring:url value="/create_user" var="actionUrl"/>
+                <spring:url value="/users" var="actionUrl"/>
                 <form:form method="post" modelAttribute="registerForm" action="${actionUrl}" class="form-header">
                     <spring:message code="FirstName" var="FirstName"/>
                     <spring:message code="LastName" var="LastName"/>

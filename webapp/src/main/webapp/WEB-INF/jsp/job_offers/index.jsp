@@ -83,7 +83,7 @@
 							<h4>
 								<spring:message code="NeedToHire"/>
 							</h4>
-							<spring:url value="job_offers/create_offer" var="offerUrl"/>
+							<spring:url value="job_offers" var="offerUrl"/>
 							<form:form method="post" modelAttribute="jobOfferForm" action="${offerUrl}" class="form-header" role="form" id="#">
 								<div class="form-group">
 									<spring:message code="JobOfferTitle" var="jobOfferTitle"/>

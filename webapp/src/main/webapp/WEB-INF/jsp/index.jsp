@@ -48,7 +48,7 @@
 					<h4>
 						<spring:message code="SharePost"/>
 					</h4>
-					<spring:url value="/create_post" var="postUrl"/>
+					<spring:url value="/posts/" var="postUrl"/>
 					<form:form method="post" modelAttribute="postForm" action="${postUrl}" class="form-header" role="form" id="#">
 						<div class="form-group">
 							<spring:message code="Title" var="title"/>

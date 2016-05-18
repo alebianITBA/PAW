@@ -36,6 +36,18 @@ public class JobOfferServiceImpl implements JobOfferService {
   public Long create(String title, String description, Long userId) {
     return jobOfferDao.create(title, description, userId);
   }
+  
+  @Override
+  public Long create(String title, String description, Long userId, String skills) {
+    Long id = jobOfferDao.create(title, description, userId);
+    if (skills != null && !skills.isEmpty()) {
+        String[] skillIds = skills.split(",");
+        for (String skillId : skillIds) {
+          jobOfferSkillService.create(id, new Long(skillId));
+        }
+      }
+    return id;
+  }
 
   @Override
   public void delete(Long id) {
