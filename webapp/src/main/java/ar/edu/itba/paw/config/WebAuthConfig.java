@@ -25,7 +25,7 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
     http.userDetailsService(userDetailsService)
       .authorizeRequests()
         .antMatchers("/create_user").anonymous()
-        .antMatchers("/").permitAll()
+        .antMatchers("/").anonymous()
         .anyRequest().authenticated()
       .and().formLogin()
         .usernameParameter("j_email")
@@ -41,7 +41,7 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
         .logoutUrl("/users/me/logout")
         .logoutSuccessUrl("/")
       .and().exceptionHandling()
-        .accessDeniedPage("/403")
+        .accessDeniedPage("/index")
       .and().csrf().disable();
   }
 
