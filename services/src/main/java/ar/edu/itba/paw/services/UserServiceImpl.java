@@ -14,51 +14,51 @@ import ar.edu.itba.paw.models.User;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-  @Autowired
-  private UserDao userDao;
+	@Autowired
+	private UserDao userDao;
 
-  public void setUserDao(UserDao userDao) {
-    this.userDao = userDao;
-  }
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
-  @Override
-  public void create(String firstName, String lastName, String email, String password) {
-    userDao.create(firstName, lastName, email, password);
-  }
+	@Override
+	public User create(String firstName, String lastName, String email, String password) {
+		return userDao.create(firstName, lastName, email, password);
+	}
 
-  @Override
-  public void delete(Long id) {
-    userDao.delete(id);
-  }
+	@Override
+	public void delete(Long id) {
+		userDao.delete(id);
+	}
 
-  @Override
-  public void update(Long id, String firstName, String lastName, String email, String password) {
-    userDao.update(id, firstName, lastName, email, password);
-  }
+	@Override
+	public User update(Long id, String firstName, String lastName, String email, String password) {
+		return userDao.update(id, firstName, lastName, email, password);
+	}
 
-  @Override
-  public User findByEmail(String email) {
-    return userDao.findByEmail(email);
-  }
+	@Override
+	public User findByEmail(String email) {
+		return userDao.findByEmail(email);
+	}
 
-  @Override
-  public Long count() {
-    return userDao.count();
-  }
+	@Override
+	public Long count() {
+		return userDao.count();
+	}
 
-  @Override
-  public User find(Long id) {
-    return userDao.find(id);
-  }
+	@Override
+	public User find(Long id) {
+		return userDao.find(id);
+	}
 
-  @Override
-  public List<User> all() {
-    return userDao.all();
-  }
+	@Override
+	public List<User> all() {
+		return userDao.all();
+	}
 
-  @Override
-	  public List<User> all(Integer page, Integer perPage) {
-    return userDao.all(page, perPage);
-  }
+	@Override
+	public List<User> all(Integer page, Integer perPage) {
+		return userDao.all(page, perPage);
+	}
 
 }

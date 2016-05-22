@@ -19,9 +19,10 @@ public class UserHibernateDao implements UserDao {
 	private EntityManager em;
 
 	@Override
-	public void create(String firstName, String lastName, String email, String password) {
+	public User create(String firstName, String lastName, String email, String password) {
 		final User user = new User(firstName, lastName, email, password, new java.util.Date());
 		em.persist(user);
+		return user;
 	}
 
 	@Override
@@ -32,9 +33,22 @@ public class UserHibernateDao implements UserDao {
 	}
 
 	@Override
-	public void update(Long id, String firstName, String lastName, String email, String password) {
-		// TODO Auto-generated method stub
-
+	public User update(Long id, String firstName, String lastName, String email, String password) {
+		User user = find(id);
+		if (firstName != null && !firstName.isEmpty()){
+			user.setFirstName(firstName);
+		}
+		if (lastName != null && !lastName.isEmpty()){
+			user.setLastName(lastName);
+		}
+		if (email != null && !email.isEmpty()){
+			user.setEmail(email);
+		}
+		if (password != null && !password.isEmpty()){
+			user.setPassword(password);
+		}
+		em.persist(user);
+		return user;
 	}
 
 	@Override

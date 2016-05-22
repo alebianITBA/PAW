@@ -3,7 +3,6 @@ package ar.edu.itba.paw.persistence;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -25,6 +24,7 @@ import ar.edu.itba.paw.models.Skill;
 @Transactional
 public class SkillHibernateDaoTest extends DaoTest {
 
+	private static final String TABLE_NAME = "skills";
 	private static final String NAME = "TEST";
 
 	@Autowired
@@ -64,14 +64,19 @@ public class SkillHibernateDaoTest extends DaoTest {
 	public void testUpdate() {
 		Skill skill = skillDao.create(NAME);
 		String newName = NAME + "2";
-		
+
 		Skill result = skillDao.update(skill.getId(), newName);
-		
+
 		assertEquals(newName, result.getName());
-		
+
 		Skill check = skillDao.findByName(newName);
-		assertEquals(skill.getId(), check.getId());
+		assertEquals(check.getId(), result.getId());
 		assertEquals(check, result);
+		
+		result = skillDao.update(skill.getId(), null);
+		assertEquals(newName, result.getName());
+		result = skillDao.update(skill.getId(), "");
+		assertEquals(newName, result.getName());
 	}
 
 	@Test
@@ -105,18 +110,19 @@ public class SkillHibernateDaoTest extends DaoTest {
 	public void testAll() {
 		Skill skill1 = skillDao.create("A " + NAME);
 		Skill skill2 = skillDao.create(NAME);
-		
+
 		List<Skill> result = skillDao.all();
-		
+
 		assertEquals(2, result.size());
-		
+
 		assertEquals(skill1, result.get(0));
 		assertEquals(skill1.getId(), result.get(0).getId());
 		assertEquals(skill2, result.get(1));
 		assertEquals(skill2.getId(), result.get(1).getId());
 	}
-	
-	private int rowCount() {
-		return ((BigInteger) em.createNativeQuery("SELECT COUNT(*) FROM skills;").getSingleResult()).intValue();
+
+	@Override
+	protected String tableName() {
+		return TABLE_NAME;
 	}
 }

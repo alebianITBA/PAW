@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface UserService {
 
-  void create(String firstName, String lastName, String email, String password);
+  User create(String firstName, String lastName, String email, String password);
 
   void delete(Long id);
 
-  void update(Long id, String firstName, String lastName, String email, String password);
+  User update(Long id, String firstName, String lastName, String email, String password);
 
   User findByEmail(String email);
 
