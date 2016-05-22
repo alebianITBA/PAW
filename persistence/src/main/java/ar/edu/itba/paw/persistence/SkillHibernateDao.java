@@ -8,17 +8,20 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.itba.paw.interfaces.SkillDao;
 import ar.edu.itba.paw.models.Skill;
 
 @Repository
+@Transactional
 public class SkillHibernateDao implements SkillDao {
 
 	@PersistenceContext
 	private EntityManager em;
 
 	@Override
+	@Transactional
 	public void create(String name) {
 		final Skill skill = new Skill(name, new java.util.Date());
 		em.persist(skill);

@@ -30,27 +30,27 @@ public class UserJDBCDaoTest extends DaoTest {
 	@Autowired
 	private UserDao userDao;
 
-	@Before
-	public void setUp() {
-		jdbcTemplate = new JdbcTemplate(ds);
-		cleanUp();
-	}
-
-	@Test
-	public void testCreate() {
-		userDao.create(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
-		assertEquals(1, JdbcTestUtils.countRowsInTable(jdbcTemplate, "users"));
-	}
-
-	@Test
-	public void testDelete() {
-		userDao.create(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
-		User user = userDao.findByEmail(EMAIL);
-		assertNotNull(user);
-
-		userDao.delete(user.getId());
-		assertEquals(0, JdbcTestUtils.countRowsInTable(jdbcTemplate, "users"));
-	}
+//	@Before
+//	public void setUp() {
+//		jdbcTemplate = new JdbcTemplate(ds);
+//		cleanUp();
+//	}
+//
+//	@Test
+//	public void testCreate() {
+//		userDao.create(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+//		assertEquals(1, JdbcTestUtils.countRowsInTable(jdbcTemplate, "users"));
+//	}
+//
+//	@Test
+//	public void testDelete() {
+//		userDao.create(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+//		User user = userDao.findByEmail(EMAIL);
+//		assertNotNull(user);
+//
+//		userDao.delete(user.getId());
+//		assertEquals(0, JdbcTestUtils.countRowsInTable(jdbcTemplate, "users"));
+//	}
 
 	@Test
 	public void testUpdate() {

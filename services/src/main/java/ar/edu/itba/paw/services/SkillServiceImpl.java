@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class SkillServiceImpl implements SkillService {
 
 	@Autowired
@@ -21,43 +22,36 @@ public class SkillServiceImpl implements SkillService {
 	}
 
 	@Override
-	@Transactional
 	public void create(String name) {
 		skillDao.create(name);
 	}
 
 	@Override
-	@Transactional
 	public void delete(Long id) {
 		skillDao.delete(id);
 	}
 
 	@Override
-	@Transactional
 	public void update(Long id, String name) {
 		skillDao.update(id, name);
 	}
 
 	@Override
-	@Transactional
 	public Long count() {
 		return skillDao.count();
 	}
 
 	@Override
-	@Transactional
 	public Skill find(Long id) {
 		return skillDao.find(id);
 	}
 
 	@Override
-	@Transactional
 	public Skill findByName(String name) {
 		return skillDao.findByName(name);
 	}
 
 	@Override
-	@Transactional
 	public List<Skill> all() {
 		return skillDao.all();
 	}

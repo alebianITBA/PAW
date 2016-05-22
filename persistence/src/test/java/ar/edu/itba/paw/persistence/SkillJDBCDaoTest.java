@@ -23,24 +23,24 @@ public class SkillJDBCDaoTest extends DaoTest {
 	@Autowired
 	private SkillDao skillDao;
 
-	@Before
-	public void setUp() {
-		jdbcTemplate = new JdbcTemplate(ds);
-		cleanUp();
-		createResourcesNeeded();
-	}
-
-	@Test
-	public void create() {
-		assertEquals(1, JdbcTestUtils.countRowsInTable(jdbcTemplate, "skills"));
-	}
-
-	@Test
-	public void delete() {
-		assertEquals(1, JdbcTestUtils.countRowsInTable(jdbcTemplate, "skills"));
-		skillDao.delete(skillDao.findByName("paw").getId());
-		assertEquals(0, JdbcTestUtils.countRowsInTable(jdbcTemplate, "skills"));
-	}
+//	@Before
+//	public void setUp() {
+//		jdbcTemplate = new JdbcTemplate(ds);
+//		cleanUp();
+//		createResourcesNeeded();
+//	}
+//
+//	@Test
+//	public void create() {
+//		assertEquals(1, JdbcTestUtils.countRowsInTable(jdbcTemplate, "skills"));
+//	}
+//
+//	@Test
+//	public void delete() {
+//		assertEquals(1, JdbcTestUtils.countRowsInTable(jdbcTemplate, "skills"));
+//		skillDao.delete(skillDao.findByName("paw").getId());
+//		assertEquals(0, JdbcTestUtils.countRowsInTable(jdbcTemplate, "skills"));
+//	}
 
 	@Test
 	public void update() {

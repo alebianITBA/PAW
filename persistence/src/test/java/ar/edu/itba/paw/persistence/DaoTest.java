@@ -1,26 +1,23 @@
 package ar.edu.itba.paw.persistence;
 
-import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.jdbc.JdbcTestUtils;
 
 @ContextConfiguration(classes = TestConfig.class)
 public class DaoTest {
-	
-	@Autowired
-	protected DataSource ds;
-	
-	protected JdbcTemplate jdbcTemplate;
+
+	@PersistenceContext
+	private EntityManager em;
 
 	public void cleanUp() {
-		JdbcTestUtils.deleteFromTables(jdbcTemplate, "user_skills");
-		JdbcTestUtils.deleteFromTables(jdbcTemplate, "job_offer_skills");
-		JdbcTestUtils.deleteFromTables(jdbcTemplate, "job_applications");
-		JdbcTestUtils.deleteFromTables(jdbcTemplate, "posts");
-		JdbcTestUtils.deleteFromTables(jdbcTemplate, "skills");
-		JdbcTestUtils.deleteFromTables(jdbcTemplate, "job_offers");
-		JdbcTestUtils.deleteFromTables(jdbcTemplate, "users");
+		em.createNativeQuery("DELETE FROM user_skills;");
+		em.createNativeQuery("DELETE FROM job_offer_skills;");
+		em.createNativeQuery("DELETE FROM job_applications;");
+		em.createNativeQuery("DELETE FROM posts;");
+		em.createNativeQuery("DELETE FROM skills;");
+		em.createNativeQuery("DELETE FROM job_offers;");
+		em.createNativeQuery("DELETE FROM users;");
 	}
 }
