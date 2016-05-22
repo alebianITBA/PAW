@@ -20,8 +20,8 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 	private JobApplicationDao jobApplicationDao;
 
 	@Override
-	public void create(String description, User user, JobOffer jobOffer) {
-		jobApplicationDao.create(description, user, jobOffer);
+	public JobApplication create(String description, User user, JobOffer jobOffer) {
+		return jobApplicationDao.create(description, user, jobOffer);
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 	}
 
 	@Override
-	public void update(Long id, String description) {
-		jobApplicationDao.update(id, description);
+	public JobApplication update(Long id, String description) {
+		return jobApplicationDao.update(id, description);
 	}
 
 	@Override

@@ -42,6 +42,7 @@ public class JobOffer {
 			@JoinColumn(name = "job_offer_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "skill_id", referencedColumnName = "id") })
 	@OrderBy("name ASC")
+	@JoinColumn()
 	private List<Skill> skills;
 
 	@OneToOne(fetch = FetchType.EAGER)
@@ -59,7 +60,7 @@ public class JobOffer {
 		this.user = user;
 		this.createdAt = createdAt;
 	}
-	
+
 	public JobOffer(String title, String description, User user, List<Skill> skills, Date createdAt) {
 		this.title = title;
 		this.description = description;
@@ -74,11 +75,11 @@ public class JobOffer {
 		this.user = user;
 		this.createdAt = createdAt;
 	}
-	
+
 	@Override
-    public int hashCode() {
-        return id.hashCode();
-    }
+	public int hashCode() {
+		return id.hashCode();
+	}
 
 	@Override
 	public boolean equals(Object other) {
@@ -118,7 +119,7 @@ public class JobOffer {
 
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "[ JOB OFFER: " + title + " OF USER: " + user.getId() + " ]";
@@ -170,6 +171,18 @@ public class JobOffer {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public boolean containsAll(List<Skill> otherSkills) {
+		if (skills == null) {
+			return (otherSkills == null);
+		} else {
+			if (otherSkills == null) {
+				return false;
+			} else {
+				return skills.containsAll(otherSkills);
+			}
+		}
 	}
 
 }

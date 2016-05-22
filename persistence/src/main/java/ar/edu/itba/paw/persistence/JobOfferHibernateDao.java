@@ -21,15 +21,17 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	private EntityManager em;
 
 	@Override
-	public void create(String title, String description, User user) {
+	public JobOffer create(String title, String description, User user) {
 		final JobOffer jobOffer = new JobOffer(title, description, user, new java.util.Date());
 		em.persist(jobOffer);
+		return jobOffer;
 	}
 
 	@Override
-	public void create(String title, String description, User user, List<Skill> skills) {
+	public JobOffer create(String title, String description, User user, List<Skill> skills) {
 		final JobOffer jobOffer = new JobOffer(title, description, user, skills, new java.util.Date());
 		em.persist(jobOffer);
+		return jobOffer;
 	}
 
 	@Override
@@ -40,9 +42,19 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	}
 
 	@Override
-	public void update(Long id, String title, String description) {
-		// TODO Auto-generated method stub
-
+	public JobOffer update(Long id, String title, String description) {
+		JobOffer jobOffer = find(id);
+		if (jobOffer == null) {
+			return null;
+		}
+		if (title != null && !title.isEmpty()) {
+			jobOffer.setTitle(title);
+		}
+		if (description != null && !description.isEmpty()) {
+			jobOffer.setDescription(description);
+		}
+		em.persist(jobOffer);
+		return jobOffer;
 	}
 
 	@Override
@@ -107,16 +119,16 @@ public class JobOfferHibernateDao implements JobOfferDao {
 
 	@Override
 	public List<JobOffer> notFromUser(Long userId) {
-		final TypedQuery<JobOffer> query = em
-				.createQuery("from JobOffer as o where not o.user.id = :userId ORDER BY o.createdAt DESC", JobOffer.class);
+		final TypedQuery<JobOffer> query = em.createQuery(
+				"from JobOffer as o where not o.user.id = :userId ORDER BY o.createdAt DESC", JobOffer.class);
 		query.setParameter("userId", userId);
 		return query.getResultList();
 	}
 
 	@Override
 	public List<JobOffer> notFromUser(Long userId, Integer page, Integer perPage) {
-		final TypedQuery<JobOffer> query = em
-				.createQuery("from JobOffer as o where not o.user.id = :userId ORDER BY o.createdAt DESC", JobOffer.class);
+		final TypedQuery<JobOffer> query = em.createQuery(
+				"from JobOffer as o where not o.user.id = :userId ORDER BY o.createdAt DESC", JobOffer.class);
 		query.setParameter("userId", userId);
 		query.setFirstResult(page * perPage);
 		query.setMaxResults(perPage);

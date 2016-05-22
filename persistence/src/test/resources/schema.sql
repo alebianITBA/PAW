@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS user_skills (
   id serial PRIMARY KEY,
   user_id integer REFERENCES users(id),
   skill_id integer REFERENCES skills(id),
-  created_at timestamp NOT NULL
+  created_at timestamp
 );
 
 CREATE INDEX IF NOT EXISTS index_user_skills_on_user_id ON user_skills(user_id);
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS job_offer_skills (
   id serial PRIMARY KEY,
   job_offer_id integer REFERENCES job_offers(id),
   skill_id integer REFERENCES skills(id),
-  created_at timestamp NOT NULL
+  created_at timestamp
 );
 
 CREATE INDEX IF NOT EXISTS index_job_offer_skills_on_job_offer_id ON job_offer_skills(job_offer_id);

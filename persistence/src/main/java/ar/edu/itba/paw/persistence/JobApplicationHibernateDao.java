@@ -21,9 +21,10 @@ public class JobApplicationHibernateDao implements JobApplicationDao {
 	private EntityManager em;
 
 	@Override
-	public void create(String description, User user, JobOffer jobOffer) {
+	public JobApplication create(String description, User user, JobOffer jobOffer) {
 		final JobApplication jobApplication = new JobApplication(description, user, jobOffer, new java.util.Date());
 		em.persist(jobApplication);
+		return jobApplication;
 	}
 
 	@Override
@@ -34,9 +35,16 @@ public class JobApplicationHibernateDao implements JobApplicationDao {
 	}
 
 	@Override
-	public void update(Long id, String description) {
-		// TODO Auto-generated method stub
-
+	public JobApplication update(Long id, String description) {
+		JobApplication application = find(id);
+		if (application == null) {
+			return null;
+		}
+		if (description != null && !description.isEmpty()) {
+			application.setDescription(description);
+		}
+		em.persist(application);
+		return application;
 	}
 
 	@Override
@@ -91,7 +99,8 @@ public class JobApplicationHibernateDao implements JobApplicationDao {
 	@Override
 	public List<JobApplication> jobOfferApplications(Long jobOfferId) {
 		final TypedQuery<JobApplication> query = em.createQuery(
-				"from JobApplication as a where a.jobOffer.id = :jobOfferId ORDER BY a.createdAt DESC", JobApplication.class);
+				"from JobApplication as a where a.jobOffer.id = :jobOfferId ORDER BY a.createdAt DESC",
+				JobApplication.class);
 		query.setParameter("jobOfferId", jobOfferId);
 		return query.getResultList();
 	}
@@ -99,7 +108,8 @@ public class JobApplicationHibernateDao implements JobApplicationDao {
 	@Override
 	public List<JobApplication> jobOfferApplications(Long jobOfferId, Integer page, Integer perPage) {
 		final TypedQuery<JobApplication> query = em.createQuery(
-				"from JobApplication as a where a.jobOffer.id = :jobOfferId ORDER BY a.createdAt DESC", JobApplication.class);
+				"from JobApplication as a where a.jobOffer.id = :jobOfferId ORDER BY a.createdAt DESC",
+				JobApplication.class);
 		query.setParameter("jobOfferId", jobOfferId);
 		query.setFirstResult(page * perPage);
 		query.setMaxResults(perPage);
@@ -108,8 +118,9 @@ public class JobApplicationHibernateDao implements JobApplicationDao {
 
 	@Override
 	public void removeJobOfferApplications(Long jobOfferId) {
-		// TODO Auto-generated method stub
-
+		Query query = em.createQuery("delete from JobApplication j where j.jobOffer.id = :id");
+		query.setParameter("id", jobOfferId);
+		query.executeUpdate();
 	}
 
 }

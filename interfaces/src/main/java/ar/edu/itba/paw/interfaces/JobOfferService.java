@@ -8,13 +8,13 @@ import ar.edu.itba.paw.models.User;
 
 public interface JobOfferService {
 
-	void create(String title, String description, User user);
+	JobOffer create(String title, String description, User user);
 
-	void create(String title, String description, User user, String skills);
+	JobOffer create(String title, String description, User user, String skills);
 
 	void delete(Long id);
 
-	void update(Long id, String title, String description);
+	JobOffer update(Long id, String title, String description);
 
 	Long count();
 

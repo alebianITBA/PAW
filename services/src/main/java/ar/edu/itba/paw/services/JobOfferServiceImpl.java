@@ -29,12 +29,12 @@ public class JobOfferServiceImpl implements JobOfferService {
 	}
 
 	@Override
-	public void create(String title, String description, User user) {
-		jobOfferDao.create(title, description, user);
+	public JobOffer create(String title, String description, User user) {
+		return jobOfferDao.create(title, description, user);
 	}
 
 	@Override
-	public void create(String title, String description, User user, String skills) {
+	public JobOffer create(String title, String description, User user, String skills) {
 		List<Skill> skillList = new ArrayList<Skill>();
 		if (skills != null && !skills.isEmpty()) {
 			String[] skillIds = skills.split(",");
@@ -42,7 +42,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 				skillList.add(skillService.find(Long.getLong(skillId)));
 			}
 		}
-		jobOfferDao.create(title, description, user, skillList);
+		return jobOfferDao.create(title, description, user, skillList);
 	}
 
 	@Override
@@ -51,8 +51,8 @@ public class JobOfferServiceImpl implements JobOfferService {
 	}
 
 	@Override
-	public void update(Long id, String title, String description) {
-		jobOfferDao.update(id, title, description);
+	public JobOffer update(Long id, String title, String description) {
+		return jobOfferDao.update(id, title, description);
 	}
 
 	@Override
