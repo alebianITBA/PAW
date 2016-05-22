@@ -22,8 +22,8 @@ public class SkillServiceImpl implements SkillService {
 	}
 
 	@Override
-	public void create(String name) {
-		skillDao.create(name);
+	public Skill create(String name) {
+		return skillDao.create(name);
 	}
 
 	@Override
@@ -32,8 +32,8 @@ public class SkillServiceImpl implements SkillService {
 	}
 
 	@Override
-	public void update(Long id, String name) {
-		skillDao.update(id, name);
+	public Skill update(Long id, String name) {
+		return skillDao.update(id, name);
 	}
 
 	@Override

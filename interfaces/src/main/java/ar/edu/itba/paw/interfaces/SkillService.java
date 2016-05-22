@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface SkillService {
 
-  void create(String name);
+  Skill create(String name);
 
   void delete(Long id);
 
-  void update(Long id, String name);
+  Skill update(Long id, String name);
 
   Long count();
 
