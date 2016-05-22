@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.itba.paw.interfaces.UserDao;
 import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 
 @Service
@@ -34,6 +35,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User update(Long id, String firstName, String lastName, String email, String password) {
 		return userDao.update(id, firstName, lastName, email, password);
+	}
+
+	@Override
+	public User updateSkills(Long id, List<Skill> skills) {
+		return userDao.updateSkills(id, skills);
 	}
 
 	@Override

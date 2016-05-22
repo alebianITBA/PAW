@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.interfaces;
 
+import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 
 import java.util.List;
@@ -11,6 +12,8 @@ public interface UserDao {
   void delete(Long id);
 
   User update(Long id, String firstName, String lastName, String email, String password);
+  
+  User updateSkills(Long id, List<Skill> skills);
 
   User findByEmail(String email);
 

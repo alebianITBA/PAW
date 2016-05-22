@@ -3,6 +3,7 @@ package ar.edu.itba.paw.persistence;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,7 +17,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.itba.paw.interfaces.SkillDao;
 import ar.edu.itba.paw.interfaces.UserDao;
+import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,6 +35,9 @@ public class UserHibernateDaoTest extends DaoTest {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private SkillDao skillDao;
 
 	@PersistenceContext
 	private EntityManager em;
@@ -104,6 +110,23 @@ public class UserHibernateDaoTest extends DaoTest {
 		assertEquals(newPassword, result.getPassword());
 		result = userDao.update(user.getId(), newFirstName, newLastName, newEmail, "");
 		assertEquals(newPassword, result.getPassword());
+	}
+
+	@Test
+	public void testUpdateSkills() {
+		Skill skill = skillDao.create("TEST");
+		List<Skill> skills = new LinkedList<Skill>();
+		skills.add(skill);
+		User user = userDao.create(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+		
+		user = userDao.updateSkills(user.getId(), skills);
+		
+		assertNotNull(user.getId());
+		assertEquals(FIRST_NAME, user.getFirstName());
+		assertEquals(LAST_NAME, user.getLastName());
+		assertEquals(EMAIL, user.getEmail());
+		assertEquals(PASSWORD, user.getPassword());
+		assertEquals(skills, user.getSkills());
 	}
 
 	@Test

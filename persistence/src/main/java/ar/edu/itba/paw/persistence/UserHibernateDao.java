@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.interfaces.UserDao;
+import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 
 @Repository
@@ -51,6 +52,19 @@ public class UserHibernateDao implements UserDao {
 			user.setPassword(password);
 		}
 		em.persist(user);
+		return user;
+	}
+	
+	@Override
+	public User updateSkills(Long id, List<Skill> skills){
+		User user = find(id);
+		if (user == null) {
+			return null;
+		}
+		if (skills != null && !skills.isEmpty()){
+			user.setSkills(skills);
+			em.persist(user);
+		}
 		return user;
 	}
 
