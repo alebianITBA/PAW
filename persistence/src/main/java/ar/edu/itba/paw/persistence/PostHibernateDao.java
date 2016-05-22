@@ -20,9 +20,10 @@ public class PostHibernateDao implements PostDao {
 	private EntityManager em;
 	
 	@Override
-	public void create(String title, String description, User user) {
+	public Post create(String title, String description, User user) {
 		final Post post = new Post(title, description, user, new java.util.Date());
 		em.persist(post);
+		return post;
 	}
 
 	@Override
@@ -33,9 +34,19 @@ public class PostHibernateDao implements PostDao {
 	}
 
 	@Override
-	public void update(Long id, String title, String description) {
-		// TODO Auto-generated method stub
-
+	public Post update(Long id, String title, String description) {
+		Post post = find(id);
+		if (post == null) {
+			return null;
+		}
+		if (title != null && !title.isEmpty()){
+			post.setTitle(title);
+		}
+		if (description != null && !description.isEmpty()){
+			post.setDescription(description);
+		}
+		em.persist(post);
+		return post;
 	}
 
 	@Override
@@ -75,7 +86,7 @@ public class PostHibernateDao implements PostDao {
 
 	@Override
 	public List<Post> userPosts(Long userId, Integer page, Integer perPage) {
-		final TypedQuery<Post> query = em.createQuery("from Post as p where p.user.id = :user_id ORDER BY p.createAt DESC", Post.class);
+		final TypedQuery<Post> query = em.createQuery("from Post as p where p.user.id = :user_id ORDER BY p.createdAt DESC", Post.class);
 		query.setParameter("user_id", userId);
 		query.setFirstResult(page * perPage);
 		query.setMaxResults(perPage);

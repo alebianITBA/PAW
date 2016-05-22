@@ -23,8 +23,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void create(String title, String description, User user) {
-		postDao.create(title, description, user);
+	public Post create(String title, String description, User user) {
+		return postDao.create(title, description, user);
 	}
 
 	@Override
@@ -33,8 +33,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void update(Long id, String title, String description) {
-		postDao.update(id, title, description);
+	public Post update(Long id, String title, String description) {
+		return postDao.update(id, title, description);
 	}
 
 	@Override

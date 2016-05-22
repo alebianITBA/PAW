@@ -7,11 +7,11 @@ import ar.edu.itba.paw.models.User;
 
 public interface PostService {
 
-	void create(String title, String description, User user);
+	Post create(String title, String description, User user);
 
 	void delete(Long id);
 
-	void update(Long id, String title, String description);
+	Post update(Long id, String title, String description);
 
 	Long count();
 

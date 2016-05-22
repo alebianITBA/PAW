@@ -35,6 +35,9 @@ public class UserHibernateDao implements UserDao {
 	@Override
 	public User update(Long id, String firstName, String lastName, String email, String password) {
 		User user = find(id);
+		if (user == null) {
+			return null;
+		}
 		if (firstName != null && !firstName.isEmpty()){
 			user.setFirstName(firstName);
 		}

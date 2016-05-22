@@ -35,6 +35,9 @@ public class SkillHibernateDao implements SkillDao {
 	@Override
 	public Skill update(Long id, String name) {
 		Skill skill = find(id);
+		if (skill == null) {
+			return null;
+		}
 		if (name != null && !name.isEmpty()) {
 			skill.setName(name);
 			em.persist(skill);

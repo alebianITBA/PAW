@@ -35,8 +35,8 @@ public class Post {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
-	
-	protected Post(){
+
+	protected Post() {
 		/* Just for Hibernate */
 	}
 
@@ -54,11 +54,11 @@ public class Post {
 		this.user = user;
 		this.createdAt = createdAt;
 	}
-	
+
 	@Override
-    public int hashCode() {
-        return id.hashCode();
-    }
+	public int hashCode() {
+		return id.hashCode();
+	}
 
 	@Override
 	public boolean equals(Object other) {
@@ -98,7 +98,7 @@ public class Post {
 
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "[ POST: " + title + " OF USER: " + user.getId() + " ]";
@@ -126,6 +126,14 @@ public class Post {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
