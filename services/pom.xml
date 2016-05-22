@@ -5,11 +5,11 @@ xmlns="http://maven.apache.org/POM/4.0.0"
   <parent>
     <groupId>ar.edu.itba.paw</groupId>
     <artifactId>test</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
   </parent>
   <groupId>ar.edu.itba.paw</groupId>
   <artifactId>services</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
   <name>services</name>
   <url>http://maven.apache.org</url>
   <properties>

@@ -5,11 +5,11 @@
   <parent>
     <groupId>ar.edu.itba.paw</groupId>
     <artifactId>test</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
   </parent>
   <groupId>ar.edu.itba.paw</groupId>
   <artifactId>persistence</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
   <name>persistence</name>
   <url>http://maven.apache.org</url>
   <properties>
@@ -47,11 +47,6 @@
      <groupId>org.postgresql</groupId>
      <artifactId>postgresql</artifactId>
    </dependency>
-
-   <dependency>
-      <groupId>org.hsqldb</groupId>
-      <artifactId>hsqldb</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
