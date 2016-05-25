@@ -84,7 +84,7 @@
 									<h4>${post.title}</h4>
 									<p class="adm">
 										<spring:message code="PostedBy"/>
-										<a href="<c:url value='/users/${post.userId}'/>">${post.user.firstName} ${post.user.lastName}</a>
+										<a href="<c:url value='/users/${post.user.id}'/>">${post.user.firstName} ${post.user.lastName}</a>
 									</p>
 									<p>${post.description}</p>
 								</hr>
