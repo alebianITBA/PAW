@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -24,9 +26,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.itba.paw.forms.RegisterForm;
 import ar.edu.itba.paw.helpers.PaginationHelper;
+import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.PostService;
 import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.validators.PasswordValidator;
 
@@ -41,6 +45,9 @@ public class UsersController extends ApplicationController {
 
 	@Autowired
 	private JobOfferService jobOfferService;
+	
+	@Autowired
+	private JobApplicationService jobApplicationService;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -75,12 +82,15 @@ public class UsersController extends ApplicationController {
 		mav.addObject("posts", postService.userPosts(id));
 		mav.addObject("offers", jobOfferService.userJobOffers(id));
 		
+		if(getLoggedUser().getId().equals(id)){
+			mav.addObject("offersApplied", jobApplicationService.userJobApplications(id));
+		}
+		
 		return mav;
 	}
 
 	@RequestMapping(path = "/users/me", method = RequestMethod.GET)
 	public String me() {
-		
 		return "forward:/users/" + getLoggedUser().getId().toString();
 	}
 

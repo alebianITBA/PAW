@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
+import ar.edu.itba.paw.models.JobApplication;
+import ar.edu.itba.paw.models.JobOffer;
 
 @Controller
 public class JobApplicationsController extends ApplicationController {
@@ -24,6 +26,17 @@ public class JobApplicationsController extends ApplicationController {
 		jobApplicationService.create("Basic application", getLoggedUser(), jobOfferService.find(id));
 		
 		return "redirect:/job_offers";
+	}
+
+	@RequestMapping(path = "/job_application/{id}", method = RequestMethod.DELETE)
+	public String deleteJobApplication(@PathVariable final Long id) {
+		
+		JobApplication application = jobApplicationService.find(id);
+		if (application.getUser().getId() == getLoggedUser().getId()) {
+			jobApplicationService.delete(id);
+		}
+		
+		return "redirect:/users/me";
 	}
 
 }
