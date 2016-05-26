@@ -53,7 +53,7 @@
                     </div>
                 </c:if>
 
-                <c:if test="${posts[0] != null}">
+                <c:if test="${offers[0] != null}">
                     <div class="col-md-6 praesent">
                         <div class="l_g_r biography-into">
                             <div class="dapibus">
@@ -90,10 +90,42 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </c:if>
 
+            <div class="col-md-12 praesent">
+                <c:if test="${offersApplied != null}">
+                    <div class="col-md-6 praesent">
+                        <div class="l_g_r biography-into">
+                            <div class="dapibus">
+                                <h3><spring:message code="JobOffersApplied"/></h3>
+                                <c:forEach items="${offersApplied}" var="applied">
+                                    <hr>
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h4>
+                                                    <a href="<c:url value='/job_offers/${applied.jobOffer.id}'/>">${applied.jobOffer.title}</a>
+                                                </h4>
+                                                <p>${applied.description}</p>
+                                                <c:forEach items="${applied.jobOffer.skills}" var="skill">
+                                                    <span class="label label-info">${skill.name}</span>
+                                                </c:forEach>
+                                            </div>
+                                            <div>
+                                              <div class="apply-button">
+                                                  <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Unapply"/>">
+                                                    <span class="glyphicon glyphicon-remove remove-button" data-href="<c:url value='/job_application/${applied.id}'/>"/>
+                                                  </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                </c:if>
             </div>
+    </div>
+</div>
 
-            <jsp:include page="../footer.jsp"/>
-            <script type="text/javascript" src="<c:url value='/script/general.js'/>"></script>
+<jsp:include page="../footer.jsp"/>
+<script type="text/javascript" src="<c:url value='/script/general.js'/>"></script>
