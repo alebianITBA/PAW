@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -35,6 +37,8 @@ import ar.edu.itba.paw.models.User;
 @SessionAttributes
 public class JobOffersController extends ApplicationController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(JobOffersController.class);
+
 	@Autowired
 	private JobOfferService jobOfferService;
 
@@ -47,42 +51,43 @@ public class JobOffersController extends ApplicationController {
 	@RequestMapping(path = "/job_offers", method = RequestMethod.GET)
 	public ModelAndView jobOffers(@RequestParam(required = false, value = "skill_id") final Long skillId,
 			@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm, final BindingResult binding) {
-		
+
 		ModelAndView mav = new ModelAndView("job_offers/index");
-		
+
 		mav.addAllObjects(getJobOffersMap(skillId));
 		mav.addObject("jobOfferForm", jobOfferForm);
 		// TODO: This doesn't work
 		mav.addObject("errors", binding);
-		
+
 		return mav;
 	}
 
 	@RequestMapping(path = "/job_offers", method = RequestMethod.POST)
 	public String createJobOffer(@Valid @ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
 			final BindingResult binding, RedirectAttributes attr) {
-		
+
 		if (!binding.hasErrors()) {
-			jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(), getLoggedUser(),
-					jobOfferForm.getSelectedSkillIds());
+			JobOffer offer = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(),
+					getLoggedUser(), jobOfferForm.getSelectedSkillIds());
+			LOGGER.info("Created Job Offer: " + offer.toString());
 		}
 		attr.addFlashAttribute("org.springframework.validation.BindingResult.jobOfferForm", binding);
 		attr.addFlashAttribute("jobOfferForm", jobOfferForm);
-		
+
 		return "redirect:/job_offers";
 	}
 
 	@RequestMapping(path = "/job_offers/{id}", method = RequestMethod.GET)
 	public ModelAndView getJobOffer(@PathVariable final Long id) {
-		
+
 		JobOffer offer = jobOfferService.find(id);
-		
+
 		if (offer == null) {
 			return new ModelAndView("redirect:/not_found");
 		}
-		
+
 		final ModelAndView mav = new ModelAndView("job_offers/show");
-		
+
 		mav.addObject("job", offer);
 		mav.addObject("userApply", null);
 
@@ -100,23 +105,25 @@ public class JobOffersController extends ApplicationController {
 		mav.addObject("quantityApplications", applications.size());
 		mav.addObject("applications", applications);
 		mav.addObject("alreadyApplied", alreadyApplied);
-		
+
 		return mav;
 	}
 
 	@RequestMapping(path = "/job_offers/{id}", method = RequestMethod.DELETE)
 	public String deleteJobOffer(@PathVariable final Long id) {
-		
+
 		JobOffer offer = jobOfferService.find(id);
+
 		if (offer.getUser().getId() == getLoggedUser().getId()) {
 			jobOfferService.delete(id);
+			LOGGER.info("Deleted Job offer: " + id.toString());
 		}
-		
+
 		return "redirect:/users/me";
 	}
 
 	private Map<String, Object> getJobOffersMap(Long skillId) {
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		User loggedUser = getLoggedUser();
@@ -159,7 +166,7 @@ public class JobOffersController extends ApplicationController {
 		map.put("jobOfferForm", new JobOfferForm());
 		map.put("job_offers", jobOfferListDTO);
 		map.put("skills", skillService.all());
-		
+
 		return map;
 	}
 

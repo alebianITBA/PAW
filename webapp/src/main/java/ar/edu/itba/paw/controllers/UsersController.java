@@ -1,10 +1,10 @@
 package ar.edu.itba.paw.controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,12 +30,13 @@ import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.PostService;
 import ar.edu.itba.paw.interfaces.UserService;
-import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.validators.PasswordValidator;
 
 @Controller
 public class UsersController extends ApplicationController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UsersController.class);
 
 	@Autowired
 	private UserService userService;
@@ -106,8 +107,10 @@ public class UsersController extends ApplicationController {
 			return "redirect:/";
 		} else {
 
-			userService.create(registerForm.getFirstName(), registerForm.getLastName(), registerForm.getEmail(),
+			User user = userService.create(registerForm.getFirstName(), registerForm.getLastName(), registerForm.getEmail(),
 					registerForm.getPassword());
+			
+			LOGGER.info("Created User: " + user.toString());
 
 			UserDetails userDetails = userDetailsService.loadUserByUsername(registerForm.getEmail());
 

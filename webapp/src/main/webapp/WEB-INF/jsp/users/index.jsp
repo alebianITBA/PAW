@@ -17,7 +17,7 @@
                                     <a href="<c:url value='/users/${user.id}'/>">${user.firstName} ${user.lastName}</a>
                                 </h3>
                                 <p class="center">
-                                    <i>${user.email}</i>
+                                    <a href="<c:url value='/users/${user.id}'/>"><i>${user.email}</i></a>
                                 </p>
                                 <p class="skill-container">
                                     <c:forEach items="${user.skills}" var="skill">

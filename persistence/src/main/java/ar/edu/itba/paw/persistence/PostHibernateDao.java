@@ -28,7 +28,7 @@ public class PostHibernateDao implements PostDao {
 
 	@Override
 	public void delete(Long id) {
-		Query q = em.createQuery("delete from Post p where p.id = :id");
+		Query q = em.createQuery("delete from Post where id = :id");
 		q.setParameter("id", id);
 		q.executeUpdate();
 	}
