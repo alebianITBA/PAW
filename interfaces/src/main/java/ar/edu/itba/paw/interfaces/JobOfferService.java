@@ -35,5 +35,13 @@ public interface JobOfferService {
 	List<JobOffer> notFromUser(Long userId);
 
 	List<JobOffer> notFromUser(Long userId, Integer page, Integer perPage);
+	
+	List<JobOffer> notApplied(Long userId);
+	
+	List<JobOffer> notApplied(Long userId, Integer page, Integer perPage);
+	
+	List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills);
+	
+	List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills, Integer page, Integer perPage);
 
 }

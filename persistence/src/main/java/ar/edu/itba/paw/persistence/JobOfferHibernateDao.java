@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.persistence;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.interfaces.JobOfferDao;
+import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
@@ -107,14 +109,30 @@ public class JobOfferHibernateDao implements JobOfferDao {
 
 	@Override
 	public List<JobOffer> withSkills(List<Skill> skills) {
-		// TODO Auto-generated method stub
-		return null;
+		final TypedQuery<JobOffer> query = em.createQuery(
+				"select o from JobOffer o join o.skills s where s.id in (:skills) ORDER BY o.createdAt DESC",
+				JobOffer.class);
+		query.setParameter("skills", skillsIds(skills));
+		return query.getResultList();
 	}
 
 	@Override
 	public List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage) {
-		// TODO Auto-generated method stub
-		return null;
+		final TypedQuery<JobOffer> query = em.createQuery(
+				"select o from JobOffer o join o.skills s where s.id in (:skills) ORDER BY o.createdAt DESC",
+				JobOffer.class);
+		query.setParameter("skills", skillsIds(skills));
+		query.setFirstResult(page * perPage);
+		query.setMaxResults(perPage);
+		return query.getResultList();
+	}
+
+	private List<Long> skillsIds(List<Skill> skills) {
+		List<Long> result = new LinkedList<Long>();
+		for (Skill skill : skills) {
+			result.add(skill.getId());
+		}
+		return result;
 	}
 
 	@Override
@@ -133,6 +151,56 @@ public class JobOfferHibernateDao implements JobOfferDao {
 		query.setFirstResult(page * perPage);
 		query.setMaxResults(perPage);
 		return query.getResultList();
+	}
+	
+	@Override
+	public List<JobOffer> notApplied(Long userId, List<JobApplication> applications) {
+		final TypedQuery<JobOffer> query = em.createQuery(
+				"from JobOffer o where not (o.id in (:applied) or o.user.id = :userId) ORDER BY o.createdAt DESC", JobOffer.class);
+		query.setParameter("userId", userId);
+		query.setParameter("applied", applicationOfferIds(applications));
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<JobOffer> notApplied(Long userId, List<JobApplication> applications, Integer page, Integer perPage) {
+		final TypedQuery<JobOffer> query = em.createQuery(
+				"from JobOffer o where not (o.id in (:applied) or o.user.id = :userId) ORDER BY o.createdAt DESC", JobOffer.class);
+		query.setParameter("userId", userId);
+		query.setParameter("applied", applicationOfferIds(applications));
+		query.setFirstResult(page * perPage);
+		query.setMaxResults(perPage);
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<JobOffer> notAppliedWithSkills(Long userId, List<JobApplication> applications, List<Skill> skills) {
+		final TypedQuery<JobOffer> query = em.createQuery(
+				"select o from JobOffer o join o.skills s where s.id in (:skills) and (o.id not in (:applied) or o.user.id != :userId) ORDER BY o.createdAt DESC", JobOffer.class);
+		query.setParameter("skills", skillsIds(skills));
+		query.setParameter("userId", userId);
+		query.setParameter("applied", applicationOfferIds(applications));
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<JobOffer> notAppliedWithSkills(Long userId, List<JobApplication> applications, List<Skill> skills, Integer page, Integer perPage) {
+		final TypedQuery<JobOffer> query = em.createQuery(
+				"select o from JobOffer o join o.skills s where s.id in (:skills) and (o.id not in (:applied) or o.user.id != :userId) ORDER BY o.createdAt DESC", JobOffer.class);
+		query.setParameter("skills", skillsIds(skills));
+		query.setParameter("userId", userId);
+		query.setParameter("applied", applicationOfferIds(applications));
+		query.setFirstResult(page * perPage);
+		query.setMaxResults(perPage);
+		return query.getResultList();
+	}
+	
+	private List<Long> applicationOfferIds(List<JobApplication> applications) {
+		List<Long> result = new LinkedList<Long>();
+		for (JobApplication application : applications) {
+			result.add(application.getJobOffer().getId());
+		}
+		return result;
 	}
 
 }

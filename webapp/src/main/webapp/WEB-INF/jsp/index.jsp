@@ -9,11 +9,9 @@
 
 <div class="content">
 	<div class="container">
-		<c:if test="${offers[0] != null}">
-
+		<c:if test="${not empty offers}">
 			<div class="col-md-4 praesent f-right">
 				<c:forEach items="${offers}" var="offer">
-					<c:if test="${offer.status == 'READY_TO_APPLY'}">
 						<div class="l_g_r">
 							<div class="dapibus">
 								<h2>
@@ -21,9 +19,9 @@
 								</h2>
 								<p class="adm">
 									<spring:message code="PostedBy"/>
-									<a href="<c:url value='/users/${offer.userId}'/>">${offer.user.firstName} ${offer.user.lastName}</a>
+									<a href="<c:url value='/users/${offer.user.id}'/>">${offer.user.firstName} ${offer.user.lastName}</a>
 								</p>
-								<p>${offers[0].description}</p>
+								<p>${offer.description}</p>
 								<p class="skill-container">
 									<c:forEach items="${offer.skills}" var="skill">
 										<a class="no-underline" href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span class="label label-info">${skill.name}</span></a>
@@ -37,11 +35,10 @@
 								</form:form>
 							</div>
 						</div>
-					</c:if>
 				</c:forEach>
 			</div>
-
 		</c:if>
+
 		<div class="col-md-8 praesent f-left">
 			<div class="l_g_r biography-into">
 				<div class="dapibus">

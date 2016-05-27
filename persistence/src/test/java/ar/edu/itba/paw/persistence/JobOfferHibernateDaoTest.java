@@ -205,6 +205,10 @@ public class JobOfferHibernateDaoTest extends DaoTest {
 
 		assertEquals(0, result.size());
 	}
+	
+	@Test
+	public void notApplied() {
+	}
 
 	@Override
 	protected String tableName() {

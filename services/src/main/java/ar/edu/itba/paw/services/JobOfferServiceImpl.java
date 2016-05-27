@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferDao;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.SkillService;
+import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
@@ -23,6 +25,9 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 	@Autowired
 	private SkillService skillService;
+
+	@Autowired
+	private JobApplicationService jobApplicationService;
 
 	public void setJobOfferDao(JobOfferDao jobOfferDao) {
 		this.jobOfferDao = jobOfferDao;
@@ -109,6 +114,54 @@ public class JobOfferServiceImpl implements JobOfferService {
 	@Override
 	public List<JobOffer> notFromUser(Long userId, Integer page, Integer perPage) {
 		return jobOfferDao.notFromUser(userId, page, perPage);
+	}
+
+	@Override
+	public List<JobOffer> notApplied(Long userId) {
+		List<JobOffer> result = null;
+		List<JobApplication> applications = jobApplicationService.userJobApplications(userId);
+		if (applications != null && !applications.isEmpty()) {
+			result = jobOfferDao.notApplied(userId, applications);
+		} else {
+			result = notFromUser(userId);
+		}
+		return result;
+	}
+
+	@Override
+	public List<JobOffer> notApplied(Long userId, Integer page, Integer perPage) {
+		List<JobOffer> result = null;
+		List<JobApplication> applications = jobApplicationService.userJobApplications(userId);
+		if (applications != null && !applications.isEmpty()) {
+			result = jobOfferDao.notApplied(userId, applications, page, perPage);
+		} else {
+			result = notFromUser(userId, page, perPage);
+		}
+		return result;
+	}
+
+	@Override
+	public List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills) {
+		List<JobOffer> result = null;
+		if (skills != null && !skills.isEmpty()) {
+			result = jobOfferDao.notAppliedWithSkills(userId, jobApplicationService.userJobApplications(userId),
+					skills);
+		} else {
+			result = notApplied(userId);
+		}
+		return result;
+	}
+
+	@Override
+	public List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills, Integer page, Integer perPage) {
+		List<JobOffer> result = null;
+		if (skills != null && !skills.isEmpty()) {
+			result = jobOfferDao.notAppliedWithSkills(userId, jobApplicationService.userJobApplications(userId), skills,
+					page, perPage);
+		} else {
+			result = notApplied(userId, page, perPage);
+		}
+		return result;
 	}
 
 }
