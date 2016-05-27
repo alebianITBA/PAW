@@ -6,6 +6,7 @@
 
 <div class="content">
     <div class="container">
+      <div class="row">
         <div class="col-md-12 praesent">
             <div class="l_g_r biography-into">
                 <div class="dapibus center">
@@ -25,8 +26,10 @@
                     </div>
                 </div>
             </div>
+          </div>
 
-            <c:if test="${posts[0] != null}">
+          <div class="row">
+            <c:if test="${not empty posts}">
                 <div class="col-md-6 praesent">
                     <div class="l_g_r biography-into">
                         <div class="dapibus">
@@ -53,7 +56,7 @@
                     </div>
                 </c:if>
 
-                <c:if test="${offers[0] != null}">
+                <c:if test="${not empty offers}">
                     <div class="col-md-6 praesent">
                         <div class="l_g_r biography-into">
                             <div class="dapibus">
@@ -91,9 +94,10 @@
                             </div>
                         </div>
                 </c:if>
+              </div>
 
-            <div class="col-md-12 praesent">
-                <c:if test="${offersApplied != null}">
+              <div class="row">
+                <c:if test="${not empty offersApplied}">
                     <div class="col-md-6 praesent">
                         <div class="l_g_r biography-into">
                             <div class="dapibus">
@@ -123,7 +127,7 @@
                             </div>
                         </div>
                 </c:if>
-            </div>
+              </div>
     </div>
 </div>
 
