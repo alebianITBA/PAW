@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.forms.PostForm;
@@ -44,13 +45,15 @@ public class HomeController extends ApplicationController {
 	}
 
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
-	public ModelAndView index(@ModelAttribute("postForm") final PostForm postForm, final BindingResult binding) {
+	public ModelAndView index(@ModelAttribute("postForm") final PostForm postForm,
+			@RequestParam(required = false, value = "page") final Integer pageParam, final BindingResult binding) {
 		final ModelAndView mav = new ModelAndView("index");
 
 		User user = getLoggedUser();
-
+		
+		mav.addObject("item_count", postService.count());
 		mav.addObject("posts",
-				postService.all(PaginationHelper.INSTANCE.page(1), PaginationHelper.INSTANCE.perPage(20)));
+				postService.all(PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.INSTANCE.perPage(20)));
 		mav.addObject("postForm", postForm);
 		mav.addObject("offers", jobOfferService.notAppliedWithSkills(user.getId(), user.getSkills(),
 				PaginationHelper.INSTANCE.page(1), PaginationHelper.INSTANCE.perPage(5)));

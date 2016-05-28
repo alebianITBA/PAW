@@ -12,29 +12,31 @@
 		<c:if test="${not empty offers}">
 			<div class="col-md-4 praesent f-right">
 				<c:forEach items="${offers}" var="offer">
-						<div class="l_g_r">
-							<div class="dapibus">
-								<h2>
-									<a href="<c:url value='/job_offers/${offer.id}'/>">${offer.title}</a>
-								</h2>
-								<p class="adm">
-									<spring:message code="PostedBy"/>
-									<a href="<c:url value='/users/${offer.user.id}'/>">${offer.user.firstName} ${offer.user.lastName}</a>
-								</p>
-								<p>${offer.description}</p>
-								<p class="skill-container">
-									<c:forEach items="${offer.skills}" var="skill">
-										<a class="no-underline" href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span class="label label-info">${skill.name}</span></a>
-									</c:forEach>
-								</p>
-								<spring:url value="/job_offers/${offer.id}/apply" var="actionUrl"/>
-								<form:form method="post" action="${actionUrl}">
-									<button class="btn btn-info btn-block btn-lg" type="submit">
-										<spring:message code="Apply"/>
-									</button>
-								</form:form>
-							</div>
+					<div class="l_g_r">
+						<div class="dapibus">
+							<h2>
+								<a href="<c:url value='/job_offers/${offer.id}'/>">${offer.title}</a>
+							</h2>
+							<p class="adm">
+								<spring:message code="PostedBy"/>
+								<a href="<c:url value='/users/${offer.user.id}'/>">${offer.user.firstName} ${offer.user.lastName}</a>
+							</p>
+							<p>${offer.description}</p>
+							<p class="skill-container">
+								<c:forEach items="${offer.skills}" var="skill">
+									<a class="no-underline" href="<c:url value='/job_offers?skill_id=${skill.id}'/>">
+										<span class="label label-info">${skill.name}</span>
+									</a>
+								</c:forEach>
+							</p>
+							<spring:url value="/job_offers/${offer.id}/apply" var="actionUrl"/>
+							<form:form method="post" action="${actionUrl}">
+								<button class="btn btn-info btn-block btn-lg" type="submit">
+									<spring:message code="Apply"/>
+								</button>
+							</form:form>
 						</div>
+					</div>
 				</c:forEach>
 			</div>
 		</c:if>
@@ -97,6 +99,15 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
+
+					<div class="col-md-8 praesent f-left">
+						<div class="l_g_r biography-into">
+								<div class="row">
+									<div id="pagination" data-value="${item_count}"></div>
+								</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -105,3 +116,4 @@
 
 <jsp:include page="./footer.jsp"/>
 <script type="text/javascript" src="<c:url value='/script/general.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/script/pagination.js'/>"></script>

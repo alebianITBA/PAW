@@ -24,7 +24,6 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
   protected void configure(final HttpSecurity http) throws Exception {
     http.userDetailsService(userDetailsService)
       .authorizeRequests()
-        .antMatchers("/create_user").anonymous()
         .antMatchers("/").anonymous()
         .anyRequest().authenticated()
       .and().formLogin()
