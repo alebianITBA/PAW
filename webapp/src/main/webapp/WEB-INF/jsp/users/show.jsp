@@ -70,7 +70,7 @@
                                                 </h4>
                                                 <p>${offer.description}</p>
                                                 <c:forEach items="${offer.skills}" var="skill">
-                                                    <span class="label label-info">${skill.name}</span>
+                                                  <a class="no-underline" href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span class="label label-info">${skill.name}</span></a>
                                                 </c:forEach>
                                             </div>
                                             <div>
@@ -110,9 +110,6 @@
                                                     <a href="<c:url value='/job_offers/${applied.jobOffer.id}'/>">${applied.jobOffer.title}</a>
                                                 </h4>
                                                 <p>${applied.description}</p>
-                                                <c:forEach items="${applied.jobOffer.skills}" var="skill">
-                                                    <span class="label label-info">${skill.name}</span>
-                                                </c:forEach>
                                             </div>
                                             <div>
                                               <div class="apply-button">
