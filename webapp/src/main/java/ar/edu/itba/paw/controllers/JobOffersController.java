@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ar.edu.itba.paw.dto.JobOfferDTO;
 import ar.edu.itba.paw.enums.JobOfferStatus;
 import ar.edu.itba.paw.forms.JobOfferForm;
+import ar.edu.itba.paw.helpers.PaginationHelper;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.SkillService;
@@ -50,16 +51,70 @@ public class JobOffersController extends ApplicationController {
 
 	@RequestMapping(path = "/job_offers", method = RequestMethod.GET)
 	public ModelAndView jobOffers(@RequestParam(required = false, value = "skill_id") final Long skillId,
+			@RequestParam(required = false, value = "page") final Integer pageParam,
 			@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm, final BindingResult binding) {
 
 		ModelAndView mav = new ModelAndView("job_offers/index");
 
-		mav.addAllObjects(getJobOffersMap(skillId));
+		mav.addAllObjects(getJobOffersMap(skillId, pageParam));
+
 		mav.addObject("jobOfferForm", jobOfferForm);
 		// TODO: This doesn't work
 		mav.addObject("errors", binding);
 
 		return mav;
+	}
+
+	private Map<String, Object> getJobOffersMap(Long skillId, Integer pageParam) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		User loggedUser = getLoggedUser();
+
+		List<JobOfferDTO> jobOfferListDTO = new ArrayList<JobOfferDTO>();
+		List<JobOffer> jobOfferList;
+		List<JobApplication> alreadyApplies = jobApplicationService.userJobApplications(loggedUser.getId());
+
+		if (skillId != null) {
+			List<Skill> skills = new LinkedList<Skill>();
+			skills.add(new Skill(skillId, "", null));
+			jobOfferList = jobOfferService.withSkills(skills, PaginationHelper.INSTANCE.page(pageParam),
+					PaginationHelper.INSTANCE.perPage(20));
+			map.put("item_count", jobOfferService.withSkillsCount(skills));
+		} else {
+			jobOfferList = jobOfferService.all(PaginationHelper.INSTANCE.page(pageParam),
+					PaginationHelper.INSTANCE.perPage(20));
+			map.put("item_count", jobOfferService.count());
+		}
+
+		// Deberia ir a un helper
+		for (JobOffer offer : jobOfferList) {
+			JobOfferDTO offerDTO = JobOfferDTO.fromModel(offer);
+			if (offerDTO.getUserId() == loggedUser.getId()) {
+				offerDTO.setStatus(JobOfferStatus.OFFER_OWNER);
+			} else {
+				boolean alreadyApply = false;
+				for (JobApplication application : alreadyApplies) {
+					if (application.getJobOffer().getId() == offerDTO.getId()) {
+						alreadyApply = true;
+						break;
+					}
+				}
+
+				if (alreadyApply) {
+					offerDTO.setStatus(JobOfferStatus.ALREADY_APPLIED);
+				} else {
+					offerDTO.setStatus(JobOfferStatus.READY_TO_APPLY);
+				}
+			}
+			jobOfferListDTO.add(offerDTO);
+		}
+
+		map.put("jobOfferForm", new JobOfferForm());
+		map.put("job_offers", jobOfferListDTO);
+		map.put("skills", skillService.all());
+
+		return map;
 	}
 
 	@RequestMapping(path = "/job_offers", method = RequestMethod.POST)
@@ -70,9 +125,10 @@ public class JobOffersController extends ApplicationController {
 			JobOffer offer = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(),
 					getLoggedUser(), jobOfferForm.getSelectedSkillIds());
 			LOGGER.info("Created Job Offer: " + offer.toString());
+		} else {
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.jobOfferForm", binding);
+			attr.addFlashAttribute("jobOfferForm", jobOfferForm);
 		}
-		attr.addFlashAttribute("org.springframework.validation.BindingResult.jobOfferForm", binding);
-		attr.addFlashAttribute("jobOfferForm", jobOfferForm);
 
 		return "redirect:/job_offers";
 	}
@@ -120,54 +176,6 @@ public class JobOffersController extends ApplicationController {
 		}
 
 		return "redirect:/users/me";
-	}
-
-	private Map<String, Object> getJobOffersMap(Long skillId) {
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		User loggedUser = getLoggedUser();
-
-		List<JobOfferDTO> jobOfferListDTO = new ArrayList<JobOfferDTO>();
-		List<JobOffer> jobOfferList = new ArrayList<JobOffer>();
-		List<JobApplication> alreadyApplies = jobApplicationService.userJobApplications(loggedUser.getId());
-
-		if (skillId != null) {
-			List<Skill> skills = new LinkedList<Skill>();
-			skills.add(new Skill(skillId, "", null));
-			jobOfferList = jobOfferService.withSkills(skills, 1, 50);
-		} else {
-			jobOfferList = jobOfferService.all(1, 50);
-		}
-
-		// Deberia ir a un helper
-		for (JobOffer offer : jobOfferList) {
-			JobOfferDTO offerDTO = JobOfferDTO.fromModel(offer);
-			if (offerDTO.getUserId() == loggedUser.getId()) {
-				offerDTO.setStatus(JobOfferStatus.OFFER_OWNER);
-			} else {
-				boolean alreadyApply = false;
-				for (JobApplication application : alreadyApplies) {
-					if (application.getJobOffer().getId() == offerDTO.getId()) {
-						alreadyApply = true;
-						break;
-					}
-				}
-
-				if (alreadyApply) {
-					offerDTO.setStatus(JobOfferStatus.ALREADY_APPLIED);
-				} else {
-					offerDTO.setStatus(JobOfferStatus.READY_TO_APPLY);
-				}
-			}
-			jobOfferListDTO.add(offerDTO);
-		}
-
-		map.put("jobOfferForm", new JobOfferForm());
-		map.put("job_offers", jobOfferListDTO);
-		map.put("skills", skillService.all());
-
-		return map;
 	}
 
 }

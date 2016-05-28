@@ -44,7 +44,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		if (skills != null && !skills.isEmpty()) {
 			String[] skillIds = skills.split(",");
 			for (String skillId : skillIds) {
-				skillList.add(skillService.find(Long.getLong(skillId)));
+				skillList.add(skillService.find(Long.parseLong(skillId)));
 			}
 		}
 		return jobOfferDao.create(title, description, user, skillList);
@@ -104,6 +104,11 @@ public class JobOfferServiceImpl implements JobOfferService {
 			return all(page, perPage);
 		}
 		return jobOfferDao.withSkills(skills, page, perPage);
+	}
+	
+	@Override
+	public Long withSkillsCount(List<Skill> skills) {
+		return jobOfferDao.withSkillsCount(skills);
 	}
 
 	@Override

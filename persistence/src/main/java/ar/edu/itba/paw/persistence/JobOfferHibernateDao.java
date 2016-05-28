@@ -126,6 +126,13 @@ public class JobOfferHibernateDao implements JobOfferDao {
 		query.setMaxResults(perPage);
 		return query.getResultList();
 	}
+	
+	@Override
+	public Long withSkillsCount(List<Skill> skills) {
+		Query query = em.createQuery("SELECT count(*) FROM JobOffer o join o.skills s where s.id in (:skills)");
+		query.setParameter("skills", skillsIds(skills));
+		return (Long) query.getSingleResult();
+	}
 
 	private List<Long> skillsIds(List<Skill> skills) {
 		List<Long> result = new LinkedList<Long>();

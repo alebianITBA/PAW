@@ -32,6 +32,8 @@ public interface JobOfferDao {
 	List<JobOffer> withSkills(List<Skill> skills);
 
 	List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage);
+	
+	Long withSkillsCount(List<Skill> skills);
 
 	List<JobOffer> notFromUser(Long userId);
 

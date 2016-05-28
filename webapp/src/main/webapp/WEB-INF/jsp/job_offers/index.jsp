@@ -53,10 +53,14 @@
 								<hr>
 								</c:forEach>
 
-								<div class="row">
-			            <div id="pagination" data-value="${item_count}"></div>
-			          </div>
 
+							</div>
+							<div class="col-md-8 praesent f-left">
+								<div class="l_g_r biography-into">
+										<div class="row">
+											<div id="pagination" data-value="${item_count}"></div>
+										</div>
+								</div>
 							</div>
 						</div>
 					</div>
