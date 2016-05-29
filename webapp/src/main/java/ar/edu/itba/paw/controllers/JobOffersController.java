@@ -55,16 +55,12 @@ public class JobOffersController extends ApplicationController {
 			@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm, final BindingResult binding) {
 
 		ModelAndView mav = new ModelAndView("job_offers/index");
-
 		mav.addAllObjects(getJobOffersMap(skillId, pageParam));
-
 		mav.addObject("jobOfferForm", jobOfferForm);
-		// TODO: This doesn't work
-		mav.addObject("errors", binding);
 
 		return mav;
 	}
-
+	
 	private Map<String, Object> getJobOffersMap(Long skillId, Integer pageParam) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -118,20 +114,18 @@ public class JobOffersController extends ApplicationController {
 	}
 
 	@RequestMapping(path = "/job_offers", method = RequestMethod.POST)
-	public String createJobOffer(@Valid @ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
+	public ModelAndView createJobOffer(@Valid @ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
 			final BindingResult binding, RedirectAttributes attr) {
 
 		if (!binding.hasErrors()) {
 			JobOffer offer = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(),
 					getLoggedUser(), jobOfferForm.getSelectedSkillIds());
 			LOGGER.info("Created Job Offer: " + offer.toString());
-		} else {
-			attr.addFlashAttribute("org.springframework.validation.BindingResult.jobOfferForm", binding);
-			attr.addFlashAttribute("jobOfferForm", jobOfferForm);
 		}
-
-		return "redirect:/job_offers";
-	}
+		//Dado que no se pudo encontrar una solucion con la ayuda de Juan, Alvaro o documentacion/foros se eligio
+		//este workaround al caso del binding perdiendo su contenido en el redirect.
+		return jobOffers(null,0,jobOfferForm,binding);
+	}	
 
 	@RequestMapping(path = "/job_offers/{id}", method = RequestMethod.GET)
 	public ModelAndView getJobOffer(@PathVariable final Long id) {
