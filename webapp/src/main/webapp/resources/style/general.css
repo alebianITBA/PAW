@@ -337,3 +337,12 @@ a.link:hover{
 .remove-button {
   cursor: pointer;
 }
+
+/* GENERAL */
+.media{
+  overflow: visible;
+}
+
+.media-body{
+  padding: 10px;
+}

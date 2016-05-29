@@ -41,11 +41,20 @@
                                     <div>
                                       <div class="apply-button">
                                         <c:if test="${post.user.id == loggedUser.id}">
-                                          <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>">
-                                            <span class="glyphicon glyphicon-pencil"/>
-                                          </div>
-                                          <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Delete"/>">
-                                            <span class="glyphicon glyphicon-remove remove-button" data-href="<c:url value='/posts/${post.id}'/>"/>
+                                          <div class="btn-group">
+                                            <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                              <spring:message code="Action"/><span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                              <li><a href="#">
+                                                <spring:message code="Edit"/>
+                                              </a></li>
+                                              <li>
+                                              <li><a href="" class="remove-button" data-href="<c:url value='/posts/${post.id}'/>"/>
+                                                <spring:message code="Delete"/>
+                                                </a>
+                                              </a></li>
+                                            </ul>
                                           </div>
                                         </c:if>
                                       </div>
@@ -76,14 +85,23 @@
                                             <div>
                                               <div class="apply-button">
                                                 <c:if test="${offer.user.id == loggedUser.id}">
-                                                  <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Edit"/>">
-                                                    <span class="glyphicon glyphicon-pencil"/>
-                                                  </div>
-                                                  <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Delete"/>">
-                                                    <span class="glyphicon glyphicon-remove remove-button" data-href="<c:url value='/job_offers/${offer.id}'/>"/>
-                                                  </div>
-                                                  <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Finish"/>">
-                                                    <span class="glyphicon glyphicon-briefcase"/>
+                                                  <div class="btn-group">
+                                                    <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                      <spring:message code="Action"/><span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                      <li><a href="">
+                                                        <spring:message code="Edit"/>
+                                                      </a></li>
+                                                      <li>
+                                                      <li><a href="" class="remove-button" data-href="<c:url value='/job_offers/${offer.id}'/>">
+                                                        <spring:message code="Delete"/>
+                                                        </a>
+                                                      </a></li>
+                                                      <li><a href="">
+                                                        <spring:message code="Finish"/>
+                                                      </a></li>
+                                                    </ul>
                                                   </div>
                                                 </c:if>
                                               </div>
@@ -113,8 +131,16 @@
                                             </div>
                                             <div>
                                               <div class="apply-button">
-                                                  <div data-toggle="tooltip" data-placement="top" title="<spring:message code="Unapply"/>">
-                                                    <span class="glyphicon glyphicon-remove remove-button" data-href="<c:url value='/job_application/${applied.id}'/>"/>
+                                                 <div class="btn-group">
+                                                    <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                      <spring:message code="Action"/><span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                      <li><a href="" class="remove-button" data-href="<c:url value='/job_application/${applied.id}'/>"/>
+                                                        <spring:message code="Delete"/>
+                                                        </a>
+                                                      </a></li>
+                                                    </ul>
                                                   </div>
                                               </div>
                                             </div>
