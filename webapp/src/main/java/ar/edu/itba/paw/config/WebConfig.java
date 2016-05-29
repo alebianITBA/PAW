@@ -94,7 +94,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public MessageSource messageSource() {
 		final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setBasename("/WEB-INF/i18n/messages");
+        messageSource.setBasename("classpath:i18n/messages");
 		messageSource.setDefaultEncoding(StandardCharsets.UTF_8.displayName());
 		messageSource.setCacheSeconds(CACHE_DURATION_SECONDS);
 		return messageSource;

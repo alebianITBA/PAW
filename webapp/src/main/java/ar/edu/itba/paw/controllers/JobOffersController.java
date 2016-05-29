@@ -121,9 +121,11 @@ public class JobOffersController extends ApplicationController {
 			JobOffer offer = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(),
 					getLoggedUser(), jobOfferForm.getSelectedSkillIds());
 			LOGGER.info("Created Job Offer: " + offer.toString());
+			return getJobOffer(offer.getId());
 		}
+		
 		//Dado que no se pudo encontrar una solucion con la ayuda de Juan, Alvaro o documentacion/foros se eligio
-		//este workaround al caso del binding perdiendo su contenido en el redirect.
+		//este workaround para el caso del binding perdiendo su contenido en el redirect.
 		return jobOffers(null,0,jobOfferForm,binding);
 	}	
 
