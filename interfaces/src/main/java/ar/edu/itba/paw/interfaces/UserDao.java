@@ -13,6 +13,8 @@ public interface UserDao {
 
   User update(Long id, String firstName, String lastName, String email, String password);
   
+  User update(Long id, String firstName, String lastName, List<Skill> skills);
+  
   User updateSkills(Long id, List<Skill> skills);
 
   User findByEmail(String email);

@@ -24,12 +24,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.edu.itba.paw.forms.JobOfferForm;
 import ar.edu.itba.paw.forms.RegisterForm;
+import ar.edu.itba.paw.forms.UserForm;
 import ar.edu.itba.paw.helpers.PaginationHelper;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.PostService;
+import ar.edu.itba.paw.interfaces.SkillService;
 import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.validators.PasswordValidator;
 
@@ -43,6 +47,9 @@ public class UsersController extends ApplicationController {
 
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private SkillService skillService;
 
 	@Autowired
 	private JobOfferService jobOfferService;
@@ -70,7 +77,8 @@ public class UsersController extends ApplicationController {
 	}
 
 	@RequestMapping(path = "/users/{id}", method = RequestMethod.GET)
-	public ModelAndView getUser(@PathVariable final Long id) {
+	public ModelAndView getUser(@PathVariable final Long id, @ModelAttribute("userForm") final UserForm userForm,
+			final BindingResult binding) {
 		
 		User user = userService.find(id);
 		if (user == null) {
@@ -79,9 +87,25 @@ public class UsersController extends ApplicationController {
 		
 		final ModelAndView mav = new ModelAndView("users/show");
 		
+		userForm.setId(user.getId());
+		userForm.setFirstName(user.getFirstName());
+		userForm.setLastName(user.getLastName());
+		String skillIds = "";
+		int i = 0;
+		for (Skill skill : user.getSkills()) {
+			if (i > 0) {
+				skillIds += ",";	
+			}
+			skillIds += skill.getId();
+			i++;
+		}
+		userForm.setSelectedSkillIds(skillIds);
+		
+		mav.addObject("userForm", userForm);
 		mav.addObject("user", user);
 		mav.addObject("posts", postService.userPosts(id));
 		mav.addObject("offers", jobOfferService.userJobOffers(id));
+		mav.addObject("skills", skillService.all());
 		
 		if(getLoggedUser().getId().equals(id)){
 			mav.addObject("offersApplied", jobApplicationService.userJobApplications(id));
@@ -93,6 +117,21 @@ public class UsersController extends ApplicationController {
 	@RequestMapping(path = "/users/me", method = RequestMethod.GET)
 	public String me() {
 		return "forward:/users/" + getLoggedUser().getId().toString();
+	}
+	
+	@RequestMapping(path = "/users/{id}", method = RequestMethod.POST)
+	public String editUser(@PathVariable final Long id, @Valid @ModelAttribute("userForm") final UserForm userForm,
+			final BindingResult binding, RedirectAttributes attr) {
+		if (binding.hasErrors()) {
+			attr.addFlashAttribute("userForm", userForm);
+			LOGGER.info("Binding has errors " + binding.getErrorCount());
+			return "redirect:/users/" + getLoggedUser().getId().toString();
+		} else {
+			User user = userService.update(userForm.getId(), userForm.getFirstName(), userForm.getLastName(), userForm.getSelectedSkillIds());
+			LOGGER.info("Updated User: " + user.toString());
+		}
+		
+		return "redirect:/users/" + getLoggedUser().getId().toString();
 	}
 
 	@RequestMapping(path = "/users", method = RequestMethod.POST)

@@ -16,6 +16,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+
 @Configuration
 @EnableWebSecurity
 @ComponentScan("ar.edu.itba.paw.config")
@@ -27,6 +32,20 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private UserDetailsServiceImpl userDetailsService;
 
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+      return new BCryptPasswordEncoder();
+  }
+   
+   
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
+      DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+      authenticationProvider.setUserDetailsService(userDetailsService);
+      authenticationProvider.setPasswordEncoder(passwordEncoder());
+      return authenticationProvider;
+  }
+  
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
     http.userDetailsService(userDetailsService)

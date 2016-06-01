@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ page import="java.util.*"%>
@@ -11,25 +12,66 @@
 				<div class="l_g_r biography-into">
 					<div class="dapibus center">
 						<img class="user-image" src="${user.gravatar}">
-						<div>
-							<h1>${user.firstName}
-								${user.lastName} <span class="glyphicon glyphicon-pencil"
-									data-toggle="tooltip" data-placement="top"
-									title="<spring:message code="Edit"/>" />
-							</h1>
+
+						<div id="info-user" style="display: block;">
+							<div>
+								<h1>${user.firstName}
+									${user.lastName} <a href="javascript:void(0);" class="edit-button"><span
+										class="glyphicon glyphicon-pencil" data-toggle="tooltip"
+										data-placement="top" title="<spring:message code="Edit"/>" /></a>
+								</h1>
+							</div>
+							<div>
+								<h3>${user.email}</h3>
+							</div>
+							<div>
+								<c:forEach items="${user.skills}" var="skill">
+									<a class="no-underline"
+										href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span
+										class="label label-info">${skill.name}</span></a>
+								</c:forEach>
+								<a href="javascript:void(0);" class="edit-button"><span
+									class="glyphicon glyphicon-pencil" data-toggle="tooltip"
+									data-placement="top" title="<spring:message code="Edit"/>" /></a>
+							</div>
 						</div>
-						<div>
-							<h3>${user.email}</h3>
+
+						<div id="editing-info-user" style="display: none;">
+
+							<spring:url value="/users/${user.id}" var="userUrl" />
+							<form:form method="post" modelAttribute="userForm" class="form-header"
+								action="${userUrl}" role="form" style="width:50%; display:inline-block; margin-top:20px;">
+
+								<form:input type="hidden"
+											value="${userForm.id}" path="id" />
+
+								<div class="form-group">
+										<form:input type="text" class="form-control input-lg"
+											value="${userForm.firstName}" path="firstName" />
+								</div>
+								<div class="form-group">
+										<form:input type="text" class="form-control input-lg"
+											value="${userForm.lastName}" path="lastName" />
+								</div>
+								<div>
+									<h3>${user.email}</h3>
+								</div>
+								<div class="form-group">
+									<form:select id="skills-select"
+									class="form-control" 
+									path="selectedSkillIds"
+										itemValue="id" multiple="true" items="${skills}"
+										itemLabel="name" data-placeholder="${ChooseSkills}"
+										/>
+								</div>
+
+
+								<spring:message code="Modify" var="modify" />
+								<input type="submit" class="btn btn-info btn-block btn-lg"
+									value="${modify}" />
+							</form:form>
 						</div>
-						<div>
-							<c:forEach items="${user.skills}" var="skill">
-								<a class="no-underline"
-									href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span
-									class="label label-info">${skill.name}</span></a>
-							</c:forEach>
-							<span class="glyphicon glyphicon-pencil" data-toggle="tooltip"
-								data-placement="top" title="<spring:message code="Edit"/>" />
-						</div>
+
 					</div>
 				</div>
 			</div>
@@ -66,7 +108,8 @@
 													<li>
 													<li><a href="" class="remove-button"
 														data-href="<c:url value='/posts/${post.id}'/>"> <spring:message
-															code="Delete" /> </a></li>
+																code="Delete" />
+													</a></li>
 												</ul>
 											</div>
 										</c:if>
@@ -185,7 +228,8 @@
 												<ul class="dropdown-menu dropdown-menu-right">
 													<li><a href="" class="remove-button"
 														data-href="<c:url value='/job_application/${applied.id}'/>">
-														<spring:message code="Delete" /> </a> </li>
+															<spring:message code="Delete" />
+													</a></li>
 												</ul>
 											</div>
 										</div>
@@ -202,3 +246,32 @@
 
 <jsp:include page="../footer.jsp" />
 <script type="text/javascript" src="<c:url value='/script/general.js'/>"></script>
+<link rel="stylesheet" href="<c:url value='/style/chosen.css'/>">
+<script type="text/javascript" src="<c:url value='/script/chosen/chosen.jquery.js'/>"></script>
+<script type="text/javascript">
+	$('.edit-button').on("click", function() {
+		$('#info-user').css("display", "none");
+		$('#editing-info-user').css("display", "block");
+	})
+	
+	$('#skills-select').chosen({
+		no_results_text : "Oops, no skills found!",
+		max_selected_options : 5
+	});
+
+	function setSelected(item, index) {
+		if (item != "") {
+			document.getElementById("skills-select").options[index].selected = true;	
+		}
+	}
+
+	var selectedSkills = "${user.skills}";
+	if (selectedSkills != "") {
+		var skillsArr = selectedSkills.split(",");
+		skillsArr.forEach(setSelected);
+		$("#skills_select_chosen").css("width", "100%");
+		$('#skills-select').trigger("chosen:updated");	
+	}
+</script>
+
+

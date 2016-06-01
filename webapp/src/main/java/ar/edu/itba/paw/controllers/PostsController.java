@@ -1,7 +1,5 @@
 package ar.edu.itba.paw.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -16,13 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ar.edu.itba.paw.forms.JobOfferForm;
 import ar.edu.itba.paw.forms.PostForm;
 import ar.edu.itba.paw.interfaces.PostService;
-import ar.edu.itba.paw.models.JobApplication;
-import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Post;
-import ar.edu.itba.paw.models.Skill;
 
 @Controller
 public class PostsController extends ApplicationController {
