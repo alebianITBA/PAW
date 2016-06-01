@@ -54,13 +54,13 @@ public class JobOfferServiceImpl implements JobOfferService {
 	public JobOffer update(Long id, String title, String description) {
 		return jobOfferDao.update(id, title, description);
 	}
-	
+
 	@Override
 	public JobOffer update(Long id, String title, String description, String skills) {
 		List<Skill> skillList = skillListFromString(skills);
 		return jobOfferDao.update(id, title, description, skillList);
 	}
-	
+
 	@Override
 	public JobOffer update(Long id, Date closedAt) {
 		return jobOfferDao.update(id, closedAt);
@@ -111,7 +111,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		}
 		return jobOfferDao.withSkills(skills, page, perPage);
 	}
-	
+
 	@Override
 	public Long withSkillsCount(List<Skill> skills) {
 		return jobOfferDao.withSkillsCount(skills);
@@ -154,24 +154,38 @@ public class JobOfferServiceImpl implements JobOfferService {
 	@Override
 	public List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills) {
 		List<JobOffer> result = null;
-		if (skills != null && !skills.isEmpty()) {
-			result = jobOfferDao.notAppliedWithSkills(userId, jobApplicationService.userJobApplications(userId),
-					skills);
+		
+		List<JobApplication> applications = jobApplicationService.userJobApplications(userId);
+		
+		if (applications != null && !applications.isEmpty()) {
+			if (skills != null && !skills.isEmpty()) {
+				result = jobOfferDao.notAppliedWithSkills(userId, applications, skills);
+			} else {
+				result = notApplied(userId);
+			}	
 		} else {
-			result = notApplied(userId);
+			result = notFromUser(userId);
 		}
+		
 		return result;
 	}
 
 	@Override
 	public List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills, Integer page, Integer perPage) {
-		List<JobOffer> result = null;
-		if (skills != null && !skills.isEmpty()) {
-			result = jobOfferDao.notAppliedWithSkills(userId, jobApplicationService.userJobApplications(userId), skills,
-					page, perPage);
+List<JobOffer> result = null;
+		
+		List<JobApplication> applications = jobApplicationService.userJobApplications(userId);
+		
+		if (applications != null && !applications.isEmpty()) {
+			if (skills != null && !skills.isEmpty()) {
+				result = jobOfferDao.notAppliedWithSkills(userId, applications, skills, page, perPage);
+			} else {
+				result = notApplied(userId, page, perPage);
+			}	
 		} else {
-			result = notApplied(userId, page, perPage);
+			result = notFromUser(userId, page, perPage);
 		}
+		
 		return result;
 	}
 
@@ -185,5 +199,5 @@ public class JobOfferServiceImpl implements JobOfferService {
 		}
 		return skillList;
 	}
-	
+
 }
