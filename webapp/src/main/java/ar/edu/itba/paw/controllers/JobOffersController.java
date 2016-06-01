@@ -125,6 +125,7 @@ public class JobOffersController extends ApplicationController {
 			if (jobOfferForm.getId() != null) {
 				offer = jobOfferService.update(jobOfferForm.getId(), jobOfferForm.getTitle(), 
 						jobOfferForm.getDescription(), jobOfferForm.getSelectedSkillIds());
+				LOGGER.info("Updated Job Offer: " + offer.toString());
 			} else {
 				offer = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(),
 						getLoggedUser(), jobOfferForm.getSelectedSkillIds());

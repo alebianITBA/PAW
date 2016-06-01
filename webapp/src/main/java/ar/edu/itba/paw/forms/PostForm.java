@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class PostForm {
 
+	private Long id;
+	
   @NotBlank
   @Length(max = 255)
   private String title;
@@ -12,6 +14,14 @@ public class PostForm {
   @NotBlank
   private String description;
 
+  public Long getId() {
+	return id;
+  }
+  
+  public void setId(Long id) {
+	this.id = id;
+  }
+  
   public String getTitle() {
     return title;
   }

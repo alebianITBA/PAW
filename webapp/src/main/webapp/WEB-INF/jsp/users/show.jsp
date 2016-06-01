@@ -59,12 +59,14 @@
 													<span class="caret"></span>
 												</button>
 												<ul class="dropdown-menu dropdown-menu-right">
-													<li><a href="#"> <spring:message code="Edit" />
+
+													<li><a href="<c:url value='/posts/${post.id}/edit'/>">
+															<spring:message code="Edit" />
 													</a></li>
 													<li>
 													<li><a href="" class="remove-button"
-														data-href="<c:url value='/posts/${post.id}'/>" /> <spring:message
-															code="Delete" /> </a> </a></li>
+														data-href="<c:url value='/posts/${post.id}'/>"> <spring:message
+															code="Delete" /> </a></li>
 												</ul>
 											</div>
 										</c:if>
@@ -111,7 +113,9 @@
 													<ul class="dropdown-menu dropdown-menu-right">
 														<c:choose>
 															<c:when test="${offer.closedAt == null}">
-																<li><a href=""> <spring:message code="Edit" />
+																<li><a
+																	href="<c:url value='/job_offers/${offer.id}/edit'/>">
+																		<spring:message code="Edit" />
 																</a></li>
 																<li>
 																<li><a href="" class="remove-button"
@@ -180,8 +184,8 @@
 												</button>
 												<ul class="dropdown-menu dropdown-menu-right">
 													<li><a href="" class="remove-button"
-														data-href="<c:url value='/job_application/${applied.id}'/>" />
-														<spring:message code="Delete" /> </a> </a></li>
+														data-href="<c:url value='/job_application/${applied.id}'/>">
+														<spring:message code="Delete" /> </a> </li>
 												</ul>
 											</div>
 										</div>

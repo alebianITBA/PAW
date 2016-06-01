@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -11,11 +13,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.edu.itba.paw.forms.JobOfferForm;
 import ar.edu.itba.paw.forms.PostForm;
 import ar.edu.itba.paw.interfaces.PostService;
+import ar.edu.itba.paw.models.JobApplication;
+import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Post;
+import ar.edu.itba.paw.models.Skill;
 
 @Controller
 public class PostsController extends ApplicationController {
@@ -37,19 +44,54 @@ public class PostsController extends ApplicationController {
 		
 		return "redirect:/users/me";
 	}
+	
+	@RequestMapping(path = "/posts/{id}/edit", method = RequestMethod.GET)
+	public ModelAndView editPost(@PathVariable final Long id,
+			@ModelAttribute("postForm") PostForm postForm, 
+			final BindingResult binding) {
+
+		Post post = postService.find(id);
+
+		if (post == null) {
+			return new ModelAndView("redirect:/not_found");
+		}
+
+		final ModelAndView mav = new ModelAndView("posts/edit");
+
+		mav.addObject("post", post);
+		
+		postForm.setId(post.getId());
+		postForm.setTitle(post.getTitle());
+		postForm.setDescription(post.getDescription());
+		mav.addObject("postForm", postForm);
+
+		return mav;
+	}
+
 
 	@RequestMapping(path = "/posts", method = RequestMethod.POST)
 	public String createPost(@Valid @ModelAttribute("postForm") final PostForm postForm, final BindingResult binding,
 			RedirectAttributes attr) {
-
-		if (binding.hasErrors()) {
-			attr.addFlashAttribute("postForm", postForm);
-		} else {
-			Post post = postService.create(postForm.getTitle(), postForm.getDescription(), getLoggedUser());
-			LOGGER.info("Created Post: " + post.toString());
-		}
-		
-		return "redirect:/index";
+			Post post = null;
+			if (postForm.getId() != null) {
+				if (!binding.hasErrors()) {
+					attr.addFlashAttribute("postForm", postForm);
+					return "redirect:/posts/edit";
+				} else {
+					post = postService.update(postForm.getId(), postForm.getTitle(), 
+						postForm.getDescription());
+					LOGGER.info("Updated Post: " + post.toString());
+				}
+			} else {
+				if (!binding.hasErrors()) {
+					attr.addFlashAttribute("postForm", postForm);
+				} else {
+					post = postService.create(postForm.getTitle(), postForm.getDescription(),
+							getLoggedUser());
+					LOGGER.info("Created Post: " + post.toString());
+				}
+			}
+			return "redirect:/index";
 	}
 
 }
