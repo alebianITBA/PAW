@@ -72,7 +72,7 @@ public class PostsController extends ApplicationController {
 					post = postService.update(postForm.getId(), postForm.getTitle(), 
 							postForm.getDescription());
 						LOGGER.info("Updated Post: " + post.toString());
-						
+						return "redirect:/users/me";						
 				} else {
 					attr.addFlashAttribute("postForm", postForm);
 					return "redirect:/posts/edit";
