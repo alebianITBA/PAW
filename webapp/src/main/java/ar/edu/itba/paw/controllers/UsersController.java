@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ar.edu.itba.paw.forms.JobOfferForm;
 import ar.edu.itba.paw.forms.RegisterForm;
 import ar.edu.itba.paw.forms.UserForm;
 import ar.edu.itba.paw.helpers.PaginationHelper;

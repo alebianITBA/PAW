@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
 
 <jsp:include page="../header.jsp" />
@@ -87,8 +88,13 @@
 							</h3>
 							<c:forEach items="${posts}" var="post">
 								<hr>
-								<h4>${post.title}</h4>
+
+								<h4>
+									<a class="no-underline"
+										href="<c:url value='/posts/${post.id}'/>">${post.title}</a>
+								</h4>
 								<p>${post.description}</p>
+								
 								<div>
 									<div class="apply-button">
 										<c:if test="${post.user.id == loggedUser.id}">
@@ -141,6 +147,9 @@
 												href="<c:url value='/job_offers?skill_id=${skill.id}'/>"><span
 												class="label label-info">${skill.name}</span></a>
 										</c:forEach>
+										<c:if test="${offer.closedAt != null}">
+											<p style="margin-top:20px;"><i><spring:message code="OfferClosed"><fmt:formatDate pattern="dd/MM/yyyy" value="${offer.closedAt}" /></i></p>
+										</c:if>
 									</div>
 									<div>
 										<div class="apply-button">

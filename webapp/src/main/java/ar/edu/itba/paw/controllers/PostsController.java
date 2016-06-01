@@ -61,6 +61,20 @@ public class PostsController extends ApplicationController {
 
 		return mav;
 	}
+	
+	@RequestMapping(path = "/posts/{id}", method = RequestMethod.GET)
+	public ModelAndView viewPost(@PathVariable final Long id) {
+
+		Post post = postService.find(id);
+
+		if (post == null) {
+			return new ModelAndView("redirect:/not_found");
+		}
+
+		final ModelAndView mav = new ModelAndView("posts/show");
+		mav.addObject("post", post);
+		return mav;
+	}
 
 
 	@RequestMapping(path = "/posts", method = RequestMethod.POST)
