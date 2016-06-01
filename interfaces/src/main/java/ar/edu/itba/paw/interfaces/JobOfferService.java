@@ -17,6 +17,8 @@ public interface JobOfferService {
 
 	JobOffer update(Long id, String title, String description);
 	
+	JobOffer update(Long id, String title, String description, String skills);
+	
 	JobOffer update(Long id, Date closedAt);
 
 	Long count();

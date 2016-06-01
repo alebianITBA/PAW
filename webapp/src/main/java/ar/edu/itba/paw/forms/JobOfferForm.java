@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class JobOfferForm {
 
+	private Long id;
+	
   @NotBlank
   @Length(max = 255)
   private String title;
@@ -14,6 +16,14 @@ public class JobOfferForm {
 
   private String selectedSkillIds;
 
+  public Long getId() {
+	return id;
+  }
+  
+  public void setId(Long id) {
+	this.id = id;
+  }
+  
   public String getTitle() {
     return title;
   }

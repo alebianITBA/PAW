@@ -62,6 +62,23 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	}
 	
 	@Override
+	public JobOffer update(Long id, String title, String description, List<Skill> skills) {
+		JobOffer jobOffer = find(id);
+		if (jobOffer == null) {
+			return null;
+		}
+		if (title != null && !title.isEmpty()) {
+			jobOffer.setTitle(title);
+		}
+		if (description != null && !description.isEmpty()) {
+			jobOffer.setDescription(description);
+		}
+		jobOffer.setSkills(skills);
+		em.persist(jobOffer);
+		return jobOffer;
+	}
+	
+	@Override
 	public JobOffer update(Long id, Date closedAt) {
 		JobOffer jobOffer = find(id);
 		if (jobOffer == null) {

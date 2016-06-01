@@ -18,6 +18,8 @@ public interface JobOfferDao {
 
 	JobOffer update(Long id, String title, String description);
 	
+	JobOffer update(Long id, String title, String description, List<Skill> skills);
+	
 	JobOffer update(Long id, Date closedAt);
 
 	Long count();

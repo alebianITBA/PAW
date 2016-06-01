@@ -41,13 +41,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 	@Override
 	public JobOffer create(String title, String description, User user, String skills) {
-		List<Skill> skillList = new ArrayList<Skill>();
-		if (skills != null && !skills.isEmpty()) {
-			String[] skillIds = skills.split(",");
-			for (String skillId : skillIds) {
-				skillList.add(skillService.find(Long.parseLong(skillId)));
-			}
-		}
+		List<Skill> skillList = skillListFromString(skills);
 		return jobOfferDao.create(title, description, user, skillList);
 	}
 
@@ -59,6 +53,12 @@ public class JobOfferServiceImpl implements JobOfferService {
 	@Override
 	public JobOffer update(Long id, String title, String description) {
 		return jobOfferDao.update(id, title, description);
+	}
+	
+	@Override
+	public JobOffer update(Long id, String title, String description, String skills) {
+		List<Skill> skillList = skillListFromString(skills);
+		return jobOfferDao.update(id, title, description, skillList);
 	}
 	
 	@Override
@@ -175,4 +175,15 @@ public class JobOfferServiceImpl implements JobOfferService {
 		return result;
 	}
 
+	private List<Skill> skillListFromString(String skills) {
+		List<Skill> skillList = new ArrayList<Skill>();
+		if (skills != null && !skills.isEmpty()) {
+			String[] skillIds = skills.split(",");
+			for (String skillId : skillIds) {
+				skillList.add(skillService.find(Long.parseLong(skillId)));
+			}
+		}
+		return skillList;
+	}
+	
 }

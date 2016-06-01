@@ -32,7 +32,7 @@
 										<div class="apply-button">
 											<c:choose>
 												<c:when test="${offer.status == 'OFFER_OWNER'}">
-													<a href="<c:url value='/job_offers/${offer.id}'/>"><span class="glyphicon glyphicon-pencil"/></a>
+													<a href="<c:url value='/job_offers/${offer.id}/edit'/>"><span class="glyphicon glyphicon-pencil"/></a>
 												</c:when>
 												<c:when test="${offer.status == 'READY_TO_APPLY'}">
 													<spring:url value="/job_offers/${offer.id}/apply" var="actionUrl"/>

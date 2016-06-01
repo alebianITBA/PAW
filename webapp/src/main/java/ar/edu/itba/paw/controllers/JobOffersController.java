@@ -121,9 +121,15 @@ public class JobOffersController extends ApplicationController {
 			final BindingResult binding, RedirectAttributes attr) {
 
 		if (!binding.hasErrors()) {
-			JobOffer offer = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(),
-					getLoggedUser(), jobOfferForm.getSelectedSkillIds());
-			LOGGER.info("Created Job Offer: " + offer.toString());
+			JobOffer offer = null;
+			if (jobOfferForm.getId() != null) {
+				offer = jobOfferService.update(jobOfferForm.getId(), jobOfferForm.getTitle(), 
+						jobOfferForm.getDescription(), jobOfferForm.getSelectedSkillIds());
+			} else {
+				offer = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(),
+						getLoggedUser(), jobOfferForm.getSelectedSkillIds());
+				LOGGER.info("Created Job Offer: " + offer.toString());	
+			}
 			return getJobOffer(offer.getId());
 		}
 		
@@ -160,6 +166,58 @@ public class JobOffersController extends ApplicationController {
 		mav.addObject("quantityApplications", applications.size());
 		mav.addObject("applications", applications);
 		mav.addObject("alreadyApplied", alreadyApplied);
+
+		return mav;
+	}
+	
+	@RequestMapping(path = "/job_offers/{id}/edit", method = RequestMethod.GET)
+	public ModelAndView editJobOffer(@PathVariable final Long id,
+			@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm, 
+			final BindingResult binding) {
+
+		JobOffer offer = jobOfferService.find(id);
+
+		if (offer == null) {
+			return new ModelAndView("redirect:/not_found");
+		}
+
+		final ModelAndView mav = new ModelAndView("job_offers/edit");
+
+		mav.addObject("job", offer);
+		mav.addObject("userApply", null);
+		
+		jobOfferForm.setId(offer.getId());
+		jobOfferForm.setTitle(offer.getTitle());
+		jobOfferForm.setDescription(offer.getDescription());
+		
+		String skillIds = "";
+		int i = 0;
+		for (Skill skill : offer.getSkills()) {
+			if (i > 0) {
+				skillIds += ",";	
+			}
+			skillIds += skill.getId();
+			i++;
+		}
+		
+		jobOfferForm.setSelectedSkillIds(skillIds);
+		mav.addObject("jobOfferForm", jobOfferForm);
+		
+		List<JobApplication> applications = jobApplicationService.jobOfferApplications(id);
+
+		boolean alreadyApplied = false;
+		for (JobApplication application : applications) {
+			if (application.getUser().getId() == getLoggedUser().getId()) {
+				alreadyApplied = true;
+				break;
+			}
+		}
+
+		mav.addObject("jobOfferSkills", offer.getSkills());
+		mav.addObject("quantityApplications", applications.size());
+		mav.addObject("applications", applications);
+		mav.addObject("alreadyApplied", alreadyApplied);
+		mav.addObject("skills", skillService.all());
 
 		return mav;
 	}
