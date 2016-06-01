@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,25 +86,27 @@ public class JobOffersController extends ApplicationController {
 
 		// Deberia ir a un helper
 		for (JobOffer offer : jobOfferList) {
-			JobOfferDTO offerDTO = JobOfferDTO.fromModel(offer);
-			if (offerDTO.getUserId() == loggedUser.getId()) {
-				offerDTO.setStatus(JobOfferStatus.OFFER_OWNER);
-			} else {
-				boolean alreadyApply = false;
-				for (JobApplication application : alreadyApplies) {
-					if (application.getJobOffer().getId() == offerDTO.getId()) {
-						alreadyApply = true;
-						break;
+			if (offer.getClosedAt() == null) {
+				JobOfferDTO offerDTO = JobOfferDTO.fromModel(offer);
+				if (offerDTO.getUserId() == loggedUser.getId()) {
+					offerDTO.setStatus(JobOfferStatus.OFFER_OWNER);
+				} else {
+					boolean alreadyApply = false;
+					for (JobApplication application : alreadyApplies) {
+						if (application.getJobOffer().getId() == offerDTO.getId()) {
+							alreadyApply = true;
+							break;
+						}
+					}
+
+					if (alreadyApply) {
+						offerDTO.setStatus(JobOfferStatus.ALREADY_APPLIED);
+					} else {
+						offerDTO.setStatus(JobOfferStatus.READY_TO_APPLY);
 					}
 				}
-
-				if (alreadyApply) {
-					offerDTO.setStatus(JobOfferStatus.ALREADY_APPLIED);
-				} else {
-					offerDTO.setStatus(JobOfferStatus.READY_TO_APPLY);
-				}
+				jobOfferListDTO.add(offerDTO);
 			}
-			jobOfferListDTO.add(offerDTO);
 		}
 
 		map.put("jobOfferForm", new JobOfferForm());
@@ -173,5 +176,33 @@ public class JobOffersController extends ApplicationController {
 
 		return "redirect:/users/me";
 	}
+	
+	@RequestMapping(path = "/job_offers/{id}/finish", method = RequestMethod.PUT)
+	public String finishJobOffer(@PathVariable final Long id) {
 
+		closeJobOffer(id, true);
+
+		return "redirect:/users/me";
+	}
+	
+	@RequestMapping(path = "/job_offers/{id}/reopen", method = RequestMethod.PUT)
+	public String reopenJobOffer(@PathVariable final Long id) {
+
+		closeJobOffer(id, false);
+		
+		return "redirect:/users/me";
+	}
+
+	private void closeJobOffer(Long id, boolean close) {
+		JobOffer offer = jobOfferService.find(id);
+
+		if (offer.getUser().getId() == getLoggedUser().getId()) {
+			Date closedAt = null;
+			if (close) {
+				closedAt = new Date();
+			}
+			jobOfferService.update(id, closedAt);
+			LOGGER.info("Updated (reopen) Job offer: " + id.toString());
+		}
+	}
 }

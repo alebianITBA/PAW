@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.interfaces;
 
+import java.util.Date;
 import java.util.List;
 
 import ar.edu.itba.paw.models.JobApplication;
@@ -16,6 +17,8 @@ public interface JobOfferDao {
 	void delete(Long id);
 
 	JobOffer update(Long id, String title, String description);
+	
+	JobOffer update(Long id, Date closedAt);
 
 	Long count();
 

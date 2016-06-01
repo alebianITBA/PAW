@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.persistence;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,10 +38,11 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	}
 
 	@Override
-	public void delete(Long id) {
-		Query q = em.createQuery("delete from JobOffer where id = :id");
-		q.setParameter("id", id);
-		q.executeUpdate();
+	public void delete(Long id) { 
+	    // Por Hibernate, esta query elimina las skills.
+	    Query queryOffer = em.createQuery("delete from JobOffer where id = :id");
+	    queryOffer.setParameter("id", id);
+	    queryOffer.executeUpdate();
 	}
 
 	@Override
@@ -55,6 +57,17 @@ public class JobOfferHibernateDao implements JobOfferDao {
 		if (description != null && !description.isEmpty()) {
 			jobOffer.setDescription(description);
 		}
+		em.persist(jobOffer);
+		return jobOffer;
+	}
+	
+	@Override
+	public JobOffer update(Long id, Date closedAt) {
+		JobOffer jobOffer = find(id);
+		if (jobOffer == null) {
+			return null;
+		}
+		jobOffer.setClosedAt(closedAt);
 		em.persist(jobOffer);
 		return jobOffer;
 	}
@@ -110,7 +123,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	@Override
 	public List<JobOffer> withSkills(List<Skill> skills) {
 		final TypedQuery<JobOffer> query = em.createQuery(
-				"select o from JobOffer o join o.skills s where s.id in (:skills) ORDER BY o.createdAt DESC",
+				"select o from JobOffer o join o.skills s where s.id in (:skills) and o.closedAt is null ORDER BY o.createdAt DESC",
 				JobOffer.class);
 		query.setParameter("skills", skillsIds(skills));
 		return query.getResultList();
@@ -119,7 +132,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	@Override
 	public List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage) {
 		final TypedQuery<JobOffer> query = em.createQuery(
-				"select o from JobOffer o join o.skills s where s.id in (:skills) ORDER BY o.createdAt DESC",
+				"select o from JobOffer o join o.skills s where s.id in (:skills) and o.closedAt is null ORDER BY o.createdAt DESC",
 				JobOffer.class);
 		query.setParameter("skills", skillsIds(skills));
 		query.setFirstResult(page * perPage);
@@ -129,7 +142,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	
 	@Override
 	public Long withSkillsCount(List<Skill> skills) {
-		Query query = em.createQuery("SELECT count(*) FROM JobOffer o join o.skills s where s.id in (:skills)");
+		Query query = em.createQuery("SELECT count(*) FROM JobOffer o join o.skills s where s.id in (:skills) and o.closedAt is null");
 		query.setParameter("skills", skillsIds(skills));
 		return (Long) query.getSingleResult();
 	}
@@ -145,7 +158,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	@Override
 	public List<JobOffer> notFromUser(Long userId) {
 		final TypedQuery<JobOffer> query = em.createQuery(
-				"from JobOffer as o where o.user.id != :userId ORDER BY o.createdAt DESC", JobOffer.class);
+				"from JobOffer as o where o.user.id != :userId and o.closedAt is null ORDER BY o.createdAt DESC", JobOffer.class);
 		query.setParameter("userId", userId);
 		return query.getResultList();
 	}
@@ -163,7 +176,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	@Override
 	public List<JobOffer> notApplied(Long userId, List<JobApplication> applications) {
 		final TypedQuery<JobOffer> query = em.createQuery(
-				"from JobOffer o where o.id not in (:applied) and o.user.id != :userId ORDER BY o.createdAt DESC", JobOffer.class);
+				"from JobOffer o where o.id not in (:applied) and o.user.id != :userId and o.closedAt is null ORDER BY o.createdAt DESC", JobOffer.class);
 		query.setParameter("userId", userId);
 		query.setParameter("applied", applicationOfferIds(applications));
 		return query.getResultList();
@@ -172,7 +185,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	@Override
 	public List<JobOffer> notApplied(Long userId, List<JobApplication> applications, Integer page, Integer perPage) {
 		final TypedQuery<JobOffer> query = em.createQuery(
-				"from JobOffer o where o.id not in (:applied) and o.user.id != :userId ORDER BY o.createdAt DESC", JobOffer.class);
+				"from JobOffer o where o.id not in (:applied) and o.user.id != :userId and o.closedAt is null ORDER BY o.createdAt DESC", JobOffer.class);
 		query.setParameter("userId", userId);
 		query.setParameter("applied", applicationOfferIds(applications));
 		query.setFirstResult(page * perPage);
@@ -183,7 +196,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	@Override
 	public List<JobOffer> notAppliedWithSkills(Long userId, List<JobApplication> applications, List<Skill> skills) {
 		final TypedQuery<JobOffer> query = em.createQuery(
-				"select o from JobOffer o join o.skills s where s.id in (:skills) and (o.id not in (:applied) and o.user.id != :userId) ORDER BY o.createdAt DESC", JobOffer.class);
+				"select o from JobOffer o join o.skills s where s.id in (:skills) and (o.id not in (:applied) and o.user.id != :userId) and o.closedAt is null ORDER BY o.createdAt DESC", JobOffer.class);
 		query.setParameter("skills", skillsIds(skills));
 		query.setParameter("userId", userId);
 		query.setParameter("applied", applicationOfferIds(applications));
@@ -193,7 +206,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
 	@Override
 	public List<JobOffer> notAppliedWithSkills(Long userId, List<JobApplication> applications, List<Skill> skills, Integer page, Integer perPage) {
 		final TypedQuery<JobOffer> query = em.createQuery(
-				"select o from JobOffer o join o.skills s where s.id in (:skills) and (o.id not in (:applied) and o.user.id != :userId) ORDER BY o.createdAt DESC", JobOffer.class);
+				"select o from JobOffer o join o.skills s where s.id in (:skills) and (o.id not in (:applied) and o.user.id != :userId) and o.closedAt is null ORDER BY o.createdAt DESC", JobOffer.class);
 		query.setParameter("skills", skillsIds(skills));
 		query.setParameter("userId", userId);
 		query.setParameter("applied", applicationOfferIds(applications));

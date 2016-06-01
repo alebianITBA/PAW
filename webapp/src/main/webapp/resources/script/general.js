@@ -11,3 +11,23 @@ $('.remove-button').click(function() {
     }
   })
 })
+
+$('.finish-button').click(function() {
+  $.ajax({
+    type: "PUT",
+    url: $(this).attr('data-href'),
+    complete: function() {
+      location.reload();
+    }
+  })
+})
+
+$('.reopen-button').click(function() {
+  $.ajax({
+    type: "PUT",
+    url: $(this).attr('data-href'),
+    complete: function() {
+      location.reload();
+    }
+  })
+})

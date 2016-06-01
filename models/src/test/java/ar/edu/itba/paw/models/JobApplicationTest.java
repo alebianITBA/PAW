@@ -12,7 +12,7 @@ public class JobApplicationTest {
 	private final Long ID = 1L;
 	private final String DESCRIPTION = "DESCRIPTION";
 	private final User USER = new User(ID, "pepe", "pepe", "pepe@pepe.com", "pass");
-	private final JobOffer JOB_OFFER = new JobOffer(ID, "titulo", DESCRIPTION, USER, new Date());
+	private final JobOffer JOB_OFFER = new JobOffer(ID, "titulo", DESCRIPTION, USER, new Date(), null);
 
 	@Test
 	public void validJobApplicationTest() {
@@ -43,7 +43,7 @@ public class JobApplicationTest {
 		JobApplication application = new JobApplication(ID, DESCRIPTION, USER, JOB_OFFER, new Date());
 		JobApplication identicalApplication = new JobApplication(ID, DESCRIPTION,
 				new User(ID, "pepe", "pepe", "pepe@pepe.com", "pass"),
-				new JobOffer(ID, "titulo", DESCRIPTION, USER, new Date()), new Date());
+				new JobOffer(ID, "titulo", DESCRIPTION, USER, new Date(), null), new Date());
 		JobApplication noIdApplication = new JobApplication(null, DESCRIPTION, USER, JOB_OFFER, new Date());
 		JobApplication noDescriptionApplication = new JobApplication(ID, null, USER, JOB_OFFER, new Date());
 		JobApplication noUserApplication = new JobApplication(ID, DESCRIPTION, null, JOB_OFFER, new Date());

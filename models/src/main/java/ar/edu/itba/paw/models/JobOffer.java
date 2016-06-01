@@ -44,21 +44,33 @@ public class JobOffer {
 	@OrderBy("name ASC")
 	@JoinColumn()
 	private List<Skill> skills;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@JoinTable(name = "job_applications", joinColumns = {
+			@JoinColumn(name = "job_offer_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "id", referencedColumnName = "id") })
+	@OrderBy("created_at DESC")
+	@JoinColumn()
+	private List<JobApplication> applications;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	@Column(name = "closed_at")
+	private Date closedAt;
 
 	protected JobOffer() {
 		/* Just for Hibernate */
 	}
 
-	public JobOffer(Long id, String title, String description, User user, Date createdAt) {
+	public JobOffer(Long id, String title, String description, User user, Date createdAt, Date closedAt) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.user = user;
 		this.createdAt = createdAt;
+		this.closedAt = closedAt;
 	}
 
 	public JobOffer(String title, String description, User user, List<Skill> skills, Date createdAt) {
@@ -153,10 +165,6 @@ public class JobOffer {
 		this.description = description;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
 	public void setSkills(List<Skill> skills) {
 		this.skills = skills;
 	}
@@ -173,6 +181,14 @@ public class JobOffer {
 		this.user = user;
 	}
 
+	public Date getClosedAt() {
+		return closedAt;
+	}
+	
+	public void setClosedAt(Date closedAt) {
+		this.closedAt = closedAt;
+	}
+	
 	public boolean containsAll(List<Skill> otherSkills) {
 		if (skills == null) {
 			return (otherSkills == null);

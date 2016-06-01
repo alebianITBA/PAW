@@ -16,7 +16,7 @@ public class JobOfferTest {
 	
 	@Test
     public void validJobOfferTest() {
-        JobOffer offer = new JobOffer(ID, TITLE, DESCRIPTION, USER, new Date());
+        JobOffer offer = new JobOffer(ID, TITLE, DESCRIPTION, USER, new Date(), null);
         
         assertEquals(ID, offer.getId());
         assertEquals(TITLE, offer.getTitle());
@@ -32,21 +32,28 @@ public class JobOfferTest {
     }
 	
 	@Test
+    public void jobOfferClosed() {
+		JobOffer offer = new JobOffer(ID, TITLE, DESCRIPTION, USER, new Date(), new Date());
+        
+        assertNotEquals(null, offer.getClosedAt());
+    }
+	
+	@Test
     public void jobOfferHashCode() {
-		JobOffer offer = new JobOffer(ID, TITLE, DESCRIPTION, USER, new Date());
+		JobOffer offer = new JobOffer(ID, TITLE, DESCRIPTION, USER, new Date(), null);
         
         assertEquals(1, offer.hashCode());
     }
 	
 	@Test
 	public void jobOfferEquals() {
-		JobOffer offer = new JobOffer(ID, TITLE, DESCRIPTION, USER, new Date());
-		JobOffer noTitleOffer = new JobOffer(ID, null, DESCRIPTION, USER, new Date());
-		JobOffer noDescriptionOffer = new JobOffer(ID, TITLE, null, USER, new Date());
-		JobOffer noUserOffer = new JobOffer(ID, TITLE, DESCRIPTION, null, new Date());
-		JobOffer noDateOffer = new JobOffer(ID, TITLE, DESCRIPTION, USER, null);
-		JobOffer otherOffer = new JobOffer(ID, "asd", "asd", USER, new Date());
-		JobOffer identicalOffer = new JobOffer(ID, TITLE, DESCRIPTION, new User(ID, "pepe", "pepe", "pepe@pepe.com", "pass"), new Date());
+		JobOffer offer = new JobOffer(ID, TITLE, DESCRIPTION, USER, new Date(), null);
+		JobOffer noTitleOffer = new JobOffer(ID, null, DESCRIPTION, USER, new Date(), null);
+		JobOffer noDescriptionOffer = new JobOffer(ID, TITLE, null, USER, new Date(), null);
+		JobOffer noUserOffer = new JobOffer(ID, TITLE, DESCRIPTION, null, new Date(), null);
+		JobOffer noDateOffer = new JobOffer(ID, TITLE, DESCRIPTION, USER, null, null);
+		JobOffer otherOffer = new JobOffer(ID, "asd", "asd", USER, new Date(), null);
+		JobOffer identicalOffer = new JobOffer(ID, TITLE, DESCRIPTION, new User(ID, "pepe", "pepe", "pepe@pepe.com", "pass"), new Date(), null);
 		
 		assertEquals(offer, offer);
 		assertEquals(offer, identicalOffer);

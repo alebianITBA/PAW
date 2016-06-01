@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS job_offers (
   description text NOT NULL,
   created_at timestamp NOT NULL,
   user_id integer REFERENCES users(id)
+  closed_at timestamp
 );
 
 CREATE TABLE IF NOT EXISTS job_applications (
@@ -41,14 +42,12 @@ CREATE TABLE IF NOT EXISTS skills (
 CREATE TABLE IF NOT EXISTS user_skills (
   id serial PRIMARY KEY,
   user_id integer REFERENCES users(id),
-  skill_id integer REFERENCES skills(id),
-  created_at timestamp
+  skill_id integer REFERENCES skills(id)
 );
 
 CREATE TABLE IF NOT EXISTS job_offer_skills (
   id serial PRIMARY KEY,
   job_offer_id integer REFERENCES job_offers(id),
-  skill_id integer REFERENCES skills(id),
-  created_at timestamp
+  skill_id integer REFERENCES skills(id)
 );
 

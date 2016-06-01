@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,11 @@ public class JobOfferServiceImpl implements JobOfferService {
 	@Override
 	public JobOffer update(Long id, String title, String description) {
 		return jobOfferDao.update(id, title, description);
+	}
+	
+	@Override
+	public JobOffer update(Long id, Date closedAt) {
+		return jobOfferDao.update(id, closedAt);
 	}
 
 	@Override

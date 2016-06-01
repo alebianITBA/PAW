@@ -74,16 +74,19 @@
                                 <div class="dapibus biography-into">
                                     <h4><spring:message code="ApplyNow"/></h4>
                                     <c:choose>
-                                        <c:when test="${alreadyApplied == false}">
-                                          <spring:url value="/job_offers/${job.id}/apply" var="actionUrl"/>
+                                        <c:when test="${job.closedAt != null}">
+                                          <p><spring:message code="JobOfferFinished"/></p>
+                                        </c:when>
+                                        <c:when test="${alreadyApplied == true}">
+                                          <p><spring:message code="AlreadyApplied"/></p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <spring:url value="/job_offers/${job.id}/apply" var="actionUrl"/>
                                           <form:form method="post" action="${actionUrl}">
                 														<button class="btn btn-info" type="submit">
                 															<spring:message code="Apply"/>
                 														</button>
                 													</form:form>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <p><spring:message code="AlreadyApplied"/></p>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
