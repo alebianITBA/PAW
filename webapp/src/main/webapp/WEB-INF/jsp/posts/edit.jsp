@@ -15,8 +15,8 @@
 					<h4>
 						<spring:message code="SharePost"/>
 					</h4>
-					<spring:url value="/posts/" var="postUrl"/>
-					<form:form method="post" modelAttribute="postForm" action="${postUrl}" class="form-header" role="form" id="#">
+					<spring:url value="/posts" var="postUrl"/>
+					<form:form method="post" modelAttribute="postForm" action="${postUrl}" class="form-header" role="form">
 						<form:input type="hidden" path="id"/>
 						<div class="form-group">
 							<spring:message code="Title" var="title"/>

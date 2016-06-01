@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-info btn-block btn-lg" value="${Register}"></div>
-                        <p class="privacy text-left white-text"><spring:message code="RequiredFields"/>.</p>
+                        <p class="privacy text-left white-text"><spring:message code="RequiredFields"/></a>.</p>
                 </form:form>
             </div>
 

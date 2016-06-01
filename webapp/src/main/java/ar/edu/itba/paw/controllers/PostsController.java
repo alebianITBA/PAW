@@ -69,20 +69,21 @@ public class PostsController extends ApplicationController {
 			Post post = null;
 			if (postForm.getId() != null) {
 				if (!binding.hasErrors()) {
+					post = postService.update(postForm.getId(), postForm.getTitle(), 
+							postForm.getDescription());
+						LOGGER.info("Updated Post: " + post.toString());
+						
+				} else {
 					attr.addFlashAttribute("postForm", postForm);
 					return "redirect:/posts/edit";
-				} else {
-					post = postService.update(postForm.getId(), postForm.getTitle(), 
-						postForm.getDescription());
-					LOGGER.info("Updated Post: " + post.toString());
 				}
 			} else {
 				if (!binding.hasErrors()) {
-					attr.addFlashAttribute("postForm", postForm);
-				} else {
 					post = postService.create(postForm.getTitle(), postForm.getDescription(),
 							getLoggedUser());
 					LOGGER.info("Created Post: " + post.toString());
+				} else {
+					attr.addFlashAttribute("postForm", postForm);
 				}
 			}
 			return "redirect:/index";

@@ -134,15 +134,18 @@ public class UsersController extends ApplicationController {
 		return "redirect:/users/" + getLoggedUser().getId().toString();
 	}
 
-	@RequestMapping(path = "/users", method = RequestMethod.POST)
+	@RequestMapping(path = "/users/register", method = RequestMethod.POST)
 	public String createUser(@Valid @ModelAttribute("registerForm") final RegisterForm registerForm,
 			final BindingResult binding, HttpServletRequest request, RedirectAttributes attr) {
 
+		LOGGER.info("Hasta aca llega");
+		
 		PasswordValidator passwordValidator = new PasswordValidator();
 		passwordValidator.validate(registerForm, binding);
 
 		if (binding.hasErrors()) {
 			attr.addFlashAttribute("registerForm", registerForm);
+			LOGGER.info("Binding has errors" + binding.getErrorCount());
 			return "redirect:/";
 		} else {
 
