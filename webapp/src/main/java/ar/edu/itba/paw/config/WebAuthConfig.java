@@ -51,6 +51,7 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
     http.userDetailsService(userDetailsService)
       .authorizeRequests()
         .antMatchers("/").anonymous()
+        .antMatchers("/users/register").anonymous()
         .anyRequest().authenticated()
       .and().formLogin()
         .usernameParameter("j_email")

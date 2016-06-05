@@ -59,7 +59,7 @@
 								</div>
 								<div class="form-group">
 									<form:select id="skills-select"
-									class="form-control" 
+									class="form-control"
 									path="selectedSkillIds"
 										itemValue="id" multiple="true" items="${skills}"
 										itemLabel="name" data-placeholder="${ChooseSkills}"
@@ -94,7 +94,7 @@
 										href="<c:url value='/posts/${post.id}'/>">${post.title}</a>
 								</h4>
 								<p>${post.description}</p>
-								
+
 								<div>
 									<div class="apply-button">
 										<c:if test="${post.user.id == loggedUser.id}">
@@ -111,7 +111,6 @@
 													<li><a href="<c:url value='/posts/${post.id}/edit'/>">
 															<spring:message code="Edit" />
 													</a></li>
-													<li>
 													<li><a href="" class="remove-button"
 														data-href="<c:url value='/posts/${post.id}'/>"> <spring:message
 																code="Delete" />
@@ -148,7 +147,7 @@
 												class="label label-info">${skill.name}</span></a>
 										</c:forEach>
 										<c:if test="${offer.closedAt != null}">
-											<p style="margin-top:20px;"><i><spring:message code="OfferClosed"><fmt:formatDate pattern="dd/MM/yyyy" value="${offer.closedAt}" /></i></p>
+											<p style="margin-top:20px;"><i><spring:message code="OfferClosed" /><fmt:formatDate pattern="dd/MM/yyyy" value="${offer.closedAt}" /></i></p>
 										</c:if>
 									</div>
 									<div>
@@ -169,7 +168,6 @@
 																	href="<c:url value='/job_offers/${offer.id}/edit'/>">
 																		<spring:message code="Edit" />
 																</a></li>
-																<li>
 																<li><a href="" class="remove-button"
 																	data-href="<c:url value='/job_offers/${offer.id}'/>">
 																		<spring:message code="Delete" />
@@ -262,7 +260,7 @@
 		$('#info-user').css("display", "none");
 		$('#editing-info-user').css("display", "block");
 	})
-	
+
 	$('#skills-select').chosen({
 		no_results_text : "Oops, no skills found!",
 		max_selected_options : 5
@@ -270,7 +268,7 @@
 
 	function setSelected(item, index) {
 		if (item != "") {
-			document.getElementById("skills-select").options[index].selected = true;	
+			document.getElementById("skills-select").options[index].selected = true;
 		}
 	}
 
@@ -279,8 +277,6 @@
 		var skillsArr = selectedSkills.split(",");
 		skillsArr.forEach(setSelected);
 		$("#skills_select_chosen").css("width", "100%");
-		$('#skills-select').trigger("chosen:updated");	
+		$('#skills-select').trigger("chosen:updated");
 	}
 </script>
-
-
