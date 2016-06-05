@@ -68,9 +68,17 @@
 								class="form-control" />
 						</div>
 
-						<spring:message code="Modify" var="modify" />
-						<input type="submit" class="btn btn-info btn-block btn-lg"
-							value="${modify}" />
+						<div class="center">
+							<spring:message code="Modify" var="modify" />
+							<input type="submit" class="btn btn-info btn-lg"
+								value="${modify}" />
+
+							<a href="/job_offers/${job.id}">
+								<button type="button" class="btn btn-lg btn-info cancel-edit-button">
+		                           <spring:message code="Cancel"/>
+		                        </button>
+	                    	</a>
+						</div>
 					</form:form>
 				</div>
 			</div>
@@ -125,6 +133,10 @@
 		no_results_text : "Oops, no skills found!",
 		max_selected_options : 5
 	});
+
+   $('.cancel-edit-button').on("click", function() {
+   	
+   })
 
 	function setSelected(item, index) {
 		if (item != "") {

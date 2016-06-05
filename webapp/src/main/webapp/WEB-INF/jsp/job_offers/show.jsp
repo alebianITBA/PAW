@@ -28,14 +28,29 @@
 				<div class="dapibus biography-into">
 					<div>
 						<c:if test="${job.user.id == loggedUser.id}">
-							<div data-toggle="tooltip" data-placement="top"
-								title="<spring:message code="Edit"/>">
-								<span class="glyphicon glyphicon-pencil" />
-							</div>
-							<div data-toggle="tooltip" data-placement="top"
-								title="<spring:message code="Delete"/>">
-								<span class="glyphicon glyphicon-remove" />
-							</div>
+						           <div class="btn-group top-right-edit-button">
+                                    <button type="button"
+                                       class="btn btn-info btn-xs dropdown-toggle"
+                                       data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                       <spring:message code="Action" />
+                                       <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                       <li>
+                                          <a href="<c:url value='/job_offers/${job.id}/edit'/>">
+                                             <spring:message code="Edit" />
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a href="" class="remove-button"
+                                             data-href="<c:url value='/job_offers/${job.id}'/>">
+                                             <spring:message
+                                                code="Delete" />
+                                          </a>
+                                       </li>
+                                    </ul>
+                                 </div>
 						</c:if>
 					</div>
 					<h2 class="media-heading">${job.title}</h2>

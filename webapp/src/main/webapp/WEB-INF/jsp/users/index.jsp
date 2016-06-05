@@ -5,9 +5,9 @@
 
 <div class="content">
     <div class="container">
-      <div class="row">
+      <div class="row grid-row">
         <c:forEach items="${users}" var="user">
-            <div class="col-md-3 praesent center biography-into">
+            <div class="grid-item praesent center biography-into">
                 <div class="l_g_r">
                     <div class="dapibus">
                         <a href="<c:url value='/users/${user.id}'/>">
@@ -31,7 +31,7 @@
             </c:forEach>
           </div>
 
-          <div class="row">
+          <div class="row center">
             <div id="pagination" data-value="${item_count}"></div>
           </div>
 

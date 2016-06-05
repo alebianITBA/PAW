@@ -32,7 +32,11 @@
 										<div class="apply-button">
 											<c:choose>
 												<c:when test="${offer.status == 'OFFER_OWNER'}">
-													<a href="<c:url value='/job_offers/${offer.id}/edit'/>"><span class="glyphicon glyphicon-pencil"/></a>
+													<a href="<c:url value='/job_offers/${offer.id}/edit'/>">
+														<button class="btn btn-primary" type="submit">
+															<spring:message code="Edit"/>
+														</button>
+													</a>
 												</c:when>
 												<c:when test="${offer.status == 'READY_TO_APPLY'}">
 													<spring:url value="/job_offers/${offer.id}/apply" var="actionUrl"/>
@@ -43,7 +47,11 @@
 													</form:form>
 												</c:when>
 												<c:otherwise>
-													<span class="glyphicon glyphicon-ok"/>
+													<span data-toggle="tooltip" data-placement="top" title="<spring:message code="AlreadyApplied" />">
+														<button class="btn btn-info disabled" type="submit">
+															<spring:message code="Apply"/>
+														</button>
+													</span>
 												</c:otherwise>
 											</c:choose>
 										</div>
@@ -55,13 +63,11 @@
 
 
 							</div>
-							<div class="col-md-8 praesent f-left">
-								<div class="l_g_r biography-into">
+								<div class="l_g_r biography-into center">
 										<div class="row">
 											<div id="pagination" data-value="${item_count}"></div>
 										</div>
 								</div>
-							</div>
 						</div>
 					</div>
 				</c:if>
