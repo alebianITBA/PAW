@@ -33,12 +33,12 @@
 
     <spring-security.version>4.0.4.RELEASE</spring-security.version>
 
-    <org.slf4j.version>1.7.5</org.slf4j.version>
+    <org.slf4j.version>1.6.4</org.slf4j.version>
     <logback.version>1.1.2</logback.version>
     <logback-ext-spring.version>0.1.1</logback-ext-spring.version>
     <maven-war-plugin.version>2.6</maven-war-plugin.version>
 
-    <org.hibernate.version>5.1.0.Final</org.hibernate.version>
+    <org.hibernate.version>4.3.11.Final</org.hibernate.version>
     <org.hibernate.jpa.version>1.0.0.Final</org.hibernate.jpa.version>
 
   </properties>
