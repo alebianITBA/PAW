@@ -7,27 +7,21 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.interfaces.UserDao;
 import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 @Repository
 public class UserHibernateDao implements UserDao {
 
 	@PersistenceContext
 	private EntityManager em;
-    
-	@Autowired
-    private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public User create(String firstName, String lastName, String email, String password) {
-		final User user = new User(firstName, lastName, email, passwordEncoder.encode(password), new java.util.Date());
+		final User user = new User(firstName, lastName, email, password, new java.util.Date());
 		em.persist(user);
 		return user;
 	}
@@ -55,7 +49,7 @@ public class UserHibernateDao implements UserDao {
 			user.setEmail(email);
 		}
 		if (password != null && !password.isEmpty()){
-			user.setPassword(passwordEncoder.encode(password));
+			user.setPassword(password);
 		}
 		em.persist(user);
 		return user;
