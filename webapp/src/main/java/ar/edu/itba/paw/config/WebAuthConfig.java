@@ -60,7 +60,7 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
         .loginPage("/")
       .and().rememberMe()
       	.userDetailsService(userDetailsService)
-      	.key("mysupersecretketthatnobodyknowsabout")
+      	.key("C5LBMe8rmZCBwcdhFNBJn6Z9Da1QX6uHQZS4fEEBzSU=") // Created using openssl
       	.tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30))
       .and().logout()
         .logoutUrl("/logout")
