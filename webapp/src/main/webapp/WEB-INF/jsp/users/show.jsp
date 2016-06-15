@@ -129,7 +129,6 @@
                         <div class="media">
                            <div class="media-body">
                               <h4>
-                              <c:if test="${user.id == loggedUser.id}">
                                  <c:choose>
                                     <c:when test="${offer.closedAt != null}">
                                        <span data-toggle="tooltip" data-placement="top" title="<spring:message code="OfferClosed" />
@@ -144,7 +143,6 @@
                                        </span>
                                     </c:otherwise>
                                  </c:choose>
-                                 </c:if>
                                  <a href="<c:url value='/job_offers/${offer.id}'/>"> ${offer.title}</a>
                               </h4>
                               <p>${offer.description}</p>
@@ -175,7 +173,7 @@
                                                    </a>
                                                 </li>
                                                 <li>
-                                                   <a class="remove-button"
+                                                   <a href="" class="remove-button"
                                                       data-href="<c:url value='/job_offers/${offer.id}'/>">
                                                       <spring:message code="Delete" />
                                                    </a>
@@ -284,7 +282,7 @@
    	}
    }
    
-   var selectedSkills = "${user.skills}";
+   var selectedSkills = "${userForm.selectedSkillIds}";
    if (selectedSkills != "") {
    	var skillsArr = selectedSkills.split(",");
    	skillsArr.forEach(setSelected);
