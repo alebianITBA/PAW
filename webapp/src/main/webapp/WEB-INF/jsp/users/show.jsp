@@ -25,9 +25,11 @@
                               class="label label-info">${skill.name}</span></a>
                         </c:forEach>
                      </div>
-                     <button type="button" class="btn btn-xs btn-info top-right-edit-button edit-button">
-                        <spring:message code="Edit"/>
-                     </button>
+                     <c:if test="${user.id == loggedUser.id}">
+	                     <button type="button" class="btn btn-xs btn-info top-right-edit-button edit-button">
+	                        <spring:message code="Edit"/>
+	                     </button>
+                     </c:if>
                   </div>
                   <div id="editing-info-user" style="display: none;">
                      <spring:url value="/users/${user.id}" var="userUrl" />

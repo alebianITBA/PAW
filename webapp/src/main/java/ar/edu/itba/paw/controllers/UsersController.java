@@ -109,13 +109,16 @@ public class UsersController extends ApplicationController {
 	@RequestMapping(path = "/users/{id}", method = RequestMethod.POST)
 	public String editUser(@PathVariable final Long id, @Valid @ModelAttribute("userForm") final UserForm userForm,
 			final BindingResult binding, RedirectAttributes attr) {
-		if (binding.hasErrors()) {
-			attr.addFlashAttribute("userForm", userForm);
-			LOGGER.info("Binding has errors " + binding.getErrorCount());
-			return "redirect:/users/" + getLoggedUser().getId().toString();
-		} else {
-			User user = userService.update(userForm.getId(), userForm.getFirstName(), userForm.getLastName(), userForm.getSelectedSkillIds());
-			LOGGER.info("Updated User: " + user.toString());
+		
+		if (getLoggedUser().getId() == id) {
+			if (binding.hasErrors()) {
+				attr.addFlashAttribute("userForm", userForm);
+				LOGGER.info("Binding has errors " + binding.getErrorCount());
+				return "redirect:/users/" + getLoggedUser().getId().toString();
+			} else {
+				User user = userService.update(userForm.getId(), userForm.getFirstName(), userForm.getLastName(), userForm.getSelectedSkillIds());
+				LOGGER.info("Updated User: " + user.toString());
+			}
 		}
 		
 		return "redirect:/users/" + getLoggedUser().getId().toString();
