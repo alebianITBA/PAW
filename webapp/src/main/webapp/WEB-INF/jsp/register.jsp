@@ -19,7 +19,7 @@
                <spring:message code="Password" var="Password"/>
                <spring:message code="ConfirmPassword" var="ConfirmPassword"/>
                <spring:message code="Register" var="Register"/>
-               <div class="form-group">
+               <div class="form-group form-group-shadow">
                   <form:input type="text" class="form-control input-lg" placeholder="${FirstName}*" path="firstName" id="firstName"/>
                   <c:set var="firstNameErrors">
                      <form:errors path="firstName"/>
@@ -30,7 +30,7 @@
                      </tr>
                   </c:if>
                </div>
-               <div class="form-group">
+               <div class="form-group form-group-shadow">
                   <form:input type="text" class="form-control input-lg" placeholder="${LastName}*" path="lastName" id="lastName"/>
                   <c:set var="lastNameErrors">
                      <form:errors path="lastName"/>
@@ -41,7 +41,7 @@
                      </tr>
                   </c:if>
                </div>
-               <div class="form-group">
+               <div class="form-group form-group-shadow">
                   <form:input type="text" class="form-control input-lg" placeholder="${Mail}*" path="email" id="email"/>
                   <c:set var="emailErrors">
                      <form:errors path="email"/>
@@ -52,7 +52,7 @@
                      </tr>
                   </c:if>
                </div>
-               <div class="form-group">
+               <div class="form-group form-group-shadow">
                   <form:input type="password" class="form-control input-lg" placeholder="${Password}*" path="password" id="password"/>
                   <c:set var="passwordErrors">
                      <form:errors path="password"/>
@@ -63,7 +63,7 @@
                      </tr>
                   </c:if>
                </div>
-               <div class="form-group">
+               <div class="form-group form-group-shadow">
                   <form:input type="password" class="form-control input-lg" placeholder="${ConfirmPassword}*" path="confirmPassword" id="confirmPassword"/>
                   <c:set var="confirmPasswordErrors">
                      <form:errors path="confirmPassword"/>
@@ -74,7 +74,7 @@
                      </tr>
                   </c:if>
                </div>
-               <div class="form-group">
+               <div class="form-group form-group-shadow">
                   <input type="submit" class="btn btn-info btn-block btn-lg" value="${Register}">
                </div>
                <p class="privacy text-left white-text">
