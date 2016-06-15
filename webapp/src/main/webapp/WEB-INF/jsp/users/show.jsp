@@ -225,6 +225,7 @@
                               <h4>
                                  <a href="<c:url value='/job_offers/${applied.jobOffer.id}'/>">${applied.jobOffer.title}</a>
                               </h4>
+                              <p><spring:message code="PostedBy" />: ${applied.jobOffer.user.email}</p>
                               <p>${applied.description}</p>
                            </div>
                            <div>
