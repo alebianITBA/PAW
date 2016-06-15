@@ -133,6 +133,9 @@ public class JobOfferServiceImpl implements JobOfferService {
 		List<JobApplication> applications = jobApplicationService.userJobApplications(userId);
 		if (applications != null && !applications.isEmpty()) {
 			result = jobOfferDao.notApplied(userId, applications);
+			if (result == null || result.isEmpty()) {
+				result = notFromUser(userId);
+			}
 		} else {
 			result = notFromUser(userId);
 		}
@@ -145,6 +148,9 @@ public class JobOfferServiceImpl implements JobOfferService {
 		List<JobApplication> applications = jobApplicationService.userJobApplications(userId);
 		if (applications != null && !applications.isEmpty()) {
 			result = jobOfferDao.notApplied(userId, applications, page, perPage);
+			if (result == null || result.isEmpty()) {
+				result = notFromUser(userId, page, perPage);
+			}
 		} else {
 			result = notFromUser(userId, page, perPage);
 		}
@@ -160,6 +166,9 @@ public class JobOfferServiceImpl implements JobOfferService {
 		if (applications != null && !applications.isEmpty()) {
 			if (skills != null && !skills.isEmpty()) {
 				result = jobOfferDao.notAppliedWithSkills(userId, applications, skills);
+				if (result == null || result.isEmpty()) {
+					result = notApplied(userId);
+				}
 			} else {
 				result = notApplied(userId);
 			}	
@@ -179,6 +188,9 @@ List<JobOffer> result = null;
 		if (applications != null && !applications.isEmpty()) {
 			if (skills != null && !skills.isEmpty()) {
 				result = jobOfferDao.notAppliedWithSkills(userId, applications, skills, page, perPage);
+				if (result == null || result.isEmpty()) {
+					result = notApplied(userId, page, perPage);
+				}
 			} else {
 				result = notApplied(userId, page, perPage);
 			}	
