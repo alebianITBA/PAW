@@ -43,10 +43,8 @@
                                           </a>
                                        </li>
                                        <li>
-                                          <a href="" class="remove-button"
-                                             data-href="<c:url value='/job_offers/${job.id}'/>">
-                                             <spring:message
-                                                code="Delete" />
+                                          <a class="remove-button" data-href="<c:url value='/job_offers/${job.id}'/>">
+                                             <spring:message code="Delete" />
                                           </a>
                                        </li>
                                     </ul>

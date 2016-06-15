@@ -175,7 +175,7 @@
                                                    </a>
                                                 </li>
                                                 <li>
-                                                   <a href="" class="remove-button"
+                                                   <a class="remove-button"
                                                       data-href="<c:url value='/job_offers/${offer.id}'/>">
                                                       <spring:message code="Delete" />
                                                    </a>
