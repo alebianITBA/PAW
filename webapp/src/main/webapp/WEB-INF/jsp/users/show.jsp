@@ -129,6 +129,7 @@
                         <div class="media">
                            <div class="media-body">
                               <h4>
+                              <c:if test="${user.id == loggedUser.id}">
                                  <c:choose>
                                     <c:when test="${offer.closedAt != null}">
                                        <span data-toggle="tooltip" data-placement="top" title="<spring:message code="OfferClosed" />
@@ -143,6 +144,7 @@
                                        </span>
                                     </c:otherwise>
                                  </c:choose>
+                                 </c:if>
                                  <a href="<c:url value='/job_offers/${offer.id}'/>"> ${offer.title}</a>
                               </h4>
                               <p>${offer.description}</p>
