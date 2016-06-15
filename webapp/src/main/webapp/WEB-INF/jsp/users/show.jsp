@@ -280,7 +280,7 @@
    
    function setSelected(item, index) {
    	if (item != "") {
-   		document.getElementById("skills-select").options[index].selected = true;
+   		document.getElementById("skills-select").options[item-1].selected = true;
    	}
    }
    
