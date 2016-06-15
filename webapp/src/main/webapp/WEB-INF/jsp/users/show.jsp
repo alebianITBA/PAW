@@ -282,11 +282,12 @@
    	}
    }
    
+   $("#skills_select_chosen").css("width", "100%");
+  	$('#skills-select').css("width", "100%");
    var selectedSkills = "${userForm.selectedSkillIds}";
    if (selectedSkills != "") {
    	var skillsArr = selectedSkills.split(",");
    	skillsArr.forEach(setSelected);
-   	$("#skills_select_chosen").css("width", "100%");
    	$('#skills-select').trigger("chosen:updated");
    }
 </script>
