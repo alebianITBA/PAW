@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -77,29 +78,38 @@ public class HomeController extends ApplicationController {
 			return home(registerForm, binding);
 		} else {
 
-			User user = userService.create(registerForm.getFirstName(), registerForm.getLastName(),
-					registerForm.getEmail(), registerForm.getPassword());
+			User existUser = userService.findByEmail(registerForm.getEmail());
+			
+			if (existUser != null) {
+				binding.rejectValue("email", "registerForm.accountExists");
+				return home(registerForm, binding);
+			} else {
+				User user = userService.create(registerForm.getFirstName(), registerForm.getLastName(),
+						registerForm.getEmail(), registerForm.getPassword());
 
-			LOGGER.info("Created User: " + user.toString());
+				LOGGER.info("Created User: " + user.toString());
 
-			UserDetails userDetails = userDetailsService.loadUserByUsername(registerForm.getEmail());
+				UserDetails userDetails = userDetailsService.loadUserByUsername(registerForm.getEmail());
 
-			try {
-				// TODO: See if this line is useful, else remove it
-				SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
-				SecurityContextHolder.getContext().setAuthentication(null);
-				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails,
-						registerForm.getPassword(), userDetails.getAuthorities());
-				request.getSession();
-				token.setDetails(new WebAuthenticationDetails(request));
-				Authentication authenticatedUser = authenticationManager.authenticate(token);
-				if (token.isAuthenticated()) {
-					SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+				try {
+					// TODO: See if this line is useful, else remove it
+					SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+					SecurityContextHolder.getContext().setAuthentication(null);
+					UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails,
+							registerForm.getPassword(), userDetails.getAuthorities());
+					request.getSession();
+					token.setDetails(new WebAuthenticationDetails(request));
+					Authentication authenticatedUser = authenticationManager.authenticate(token);
+					if (token.isAuthenticated()) {
+						SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+					}
+				} catch (Exception ex) {
 				}
-			} catch (Exception ex) {
-			}
 
-			return new ModelAndView("redirect:/index");
+				return new ModelAndView("redirect:/index");
+			}
+			
+			
 		}
 	}
 
