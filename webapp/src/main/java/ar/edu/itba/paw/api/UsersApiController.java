@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.controllers.api;
+package ar.edu.itba.paw.api;
 
 import java.util.List;
 
@@ -13,10 +13,11 @@ import javax.ws.rs.core.Response.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ar.edu.itba.paw.api.dto.UserDTO;
 import ar.edu.itba.paw.interfaces.UserService;
 import ar.edu.itba.paw.models.User;
 
-@Path("v1/users")
+@Path("api/v1/users")
 @Component
 public class UsersApiController {
 	
@@ -26,10 +27,10 @@ public class UsersApiController {
 	@GET
     @Path("/")
     @Produces(value = { MediaType.APPLICATION_JSON })
-    public Response listUsers() {
+    public List<UserDTO> listUsers() {
         final List<User> allUsers = userService.all();
 
-        return Response.ok(allUsers).build();
+        return UserDTO.fromList(allUsers);
     }
 	
 	@GET
@@ -39,7 +40,7 @@ public class UsersApiController {
         final User user = userService.find(id);
 
         if (user != null) {
-            return Response.ok(user).build();
+            return Response.ok(new UserDTO(user)).build();
         } else {
             return Response.status(Status.NOT_FOUND).build();
         }

@@ -49,10 +49,12 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
     http.userDetailsService(userDetailsService)
-      .authorizeRequests()
-        .antMatchers("/").anonymous()
-        .antMatchers("/users/register").anonymous()
-        .anyRequest().authenticated()
+        .authorizeRequests()
+          .anyRequest().anonymous()
+//      .authorizeRequests()
+//        .antMatchers("/").anonymous()
+//        .antMatchers("/users/register").anonymous()
+//        .anyRequest().authenticated()
       .and().formLogin()
         .usernameParameter("j_email")
         .passwordParameter("j_password")
