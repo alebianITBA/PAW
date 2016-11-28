@@ -25,7 +25,6 @@ public class UsersApiController {
     private UserService userService;
 	
 	@GET
-    @Path("/")
     @Produces(value = { MediaType.APPLICATION_JSON })
     public List<UserDTO> listUsers() {
         final List<User> allUsers = userService.all();
