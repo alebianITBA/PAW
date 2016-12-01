@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class UserRegistration {
+public class UserParams {
   @XmlElement
   public String email;
   @XmlElement
@@ -15,4 +15,6 @@ public class UserRegistration {
   public String firstName;
   @XmlElement
   public String lastName;
+  @XmlElement
+  public String skillIds;
 }
