@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>ar.edu.itba.paw</groupId>
   <artifactId>test</artifactId>
@@ -36,6 +37,7 @@
     <org.jboss.logging>3.3.0.Final</org.jboss.logging>
     <jersey.version>3.0-SNAPSHOT</jersey.version>
     <frontend-maven-plugin.version>1.3</frontend-maven-plugin.version>
+    <jjwt.version>0.7.0</jjwt.version>
   </properties>
   <repositories>
     <repository>
@@ -321,6 +323,12 @@
         <groupId>org.glassfish.jersey.media</groupId>
         <artifactId>jersey-media-jaxb</artifactId>
         <version>${jersey.version}</version>
+      </dependency>
+      <!-- JWT implementation -->
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>${jjwt.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
