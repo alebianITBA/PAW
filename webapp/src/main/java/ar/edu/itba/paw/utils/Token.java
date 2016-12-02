@@ -34,7 +34,7 @@ public class Token {
       }
       return body.getIssuer();
 
-    } catch (SignatureException e) {
+    } catch (Exception e) {
       return null;
     }
   }

@@ -8,12 +8,14 @@ import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.utils.Pair;
 import ar.edu.itba.paw.validators.UserPasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
 @Path("api/v1/users")
@@ -68,8 +70,8 @@ public class UsersController extends ApiController {
   @GET
   @Path("/me")
   public Response me() {
-    // TODO: do this when authorization is set
-    return ok(null);
+    final User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    return ok(new UserDTO(user));
   }
 
   @PUT
