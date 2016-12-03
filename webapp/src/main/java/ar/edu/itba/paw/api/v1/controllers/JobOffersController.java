@@ -41,8 +41,10 @@ public class JobOffersController extends ApiController {
 
   @GET
   public Response index(@PathParam("page") Integer pageParam) {
+    // TODO: Add parameter for filter
     final List<JobOffer> allJobOffers = jobOfferService.all(PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.DEFAULT_PER_PAGE);
-    GenericEntity<List<JobOfferDTO>> list = new GenericEntity<List<JobOfferDTO>>(JobOfferDTO.fromList(allJobOffers, jobApplicationService, getLoggedUser())) {};
+    GenericEntity<List<JobOfferDTO>> list = new GenericEntity<List<JobOfferDTO>>(JobOfferDTO.fromList(allJobOffers, jobApplicationService, getLoggedUser())) {
+    };
     return ok(list);
   }
 

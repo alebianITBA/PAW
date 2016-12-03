@@ -14,12 +14,6 @@ public class JobApplicationDTO {
   private Long id;
 
   @XmlElement
-  private String description;
-
-  @XmlElement
-  private UserDTO user;
-
-  @XmlElement
   private JobOfferDTO job_offer;
 
   @XmlElement
@@ -30,8 +24,6 @@ public class JobApplicationDTO {
 
   public JobApplicationDTO(JobApplication application) {
     this.id = application.getId();
-    this.description = application.getDescription();
-    this.user = new UserDTO(application.getUser());
     this.job_offer = new JobOfferDTO(application.getJobOffer());
     this.created_at = application.getCreatedAt();
   }

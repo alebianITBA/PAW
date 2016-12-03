@@ -24,6 +24,10 @@ public class ApiController {
     return Response.ok(entity).build();
   }
 
+  Response created() {
+    return Response.status(Response.Status.CREATED).build();
+  }
+
   Response created(final Object entity) {
     return Response.status(Response.Status.CREATED).entity(entity).build();
   }

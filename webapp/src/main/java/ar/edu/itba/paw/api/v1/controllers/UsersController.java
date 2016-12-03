@@ -8,14 +8,12 @@ import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.utils.Pair;
 import ar.edu.itba.paw.validators.UserPasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
 @Path("api/v1/users")
@@ -28,7 +26,8 @@ public class UsersController extends ApiController {
   @GET
   public Response index(@PathParam("page") Integer pageParam) {
     final List<User> allUsers = userService.all(PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.DEFAULT_PER_PAGE);
-    GenericEntity<List<UserDTO>> list = new GenericEntity<List<UserDTO>>(UserDTO.fromList(allUsers)) {};
+    GenericEntity<List<UserDTO>> list = new GenericEntity<List<UserDTO>>(UserDTO.fromList(allUsers)) {
+    };
     return ok(list);
   }
 
