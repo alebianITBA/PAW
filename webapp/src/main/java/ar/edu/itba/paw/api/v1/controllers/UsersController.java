@@ -78,6 +78,7 @@ public class UsersController extends ApiController {
   public Response edit(final UserParams input) {
     User user = getLoggedUser();
     // TODO: When sending null skillIds don't delete the skills, add a addSkill and removeSkill method
+    // TODO: skillIds should be an array [1,2] not a "1,2"
     user = userService.update(user.getId(), input.firstName, input.lastName, input.skillIds);
     return ok(new UserDTO(user));
   }

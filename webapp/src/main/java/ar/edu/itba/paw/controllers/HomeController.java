@@ -79,7 +79,7 @@ public class HomeController extends ApplicationController {
 		} else {
 
 			User existUser = userService.findByEmail(registerForm.getEmail());
-			
+
 			if (existUser != null) {
 				binding.rejectValue("email", "registerForm.accountExists");
 				return home(registerForm, binding);
@@ -108,8 +108,8 @@ public class HomeController extends ApplicationController {
 
 				return new ModelAndView("redirect:/index");
 			}
-			
-			
+
+
 		}
 	}
 

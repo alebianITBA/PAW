@@ -1,34 +1,31 @@
 package ar.edu.itba.paw.api.v1.dto;
 
-import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @XmlRootElement()
 public class UserDTO {
-
-  @XmlElement(name = "email")
+  @XmlElement
   private String email;
 
-  @XmlElement(name = "id")
+  @XmlElement
   private Long id;
 
-  @XmlElement(name = "last_name")
-  private String lastName;
+  @XmlElement
+  private String last_name;
 
-  @XmlElement(name = "first_name")
-  private String firstName;
+  @XmlElement
+  private String first_name;
 
-  @XmlElement(name = "avatar")
+  @XmlElement
   private String avatar;
 
-  @XmlElement(name = "skills")
-  private List<String> skills;
+  @XmlElement
+  private List<SkillDTO> skills;
 
   public UserDTO() {
   }
@@ -36,10 +33,10 @@ public class UserDTO {
   public UserDTO(User user) {
     this.email = user.getEmail();
     this.id = user.getId();
-    this.lastName = user.getLastName();
-    this.firstName = user.getFirstName();
+    this.last_name = user.getLastName();
+    this.first_name = user.getFirstName();
     this.avatar = user.getGravatar();
-    this.skills = user.getSkills().stream().map(s -> s.getName()).collect(Collectors.toList());
+    this.skills = SkillDTO.fromList(user.getSkills());
   }
 
   public static List<UserDTO> fromList(List<User> users) {

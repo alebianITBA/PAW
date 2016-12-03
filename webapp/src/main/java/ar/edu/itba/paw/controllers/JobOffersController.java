@@ -61,7 +61,7 @@ public class JobOffersController extends ApplicationController {
 
 		return mav;
 	}
-	
+
 	private Map<String, Object> getJobOffersMap(Long skillId, Integer pageParam) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -123,21 +123,21 @@ public class JobOffersController extends ApplicationController {
 		if (!binding.hasErrors()) {
 			JobOffer offer = null;
 			if (jobOfferForm.getId() != null) {
-				offer = jobOfferService.update(jobOfferForm.getId(), jobOfferForm.getTitle(), 
+				offer = jobOfferService.update(jobOfferForm.getId(), jobOfferForm.getTitle(),
 						jobOfferForm.getDescription(), jobOfferForm.getSelectedSkillIds());
 				LOGGER.info("Updated Job Offer: " + offer.toString());
 			} else {
 				offer = jobOfferService.create(jobOfferForm.getTitle(), jobOfferForm.getDescription(),
 						getLoggedUser(), jobOfferForm.getSelectedSkillIds());
-				LOGGER.info("Created Job Offer: " + offer.toString());	
+				LOGGER.info("Created Job Offer: " + offer.toString());
 			}
 			return getJobOffer(offer.getId());
 		}
-		
+
 		//Dado que no se pudo encontrar una solucion con la ayuda de Juan, Alvaro o documentacion/foros se eligio
 		//este workaround para el caso del binding perdiendo su contenido en el redirect.
 		return jobOffers(null,0,jobOfferForm,binding);
-	}	
+	}
 
 	@RequestMapping(path = "/job_offers/{id}", method = RequestMethod.GET)
 	public ModelAndView getJobOffer(@PathVariable final Long id) {
@@ -170,10 +170,10 @@ public class JobOffersController extends ApplicationController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping(path = "/job_offers/{id}/edit", method = RequestMethod.GET)
 	public ModelAndView editJobOffer(@PathVariable final Long id,
-			@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm, 
+			@ModelAttribute("jobOfferForm") JobOfferForm jobOfferForm,
 			final BindingResult binding) {
 
 		JobOffer offer = jobOfferService.find(id);
@@ -186,24 +186,24 @@ public class JobOffersController extends ApplicationController {
 
 		mav.addObject("job", offer);
 		mav.addObject("userApply", null);
-		
+
 		jobOfferForm.setId(offer.getId());
 		jobOfferForm.setTitle(offer.getTitle());
 		jobOfferForm.setDescription(offer.getDescription());
-		
+
 		String skillIds = "";
 		int i = 0;
 		for (Skill skill : offer.getSkills()) {
 			if (i > 0) {
-				skillIds += ",";	
+				skillIds += ",";
 			}
 			skillIds += skill.getId();
 			i++;
 		}
-		
+
 		jobOfferForm.setSelectedSkillIds(skillIds);
 		mav.addObject("jobOfferForm", jobOfferForm);
-		
+
 		List<JobApplication> applications = jobApplicationService.jobOfferApplications(id);
 
 		boolean alreadyApplied = false;
@@ -235,7 +235,7 @@ public class JobOffersController extends ApplicationController {
 
 		return "redirect:/users/me";
 	}
-	
+
 	@RequestMapping(path = "/job_offers/{id}/finish", method = RequestMethod.PUT)
 	public String finishJobOffer(@PathVariable final Long id) {
 
@@ -243,12 +243,12 @@ public class JobOffersController extends ApplicationController {
 
 		return "redirect:/users/me";
 	}
-	
+
 	@RequestMapping(path = "/job_offers/{id}/reopen", method = RequestMethod.PUT)
 	public String reopenJobOffer(@PathVariable final Long id) {
 
 		closeJobOffer(id, false);
-		
+
 		return "redirect:/users/me";
 	}
 

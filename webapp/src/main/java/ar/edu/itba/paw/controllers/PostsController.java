@@ -20,7 +20,7 @@ import ar.edu.itba.paw.models.Post;
 
 @Controller
 public class PostsController extends ApplicationController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(PostsController.class);
 
 	@Autowired
@@ -28,20 +28,20 @@ public class PostsController extends ApplicationController {
 
 	@RequestMapping(path = "/posts/{id}", method = RequestMethod.DELETE)
 	public String deletePost(@PathVariable final Long id) {
-		
+
 		Post post = postService.find(id);
-		
+
 		if (post.getUser().getId() == getLoggedUser().getId()) {
 			postService.delete(id);
 			LOGGER.info("Deleted Post with id: " + id.toString());
 		}
-		
+
 		return "redirect:/users/me";
 	}
-	
+
 	@RequestMapping(path = "/posts/{id}/edit", method = RequestMethod.GET)
 	public ModelAndView editPost(@PathVariable final Long id,
-			@ModelAttribute("postForm") PostForm postForm, 
+			@ModelAttribute("postForm") PostForm postForm,
 			final BindingResult binding) {
 
 		Post post = postService.find(id);
@@ -53,7 +53,7 @@ public class PostsController extends ApplicationController {
 		final ModelAndView mav = new ModelAndView("posts/edit");
 
 		mav.addObject("post", post);
-		
+
 		postForm.setId(post.getId());
 		postForm.setTitle(post.getTitle());
 		postForm.setDescription(post.getDescription());
@@ -61,7 +61,7 @@ public class PostsController extends ApplicationController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping(path = "/posts/{id}", method = RequestMethod.GET)
 	public ModelAndView viewPost(@PathVariable final Long id) {
 
@@ -83,10 +83,10 @@ public class PostsController extends ApplicationController {
 			Post post = null;
 			if (postForm.getId() != null) {
 				if (!binding.hasErrors()) {
-					post = postService.update(postForm.getId(), postForm.getTitle(), 
+					post = postService.update(postForm.getId(), postForm.getTitle(),
 							postForm.getDescription());
 						LOGGER.info("Updated Post: " + post.toString());
-						return "redirect:/users/me";						
+						return "redirect:/users/me";
 				} else {
 					attr.addFlashAttribute("postForm", postForm);
 					return "redirect:/posts/edit";

@@ -29,7 +29,7 @@ import ar.edu.itba.paw.models.User;
 
 @Controller
 public class UsersController extends ApplicationController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(UsersController.class);
 
 	@Autowired
@@ -37,13 +37,13 @@ public class UsersController extends ApplicationController {
 
 	@Autowired
 	private PostService postService;
-	
+
 	@Autowired
 	private SkillService skillService;
 
 	@Autowired
 	private JobOfferService jobOfferService;
-	
+
 	@Autowired
 	private JobApplicationService jobApplicationService;
 
@@ -53,27 +53,27 @@ public class UsersController extends ApplicationController {
 
 	@RequestMapping(path = "/users", method = RequestMethod.GET)
 	public ModelAndView listUser(@RequestParam(required = false, value = "page") final Integer pageParam) {
-		
+
 		final ModelAndView mav = new ModelAndView("users/index");
-		
+
 		mav.addObject("users",
 				userService.all(PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.DEFAULT_PER_PAGE));
 		mav.addObject("item_count", userService.count());
-		
+
 		return mav;
 	}
 
 	@RequestMapping(path = "/users/{id}", method = RequestMethod.GET)
 	public ModelAndView getUser(@PathVariable final Long id, @ModelAttribute("userForm") final UserForm userForm,
 			final BindingResult binding) {
-		
+
 		User user = userService.find(id);
 		if (user == null) {
 			return new ModelAndView("redirect:/not_found");
 		}
-		
+
 		final ModelAndView mav = new ModelAndView("users/show");
-		
+
 		userForm.setId(user.getId());
 		userForm.setFirstName(user.getFirstName());
 		userForm.setLastName(user.getLastName());
@@ -81,23 +81,23 @@ public class UsersController extends ApplicationController {
 		int i = 0;
 		for (Skill skill : user.getSkills()) {
 			if (i > 0) {
-				skillIds += ",";	
+				skillIds += ",";
 			}
 			skillIds += skill.getId();
 			i++;
 		}
 		userForm.setSelectedSkillIds(skillIds);
-		
+
 		mav.addObject("userForm", userForm);
 		mav.addObject("user", user);
 		mav.addObject("posts", postService.userPosts(id));
 		mav.addObject("offers", jobOfferService.userJobOffers(id));
 		mav.addObject("skills", skillService.all());
-		
+
 		if(getLoggedUser().getId().equals(id)){
 			mav.addObject("offersApplied", jobApplicationService.userJobApplications(id));
 		}
-		
+
 		return mav;
 	}
 
@@ -105,11 +105,11 @@ public class UsersController extends ApplicationController {
 	public String me() {
 		return "forward:/users/" + getLoggedUser().getId().toString();
 	}
-	
+
 	@RequestMapping(path = "/users/{id}", method = RequestMethod.POST)
 	public String editUser(@PathVariable final Long id, @Valid @ModelAttribute("userForm") final UserForm userForm,
 			final BindingResult binding, RedirectAttributes attr) {
-		
+
 		if (getLoggedUser().getId() == id) {
 			if (binding.hasErrors()) {
 				attr.addFlashAttribute("userForm", userForm);
@@ -120,7 +120,7 @@ public class UsersController extends ApplicationController {
 				LOGGER.info("Updated User: " + user.toString());
 			}
 		}
-		
+
 		return "redirect:/users/" + getLoggedUser().getId().toString();
 	}
 

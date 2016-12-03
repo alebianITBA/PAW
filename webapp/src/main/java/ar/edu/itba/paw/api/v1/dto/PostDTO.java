@@ -11,20 +11,19 @@ import java.util.stream.Collectors;
 
 @XmlRootElement()
 public class PostDTO {
-
-  @XmlElement(name = "id")
+  @XmlElement
   private Long id;
 
-  @XmlElement(name = "title")
+  @XmlElement
   private String title;
 
-  @XmlElement(name = "description")
+  @XmlElement
   private String description;
 
-  @XmlElement(name = "user")
+  @XmlElement
   private UserDTO user;
 
-  @XmlElement(name = "created_at")
+  @XmlElement
   private Date created_at;
 
   public PostDTO() {
