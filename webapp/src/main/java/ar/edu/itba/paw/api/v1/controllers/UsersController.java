@@ -70,15 +70,15 @@ public class UsersController extends ApiController {
   @GET
   @Path("/me")
   public Response me() {
-    final User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    return ok(new UserDTO(user));
+    return ok(new UserDTO(getLoggedUser()));
   }
 
   @PUT
-  @Path("/{id}")
-  public Response edit(@PathParam("id") final long id, final UserParams input) {
-    // TODO: change this to /me when authorization is set
-    User user = userService.update(id, input.firstName, input.lastName, input.skillIds);
+  @Path("/me")
+  public Response edit(final UserParams input) {
+    User user = getLoggedUser();
+    // TODO: When sending null skillIds don't delete the skills, add a addSkill and removeSkill method
+    user = userService.update(user.getId(), input.firstName, input.lastName, input.skillIds);
     return ok(new UserDTO(user));
   }
 }
