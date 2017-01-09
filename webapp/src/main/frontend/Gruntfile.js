@@ -1,14 +1,15 @@
 /* eslint-env node */
 
+'use strict';
+
 module.exports = function (grunt) {
-  'use strict';
   require('load-grunt-tasks')(grunt);
 
   require('time-grunt')(grunt);
 
   var appConfig = {
     app: 'app',
-    dist: 'webapp/target/webapp'
+    dist: '../../../target/webapp/'
   };
 
   grunt.initConfig({

@@ -210,3 +210,4 @@ dist/
 *.css.map
 
 node
+.vscode
