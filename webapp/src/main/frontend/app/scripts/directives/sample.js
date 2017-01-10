@@ -1,7 +1,7 @@
 'use strict';
-define(['frontend'], function(frontend) {
+define(['connectOn'], function(connectOn) {
 
-	frontend.directive('sample', function() {
+	connectOn.directive('sample', function() {
 		return {
 			restrict: 'E',
 			template: '<span>Sample</span>'

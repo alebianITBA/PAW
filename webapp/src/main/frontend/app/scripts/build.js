@@ -71,10 +71,10 @@ if (paths) {
 
 require([
         'angular',
-        'frontend',
+        'connectOn',
         'controllers/IndexCtrl'
     ],
     function() {
-        angular.bootstrap(document, ['frontend']);
+        angular.bootstrap(document, ['connectOn']);
     }
 );

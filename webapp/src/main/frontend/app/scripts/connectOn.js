@@ -7,11 +7,11 @@ define(['routes',
 	'bootstrap',
 	'angular-translate'],
 	function(config, dependencyResolverFor, i18n) {
-		var frontend = angular.module('frontend', [
+		var connectOn = angular.module('connectOn', [
 			'ngRoute',
 			'pascalprecht.translate'
 		]);
-		frontend
+		connectOn
 			.config(
 				['$routeProvider',
 				'$controllerProvider',
@@ -21,11 +21,11 @@ define(['routes',
 				'$translateProvider',
 				function($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $translateProvider) {
 
-					frontend.controller = $controllerProvider.register;
-					frontend.directive = $compileProvider.directive;
-					frontend.filter = $filterProvider.register;
-					frontend.factory = $provide.factory;
-					frontend.service = $provide.service;
+					connectOn.controller = $controllerProvider.register;
+					connectOn.directive = $compileProvider.directive;
+					connectOn.filter = $filterProvider.register;
+					connectOn.factory = $provide.factory;
+					connectOn.service = $provide.service;
 
 					if (config.routes !== undefined) {
 						angular.forEach(config.routes, function(route, path) {
@@ -39,6 +39,6 @@ define(['routes',
 					$translateProvider.translations('preferredLanguage', i18n);
 					$translateProvider.preferredLanguage('preferredLanguage');
 				}]);
-		return frontend;
+		return connectOn;
 	}
 );

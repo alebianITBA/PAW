@@ -1,7 +1,7 @@
 'use strict';
-define(['frontend'], function(frontend) {
+define(['connectOn'], function(connectOn) {
 
-	frontend.controller('IndexCtrl', function($scope) {
+	connectOn.controller('IndexCtrl', function($scope) {
 		$scope.welcomeText = 'Welcome to your frontend page';
 	});
 });
