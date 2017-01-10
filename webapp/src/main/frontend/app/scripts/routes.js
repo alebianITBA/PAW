@@ -5,8 +5,8 @@ define([], function() {
         defaultRoutePath: '/',
         routes: {
             '/': {
-                templateUrl: '/views/home.html',
-                controller: 'HomeCtrl'
+                templateUrl: 'views/register.html',
+                controller: "RegisterCtrl"
             }
             /* ===== yeoman hook ===== */
             /* Do not remove these commented lines! Needed for auto-generation */

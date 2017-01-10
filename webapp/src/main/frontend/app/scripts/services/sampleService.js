@@ -1,7 +1,7 @@
 'use strict';
-define(['connectOn'], function(frontend) {
+define(['connectOn'], function(connectOn) {
 
-	frontend.service('SampleService', function() {
+	connectOn.service('SampleService', function() {
 
 	});
 });

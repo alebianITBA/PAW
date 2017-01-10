@@ -1,4 +1,5 @@
 'use strict';
+
 define(['connectOn'], function(connectOn) {
 
 	connectOn.controller('IndexCtrl', function($scope) {

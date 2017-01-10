@@ -3,7 +3,6 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import 'bootstrap-sass-official/assets/stylesheets/_bootstrap.scss';
 // endbower
 
-@import 'partials/home';
 @import 'modules/colors';
 
 html {
@@ -396,4 +395,12 @@ a.link:hover {
 
 .upper {
   text-transform: uppercase;
+}
+
+.ng-invalid.ng-dirty {
+  border-color: $dark-red;
+}
+
+.ng-valid.ng-dirty {
+  border-color: $light-blue;
 }
