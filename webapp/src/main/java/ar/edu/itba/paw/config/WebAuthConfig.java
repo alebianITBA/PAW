@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,6 +42,9 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
       .antMatchers("**/*.css").permitAll()
       .antMatchers("**/*.js").permitAll()
       .antMatchers("/api/v1/login").permitAll()
+      // For user registration
+      .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+      .antMatchers(HttpMethod.OPTIONS, "/api/v1/users").permitAll()
       .anyRequest().authenticated().and()
       .addFilterBefore(new StatelessAuthenticationFilter(userService), UsernamePasswordAuthenticationFilter.class)
       .exceptionHandling().and()
