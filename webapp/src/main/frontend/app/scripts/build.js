@@ -23,7 +23,8 @@ require.config({
         scrollspy: '../../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy',
         tab: '../../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab',
         tooltip: '../../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip',
-        transition: '../../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition'
+        transition: '../../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition',
+        'angular-local-storage': '../../bower_components/angular-local-storage/dist/angular-local-storage'
     },
     shim: {
         angular: {
@@ -56,6 +57,11 @@ require.config({
             deps: [
                 'angular'
             ]
+        },
+        'angular-local-storage': {
+            deps: [
+                'angular'
+            ]
         }
     },
     packages: [
@@ -71,8 +77,11 @@ if (paths) {
 
 require([
         'angular',
+        'angular-local-storage',
         'connectOn',
-        'directives/navbar'
+        'controllers/NavbarCtrl',
+        'directives/navbar',
+        'services/userService'
     ],
     function() {
         angular.bootstrap(document, ['connectOn']);

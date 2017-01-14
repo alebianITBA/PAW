@@ -5,10 +5,8 @@ define(['connectOn'], function(connectOn) {
         return {
             restrict: 'E',
             templateUrl: 'views/header.html',
-            controller: function() {
-
-            },
-            controllerAs: 'login'
+            controller: 'NavbarCtrl',
+            controllerAs: 'ctrl'
         }
     });
 

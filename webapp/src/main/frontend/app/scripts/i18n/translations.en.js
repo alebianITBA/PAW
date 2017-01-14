@@ -6,6 +6,7 @@ define([], function() {
         USERS: 'Usuarios',
         JOB_OFFERS: 'Ofertas de trabajo',
         MY_PROFILE: 'Mi perfil',
+        LOG_IN: 'Ingresar',
         LOG_OUT: 'Salir',
         GET_STARTED: 'Comienza ya!',
         FIRST_NAME: 'Nombre',

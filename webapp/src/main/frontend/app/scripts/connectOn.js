@@ -5,11 +5,13 @@ define(['routes',
 	'angular',
 	'angular-route',
 	'bootstrap',
-	'angular-translate'],
+	'angular-translate',
+	'angular-local-storage'],
 	function(config, dependencyResolverFor, i18n) {
 		var connectOn = angular.module('connectOn', [
 			'ngRoute',
-			'pascalprecht.translate'
+			'pascalprecht.translate',
+			'LocalStorageModule'
 		]);
 		connectOn
 			.config(
@@ -19,7 +21,8 @@ define(['routes',
 				'$filterProvider',
 				'$provide',
 				'$translateProvider',
-				function($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $translateProvider) {
+				'localStorageServiceProvider',
+				function($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $translateProvider, localStorageServiceProvider) {
 
 					connectOn.controller = $controllerProvider.register;
 					connectOn.directive = $compileProvider.directive;
@@ -38,9 +41,14 @@ define(['routes',
 
 					$translateProvider.translations('preferredLanguage', i18n);
 					$translateProvider.preferredLanguage('preferredLanguage');
-				}]);
 
-		connectOn.apiV1BaseUrl = 'http://localhost:8080/api/v1';
+					localStorageServiceProvider.setPrefix('connectOn')
+				}]);
+		
+		connectOn.constants = {
+			TOKEN_KEY: 'token',
+			API_V1_BASE_URL: 'http://localhost:8080/api/v1'
+		};
 
 		return connectOn;
 	}
