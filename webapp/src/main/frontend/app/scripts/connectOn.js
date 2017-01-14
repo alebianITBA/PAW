@@ -39,6 +39,9 @@ define(['routes',
 					$translateProvider.translations('preferredLanguage', i18n);
 					$translateProvider.preferredLanguage('preferredLanguage');
 				}]);
+
+		connectOn.apiV1BaseUrl = 'http://localhost:8080/api/v1';
+
 		return connectOn;
 	}
 );

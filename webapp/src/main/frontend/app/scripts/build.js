@@ -72,7 +72,7 @@ if (paths) {
 require([
         'angular',
         'connectOn',
-        'controllers/IndexCtrl'
+        'directives/navbar'
     ],
     function() {
         angular.bootstrap(document, ['connectOn']);

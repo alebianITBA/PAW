@@ -1,6 +1,6 @@
-'use strict';
-
 define([], function() {
+
+    'use strict';
     return {
         defaultRoutePath: '/',
         routes: {
@@ -12,4 +12,5 @@ define([], function() {
             /* Do not remove these commented lines! Needed for auto-generation */
         }
     };
+
 });
