@@ -7,6 +7,10 @@ define([], function() {
             '/': {
                 templateUrl: 'views/register.html',
                 controller: 'RegisterCtrl'
+            },
+            '/index': {
+                templateUrl: 'views/main.html',
+                controller: 'MainCtrl'
             }
             /* ===== yeoman hook ===== */
             /* Do not remove these commented lines! Needed for auto-generation */

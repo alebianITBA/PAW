@@ -5,8 +5,10 @@ define(['connectOn'], function(connectOn) {
 
         return {
             createUser: function(user) {
-                $http.post(`${connectOn.constants.API_V1_BASE_URL}/users`, JSON.stringify(user))
-                     .then(function (response) { return user; });
+                return $http.post(`${connectOn.constants.API_V1_BASE_URL}/users`, JSON.stringify(user));
+            },
+            login: function(params) {
+                return $http.post(`${connectOn.constants.API_V1_BASE_URL}/login`, { email: params.email, password: params.password });
             },
             list: function(page) {
                 $http.get(`${connectOn.constants.API_V1_BASE_URL}/users?page=${page || 1}`)
