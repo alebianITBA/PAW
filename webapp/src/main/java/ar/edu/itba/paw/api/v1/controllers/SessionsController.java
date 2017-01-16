@@ -23,7 +23,7 @@ public class SessionsController extends ApiController {
   public Response login(final UserParams input) {
     User user = userService.findByEmail(input.email);
     if (user != null && user.getPassword().equals(input.password)) {
-      return ok(new TokenDTO(Token.create(user)));
+      return ok(new TokenDTO(user));
     }
     return unauthorized();
   }

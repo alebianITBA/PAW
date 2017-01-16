@@ -17,7 +17,7 @@
 
                <div ng-repeat="post in mainCtrl.posts">
                   <hr>
-                  <h4><a class="no-underline" href="">{{ post.title }}</a></h4>
+                  <h4><a class="no-underline" ng-href="/posts/{{post.id}}">{{ post.title }}</a></h4>
                      <p class="adm">
                         {{ 'POSTED_BY' | translate }}
                         <a href="">{{ post.user.first_name }} {{ post.user.last_name }}</a>

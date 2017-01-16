@@ -22,6 +22,9 @@ define([], function() {
         CONTENT: 'Contenido',
         SUBMIT: 'Enviar',
         APPLY: 'Aplicar',
-        RECOMMENDED_OFFERS: 'Ofertas recomendadas'
+        RECOMMENDED_OFFERS: 'Ofertas recomendadas',
+        ACTION: 'Accion',
+        EDIT: 'Editar',
+        DELETE: 'Borrar'
     };
 });

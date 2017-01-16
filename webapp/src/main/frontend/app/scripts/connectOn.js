@@ -16,13 +16,14 @@ define(['routes',
 		connectOn
 			.config(
 				['$routeProvider',
+				'$locationProvider',
 				'$controllerProvider',
 				'$compileProvider',
 				'$filterProvider',
 				'$provide',
 				'$translateProvider',
 				'localStorageServiceProvider',
-				function($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $translateProvider, localStorageServiceProvider) {
+				function($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $translateProvider, localStorageServiceProvider) {
 
 					connectOn.controller = $controllerProvider.register;
 					connectOn.directive = $compileProvider.directive;
@@ -38,6 +39,7 @@ define(['routes',
 					if (config.defaultRoutePath !== undefined) {
 						$routeProvider.otherwise({redirectTo: config.defaultRoutePath});
 					}
+					$locationProvider.html5Mode(true);
 
 					$translateProvider.translations('preferredLanguage', i18n);
 					$translateProvider.preferredLanguage('preferredLanguage');
@@ -48,6 +50,7 @@ define(['routes',
 		connectOn.constants = {
 			TOKEN_KEY: 'token',
 			API_V1_BASE_URL: 'http://localhost:8080/api/v1',
+			LOGGED_USER: 'logged_user',
 
 			PATH_ROOT: '/',
 			PATH_INDEX: '/index'

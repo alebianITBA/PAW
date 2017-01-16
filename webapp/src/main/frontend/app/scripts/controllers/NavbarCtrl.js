@@ -24,6 +24,7 @@ define(['connectOn'], function(connectOn) {
             var that = this;
             UserService.login(that.login).then(function (response) {
                 localStorageService.set(that.constants.TOKEN_KEY, response.data.token);
+                localStorageService.set(that.constants.LOGGED_USER, response.data.user);
                 $scope.logged = true;
                 that.redirect(that.constants.PATH_INDEX);
             });

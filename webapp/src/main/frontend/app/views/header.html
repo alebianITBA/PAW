@@ -28,8 +28,8 @@
             </div>
 
             <div ng-show="logged">
-                <li><a class="simil-link">{{ 'USERS' | translate }}</a></li>
-                <li><a class="simil-link">{{ 'JOB_OFFERS' | translate }}</a></li>
+                <li><a class="simil-link" ng-href="/users">{{ 'USERS' | translate }}</a></li>
+                <li><a class="simil-link" ng-href="/job_offers">{{ 'JOB_OFFERS' | translate }}</a></li>
                 <li><a class="simil-link">{{ 'MY_PROFILE' | translate }}</a></li>
                 <li><a class="simil-link" ng-click="navbarCtrl.logout()">{{ 'LOG_OUT' | translate }}</a></li>
             </div>

@@ -13,6 +13,12 @@ define(['connectOn'], function(connectOn) {
             },
             show: function(id) {
                 return $http.get(`${connectOn.constants.API_V1_BASE_URL}/posts/${id}`, headers);
+            },
+            delete: function(id) {
+                return $http.delete(`${connectOn.constants.API_V1_BASE_URL}/posts/${id}`, headers);
+            },
+            edit: function(post) {
+                return $http.put(`${connectOn.constants.API_V1_BASE_URL}/posts/${post.id}`, JSON.stringify(post), headers);
             }
         }
 

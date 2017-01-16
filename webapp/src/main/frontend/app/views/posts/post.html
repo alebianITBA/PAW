@@ -1,0 +1,38 @@
+<div class="content" ng-controller="PostCtrl as postCtrl">
+    <div class="container">
+        <div class="col-md-12 praesent f-left">
+            <div class="l_g_r b-margin">
+                <div class="dapibus biography-into">
+                    <h4>{{ postCtrl.post.title }}</h4>
+                    <div ng-show="postCtrl.belongsToUser">
+                        <div class="apply-button">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ 'ACTION' | translate }}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li>
+                                        <a ng-href="/posts/{{postCtrl.post.id}}/edit">
+                                            {{ 'EDIT' | translate }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="remove-button" ng-click="postCtrl.delete()">
+                                            {{ 'DELETE' | translate }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="adm">
+                        {{ 'POSTED_BY' | translate }}
+                        <a href="">{{ postCtrl.post.user.first_name }} {{ postCtrl.post.user.last_name }}</a>
+                    </p>
+                    <p>{{ postCtrl.post.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
