@@ -81,6 +81,8 @@ require([
         'connectOn',
         'controllers/NavbarCtrl',
         'directives/navbar',
+        'services/jobOfferService',
+        'services/postService',
         'services/userService'
     ],
     function() {

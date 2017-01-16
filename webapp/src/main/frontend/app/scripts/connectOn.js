@@ -47,7 +47,10 @@ define(['routes',
 		
 		connectOn.constants = {
 			TOKEN_KEY: 'token',
-			API_V1_BASE_URL: 'http://localhost:8080/api/v1'
+			API_V1_BASE_URL: 'http://localhost:8080/api/v1',
+
+			PATH_ROOT: '/',
+			PATH_INDEX: '/index'
 		};
 
 		return connectOn;

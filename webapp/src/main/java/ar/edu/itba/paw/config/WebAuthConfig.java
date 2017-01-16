@@ -44,7 +44,8 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
       .antMatchers("/api/v1/login").permitAll()
       // For user registration
       .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-      .antMatchers(HttpMethod.OPTIONS, "/api/v1/users").permitAll()
+      // For Angular requests
+      .antMatchers(HttpMethod.OPTIONS).permitAll()
       .anyRequest().authenticated().and()
       .addFilterBefore(new StatelessAuthenticationFilter(userService), UsernamePasswordAuthenticationFilter.class)
       .exceptionHandling().and()

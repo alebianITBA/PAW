@@ -209,7 +209,7 @@ p.adm {
 }
 
 .link {
-  background: url(/imgages/arrow.png) no-repeat -1px 5px;
+  background: url(/images/arrow.png) no-repeat -1px 5px;
   display: inline-block;
   padding: 0 0 0 13px;
   line-height: 20px;
@@ -403,4 +403,8 @@ a.link:hover {
 
 .ng-valid.ng-dirty {
   border-color: $light-blue;
+}
+
+.simil-link {
+  cursor: pointer;
 }

@@ -24,7 +24,7 @@ public class UsersController extends ApiController {
   private UserService userService;
 
   @GET
-  public Response index(@PathParam("page") Integer pageParam) {
+  public Response index(@QueryParam("page") Integer pageParam) {
     final List<User> allUsers = userService.all(PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.DEFAULT_PER_PAGE);
     GenericEntity<List<UserDTO>> list = new GenericEntity<List<UserDTO>>(UserDTO.fromList(allUsers)) {
     };

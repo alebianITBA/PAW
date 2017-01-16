@@ -3,25 +3,36 @@ define(['connectOn'], function(connectOn) {
     'use strict';
     connectOn.controller('NavbarCtrl', ['$scope', '$http', 'localStorageService', '$location', 'UserService',
                             function($scope, $http, localStorageService, $location, UserService) {
-        this.login = {};
-        $scope.logged = localStorageService.get(connectOn.constants.TOKEN_KEY) !== null;
 
-        if (!$scope.logged && $location.$$path !== '/') {
-            $location.path('/');
+        this.constants = connectOn.constants;
+        this.login = {};
+        $scope.logged = localStorageService.get(this.constants.TOKEN_KEY) !== null;
+
+        this.redirect = function(path) {
+            if ($scope.logged) {
+                $location.path(path);
+            } else {
+                $location.path(this.constants.PATH_ROOT);
+            }
+        };
+
+        if (!$scope.logged && $location.$$path !== this.constants.PATH_ROOT) {
+            this.redirect(this.constants.PATH_ROOT);
         }
 
         this.login = function() {
-            UserService.login(this.login).then(function (response) {
-                localStorageService.set(connectOn.constants.TOKEN_KEY, response.data.token);
+            var that = this;
+            UserService.login(that.login).then(function (response) {
+                localStorageService.set(that.constants.TOKEN_KEY, response.data.token);
                 $scope.logged = true;
-                $location.path('/index');
+                that.redirect(that.constants.PATH_INDEX);
             });
         };
 
         this.logout = function() {
             localStorageService.clearAll();
             $scope.logged = false;
-            $location.path('/');
+            this.redirect(this.constants.PATH_ROOT);
         };
 
     }]);

@@ -1,1 +1,66 @@
-<h1> RE LOCO </h1>
+<div class="content" ng-controller="MainCtrl as mainCtrl">
+   <div class="container">
+      <div class="col-md-8 praesent">
+         <div class="l_g_r biography-into">
+            <div class="dapibus">
+               <h4>{{ 'SHARE_POST' | translate}}</h4>
+
+               <form name="postForm" ng-submit="postForm.$valid && mainCtrl.createPost()" novalidate>
+                    <div class="form-group">
+                        <input class="form-control input-lg" type="text" placeholder="{{ 'TITLE' | translate }}*" name="title" ng-model="mainCtrl.post.title" required></input>
+                    </div>
+                    <div class="form-group form-group-shadow">
+                        <textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description" ng-model="mainCtrl.post.description" required></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-info btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
+               </form>
+
+               <div ng-repeat="post in mainCtrl.posts">
+                  <hr>
+                  <h4><a class="no-underline" href="">{{ post.title }}</a></h4>
+                     <p class="adm">
+                        {{ 'POSTED_BY' | translate }}
+                        <a href="">{{ post.user.first_name }} {{ post.user.last_name }}</a>
+                    </p>
+                    <p>{{ post.description }}</p>
+                    </hr>
+               </div>
+            </div>
+
+            <div class="row center">
+               <div id="pagination">
+                   <ul class="pagination">
+                       <li class="simil-link" ng-click="mainCtrl.previousPage()"><span aria-hidden="true">«</span></li>
+                       <li><span>{{ mainCtrl.page }}</span></li>
+                       <li class="simil-link" ng-click="mainCtrl.nextPage()"><span aria-hidden="true">»</span></li>
+                   </ul>
+               </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 praesent">
+        <div class="l_g_r biography-into">
+            <div class="dapibus">
+                <h4>{{ 'RECOMMENDED_OFFERS' | translate }}</h4>
+
+                <div ng-repeat="offer in mainCtrl.offers">
+                    <hr>
+                    <h4><a class="no-underline" href="">{{ offer.title }}</a></h4>
+                    <p class="adm">
+                        {{ 'POSTED_BY' | translate }}
+                        <a href="">{{ offer.user.first_name }} {{ offer.user.last_name }}</a>
+                    </p>
+                    <p>{{ offer.description }}</p>
+                    <p class="skill-container">
+                        <div ng-repeat="skill in offer.skill">
+                            <a class="no-underline" href=""><span class="label label-info">{{ skill.name }}</span></a>
+                        </div>
+                    </p>
+                    <button class="btn btn-info btn-block btn-lg" type="submit">{{ 'APPLY' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

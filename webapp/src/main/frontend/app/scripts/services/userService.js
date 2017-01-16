@@ -11,16 +11,13 @@ define(['connectOn'], function(connectOn) {
                 return $http.post(`${connectOn.constants.API_V1_BASE_URL}/login`, { email: params.email, password: params.password });
             },
             list: function(page) {
-                $http.get(`${connectOn.constants.API_V1_BASE_URL}/users?page=${page || 1}`)
-                     .then();
+                return $http.get(`${connectOn.constants.API_V1_BASE_URL}/users?page=${page || 1}`);
             },
             show: function(id) {
-                $http.get(`${connectOn.constants.API_V1_BASE_URL}/users/${id}`)
-                     .then();
+                return $http.get(`${connectOn.constants.API_V1_BASE_URL}/users/${id}`);
             },
             me: function() {
-                $http.get(`${connectOn.constants.API_V1_BASE_URL}/users/me`)
-                     .then();
+                return $http.get(`${connectOn.constants.API_V1_BASE_URL}/users/me`);
             }
         }
 

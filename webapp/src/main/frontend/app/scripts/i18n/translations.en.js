@@ -15,6 +15,13 @@ define([], function() {
         PASSWORD: 'Contraseña',
         CONFIRM_PASSWORD: 'Confirmar contraseña',
         REGISTER: 'Registrarse',
-        REQUIRED_FIELDS: '* Campos requeridos'
+        REQUIRED_FIELDS: '* Campos requeridos',
+        SHARE_POST: 'Comparte una publicacion!',
+        POSTED_BY: 'Publicado por',
+        TITLE: 'Titulo',
+        CONTENT: 'Contenido',
+        SUBMIT: 'Enviar',
+        APPLY: 'Aplicar',
+        RECOMMENDED_OFFERS: 'Ofertas recomendadas'
     };
 });
