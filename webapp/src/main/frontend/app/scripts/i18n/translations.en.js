@@ -2,7 +2,7 @@
 
 define([], function() {
     return {
-        GROUP: 'Grupo',
+        GROUP: 'Grupo 5',
         USERS: 'Usuarios',
         JOB_OFFERS: 'Ofertas de trabajo',
         MY_PROFILE: 'Mi perfil',

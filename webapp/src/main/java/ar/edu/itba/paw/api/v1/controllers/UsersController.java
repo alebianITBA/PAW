@@ -3,7 +3,9 @@ package ar.edu.itba.paw.api.v1.controllers;
 import ar.edu.itba.paw.api.v1.dto.UserDTO;
 import ar.edu.itba.paw.api.v1.parameters.UserParams;
 import ar.edu.itba.paw.helpers.PaginationHelper;
+import ar.edu.itba.paw.interfaces.SkillService;
 import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.utils.Pair;
 import ar.edu.itba.paw.validators.UserPasswordValidator;
@@ -15,6 +17,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Set;
 
 @Path("api/v1/users")
 @Component
@@ -22,6 +25,9 @@ public class UsersController extends ApiController {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private SkillService skillService;
 
   @GET
   public Response index(@QueryParam("page") Integer pageParam) {
@@ -66,6 +72,42 @@ public class UsersController extends ApiController {
     }
   }
 
+  @POST
+  @Path("/me/add_skill")
+  public Response addSkill(@PathParam("id") final long id, @QueryParam("skill_id") final long skillId) {
+    final User user = getLoggedUser();
+    final Skill skill = skillService.find(skillId);
+
+    if (user != null && skill != null) {
+      List<Skill> userSkills = user.getSkills();
+      if (!userSkills.contains(skill)) {
+        userSkills.add(skill);
+        userService.updateSkills(id, userSkills);
+      }
+      return ok(new UserDTO(user));
+    } else {
+      return notFound();
+    }
+  }
+
+  @POST
+  @Path("/me/remove_skill")
+  public Response removeSkill(@PathParam("id") final long id, @QueryParam("skill_id") final long skillId) {
+    final User user = getLoggedUser();
+    final Skill skill = skillService.find(skillId);
+
+    if (user != null && skill != null) {
+      List<Skill> userSkills = user.getSkills();
+      if (userSkills.contains(skill)) {
+        userSkills.remove(skill);
+        userService.updateSkills(id, userSkills);
+      }
+      return ok(new UserDTO(user));
+    } else {
+      return notFound();
+    }
+  }
+
   @GET
   @Path("/me")
   public Response me() {
@@ -76,9 +118,7 @@ public class UsersController extends ApiController {
   @Path("/me")
   public Response edit(final UserParams input) {
     User user = getLoggedUser();
-    // TODO: When sending null skillIds don't delete the skills, add a addSkill and removeSkill method
-    // TODO: skillIds should be an array [1,2] not a "1,2"
-    user = userService.update(user.getId(), input.firstName, input.lastName, input.skillIds);
+    user = userService.update(user.getId(), input.firstName, input.lastName);
     return ok(new UserDTO(user));
   }
 }

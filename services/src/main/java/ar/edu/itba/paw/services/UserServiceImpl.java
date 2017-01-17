@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public User update(Long id, String firstName, String lastName) {
+    return userDao.update(id, firstName, lastName);
+  }
+
+  @Override
   public User updateSkills(Long id, List<Skill> skills) {
     return userDao.updateSkills(id, skills);
   }

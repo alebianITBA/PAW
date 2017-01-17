@@ -18,7 +18,7 @@ public class UserHibernateDao implements UserDao {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
 	public User create(String firstName, String lastName, String email, String password) {
 		final User user = new User(firstName, lastName, email, password, new java.util.Date());
@@ -54,7 +54,7 @@ public class UserHibernateDao implements UserDao {
 		em.persist(user);
 		return user;
 	}
-	
+
 	@Override
 	public User update(Long id, String firstName, String lastName, List<Skill> skills) {
 		User user = find(id);
@@ -67,13 +67,30 @@ public class UserHibernateDao implements UserDao {
 		if (lastName != null && !lastName.isEmpty()){
 			user.setLastName(lastName);
 		}
-		
+
 		user.setSkills(skills);
-		
+
 		em.persist(user);
 		return user;
 	}
-	
+
+  @Override
+  public User update(Long id, String firstName, String lastName) {
+    User user = find(id);
+    if (user == null) {
+      return null;
+    }
+    if (firstName != null && !firstName.isEmpty()){
+      user.setFirstName(firstName);
+    }
+    if (lastName != null && !lastName.isEmpty()){
+      user.setLastName(lastName);
+    }
+
+    em.persist(user);
+    return user;
+  }
+
 	@Override
 	public User updateSkills(Long id, List<Skill> skills){
 		User user = find(id);

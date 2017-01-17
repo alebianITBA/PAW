@@ -20,7 +20,7 @@
                   <h4><a class="no-underline" ng-href="/posts/{{post.id}}">{{ post.title }}</a></h4>
                      <p class="adm">
                         {{ 'POSTED_BY' | translate }}
-                        <a href="">{{ post.user.first_name }} {{ post.user.last_name }}</a>
+                        <a ng-href="/users/{{post.user.id}}">{{ post.user.first_name }} {{ post.user.last_name }}</a>
                     </p>
                     <p>{{ post.description }}</p>
                     </hr>
@@ -49,7 +49,7 @@
                     <h4><a class="no-underline" href="">{{ offer.title }}</a></h4>
                     <p class="adm">
                         {{ 'POSTED_BY' | translate }}
-                        <a href="">{{ offer.user.first_name }} {{ offer.user.last_name }}</a>
+                        <a ng-href="/users/{{offer.user.id}}">{{ offer.user.first_name }} {{ offer.user.last_name }}</a>
                     </p>
                     <p>{{ offer.description }}</p>
                     <p class="skill-container">

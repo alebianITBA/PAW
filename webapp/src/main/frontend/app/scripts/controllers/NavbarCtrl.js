@@ -16,9 +16,16 @@ define(['connectOn'], function(connectOn) {
             }
         };
 
-        if (!$scope.logged && $location.$$path !== this.constants.PATH_ROOT) {
-            this.redirect(this.constants.PATH_ROOT);
-        }
+        // TODO: Remove this hack :P
+        var that = this;
+        var me = UserService.me()
+                    .then(function(result) {
+                        if (result.status !== 200 && $location.$$path !== that.constants.PATH_ROOT) {
+                            that.redirect(that.constants.PATH_ROOT);
+                        }
+                    }).catch(function(error) {
+                        that.redirect(that.constants.PATH_ROOT);
+                    });
 
         this.login = function() {
             var that = this;

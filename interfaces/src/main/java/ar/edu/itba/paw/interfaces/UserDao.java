@@ -12,9 +12,11 @@ public interface UserDao {
   void delete(Long id);
 
   User update(Long id, String firstName, String lastName, String email, String password);
-  
+
   User update(Long id, String firstName, String lastName, List<Skill> skills);
-  
+
+  User update(Long id, String firstName, String lastName);
+
   User updateSkills(Long id, List<Skill> skills);
 
   User findByEmail(String email);
