@@ -2,7 +2,7 @@
 
 define([], function() {
     return {
-        GROUP: 'Grupo 5',
+        GROUP: 'Hecho por Alejandro Bezdjian',
         USERS: 'Usuarios',
         JOB_OFFERS: 'Ofertas de trabajo',
         MY_PROFILE: 'Mi perfil',

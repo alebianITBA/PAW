@@ -1,53 +1,48 @@
 define(['connectOn'], function(connectOn) {
 
     'use strict';
-    connectOn.controller('MainCtrl', ['$scope', 'PostService', 'JobOfferService', function($scope, PostService, JobOfferService) {
-        this.post = {};
-        this.posts = [];
-        this.page = 1;
-        this.offers = [];
+    connectOn.controller(
+        'MainCtrl',
+        ['$scope', 'PostService', 'JobOfferService', 'CommonService',
+        function($scope, PostService, JobOfferService, CommonService) {
+            this.post = {};
+            this.posts = [];
+            this.page = 1;
+            this.offers = [];
 
-        this.createPost = function() {
-            var that = this;
-            PostService.createPost(that.post).then(function (response) {
-                that.posts.unshift(response.data);
-                that.post = {};
-            });
-        };
-
-        this.previousPage = function() {
-            var that = this;
-            if (that.page > 1) {
-                PostService.list(that.page - 1).then(function(result) {
-                    while (that.posts.length > 0) {
-                        that.posts.pop();
-                    }
-                    that.posts.push(...result.data);
-                    that.page--;
+            this.createPost = function() {
+                var that = this;
+                PostService.createPost(that.post).then(function (response) {
+                    that.posts.unshift(response.data);
+                    that.post = {};
                 });
-            }
-        };
+            };
 
-        this.nextPage = function() {
             var that = this;
-            PostService.list(that.page + 1).then(function(result) {
-                if (result.data.length > 0) {
-                    while (that.posts.length > 0) {
-                        that.posts.pop();
-                    }
-                    that.posts.push(...result.data);
-                    that.page++;
-                }
+
+            const incrementPage = function(newPage) {
+                that.page++;
+            };
+
+            const decrementPage = function(newPage) {
+                that.page--;
+            };
+
+            this.previousPage = function() {
+                CommonService.previousPage(this.page, PostService, this.posts, decrementPage);
+            };
+
+            this.nextPage = function() {
+                CommonService.nextPage(this.page, PostService, this.posts, incrementPage);
+            };
+
+            PostService.list(that.page).then(function(result) {
+                that.posts = result.data;
             });
-        };
+            JobOfferService.list(1).then(function(result) {
+                that.offers = result.data.slice(0, 5);
+            });
 
-        var that = this;
-        PostService.list(that.page).then(function(result) {
-             that.posts = result.data;
-        });
-        JobOfferService.list(1).then(function(result) {
-             that.offers = result.data.slice(0, 5);
-        });
-
-    }]);
+        }]
+    );
 });

@@ -19,7 +19,15 @@ define([], function() {
             '/posts/:postId/edit': {
                 templateUrl: 'views/posts/edit.html',
                 controller: 'EditPostCtrl'
-            }
+            },
+            '/users': {
+                templateUrl: 'views/users/index.html',
+                controller: 'UsersCtrl'
+            },
+            '/users/:userId': {
+                templateUrl: 'views/users/user.html',
+                controller: 'UserCtrl'
+            },
             /* ===== yeoman hook ===== */
             /* Do not remove these commented lines! Needed for auto-generation */
         }

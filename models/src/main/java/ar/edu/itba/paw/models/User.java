@@ -166,7 +166,7 @@ public class User {
   }
 
   public String getGravatar() {
-    return "http://www.gravatar.com/avatar/" + MD5Util.INSTANCE.md5Hex(getEmail());
+    return "https://secure.gravatar.com/avatar/" + MD5Util.INSTANCE.md5Hex(getEmail()) + ".jpg";
   }
 
   @Override

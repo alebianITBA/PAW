@@ -23,7 +23,8 @@ public class JobApplicationsController extends ApiController {
   private JobOfferService jobOfferService;
 
   @GET
-  public Response index(@QueryParam("job_offer_id") final long job_offer_id) {
+  @Path("/me")
+  public Response myApplications() {
     final List<JobApplication> allApplications = jobApplicationService.userJobApplications(getLoggedUser().getId());
     GenericEntity<List<JobApplicationDTO>> list = new GenericEntity<List<JobApplicationDTO>>(JobApplicationDTO.fromList(allApplications)) {
     };
