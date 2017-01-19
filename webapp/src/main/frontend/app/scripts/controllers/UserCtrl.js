@@ -27,7 +27,7 @@ define(['connectOn'], function(connectOn) {
             this.postsPerPage = 5;
 
             this.currentPosts = function() {
-                PostService.userPosts(that.user.id, that.postsPage, that.postsPerPage).then(function(result) {
+                PostService.userPosts($routeParams.userId, that.postsPage, that.postsPerPage).then(function(result) {
                     CommonService.reloadData(that.posts, result.data);
                 })
             };
