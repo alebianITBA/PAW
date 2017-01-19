@@ -26,9 +26,12 @@ define(['connectOn'], function(connectOn) {
             this.postsPage = 1;
             this.postsPerPage = 5;
 
-            PostService.userPosts(this.loggedUserId, this.postsPage, this.postsPerPage).then(function(result) {
-                CommonService.reloadData(that.posts, result.data);
-            });
+            this.currentPosts = function() {
+                PostService.userPosts(that.user.id, that.postsPage, that.postsPerPage).then(function(result) {
+                    CommonService.reloadData(that.posts, result.data);
+                })
+            };
+            this.currentPosts();
 
             const incrementPostsPage = function(newPage) {
                 that.postsPage++;
@@ -44,6 +47,12 @@ define(['connectOn'], function(connectOn) {
 
             this.nextPostsPage = function() {
                 CommonService.nextPage(this.postsPage, PostService, 'userPosts', [this.user.id, this.postsPage + 1, this.postsPerPage], this.posts, incrementPostsPage);
+            };
+
+            this.deletePost = function(postId) {
+                PostService.delete(postId).then(function(result) {
+                    that.currentPosts();
+                });
             };
 
             // JOB OFFERS

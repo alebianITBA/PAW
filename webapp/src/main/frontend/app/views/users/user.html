@@ -37,6 +37,28 @@
                                         <p>{{ post.description }}</p>
                                     </div>
                                 </div>
+                                <div ng-show="userCtrl.belongsToUser">
+                                    <div class="apply-button">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{ 'ACTION' | translate }}
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    <a ng-href="/posts/{{post.id}}/edit">
+                                                        {{ 'EDIT' | translate }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="remove-button" ng-click="userCtrl.deletePost(post.id)">
+                                                        {{ 'DELETE' | translate }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row center">
                                 <div id="pagination">
@@ -69,16 +91,6 @@
 </div>
 <!--
 
-                        <hr>
-                        <div class="media">
-                           <div class="media-body">
-                              <h4>
-                                 <a class="no-underline"
-                                    href="<c:url value='/posts/${post.id}'/>">${post.title}</a>
-                              </h4>
-                              <p>${post.description}</p>
-                           </div>
-                        </div>
                         <div>
                            <div class="apply-button">
                               <c:if test="${post.user.id == loggedUser.id}">
