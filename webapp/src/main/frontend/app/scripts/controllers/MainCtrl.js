@@ -29,11 +29,11 @@ define(['connectOn'], function(connectOn) {
             };
 
             this.previousPage = function() {
-                CommonService.previousPage(this.page, PostService, this.posts, decrementPage);
+                CommonService.previousPage(this.page, PostService, 'list', [this.page - 1], this.posts, decrementPage);
             };
 
             this.nextPage = function() {
-                CommonService.nextPage(this.page, PostService, this.posts, incrementPage);
+                CommonService.nextPage(this.page, PostService, 'list', [this.page + 1], this.posts, incrementPage);
             };
 
             PostService.list(that.page).then(function(result) {

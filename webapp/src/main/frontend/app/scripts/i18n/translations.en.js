@@ -25,6 +25,7 @@ define([], function() {
         RECOMMENDED_OFFERS: 'Ofertas recomendadas',
         ACTION: 'Accion',
         EDIT: 'Editar',
-        DELETE: 'Borrar'
+        DELETE: 'Borrar',
+        RECENT_POSTS: 'Publicaciones recientes'
     };
 });

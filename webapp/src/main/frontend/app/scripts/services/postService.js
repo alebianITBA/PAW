@@ -19,6 +19,9 @@ define(['connectOn'], function(connectOn) {
             },
             edit: function(post) {
                 return $http.put(`${connectOn.constants.API_V1_BASE_URL}/posts/${post.id}`, JSON.stringify(post), headers);
+            },
+            userPosts: function(userId, page, perPage) {
+                return $http.get(`${connectOn.constants.API_V1_BASE_URL}/posts?user_id=${userId}&page=${page}&per_page=${perPage}`, headers);
             }
         }
 

@@ -19,11 +19,11 @@ define(['connectOn'], function(connectOn) {
             };
 
             this.previousPage = function() {
-                CommonService.previousPage(this.page, UserService, this.posts, decrementPage);
+                CommonService.previousPage(this.page, UserService, 'list', [this.page - 1], this.users, decrementPage);
             };
 
             this.nextPage = function() {
-                CommonService.nextPage(this.page, UserService, this.posts, incrementPage);
+                CommonService.nextPage(this.page, UserService, 'list', [this.page + 1], this.users, incrementPage);
             };
 
             UserService.list(that.page).then(function(result) {
