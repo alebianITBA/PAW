@@ -76,13 +76,11 @@ public class JobOffersController extends ApiController {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   public Response create(final JobOfferParams input) {
+    System.out.println(input.skillIds);
     Pair<Boolean, String> validation = JobOfferValidator.validate(input);
     if (!validation.getLeft()) {
       return badRequest(validation.getRight());
     }
-
-    // TODO: there is an error when creating an offer with same ids
-    // TODO: skillIds should be an array [1,2] not a "1,2"
     JobOffer jobOffer = jobOfferService.create(input.title, input.description, getLoggedUser(), input.skillIds);
     return created(new JobOfferDTO(jobOffer));
   }

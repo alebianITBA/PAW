@@ -20,6 +20,10 @@ define(['connectOn'], function(connectOn) {
                     url = CommonService.addQueryToUrl(url, 'page', (page || 1));
                     url = CommonService.addQueryToUrl(url, 'per_page', perPage);
                     return $http.get(url, headers);
+                },
+                create: function(offer) {
+                    offer.skillIds = offer.skillIds.map(function(element) { return element.id; }).join(',');
+                    return $http.post(`${connectOn.constants.API_V1_BASE_URL}/job_offers`, JSON.stringify(offer), headers);
                 }
             }
 

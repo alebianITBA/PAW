@@ -12,7 +12,7 @@
                     <div class="form-group form-group-shadow">
                         <textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description" ng-model="mainCtrl.post.description" required></textarea>
                     </div>
-                    <input type="submit" class="btn btn-info btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
+                    <input type="submit" class="btn btn-primary btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
                </form>
 
                <div ng-repeat="post in mainCtrl.posts">
@@ -53,9 +53,9 @@
                     </p>
                     <p>{{ offer.description }}</p>
                     <p class="skill-container">
-                        <a ng-repeat="skill in offer.skills" class="no-underline right" ng-ref="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
+                        <a ng-repeat="skill in offer.skills" class="no-underline right" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
                     </p>
-                    <button class="btn btn-info btn-block btn-lg" type="submit" ng-click="mainCtrl.createApplication(offer.id)">{{ 'APPLY' | translate }}</button>
+                    <button class="btn btn-primary btn-block btn-lg" type="submit" ng-click="mainCtrl.createApplication(offer.id)">{{ 'APPLY' | translate }}</button>
                 </div>
             </div>
         </div>

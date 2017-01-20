@@ -50,7 +50,7 @@ define(['connectOn'], function(connectOn) {
             };
 
             const addQueryToUrl = function(url, queryName, queryParam) {
-                if (queryParam === null || queryParam === 'undefined') {
+                if (queryParam === undefined) {
                     return url;
                 }
                 var newUrl;
@@ -65,11 +65,28 @@ define(['connectOn'], function(connectOn) {
                 return newUrl;
             };
 
+            // Function used to move an element from an array to another
+            // Params:
+            // + source: array to move elements from
+            // + target: array to move elements to
+            // + moveCheck: function that receives an element and returns true if the element should be moved
+            const moveElements = function(source, target, moveCheck) {
+                for (var i = 0; i < source.length; i++) {
+                    var element = source[i];
+                    if (moveCheck(element)) {
+                        source.splice(i, 1);
+                        target.push(element);
+                        i--;
+                    }
+                }
+            };
+
             return {
                 reloadData: reloadData,
                 previousPage: previousPage,
                 nextPage: nextPage,
-                addQueryToUrl: addQueryToUrl
+                addQueryToUrl: addQueryToUrl,
+                moveElements: moveElements
             }
 
         }]

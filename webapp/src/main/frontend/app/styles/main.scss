@@ -25,8 +25,8 @@ body {
 }
 
 .user-placeholder {
-  height: 100px;
-  width: 100px;
+  height: 120px;
+  width: 120px;
 }
 
 .user-placeholder-header {
@@ -311,6 +311,7 @@ a.link:hover {
 .skill-container {
   line-height: 3em !important;
   text-align: center !important;
+  margin-bottom: 0;
 }
 
 /* USERS */
@@ -416,4 +417,8 @@ a.link:hover {
 .blue {
   background-color: $dark-blue !important;
   color: $white !important;
+}
+
+hr {
+  margin-top: 0;
 }

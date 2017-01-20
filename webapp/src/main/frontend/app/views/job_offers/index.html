@@ -1,0 +1,89 @@
+<div class="content" ng-controller="JobOffersCtrl as offersCtrl">
+    <div class="container">
+
+        <div class="col-md-8 praesent">
+            <div class="l_g_r biography-into">
+                <div class="dapibus">
+                    <div ng-repeat="offer in offersCtrl.offers">
+                        <div class="media">
+                            <div class="media-left pull-left">
+                                <a ng-href="/users/{{ offer.user.id }}">
+                                    <img class="user-placeholder" ng-src="{{ offer.user.avatar }}" />
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4><a class="no-underline" ng-href="/job_offers/{{offer.id}}">{{ offer.title }}</a></h4>
+                                <p class="adm">
+                                    {{ 'POSTED_BY' | translate }}
+                                    <a ng-href="/users/{{offer.user.id}}">{{ offer.user.first_name }} {{ offer.user.last_name }}</a>
+                                </p>
+                                <p>{{ offer.description }}</p>
+                                <p class="skill-container pull-left">
+                                    <a ng-repeat="skill in offer.skills" class="no-underline right" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
+                                </p>
+                            </div>
+                            <div class="apply-button">
+                                <div ng-show="offersCtrl.loggedUserId === offer.user.id">
+                                    <!--EDIT-->
+                                    <a ng-href="/job_offers/{{ offer.id }}/edit">
+                                        <button class="btn btn-primary" type="submit">{{ 'EDIT' | translate }}</button>
+                                    </a>
+                                </div>
+                                <div ng-hide="offersCtrl.loggedUserId === offer.user.id">
+                                    <!--APPLY-->
+                                    <button class="btn btn-primary btn-block" type="submit" ng-click="offersCtrl.createApplication(offer.id)">{{ 'APPLY' | translate }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="row center">
+                        <div id="pagination">
+                            <ul class="pagination">
+                                <li class="simil-link" ng-click="offersCtrl.previousPage()"><span aria-hidden="true">«</span></li>
+                                <li><span class="blue">{{ offersCtrl.page }}</span></li>
+                                <li class="simil-link" ng-click="offersCtrl.nextPage()"><span aria-hidden="true">»</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 praesent">
+            <div class="l_g_r b-margin">
+                <div class="dapibus biography-into">
+                    <div class="input-group b-margin">
+                        <select name="skillsFilter" ng-model="offersCtrl.skillIdFilter" class="form-control input-lg">
+                            <option value="">{{ 'SELECT_OPTION' | translate }}</option>
+                            <option ng-repeat="skill in offersCtrl.skills" value="{{skill.id}}">{{skill.name}}</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-lg form-control" type="submit" ng-click="offersCtrl.filter()">{{ 'FILTER' | translate }}</button>
+                </div>
+            </div>
+            <div class="l_g_r">
+                <div class="dapibus biography-into">
+                    <h4>{{ 'NEED_TO_HIRE' | translate }}</h4>
+                    <form name="offerForm" ng-submit="offerForm.$valid && offersCtrl.createOffer()" novalidate>
+                        <div class="form-group">
+                            <input class="form-control input-lg" type="text" placeholder="{{ 'TITLE' | translate }}*" name="title" ng-model="offersCtrl.offer.title" required></input>
+                        </div>
+                        <div class="form-group form-group-shadow">
+                            <textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description" ng-model="offersCtrl.offer.description" required></textarea>
+                        </div>
+                        <p class="skill-container">
+                            <a ng-repeat="skill in offersCtrl.selectedSkills" ng-click="offersCtrl.removeSelected(skill.id)" class="no-underline right"><span class="label label-info">{{ skill.name }}</span></a>
+                        </p>
+                        <select name="skillsSelection" class="form-control input-lg" ng-model="offersCtrl.skillIdToAdd" ng-change="offersCtrl.addSelected()">
+                            <option value="">{{ 'SELECT_SKILL' | translate }}</option>
+                            <option ng-repeat="skill in offersCtrl.skillsToSelect" value="{{skill.id}}">{{skill.name}}</option>
+                        </select>
+                        <br>
+                        <input type="submit" class="btn btn-primary btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

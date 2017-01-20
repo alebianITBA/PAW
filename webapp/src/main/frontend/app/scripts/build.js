@@ -85,6 +85,7 @@ require([
         'services/jobApplicationService',
         'services/jobOfferService',
         'services/postService',
+        'services/skillService',
         'services/userService'
     ],
     function() {

@@ -36,6 +36,10 @@ define([], function() {
                 templateUrl: 'views/job_offers/show.html',
                 controller: 'JobOfferCtrl'
             },
+            '/job_offers/:offerId/edit': {
+                templateUrl: 'views/job_offers/edit.html',
+                controller: 'EditJobOfferCtrl'
+            }
             /* ===== yeoman hook ===== */
             /* Do not remove these commented lines! Needed for auto-generation */
         }

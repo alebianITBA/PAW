@@ -11,7 +11,7 @@
                                     <h3><a ng-href="/users/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a></h3>
                                     <p class="center"><a ng-href="/users/{{ user.id }}"><i>{{ user.email }}</i></a></p>
                                     <p class="skill-container">
-                                        <a ng-repeat="skill in user.skills" class="no-underline right" ng-ref="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
+                                        <a ng-repeat="skill in user.skills" class="no-underline right" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
                                     </p>
                                 </div>
                             </a>

@@ -27,6 +27,10 @@ define([], function() {
         EDIT: 'Editar',
         DELETE: 'Borrar',
         RECENT_POSTS: 'Publicaciones recientes',
-        JOB_OFFERS_APPLIED: 'Mis aplicaciones'
+        JOB_OFFERS_APPLIED: 'Mis aplicaciones',
+        FILTER: 'Filtrar',
+        SELECT_OPTION: 'Selecciona un filtro',
+        NEED_TO_HIRE: 'Necesitas un empleado?',
+        SELECT_SKILL: 'Agrega una habilidad'
     };
 });
