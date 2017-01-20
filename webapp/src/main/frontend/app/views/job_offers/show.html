@@ -48,7 +48,7 @@
                     </h3>
                 </div>
             </div>
-            <button class="btn btn-primary" type="submit" ng-click="offerCtrl.createApplication(offerCtrl.offer.id)">{{ 'APPLY' | translate }}</button>
+            <button ng-hide="offerCtrl.belongsToUser" class="btn btn-primary" type="submit" ng-click="offerCtrl.createApplication(offerCtrl.offer.id)">{{ 'APPLY' | translate }}</button>
             <!--APPLICANTS-->
             <div class="l_g_r" ng-show="offerCtrl.belongsToUser">
                 <div class="dapibus biography-into">
