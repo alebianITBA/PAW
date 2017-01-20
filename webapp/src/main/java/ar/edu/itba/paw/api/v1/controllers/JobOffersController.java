@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.api.v1.controllers;
 
+import ar.edu.itba.paw.api.v1.dto.JobApplicationDTO;
 import ar.edu.itba.paw.api.v1.dto.JobOfferDTO;
 import ar.edu.itba.paw.api.v1.parameters.JobOfferParams;
 import ar.edu.itba.paw.api.v1.parameters.SkillParams;
@@ -7,6 +8,7 @@ import ar.edu.itba.paw.helpers.PaginationHelper;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.SkillService;
+import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.utils.Pair;
@@ -47,6 +49,24 @@ public class JobOffersController extends ApiController {
   }
 
   @GET
+  @Path("/{id}/applications")
+  public Response applicationsOf(@PathParam("id") final long id) {
+    final JobOffer jobOffer = jobOfferService.find(id);
+    if (jobOffer.getUser().getId() != getLoggedUser().getId()) {
+      return forbidden();
+    }
+    List<JobApplication> applications = jobApplicationService.jobOfferApplications(id);
+
+    if (applications != null) {
+      GenericEntity<List<JobApplicationDTO>> list = new GenericEntity<List<JobApplicationDTO>>(JobApplicationDTO.fromList(applications)) {
+      };
+      return ok(list);
+    } else {
+      return notFound();
+    }
+  }
+
+  @GET
   public Response index(@QueryParam("page") Integer page, @QueryParam("per_page") Integer perPage, @QueryParam("skill_id") Long skillId) {
     Skill skill = skillService.find(skillId);
     List<JobOffer> jobOffers;
@@ -76,7 +96,6 @@ public class JobOffersController extends ApiController {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   public Response create(final JobOfferParams input) {
-    System.out.println(input.skillIds);
     Pair<Boolean, String> validation = JobOfferValidator.validate(input);
     if (!validation.getLeft()) {
       return badRequest(validation.getRight());

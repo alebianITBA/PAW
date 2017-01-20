@@ -31,6 +31,8 @@ define([], function() {
         FILTER: 'Filtrar',
         SELECT_OPTION: 'Selecciona un filtro',
         NEED_TO_HIRE: 'Necesitas un empleado?',
-        SELECT_SKILL: 'Agrega una habilidad'
+        SELECT_SKILL: 'Agrega una habilidad',
+        APPLICANTS: 'Aplicantes',
+        NO_APPLICANTS: 'Esta oferta aun no tiene aplicantes.'
     };
 });

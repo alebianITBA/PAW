@@ -24,6 +24,15 @@ define(['connectOn'], function(connectOn) {
                 create: function(offer) {
                     offer.skillIds = offer.skillIds.map(function(element) { return element.id; }).join(',');
                     return $http.post(`${connectOn.constants.API_V1_BASE_URL}/job_offers`, JSON.stringify(offer), headers);
+                },
+                show: function(offerId) {
+                    return $http.get(`${connectOn.constants.API_V1_BASE_URL}/job_offers/${offerId}`, headers);
+                },
+                applicationsOf: function(offerId) {
+                    return $http.get(`${connectOn.constants.API_V1_BASE_URL}/job_offers/${offerId}/applications`, headers);
+                },
+                delete: function(offerId) {
+                    return $http.delete(`${connectOn.constants.API_V1_BASE_URL}/job_offers/${offerId}`, headers);
                 }
             }
 

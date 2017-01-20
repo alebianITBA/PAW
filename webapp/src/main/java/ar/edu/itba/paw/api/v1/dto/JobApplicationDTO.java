@@ -19,6 +19,9 @@ public class JobApplicationDTO {
   @XmlElement
   private Date created_at;
 
+  @XmlElement
+  private UserDTO user;
+
   public JobApplicationDTO() {
   }
 
@@ -26,6 +29,7 @@ public class JobApplicationDTO {
     this.id = application.getId();
     this.job_offer = new JobOfferDTO(application.getJobOffer());
     this.created_at = application.getCreatedAt();
+    this.user = new UserDTO(application.getUser());
   }
 
   public static List<JobApplicationDTO> fromList(List<JobApplication> applications) {
