@@ -6,7 +6,7 @@
             <div class="col-md-4 praesent">
                 <div class="l_g_r biography-into">
                     <div class="dapibus center">
-                        <img class="user-image" ng-src="{{ userCtrl.user.avatar }}" height="150">
+                        <img class="user-image" ng-src="{{ userCtrl.user.avatar }}" height="150" />
                         <div id="info-user" style="display: block;">
                             <div >
                                 <h2 class="center">{{ userCtrl.user.first_name }} {{ userCtrl.user.last_name }}</h2>
@@ -14,9 +14,9 @@
                             <div>
                                 <h3>{{ userCtrl.user.email }}</h3>
                             </div>
-                            <div ng-repeat="skill in userCtrl.user.skills">
-                                <a class="no-underline" ng-ref="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
-                            </div>
+                            <p class="skill-container">
+                                <a ng-repeat="skill in userCtrl.user.skills" class="no-underline right" ng-ref="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
+                            </p>
                             <button type="button" class="btn btn-xs btn-info top-right-edit-button edit-button" ng-show="userCtrl.belongsToUser">{{ 'EDIT' | translate }}</button>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                                 <div id="pagination">
                                     <ul class="pagination">
                                         <li class="simil-link" ng-click="userCtrl.previousPostsPage()"><span aria-hidden="true">«</span></li>
-                                        <li><span>{{ userCtrl.postsPage }}</span></li>
+                                        <li><span class="blue">{{ userCtrl.postsPage }}</span></li>
                                         <li class="simil-link" ng-click="userCtrl.nextPostsPage()"><span aria-hidden="true">»</span></li>
                                     </ul>
                                 </div>
@@ -73,13 +73,52 @@
                     </div>
                 </div>
 
-                <div ng-show="userCtrl.posts.length > 0">
+                <div ng-show="userCtrl.job_offers.length > 0">
                     <div class="biography-into praesent">
                     </div>
                 </div>
 
-                <div ng-show="userCtrl.posts.length > 0">
+                <div ng-show="userCtrl.applications.length > 0">
                     <div class="biography-into praesent">
+                        <div class="biography-into praesent">
+                            <div class="dapibus">
+                                <h3>{{ 'JOB_OFFERS_APPLIED' | translate }}</h3>
+                                <div ng-repeat="application in userCtrl.applications">
+                                    <hr>
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h4><a ng-href="/job_offers/{{application.jobOffer.id}}">{{ application.job_offer.title }}</a></h4>
+                                            <p>{{ 'POSTED_BY' | translate }} {{ application.job_offer.user.email }}</p>
+                                            <p>{{ application.job_offer.description }}</p>
+                                        </div>
+                                        <div class="apply-button">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    {{ 'ACTION' | translate }}
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li>
+                                                        <a class="remove-button" ng-click="userCtrl.deleteApplication(application.id)">
+                                                            {{ 'DELETE' | translate }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row center">
+                                    <div id="pagination">
+                                        <ul class="pagination">
+                                            <li class="simil-link" ng-click="userCtrl.previousApplicationsPage()"><span aria-hidden="true">«</span></li>
+                                            <li><span class="blue">{{ userCtrl.applicationsPage }}</span></li>
+                                            <li class="simil-link" ng-click="userCtrl.nextApplicationsPage()"><span aria-hidden="true">»</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -89,35 +128,3 @@
 
     </div>
 </div>
-<!--
-
-                        <div>
-                           <div class="apply-button">
-                              <c:if test="${post.user.id == loggedUser.id}">
-                                 <div class="btn-group">
-                                    <button type="button"
-                                       class="btn btn-info btn-xs dropdown-toggle"
-                                       data-toggle="dropdown" aria-haspopup="true"
-                                       aria-expanded="false">
-                                       <spring:message code="Action" />
-                                       <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                       <li>
-                                          <a href="<c:url value='/posts/${post.id}/edit'/>">
-                                             <spring:message code="Edit" />
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a href="" class="remove-button"
-                                             data-href="<c:url value='/posts/${post.id}'/>">
-                                             <spring:message
-                                                code="Delete" />
-                                          </a>
-                                       </li>
-                                    </ul>
-                                 </div>
-                              </c:if>
-                           </div>
-                        </div>
-                     </c:forE-->

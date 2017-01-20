@@ -26,6 +26,7 @@ define([], function() {
         ACTION: 'Accion',
         EDIT: 'Editar',
         DELETE: 'Borrar',
-        RECENT_POSTS: 'Publicaciones recientes'
+        RECENT_POSTS: 'Publicaciones recientes',
+        JOB_OFFERS_APPLIED: 'Mis aplicaciones'
     };
 });

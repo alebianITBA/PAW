@@ -11,9 +11,7 @@
                                     <h3><a ng-href="/users/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a></h3>
                                     <p class="center"><a ng-href="/users/{{ user.id }}"><i>{{ user.email }}</i></a></p>
                                     <p class="skill-container">
-                                        <div ng-repeat="skill in user.skills">
-                                            <a class="no-underline" ng-ref="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
-                                        </div>
+                                        <a ng-repeat="skill in user.skills" class="no-underline right" ng-ref="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
                                     </p>
                                 </div>
                             </a>
@@ -26,7 +24,7 @@
             <div id="pagination">
                 <ul class="pagination">
                     <li class="simil-link" ng-click="usersCtrl.previousPage()"><span aria-hidden="true">«</span></li>
-                    <li><span>{{ usersCtrl.page }}</span></li>
+                    <li><span class="blue">{{ usersCtrl.page }}</span></li>
                     <li class="simil-link" ng-click="usersCtrl.nextPage()"><span aria-hidden="true">»</span></li>
                 </ul>
             </div>

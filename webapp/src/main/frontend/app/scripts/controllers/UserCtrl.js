@@ -8,6 +8,7 @@ define(['connectOn'], function(connectOn) {
             this.belongsToUser = false;
             this.loggedUserId = localStorageService.get(connectOn.constants.LOGGED_USER).id;
             var that = this;
+            const defaultPerPage = 3;
             
             // USER
             this.user = {};
@@ -17,14 +18,15 @@ define(['connectOn'], function(connectOn) {
                 const isOwner = that.loggedUserId === result.data.id;
                 that.belongsToUser = isOwner;
                 if (isOwner) {
-
+                    that.currentApplications();
+                    
                 }
             });
 
             // POSTS
             this.posts = [];
             this.postsPage = 1;
-            this.postsPerPage = 5;
+            this.postsPerPage = defaultPerPage;
 
             this.currentPosts = function() {
                 PostService.userPosts($routeParams.userId, that.postsPage, that.postsPerPage).then(function(result) {
@@ -33,11 +35,11 @@ define(['connectOn'], function(connectOn) {
             };
             this.currentPosts();
 
-            const incrementPostsPage = function(newPage) {
+            const incrementPostsPage = function() {
                 that.postsPage++;
             };
 
-            const decrementPostsPage = function(newPage) {
+            const decrementPostsPage = function() {
                 that.postsPage--;
             };
 
@@ -57,9 +59,43 @@ define(['connectOn'], function(connectOn) {
 
             // JOB OFFERS
             this.job_offers = [];
+            this.jobOffersPage = 1;
+            this.jobOffersPerPage = defaultPerPage;
 
             // JOB APPLICATIONS
             this.applications = [];
+            this.applicationsPage = 1;
+            this.applicationsPerPage = defaultPerPage;
+
+            this.currentApplications = function() {
+                if (that.belongsToUser) {
+                    JobApplicationService.myApplications(that.applicationsPage, that.applicationsPerPage).then(function(result) {
+                        CommonService.reloadData(that.applications, result.data);
+                    })
+                }
+            };
+
+            const incrementApplicationsPage = function() {
+                that.applicationsPage++;
+            };
+
+            const decrementApplicationsPage = function() {
+                that.applicationsPage--;
+            };
+
+            this.previousApplicationsPage = function() {
+                CommonService.previousPage(this.applicationsPage, JobApplicationService, 'myApplications', [this.applicationsPage - 1, this.applicationsPerPage], this.applications, decrementApplicationsPage);
+            };
+
+            this.nextApplicationsPage = function() {
+                CommonService.nextPage(this.applicationsPage, JobApplicationService, 'myApplications', [this.applicationsPage + 1, this.applicationsPerPage], this.applications, incrementApplicationsPage);
+            };
+
+            this.deleteApplication = function(applicationId) {
+                JobApplicationService.delete(applicationId).then(function(result) {
+                    that.currentApplications();
+                });
+            };
         }]
     );
 });

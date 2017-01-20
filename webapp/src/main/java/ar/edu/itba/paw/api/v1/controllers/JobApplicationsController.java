@@ -1,6 +1,8 @@
 package ar.edu.itba.paw.api.v1.controllers;
 
 import ar.edu.itba.paw.api.v1.dto.JobApplicationDTO;
+import ar.edu.itba.paw.api.v1.parameters.JobApplicationParams;
+import ar.edu.itba.paw.helpers.PaginationHelper;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.models.JobApplication;
@@ -23,17 +25,16 @@ public class JobApplicationsController extends ApiController {
   private JobOfferService jobOfferService;
 
   @GET
-  @Path("/me")
-  public Response myApplications() {
-    final List<JobApplication> allApplications = jobApplicationService.userJobApplications(getLoggedUser().getId());
+  public Response myApplications(@QueryParam("page") Integer pageParam, @QueryParam("per_page") Integer perPage) {
+    final List<JobApplication> allApplications = jobApplicationService.userJobApplications(getLoggedUser().getId(), PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.INSTANCE.perPage(perPage));
     GenericEntity<List<JobApplicationDTO>> list = new GenericEntity<List<JobApplicationDTO>>(JobApplicationDTO.fromList(allApplications)) {
     };
     return ok(list);
   }
 
   @POST
-  public Response create(@QueryParam("job_offer_id") final long job_offer_id) {
-    JobOffer jobOffer = jobOfferService.find(job_offer_id);
+  public Response create(final JobApplicationParams input) {
+    JobOffer jobOffer = jobOfferService.find(input.jobOfferId);
     if (jobOffer.getUser().getId() == getLoggedUser().getId()) {
       return forbidden();
     }

@@ -166,7 +166,21 @@ public class User {
   }
 
   public String getGravatar() {
+    Integer picId = Math.toIntExact((id % 9) + 1);
+    return "https://randomuser.me/api/portraits/lego/" + picId.toString() +".jpg";
+  }
+
+  private String avatarAdorable() {
+    return avatarRandomuser();
+  }
+
+  // This service stopped working
+  private String avatarGravatar() {
     return "https://secure.gravatar.com/avatar/" + MD5Util.INSTANCE.md5Hex(getEmail()) + ".jpg";
+  }
+
+  private String avatarRandomuser() {
+    return "https://api.adorable.io/avatars/150/" + MD5Util.INSTANCE.md5Hex(getEmail()) + "@adorable.png";
   }
 
   @Override

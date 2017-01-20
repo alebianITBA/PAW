@@ -3,22 +3,27 @@ define(['connectOn'], function(connectOn) {
     'use strict';
     connectOn.controller(
         'MainCtrl',
-        ['$scope', 'PostService', 'JobOfferService', 'CommonService',
-        function($scope, PostService, JobOfferService, CommonService) {
+        ['$scope', 'PostService', 'JobOfferService', 'CommonService', 'JobApplicationService',
+        function($scope, PostService, JobOfferService, CommonService, JobApplicationService) {
             this.post = {};
             this.posts = [];
             this.page = 1;
             this.offers = [];
+            var that = this;            
 
             this.createPost = function() {
-                var that = this;
                 PostService.createPost(that.post).then(function (response) {
                     that.posts.unshift(response.data);
                     that.post = {};
                 });
             };
 
-            var that = this;
+            this.createApplication = function(jobOfferId) {
+                JobApplicationService.create(jobOfferId).then(function (response) {
+                    that.getJobOffers();
+                    // TODO: Do something with the button so you cant re-apply
+                });
+            };
 
             const incrementPage = function(newPage) {
                 that.page++;
@@ -36,12 +41,19 @@ define(['connectOn'], function(connectOn) {
                 CommonService.nextPage(this.page, PostService, 'list', [this.page + 1], this.posts, incrementPage);
             };
 
-            PostService.list(that.page).then(function(result) {
-                that.posts = result.data;
-            });
-            JobOfferService.list(1).then(function(result) {
-                that.offers = result.data.slice(0, 5);
-            });
+            this.getPosts = function() {
+                PostService.list(that.page).then(function(result) {
+                    that.posts = result.data;
+                })
+            };
+            this.getPosts();
+
+            this.getJobOffers = function() {
+                JobOfferService.list(1).then(function(result) {
+                    that.offers = result.data.slice(0, 5);
+                })
+            };
+            this.getJobOffers();
 
         }]
     );
