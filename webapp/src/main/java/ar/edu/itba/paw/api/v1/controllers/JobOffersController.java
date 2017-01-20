@@ -2,10 +2,13 @@ package ar.edu.itba.paw.api.v1.controllers;
 
 import ar.edu.itba.paw.api.v1.dto.JobOfferDTO;
 import ar.edu.itba.paw.api.v1.parameters.JobOfferParams;
+import ar.edu.itba.paw.api.v1.parameters.SkillParams;
 import ar.edu.itba.paw.helpers.PaginationHelper;
 import ar.edu.itba.paw.interfaces.JobApplicationService;
 import ar.edu.itba.paw.interfaces.JobOfferService;
+import ar.edu.itba.paw.interfaces.SkillService;
 import ar.edu.itba.paw.models.JobOffer;
+import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.utils.Pair;
 import ar.edu.itba.paw.validators.JobOfferValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +30,9 @@ public class JobOffersController extends ApiController {
 
   @Autowired
   private JobApplicationService jobApplicationService;
+
+  @Autowired
+  private SkillService skillService;
 
   @GET
   @Path("/{id}")
@@ -40,9 +47,27 @@ public class JobOffersController extends ApiController {
   }
 
   @GET
-  public Response index(@QueryParam("page") Integer pageParam) {
-    // TODO: Add parameter for filter
-    final List<JobOffer> allJobOffers = jobOfferService.all(PaginationHelper.INSTANCE.page(pageParam), PaginationHelper.DEFAULT_PER_PAGE);
+  public Response index(@QueryParam("page") Integer page, @QueryParam("per_page") Integer perPage, @QueryParam("skill_id") Long skillId) {
+    Skill skill = skillService.find(skillId);
+    List<JobOffer> jobOffers;
+
+    if (skill != null) {
+      List<Skill> skills = new ArrayList<>();
+      skills.add(skill);
+      jobOffers = jobOfferService.withSkills(skills, PaginationHelper.INSTANCE.page(page), PaginationHelper.INSTANCE.perPage(perPage));
+    } else {
+      jobOffers = jobOfferService.all(PaginationHelper.INSTANCE.page(page), PaginationHelper.INSTANCE.perPage(perPage));
+    }
+
+    GenericEntity<List<JobOfferDTO>> list = new GenericEntity<List<JobOfferDTO>>(JobOfferDTO.fromList(jobOffers, jobApplicationService, getLoggedUser())) {
+    };
+    return ok(list);
+  }
+
+  @GET
+  @Path("/not_applied")
+  public Response notApplied(@QueryParam("page") Integer page, @QueryParam("per_page") Integer perPage) {
+    final List<JobOffer> allJobOffers = jobOfferService.notApplied(getLoggedUser().getId(), PaginationHelper.INSTANCE.page(page), PaginationHelper.INSTANCE.perPage(perPage));
     GenericEntity<List<JobOfferDTO>> list = new GenericEntity<List<JobOfferDTO>>(JobOfferDTO.fromList(allJobOffers, jobApplicationService, getLoggedUser())) {
     };
     return ok(list);
@@ -65,8 +90,7 @@ public class JobOffersController extends ApiController {
   @PUT
   @Path("/{id}")
   public Response edit(@PathParam("id") final long id, final JobOfferParams input) {
-    JobOffer jobOffer = jobOfferService.find(id);
-    if (jobOffer.getUser().getId() != getLoggedUser().getId()) {
+    if (!isUserOwner(id)) {
       return forbidden();
     }
 
@@ -75,15 +99,32 @@ public class JobOffersController extends ApiController {
       return badRequest(validation.getRight());
     }
 
-    jobOffer = jobOfferService.update(id, input.title, input.description);
+    JobOffer jobOffer = jobOfferService.update(id, input.title, input.description);
     return ok(new JobOfferDTO(jobOffer));
+  }
+
+  @POST
+  @Path("/{id}/add_skill")
+  public Response addSkill(@PathParam("id") final long id, final SkillParams skillParams) {
+    if (!isUserOwner(id)) {
+      return forbidden();
+    }
+    return ok();
+  }
+
+  @DELETE
+  @Path("/{id}/remove_skill")
+  public Response removeSkill(@PathParam("id") final long id, @QueryParam("skill_id") final long skillId) {
+    if (!isUserOwner(id)) {
+      return forbidden();
+    }
+    return ok();
   }
 
   @DELETE
   @Path("/{id}")
   public Response destroy(@PathParam("id") final long id) {
-    JobOffer jobOffer = jobOfferService.find(id);
-    if (jobOffer.getUser().getId() != getLoggedUser().getId()) {
+    if (!isUserOwner(id)) {
       return forbidden();
     }
 
@@ -94,24 +135,30 @@ public class JobOffersController extends ApiController {
   @PUT
   @Path("/{id}/open")
   public Response open(@PathParam("id") final long id) {
-    JobOffer jobOffer = jobOfferService.find(id);
-    if (jobOffer.getUser().getId() != getLoggedUser().getId()) {
+    if (!isUserOwner(id)) {
       return forbidden();
     }
 
-    jobOffer = jobOfferService.update(jobOffer.getId(), null);
+    JobOffer jobOffer = jobOfferService.update(id, null);
     return ok(new JobOfferDTO(jobOffer));
   }
 
   @PUT
   @Path("/{id}/finish")
   public Response finish(@PathParam("id") final long id) {
-    JobOffer jobOffer = jobOfferService.find(id);
-    if (jobOffer.getUser().getId() != getLoggedUser().getId()) {
+    if (!isUserOwner(id)) {
       return forbidden();
     }
 
-    jobOffer = jobOfferService.update(jobOffer.getId(), new Date());
+    JobOffer jobOffer = jobOfferService.update(id, new Date());
     return ok(new JobOfferDTO(jobOffer));
+  }
+
+  private boolean isUserOwner(long id) {
+    JobOffer jobOffer = jobOfferService.find(id);
+    if (jobOffer.getUser().getId() != getLoggedUser().getId()) {
+      return false;
+    }
+    return true;
   }
 }

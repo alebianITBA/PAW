@@ -13,7 +13,7 @@ define([], function() {
                 controller: 'MainCtrl'
             },
             '/posts/:postId': {
-                templateUrl: 'views/posts/post.html',
+                templateUrl: 'views/posts/show.html',
                 controller: 'PostCtrl'
             },
             '/posts/:postId/edit': {
@@ -25,8 +25,16 @@ define([], function() {
                 controller: 'UsersCtrl'
             },
             '/users/:userId': {
-                templateUrl: 'views/users/user.html',
+                templateUrl: 'views/users/show.html',
                 controller: 'UserCtrl'
+            },
+            '/job_offers': {
+                templateUrl: 'views/job_offers/index.html',
+                controller: 'JobOffersCtrl'
+            },
+            '/job_offers/:offerId': {
+                templateUrl: 'views/job_offers/show.html',
+                controller: 'JobOfferCtrl'
             },
             /* ===== yeoman hook ===== */
             /* Do not remove these commented lines! Needed for auto-generation */

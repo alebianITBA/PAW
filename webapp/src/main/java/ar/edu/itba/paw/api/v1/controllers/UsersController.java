@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.api.v1.controllers;
 
 import ar.edu.itba.paw.api.v1.dto.UserDTO;
+import ar.edu.itba.paw.api.v1.parameters.SkillParams;
 import ar.edu.itba.paw.api.v1.parameters.UserParams;
 import ar.edu.itba.paw.helpers.PaginationHelper;
 import ar.edu.itba.paw.interfaces.SkillService;
@@ -74,15 +75,15 @@ public class UsersController extends ApiController {
 
   @POST
   @Path("/me/add_skill")
-  public Response addSkill(@PathParam("id") final long id, @QueryParam("skill_id") final long skillId) {
+  public Response addSkill(final SkillParams skillParams) {
     final User user = getLoggedUser();
-    final Skill skill = skillService.find(skillId);
+    final Skill skill = skillService.find(skillParams.skillId);
 
     if (user != null && skill != null) {
       List<Skill> userSkills = user.getSkills();
       if (!userSkills.contains(skill)) {
         userSkills.add(skill);
-        userService.updateSkills(id, userSkills);
+        userService.updateSkills(user.getId(), userSkills);
       }
       return ok(new UserDTO(user));
     } else {
@@ -90,9 +91,9 @@ public class UsersController extends ApiController {
     }
   }
 
-  @POST
+  @DELETE
   @Path("/me/remove_skill")
-  public Response removeSkill(@PathParam("id") final long id, @QueryParam("skill_id") final long skillId) {
+  public Response removeSkill(@QueryParam("skill_id") final long skillId) {
     final User user = getLoggedUser();
     final Skill skill = skillService.find(skillId);
 
@@ -100,7 +101,7 @@ public class UsersController extends ApiController {
       List<Skill> userSkills = user.getSkills();
       if (userSkills.contains(skill)) {
         userSkills.remove(skill);
-        userService.updateSkills(id, userSkills);
+        userService.updateSkills(user.getId(), userSkills);
       }
       return ok(new UserDTO(user));
     } else {

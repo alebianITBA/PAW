@@ -20,8 +20,9 @@ define(['connectOn'], function(connectOn) {
 
             this.createApplication = function(jobOfferId) {
                 JobApplicationService.create(jobOfferId).then(function (response) {
-                    that.getJobOffers();
-                    // TODO: Do something with the button so you cant re-apply
+                    if (response.status === 201) {
+                        that.getJobOffers();
+                    }
                 });
             };
 
@@ -43,14 +44,14 @@ define(['connectOn'], function(connectOn) {
 
             this.getPosts = function() {
                 PostService.list(that.page).then(function(result) {
-                    that.posts = result.data;
+                    CommonService.reloadData(that.posts, result.data);
                 })
             };
             this.getPosts();
 
             this.getJobOffers = function() {
-                JobOfferService.list(1).then(function(result) {
-                    that.offers = result.data.slice(0, 5);
+                JobOfferService.notApplied(1, 5).then(function(result) {
+                    CommonService.reloadData(that.offers, result.data);
                 })
             };
             this.getJobOffers();
