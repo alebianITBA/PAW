@@ -55,7 +55,7 @@
                     <h2 class="media-heading">{{ 'APPLICANTS' | translate }}</h2>
                     <p ng-show="offerCtrl.applications.length === 0">{{ 'NO_APPLICANTS' | translate}}</p>
                     <div ng-repeat="application in offerCtrl.applications" class="media">
-                        <div class="media-left">
+                        <div class="media-left pull-left">
                             <a ng-href="/users/{{ application.user.id }}">
                                 <img class="user-placeholder" ng-src="{{ application.user.avatar }}">
                             </a>
