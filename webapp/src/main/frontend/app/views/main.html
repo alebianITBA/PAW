@@ -53,7 +53,7 @@
                     </p>
                     <p>{{ offer.description }}</p>
                     <p class="skill-container">
-                        <a ng-repeat="skill in offer.skills" class="no-underline right" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
+                        <a ng-repeat="skill in offer.skills" class="no-underline right skill" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
                     </p>
                     <button class="btn btn-primary btn-block btn-lg" type="submit" ng-click="mainCtrl.createApplication(offer.id)">{{ 'APPLY' | translate }}</button>
                 </div>

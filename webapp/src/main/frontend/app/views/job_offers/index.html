@@ -11,18 +11,8 @@
                                     <img class="user-placeholder" ng-src="{{ offer.user.avatar }}" />
                                 </a>
                             </div>
-                            <div class="media-body">
-                                <h4><a class="no-underline" ng-href="/job_offers/{{offer.id}}">{{ offer.title }}</a></h4>
-                                <p class="adm">
-                                    {{ 'POSTED_BY' | translate }}
-                                    <a ng-href="/users/{{offer.user.id}}">{{ offer.user.first_name }} {{ offer.user.last_name }}</a>
-                                </p>
-                                <p>{{ offer.description }}</p>
-                                <p class="skill-container pull-left">
-                                    <a ng-repeat="skill in offer.skills" class="no-underline right" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
-                                </p>
-                            </div>
-                            <div class="apply-button">
+							
+							<div class="apply-button">
                                 <div ng-show="offersCtrl.loggedUserId === offer.user.id">
                                     <!--EDIT-->
                                     <a ng-href="/job_offers/{{ offer.id }}/edit">
@@ -34,6 +24,19 @@
                                     <button class="btn btn-primary btn-block" type="submit" ng-click="offersCtrl.createApplication(offer.id)">{{ 'APPLY' | translate }}</button>
                                 </div>
                             </div>
+							
+                            <div class="media-body">
+                                <h4><a class="no-underline" ng-href="/job_offers/{{offer.id}}">{{ offer.title }}</a></h4>
+                                <p class="adm">
+                                    {{ 'POSTED_BY' | translate }}
+                                    <a ng-href="/users/{{offer.user.id}}">{{ offer.user.first_name }} {{ offer.user.last_name }}</a>
+                                </p>
+                                <p>{{ offer.description }}</p>
+                                <p class="skill-container pull-left">
+                                    <a ng-repeat="skill in offer.skills" class="no-underline right skill" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
+                                </p>
+                            </div>
+                            
                         </div>
                         <hr>
                     </div>
