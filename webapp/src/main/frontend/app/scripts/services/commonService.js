@@ -1,3 +1,4 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
     connectOn.service(
@@ -10,7 +11,9 @@ define(['connectOn'], function(connectOn) {
                 while (oldData.length > 0) {
                     oldData.pop();
                 }
-                oldData.push(...newData);
+                for (var i = 0; i < newData.length; i++) {
+                    oldData.push(newData[i]);
+                }
             };
 
             // Function used to paginate - get previous page of data
@@ -18,13 +21,13 @@ define(['connectOn'], function(connectOn) {
             // + page: current page
             // + service: the service object that will be used to get data, 'method' named field of the object should be a function
             // + method: the name of the service's method that will be called to fetch the data
-            // + arguments: array containing the arguments that will be passed to the service's method
+            // + args: array containing the arguments that will be passed to the service's method
             // + oldData: array of data containing the data to de refreshed
             // + callback: this should update the original page value
-            var previousPage = function(page, service, method, arguments, oldData, callback) {
+            var previousPage = function(page, service, method, args, oldData, callback) {
                 if (page > 1) {
                     var newPage = page - 1;
-                    service[method].apply(this, arguments).then(function(result) {
+                    service[method].apply(this, args).then(function(result) {
                         reloadData(oldData, result.data);
                         callback(newPage);
                     });
@@ -36,12 +39,12 @@ define(['connectOn'], function(connectOn) {
             // + page: current page
             // + service: the service object that will be used to get data, 'method' named field of the object should be a function
             // + method: the name of the service's method that will be called to fetch the data
-            // + arguments: array containing the arguments that will be passed to the service's method
+            // + args: array containing the arguments that will be passed to the service's method
             // + oldData: array of data containing the data to de refreshed
             // + callback: this should update the original page value
-            var nextPage = function(page, service, method, arguments, oldData, callback) {
+            var nextPage = function(page, service, method, args, oldData, callback) {
                 var newPage = page + 1;
-                service[method].apply(this, arguments).then(function(result) {
+                service[method].apply(this, args).then(function(result) {
                     if (result.data.length > 0) {
                         reloadData(oldData, result.data);
                         callback(newPage);
