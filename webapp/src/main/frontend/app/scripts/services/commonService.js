@@ -6,7 +6,7 @@ define(['connectOn'], function(connectOn) {
         function($http, localStorageService) {
             // Function used to reload any array of data with new data
             // It is necessary to use push() and pop() so the dom gets refreshed
-            const reloadData = function(oldData, newData) {
+            var reloadData = function(oldData, newData) {
                 while (oldData.length > 0) {
                     oldData.pop();
                 }
@@ -21,9 +21,9 @@ define(['connectOn'], function(connectOn) {
             // + arguments: array containing the arguments that will be passed to the service's method
             // + oldData: array of data containing the data to de refreshed
             // + callback: this should update the original page value
-            const previousPage = function(page, service, method, arguments, oldData, callback) {
+            var previousPage = function(page, service, method, arguments, oldData, callback) {
                 if (page > 1) {
-                    const newPage = page - 1;
+                    var newPage = page - 1;
                     service[method].apply(this, arguments).then(function(result) {
                         reloadData(oldData, result.data);
                         callback(newPage);
@@ -39,7 +39,7 @@ define(['connectOn'], function(connectOn) {
             // + arguments: array containing the arguments that will be passed to the service's method
             // + oldData: array of data containing the data to de refreshed
             // + callback: this should update the original page value
-            const nextPage = function(page, service, method, arguments, oldData, callback) {
+            var nextPage = function(page, service, method, arguments, oldData, callback) {
                 var newPage = page + 1;
                 service[method].apply(this, arguments).then(function(result) {
                     if (result.data.length > 0) {
@@ -49,7 +49,7 @@ define(['connectOn'], function(connectOn) {
                 });
             };
 
-            const addQueryToUrl = function(url, queryName, queryParam) {
+            var addQueryToUrl = function(url, queryName, queryParam) {
                 if (queryParam === undefined) {
                     return url;
                 }
@@ -57,10 +57,10 @@ define(['connectOn'], function(connectOn) {
                 var urlParts = url.split('?');
                 if (urlParts.length === 1) {
                     // First param
-                    newUrl = urlParts[0] + `?${queryName}=${queryParam}`;
+                    newUrl = urlParts[0] + '?' + queryName + '=' + queryParam;
                 } else {
                     // url had previous params
-                    newUrl = url + `&${queryName}=${queryParam}`;
+                    newUrl = url + '&' + queryName + '=' + queryParam;
                 }
                 return newUrl;
             };
@@ -70,7 +70,7 @@ define(['connectOn'], function(connectOn) {
             // + source: array to move elements from
             // + target: array to move elements to
             // + moveCheck: function that receives an element and returns true if the element should be moved
-            const moveElements = function(source, target, moveCheck) {
+            var moveElements = function(source, target, moveCheck) {
                 for (var i = 0; i < source.length; i++) {
                     var element = source[i];
                     if (moveCheck(element)) {
@@ -87,7 +87,7 @@ define(['connectOn'], function(connectOn) {
                 nextPage: nextPage,
                 addQueryToUrl: addQueryToUrl,
                 moveElements: moveElements
-            }
+            };
 
         }]
     );

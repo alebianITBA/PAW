@@ -1,6 +1,6 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
-    'use strict';
     connectOn.controller(
         'PostCtrl',
         ['$scope', 'PostService', '$routeParams', 'localStorageService', '$location',

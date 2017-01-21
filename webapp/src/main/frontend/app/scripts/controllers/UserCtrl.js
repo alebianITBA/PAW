@@ -1,6 +1,6 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
-    'use strict';
     connectOn.controller(
         'UserCtrl',
         ['$scope', 'UserService', 'PostService', 'JobApplicationService', 'JobOfferService', 'CommonService', 'localStorageService', '$routeParams',
@@ -8,18 +8,17 @@ define(['connectOn'], function(connectOn) {
             this.belongsToUser = false;
             this.loggedUserId = localStorageService.get(connectOn.constants.LOGGED_USER).id;
             var that = this;
-            const defaultPerPage = 3;
-            
+            var defaultPerPage = 3;
+
             // USER
             this.user = {};
 
             UserService.show($routeParams.userId).then(function(result) {
                 that.user = result.data;
-                const isOwner = that.loggedUserId === result.data.id;
+                var isOwner = that.loggedUserId === result.data.id;
                 that.belongsToUser = isOwner;
                 if (isOwner) {
                     that.currentApplications();
-                    
                 }
             });
 
@@ -31,15 +30,15 @@ define(['connectOn'], function(connectOn) {
             this.currentPosts = function() {
                 PostService.userPosts($routeParams.userId, that.postsPage, that.postsPerPage).then(function(result) {
                     CommonService.reloadData(that.posts, result.data);
-                })
+                });
             };
             this.currentPosts();
 
-            const incrementPostsPage = function() {
+            var incrementPostsPage = function() {
                 that.postsPage++;
             };
 
-            const decrementPostsPage = function() {
+            var decrementPostsPage = function() {
                 that.postsPage--;
             };
 
@@ -58,7 +57,7 @@ define(['connectOn'], function(connectOn) {
             };
 
             // JOB OFFERS
-            this.job_offers = [];
+            this.jobOffers = [];
             this.jobOffersPage = 1;
             this.jobOffersPerPage = defaultPerPage;
 
@@ -71,15 +70,15 @@ define(['connectOn'], function(connectOn) {
                 if (that.belongsToUser) {
                     JobApplicationService.myApplications(that.applicationsPage, that.applicationsPerPage).then(function(result) {
                         CommonService.reloadData(that.applications, result.data);
-                    })
+                    });
                 }
             };
 
-            const incrementApplicationsPage = function() {
+            var incrementApplicationsPage = function() {
                 that.applicationsPage++;
             };
 
-            const decrementApplicationsPage = function() {
+            var decrementApplicationsPage = function() {
                 that.applicationsPage--;
             };
 

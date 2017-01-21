@@ -1,6 +1,6 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
-    'use strict';
     connectOn.controller(
         'EditPostCtrl',
         ['$scope', 'PostService', '$routeParams', '$location',
@@ -14,7 +14,7 @@ define(['connectOn'], function(connectOn) {
 
             this.editPost = function() {
                 PostService.edit(that.post).then(function(result) {
-                    $location.path(`/posts/${that.post.id}`);
+                    $location.path('/posts/' + that.post.id);
                 });
             };
         }]

@@ -1,6 +1,6 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
-    'use strict';
     connectOn.controller(
         'MainCtrl',
         ['$scope', 'PostService', 'JobOfferService', 'CommonService', 'JobApplicationService',
@@ -9,7 +9,7 @@ define(['connectOn'], function(connectOn) {
             this.posts = [];
             this.page = 1;
             this.offers = [];
-            var that = this;            
+            var that = this;
 
             this.createPost = function() {
                 PostService.createPost(that.post).then(function (response) {
@@ -26,11 +26,11 @@ define(['connectOn'], function(connectOn) {
                 });
             };
 
-            const incrementPage = function(newPage) {
+            var incrementPage = function(newPage) {
                 that.page++;
             };
 
-            const decrementPage = function(newPage) {
+            var decrementPage = function(newPage) {
                 that.page--;
             };
 
@@ -45,14 +45,14 @@ define(['connectOn'], function(connectOn) {
             this.getPosts = function() {
                 PostService.list(that.page).then(function(result) {
                     CommonService.reloadData(that.posts, result.data);
-                })
+                });
             };
             this.getPosts();
 
             this.getJobOffers = function() {
                 JobOfferService.notApplied(1, 5).then(function(result) {
                     CommonService.reloadData(that.offers, result.data);
-                })
+                });
             };
             this.getJobOffers();
 

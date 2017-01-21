@@ -1,6 +1,6 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
-    'use strict';
     connectOn.directive(
         'navbar',
         function() {
@@ -9,7 +9,7 @@ define(['connectOn'], function(connectOn) {
                 templateUrl: 'views/header.html',
                 controller: 'NavbarCtrl',
                 controllerAs: 'ctrl'
-            }
+            };
         }
     );
 

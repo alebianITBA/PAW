@@ -44,9 +44,9 @@ define(['routes',
 					$translateProvider.translations('preferredLanguage', i18n);
 					$translateProvider.preferredLanguage('preferredLanguage');
 
-					localStorageServiceProvider.setPrefix('connectOn')
+					localStorageServiceProvider.setPrefix('connectOn');
 				}]);
-		
+
 		connectOn.constants = {
 			TOKEN_KEY: 'token',
 			API_V1_BASE_URL: 'http://localhost:8080/api/v1',

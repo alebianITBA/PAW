@@ -1,6 +1,6 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
-    'use strict';
     connectOn.controller(
         'NavbarCtrl',
         ['$scope', '$http', 'localStorageService', '$location', 'UserService',

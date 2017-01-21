@@ -1,6 +1,6 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
-    'use strict';
     connectOn.controller(
         'JobOffersCtrl',
         ['$scope', 'JobOfferService', 'JobApplicationService', 'CommonService', 'localStorageService', '$location', 'SkillService',
@@ -17,7 +17,7 @@ define(['connectOn'], function(connectOn) {
             this.getOffers = function() {
                 JobOfferService.list(that.page, that.perPage, that.skillIdFilter).then(function(result) {
                     CommonService.reloadData(that.offers, result.data);
-                })
+                });
             };
             this.getOffers();
 
@@ -26,16 +26,16 @@ define(['connectOn'], function(connectOn) {
                 SkillService.all().then(function(result) {
                     CommonService.reloadData(that.skills, result.data);
                     CommonService.reloadData(that.skillsToSelect, result.data);
-                })
+                });
             };
             this.getSkills();
 
             // OTHER FUNCTIONS
-            const incrementPage = function(newPage) {
+            var incrementPage = function(newPage) {
                 that.page++;
             };
 
-            const decrementPage = function(newPage) {
+            var decrementPage = function(newPage) {
                 that.page--;
             };
 
@@ -62,24 +62,24 @@ define(['connectOn'], function(connectOn) {
             this.offer = {};
             this.selectedSkills = [];
             this.skillsToSelect = [];
-            this.skillIdToAdd;
+            this.skillIdToAdd = null;
             this.removeSelected = function(skillId) {
                 var check = function(element) {
-                    if(element.id === skillId) {
+                    if (element.id === skillId) {
                         return true;
                     }
                     return false;
-                }
+                };
                 CommonService.moveElements(that.selectedSkills, that.skillsToSelect, check);
             };
             this.addSelected = function() {
-                var id = Number.parseInt(this.skillIdToAdd);
+                var id = Number.parseInt(this.skillIdToAdd, 10);
                 var check = function(element) {
-                    if(element.id === id) {
+                    if (element.id === id) {
                         return true;
                     }
                     return false;
-                }
+                };
                 CommonService.moveElements(that.skillsToSelect, that.selectedSkills, check);
             };
             this.createOffer = function() {
@@ -87,7 +87,9 @@ define(['connectOn'], function(connectOn) {
                 JobOfferService.create(that.offer).then(function(response) {
                     if (response.status === 201) {
                         that.offer = {};
-                        CommonService.moveElements(that.selectedSkills, that.skillsToSelect, function() { return true; });
+                        CommonService.moveElements(that.selectedSkills, that.skillsToSelect, function() {
+                            return true;
+                        });
                         that.getOffers();
                     }
                 });

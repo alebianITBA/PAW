@@ -1,6 +1,6 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
-    'use strict';
     connectOn.controller(
         'UsersCtrl',
         ['$scope', 'UserService', 'CommonService',
@@ -10,11 +10,11 @@ define(['connectOn'], function(connectOn) {
 
             var that = this;
 
-            const incrementPage = function(newPage) {
+            var incrementPage = function(newPage) {
                 that.page++;
             };
 
-            const decrementPage = function(newPage) {
+            var decrementPage = function(newPage) {
                 that.page--;
             };
 

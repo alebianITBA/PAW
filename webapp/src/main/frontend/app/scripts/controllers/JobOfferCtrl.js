@@ -1,6 +1,6 @@
+'use strict';
 define(['connectOn'], function(connectOn) {
 
-    'use strict';
     connectOn.controller(
         'JobOfferCtrl',
         ['$scope', 'JobOfferService', '$routeParams', 'localStorageService', 'CommonService', '$location', 'JobApplicationService',
@@ -15,7 +15,7 @@ define(['connectOn'], function(connectOn) {
             JobOfferService.show($routeParams.offerId)
                 .then(function(result) {
                     that.offer = result.data;
-                    const isOwner = that.loggedUserId === result.data.user.id;
+                    var isOwner = that.loggedUserId === result.data.user.id;
                     that.belongsToUser = isOwner;
                     if (isOwner) {
                         JobOfferService.applicationsOf($routeParams.offerId).then(function(response) {
@@ -25,7 +25,9 @@ define(['connectOn'], function(connectOn) {
                         });
                     }
                 })
-                .catch(function() { $location.path('/job_offers/'); });
+                .catch(function() {
+                    $location.path('/job_offers/');
+                });
 
             this.delete = function() {
                 JobOfferService.delete($routeParams.offerId).then(function(response) {
@@ -38,7 +40,7 @@ define(['connectOn'], function(connectOn) {
             this.createApplication = function(jobOfferId) {
                 JobApplicationService.create(jobOfferId).then(function (response) {
                     if (response.status === 201) {
-                        $location.path(`/job_offers/${that.offer.id}`);
+                        $location.path('/job_offers/' + that.offer.id);
                     }
                 });
             };
