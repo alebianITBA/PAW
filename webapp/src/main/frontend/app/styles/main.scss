@@ -438,11 +438,15 @@ hr {
 }
 
 .apply-button {
-    margin-top: 0px !important;
+    margin-top: 20px !important;
 	position: absolute !important;
     right: 35px !important;
 }
 
 .biography-into h4, .biography-into h3 {
     padding-right: 60px !important;
+}
+
+.skill-container{
+	overflow: auto;
 }

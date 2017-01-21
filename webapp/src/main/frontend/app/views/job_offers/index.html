@@ -76,7 +76,7 @@
                             <textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description" ng-model="offersCtrl.offer.description" required></textarea>
                         </div>
                         <p class="skill-container">
-                            <a ng-repeat="skill in offersCtrl.selectedSkills" ng-click="offersCtrl.removeSelected(skill.id)" class="no-underline right"><span class="label label-info">{{ skill.name }}</span></a>
+                            <a ng-repeat="skill in offersCtrl.selectedSkills" ng-click="offersCtrl.removeSelected(skill.id)" class="no-underline right skill"><span class="label label-info">{{ skill.name }}</span></a>
                         </p>
                         <select name="skillsSelection" class="form-control input-lg" ng-model="offersCtrl.skillIdToAdd" ng-change="offersCtrl.addSelected()">
                             <option value="">{{ 'SELECT_SKILL' | translate }}</option>
