@@ -43,6 +43,7 @@
         <div class="l_g_r biography-into">
             <div class="dapibus">
                 <h4>{{ 'RECOMMENDED_OFFERS' | translate }}</h4>
+                <div class="alert alert-success" role="alert" ng-show="mainCtrl.showSuccessfulApplication"><b>{{ 'APPLIED_SUCCESSFULLY' | translate}}</b></div>
 
                 <div ng-repeat="offer in mainCtrl.offers">
                     <hr>

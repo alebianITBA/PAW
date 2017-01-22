@@ -84,12 +84,28 @@ define(['connectOn'], function(connectOn) {
                 }
             };
 
+            var defaultEquals = function(elem1, elem2) {
+                return elem1 === elem2;
+            };
+
+            // Function that checks if an element exists in an array
+            var includes = function(data, element, comparator) {
+                var equals = comparator === undefined ? defaultEquals : comparator;
+                for (var i = 0; i < data.length; i++) {
+                    if (equals(element, data[i])) {
+                        return true;
+                    }
+                };
+                return false;
+            };
+
             return {
                 reloadData: reloadData,
                 previousPage: previousPage,
                 nextPage: nextPage,
                 addQueryToUrl: addQueryToUrl,
-                moveElements: moveElements
+                moveElements: moveElements,
+                includes: includes
             };
 
         }]

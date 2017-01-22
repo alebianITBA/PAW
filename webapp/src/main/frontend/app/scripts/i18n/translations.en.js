@@ -33,6 +33,7 @@ define([], function() {
         NEED_TO_HIRE: 'Do you need to hire?',
         SELECT_SKILL: 'Add skills',
         APPLICANTS: 'Applicants',
-        NO_APPLICANTS: 'This offer doesnt have any applicants yet'
+        NO_APPLICANTS: 'This offer does not have any applicants yet',
+        APPLIED_SUCCESSFULLY: 'Application successful! In instants you will see it in your profile'
     };
 });

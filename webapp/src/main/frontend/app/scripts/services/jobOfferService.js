@@ -7,6 +7,10 @@ define(['connectOn'], function(connectOn) {
         function($http, localStorageService, CommonService) {
             var headers = {headers: {'Authorization': localStorageService.get(connectOn.constants.TOKEN_KEY)}};
 
+            var getId = function(element) {
+                return element.id;
+            };
+
             return {
                 list: function(page, perPage, skillId) {
                     var url = connectOn.constants.API_V1_BASE_URL + '/job_offers';
@@ -22,9 +26,6 @@ define(['connectOn'], function(connectOn) {
                     return $http.get(url, headers);
                 },
                 create: function(offer) {
-                    var getId = function(element) {
-                        return element.id;
-                    };
                     offer.skillIds = offer.skillIds.map(getId).join(',');
                     return $http.post(connectOn.constants.API_V1_BASE_URL + '/job_offers', JSON.stringify(offer), headers);
                 },
@@ -36,6 +37,10 @@ define(['connectOn'], function(connectOn) {
                 },
                 delete: function(offerId) {
                     return $http.delete(connectOn.constants.API_V1_BASE_URL + '/job_offers/' + offerId, headers);
+                },
+                edit: function(offer) {
+                    offer.skillIds = offer.skillIds.map(getId).join(',');
+                    return $http.put(connectOn.constants.API_V1_BASE_URL + '/job_offers/' + offer.id, JSON.stringify(offer), headers);
                 }
             };
 

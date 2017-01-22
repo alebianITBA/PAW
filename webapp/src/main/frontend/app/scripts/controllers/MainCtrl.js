@@ -3,12 +3,13 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.controller(
         'MainCtrl',
-        ['$scope', 'PostService', 'JobOfferService', 'CommonService', 'JobApplicationService',
-        function($scope, PostService, JobOfferService, CommonService, JobApplicationService) {
+        ['$scope', 'PostService', 'JobOfferService', 'CommonService', 'JobApplicationService', '$timeout',
+        function($scope, PostService, JobOfferService, CommonService, JobApplicationService, $timeout) {
             this.post = {};
             this.posts = [];
             this.page = 1;
             this.offers = [];
+            this.showSuccessfulApplication = false;
             var that = this;
 
             this.createPost = function() {
@@ -22,6 +23,10 @@ define(['connectOn'], function(connectOn) {
                 JobApplicationService.create(jobOfferId).then(function (response) {
                     if (response.status === 201) {
                         that.getJobOffers();
+                        that.showSuccessfulApplication = true;
+                        $timeout(function() {
+                            that.showSuccessfulApplication = false;
+                        }, 3000);
                     }
                 });
             };

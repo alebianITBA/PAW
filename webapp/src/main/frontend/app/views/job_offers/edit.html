@@ -1,0 +1,30 @@
+<div class="content" ng-controller="EditJobOfferCtrl as editJobOfferCtrl">
+    <div class="container">
+        <div class="col-md-12 praesent f-left">
+            <div class="l_g_r biography-into">
+                <div class="dapibus">
+                    <h4>{{ 'EDIT' | translate }}</h4>
+                    <form name="offerForm" ng-submit="offerForm.$valid && editJobOfferCtrl.editOffer()" novalidate>
+                        <div class="form-group">
+                            <input class="form-control input-lg" type="text" placeholder="{{ 'TITLE' | translate }}*" name="title" ng-model="editJobOfferCtrl.offer.title"
+                                required></input>
+                        </div>
+                        <div class="form-group form-group-shadow">
+                            <textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description"
+                                ng-model="editJobOfferCtrl.offer.description" required></textarea>
+                        </div>
+                        <p class="skill-container">
+                            <a ng-repeat="skill in editJobOfferCtrl.selectedSkills" ng-click="editJobOfferCtrl.removeSelected(skill.id)" class="no-underline right"><span class="label label-info">{{ skill.name }}</span></a>
+                        </p>
+                        <select name="skillsSelection" class="form-control" ng-model="editJobOfferCtrl.skillIdToAdd" ng-change="editJobOfferCtrl.addSelected()">
+                            <option value="">{{ 'SELECT_SKILL' | translate }}</option>
+                            <option ng-repeat="skill in editJobOfferCtrl.skillsToSelect" value="{{skill.id}}">{{skill.name}}</option>
+                        </select>
+                        <br>
+                        <input type="submit" class="btn btn-primary btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
