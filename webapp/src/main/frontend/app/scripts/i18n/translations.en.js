@@ -34,6 +34,10 @@ define([], function() {
         SELECT_SKILL: 'Add skills',
         APPLICANTS: 'Applicants',
         NO_APPLICANTS: 'This offer does not have any applicants yet',
-        APPLIED_SUCCESSFULLY: 'Application successful! In instants you will see it in your profile'
+        APPLIED_SUCCESSFULLY: 'Application successful! In instants you will see it in your profile',
+        JOB_OFFERS_CREATED: 'Job offers created',
+        ALREADY_APPLIED: 'Applied',
+        FINISH: 'Finish',
+        REOPEN: 'Activate'
     };
 });

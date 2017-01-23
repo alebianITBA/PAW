@@ -1,11 +1,15 @@
 package ar.edu.itba.paw.api.v1.controllers;
 
+import ar.edu.itba.paw.api.v1.dto.JobOfferDTO;
 import ar.edu.itba.paw.api.v1.dto.UserDTO;
 import ar.edu.itba.paw.api.v1.parameters.SkillParams;
 import ar.edu.itba.paw.api.v1.parameters.UserParams;
 import ar.edu.itba.paw.helpers.PaginationHelper;
+import ar.edu.itba.paw.interfaces.JobApplicationService;
+import ar.edu.itba.paw.interfaces.JobOfferService;
 import ar.edu.itba.paw.interfaces.SkillService;
 import ar.edu.itba.paw.interfaces.UserService;
+import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.utils.Pair;
@@ -29,6 +33,12 @@ public class UsersController extends ApiController {
 
   @Autowired
   private SkillService skillService;
+
+  @Autowired
+  private JobOfferService jobOfferService;
+
+  @Autowired
+  private JobApplicationService jobApplicationService;
 
   @GET
   public Response index(@QueryParam("page") Integer pageParam) {
@@ -68,6 +78,21 @@ public class UsersController extends ApiController {
 
     if (user != null) {
       return ok(new UserDTO(user));
+    } else {
+      return notFound();
+    }
+  }
+
+  @GET
+  @Path("/{id}/job_offers")
+  public Response userJobOffers(@PathParam("id") final long id, @QueryParam("page") Integer page, @QueryParam("per_page") Integer perPage) {
+    final User user = userService.find(id);
+
+    if (user != null) {
+      List<JobOffer> offers = jobOfferService.userJobOffers(id, PaginationHelper.INSTANCE.page(page), PaginationHelper.INSTANCE.perPage(perPage));
+      GenericEntity<List<JobOfferDTO>> list = new GenericEntity<List<JobOfferDTO>>(JobOfferDTO.fromList(offers, jobApplicationService, getLoggedUser())) {
+      };
+      return ok(list);
     } else {
       return notFound();
     }

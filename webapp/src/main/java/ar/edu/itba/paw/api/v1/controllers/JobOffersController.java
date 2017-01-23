@@ -156,8 +156,8 @@ public class JobOffersController extends ApiController {
       return forbidden();
     }
 
-    JobOffer jobOffer = jobOfferService.update(id, null);
-    return ok(new JobOfferDTO(jobOffer));
+    jobOfferService.update(id, null);
+    return ok();
   }
 
   @PUT
@@ -167,8 +167,8 @@ public class JobOffersController extends ApiController {
       return forbidden();
     }
 
-    JobOffer jobOffer = jobOfferService.update(id, new Date());
-    return ok(new JobOfferDTO(jobOffer));
+    jobOfferService.update(id, new Date());
+    return ok();
   }
 
   private boolean isUserOwner(long id) {

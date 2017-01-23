@@ -25,6 +25,12 @@ define(['connectOn'], function(connectOn) {
                     url = CommonService.addQueryToUrl(url, 'per_page', perPage);
                     return $http.get(url, headers);
                 },
+                fromUser: function(userId, page, perPage) {
+                    var url = connectOn.constants.API_V1_BASE_URL + '/users/' + userId + '/job_offers';
+                    url = CommonService.addQueryToUrl(url, 'page', (page || 1));
+                    url = CommonService.addQueryToUrl(url, 'per_page', perPage);
+                    return $http.get(url, headers);
+                },
                 create: function(offer) {
                     offer.skillIds = offer.skillIds.map(getId).join(',');
                     return $http.post(connectOn.constants.API_V1_BASE_URL + '/job_offers', JSON.stringify(offer), headers);
@@ -41,6 +47,12 @@ define(['connectOn'], function(connectOn) {
                 edit: function(offer) {
                     offer.skillIds = offer.skillIds.map(getId).join(',');
                     return $http.put(connectOn.constants.API_V1_BASE_URL + '/job_offers/' + offer.id, JSON.stringify(offer), headers);
+                },
+                open: function(offerId) {
+                    return $http.put(connectOn.constants.API_V1_BASE_URL + '/job_offers/' + offerId + '/open', {}, headers);
+                },
+                close: function(offerId) {
+                    return $http.put(connectOn.constants.API_V1_BASE_URL + '/job_offers/' + offerId + '/finish', {}, headers);
                 }
             };
 

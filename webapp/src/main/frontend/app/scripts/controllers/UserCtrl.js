@@ -13,14 +13,17 @@ define(['connectOn'], function(connectOn) {
             // USER
             this.user = {};
 
-            UserService.show($routeParams.userId).then(function(result) {
-                that.user = result.data;
-                var isOwner = that.loggedUserId === result.data.id;
-                that.belongsToUser = isOwner;
-                if (isOwner) {
-                    that.currentApplications();
-                }
-            });
+            this.getUser = function() {
+                UserService.show($routeParams.userId).then(function(result) {
+                    that.user = result.data;
+                    var isOwner = that.loggedUserId === result.data.id;
+                    that.belongsToUser = isOwner;
+                    if (isOwner) {
+                        that.currentApplications();
+                    }
+                });
+            };
+            this.getUser();
 
             // POSTS
             this.posts = [];
@@ -60,6 +63,47 @@ define(['connectOn'], function(connectOn) {
             this.jobOffers = [];
             this.jobOffersPage = 1;
             this.jobOffersPerPage = defaultPerPage;
+
+            this.getJobOffers = function() {
+                JobOfferService.fromUser($routeParams.userId, that.jobOffersPage, that.jobOffersPerPage).then(function(result) {
+                    CommonService.reloadData(that.jobOffers, result.data);
+                });
+            };
+            this.getJobOffers();
+
+            var incrementOffersPage = function() {
+                that.jobOffersPage++;
+            };
+
+            var decrementOffersPage = function() {
+                that.jobOffersPage--;
+            };
+
+            this.previousOffersPage = function() {
+                CommonService.previousPage(this.jobOffersPage, JobOfferService, 'fromUser', [$routeParams.userId, this.jobOffersPage - 1, this.jobOffersPerPage], this.jobOffers, decrementOffersPage);
+            };
+
+            this.nextOffersPage = function() {
+                CommonService.nextPage(this.jobOffersPage, JobOfferService, 'fromUser', [$routeParams.userId, this.jobOffersPage + 1, this.jobOffersPerPage], this.jobOffers, incrementOffersPage);
+            };
+
+            this.deleteOffer = function(offerId) {
+                JobOfferService.delete(offerId).then(function(result) {
+                    that.getJobOffers();
+                });
+            };
+
+            this.openOffer = function(offerId) {
+                JobOfferService.open(offerId).then(function(result) {
+                    that.getJobOffers();
+                });
+            };
+
+            this.closeOffer = function(offerId) {
+                JobOfferService.close(offerId).then(function(result) {
+                    that.getJobOffers();
+                });
+            };
 
             // JOB APPLICATIONS
             this.applications = [];

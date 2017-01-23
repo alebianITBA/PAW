@@ -11,7 +11,7 @@
                                     <img class="user-placeholder" ng-src="{{ offer.user.avatar }}" />
                                 </a>
                             </div>
-							
+
 							<div class="apply-button">
                                 <div ng-show="offersCtrl.loggedUserId === offer.user.id">
                                     <!--EDIT-->
@@ -21,10 +21,11 @@
                                 </div>
                                 <div ng-hide="offersCtrl.loggedUserId === offer.user.id">
                                     <!--APPLY-->
-                                    <button class="btn btn-primary btn-block" type="submit" ng-click="offersCtrl.createApplication(offer.id)">{{ 'APPLY' | translate }}</button>
+                                    <button class="btn btn-primary btn-block" type="submit" ng-click="offersCtrl.createApplication(offer.id)" ng-hide="offer.user_applied">{{ 'APPLY' | translate }}</button>
+                                    <button class="btn btn-primary btn-block" ng-show="offer.user_applied" disabled>{{ 'ALREADY_APPLIED' | translate }}</button>
                                 </div>
                             </div>
-							
+
                             <div class="media-body">
                                 <h4><a class="no-underline" ng-href="/job_offers/{{offer.id}}">{{ offer.title }}</a></h4>
                                 <p class="adm">
@@ -36,7 +37,7 @@
                                     <a ng-repeat="skill in offer.skills" class="no-underline right skill" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
                                 </p>
                             </div>
-                            
+
                         </div>
                         <hr>
                     </div>

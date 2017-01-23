@@ -81,5 +81,4 @@ public class JobOfferDTO {
   public static List<JobOfferDTO> fromList(final List<JobOffer> offers, final JobApplicationService service, final User user) {
     return offers.stream().map(o -> new JobOfferDTO(o, service.jobOfferApplications(o.getId()), user)).collect(Collectors.toList());
   }
-
 }

@@ -24,7 +24,7 @@
             </div>
 
             <div class="col-md-8 praesent">
-
+                <!-- POSTS -->
                 <div ng-show="userCtrl.posts.length > 0">
                     <div class="biography-into praesent">
                         <div class="dapibus">
@@ -72,12 +72,70 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- OFFERS -->
                 <div ng-show="userCtrl.jobOffers.length > 0">
                     <div class="biography-into praesent">
+                        <div class="dapibus">
+                            <h3>{{ 'JOB_OFFERS_CREATED' | translate }}</h3>
+                            <div ng-repeat="offer in userCtrl.jobOffers">
+                                <hr>
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h4>
+                                            <img ng-src="/images/on.png" ng-show="offer.closed_at === undefined"/>
+                                            <img ng-src="/images/off.png" ng-hide="offer.closed_at === undefined"/>
+                                            <a class="no-underline" ng-href="/job_offers/{{offer.id}}">{{ offer.title }}</a>
+                                        </h4>
+                                        <p>{{ offer.description }}</p>
+                                        <p class="skill-container">
+                                            <a ng-repeat="skill in offer.skills" class="no-underline right skill" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div ng-show="userCtrl.belongsToUser">
+                                    <div class="apply-button">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{ 'ACTION' | translate }}
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    <a ng-href="/job_offers/{{offer.id}}/edit">
+                                                        {{ 'EDIT' | translate }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="remove-button" ng-click="userCtrl.deleteOffer(offer.id)">
+                                                        {{ 'DELETE' | translate }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="remove-button" ng-click="userCtrl.closeOffer(offer.id)" ng-show="offer.closed_at === undefined">
+                                                        {{ 'FINISH' | translate }}
+                                                    </a>
+                                                    <a class="remove-button" ng-click="userCtrl.openOffer(offer.id)" ng-hide="offer.closed_at === undefined">
+                                                        {{ 'REOPEN' | translate }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row center">
+                                <div id="pagination">
+                                    <ul class="pagination">
+                                        <li class="simil-link" ng-click="userCtrl.previousOffersPage()"><span aria-hidden="true">«</span></li>
+                                        <li><span class="blue">{{ userCtrl.jobOffersPage }}</span></li>
+                                        <li class="simil-link" ng-click="userCtrl.nextOffersPage()"><span aria-hidden="true">»</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
+                <!-- APPLICATIONS -->
                 <div ng-show="userCtrl.applications.length > 0">
                     <div class="biography-into praesent">
                         <div class="biography-into praesent">
@@ -128,3 +186,91 @@
 
     </div>
 </div>
+
+            <!--<c:if test="${not empty offers}">
+               <div class="biography-into praesent">
+                  <div class="dapibus">
+
+                     <c:forEach items="${offers}" var="offer">
+                        <hr>
+                        <div class="media">
+                           <div class="media-body">
+                              <h4>
+
+                                 <c:choose>
+                                    <c:when test="${offer.closedAt != null}">
+                                       <span data-toggle="tooltip" data-placement="top" title="<spring:message code="OfferClosed" />
+                                          <fmt:formatDate pattern="dd/MM/yyyy" value="${offer.closedAt}" />
+                                          ">
+                                          <img src="<c:url value='/img/off.png'/>"/>
+                                       </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                       <span data-toggle="tooltip" data-placement="top" title="<spring:message code="OfferActive" />">
+                                       <img src="<c:url value='/img/on.png'/>"/>
+                                       </span>
+                                    </c:otherwise>
+                                 </c:choose>
+                                 <a href="<c:url value='/job_offers/${offer.id}'/>"> ${offer.title}</a>
+                              </h4>
+
+                           </div>
+                           <div>
+
+                              <div class="apply-button">
+                                 <c:if test="${offer.user.id == loggedUser.id}">
+                                    <div class="btn-group">
+                                       <button type="button"
+                                          class="btn btn-info btn-xs dropdown-toggle"
+                                          data-toggle="dropdown" aria-haspopup="true"
+                                          aria-expanded="false">
+                                          <spring:message code="Action" />
+                                          <span class="caret"></span>
+                                       </button>
+                                       <ul class="dropdown-menu dropdown-menu-right">
+                                          <c:choose>
+                                             <c:when test="${offer.closedAt == null}">
+                                                <li>
+                                                   <a
+                                                      href="<c:url value='/job_offers/${offer.id}/edit'/>">
+                                                      <spring:message code="Edit" />
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="" class="remove-button"
+                                                      data-href="<c:url value='/job_offers/${offer.id}'/>">
+                                                      <spring:message code="Delete" />
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="" class="finish-button"
+                                                      data-href="<c:url value='/job_offers/${offer.id}/finish'/>">
+                                                      <spring:message code="Finish" />
+                                                   </a>
+                                                </li>
+                                             </c:when>
+                                             <c:otherwise>
+                                                <li>
+                                                   <a href="" class="reopen-button"
+                                                      data-href="<c:url value='/job_offers/${offer.id}/reopen'/>">
+                                                      <spring:message code="Reopen" />
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="" class="remove-button"
+                                                      data-href="<c:url value='/job_offers/${offer.id}'/>">
+                                                      <spring:message code="Delete" />
+                                                   </a>
+                                                </li>
+                                             </c:otherwise>
+                                          </c:choose>
+                                       </ul>
+                                    </div>
+                                 </c:if>
+                              </div>
+                           </div>
+                        </div>
+                     </c:forEach>
+                  </div>
+               </div>
+            </c:if>-->

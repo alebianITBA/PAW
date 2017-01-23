@@ -34,6 +34,10 @@ define([], function() {
         SELECT_SKILL: 'Agrega una habilidad',
         APPLICANTS: 'Aplicantes',
         NO_APPLICANTS: 'Esta oferta aun no tiene aplicantes.',
-        APPLIED_SUCCESSFULLY: 'Aplicación exitosa! En instantes podrás verla en tu perfil'
+        APPLIED_SUCCESSFULLY: 'Aplicación exitosa! En instantes podrás verla en tu perfil',
+        JOB_OFFERS_CREATED: 'Ofertas creadas',
+        ALREADY_APPLIED: 'Aplicado',
+        FINISH: 'Finalizar',
+        REOPEN: 'Activar'
     };
 });
