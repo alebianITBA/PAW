@@ -1,6 +1,6 @@
 <div class="content" ng-controller="EditUserCtrl as editUserCtrl">
     <div class="container">
-        <div class="col-md-6 praesent f-left">
+        <div class="col-md-12 praesent f-left">
             <div class="l_g_r biography-into">
                 <div class="dapibus">
                     <h4>{{ 'EDIT' | translate }}</h4>
@@ -13,9 +13,9 @@
                             <input class="form-control input-lg" type="text" placeholder="{{ 'LAST_NAME' | translate }}*" name="title" ng-model="editUserCtrl.user.last_name"
                                 required></input>
                         </div>
-                        <p class="skill-container">
-                            <a ng-repeat="skill in editUserCtrl.selectedSkills" ng-click="editUserCtrl.removeSelected(skill.id)" class="no-underline right"><span class="label label-info">{{ skill.name }}</span></a>
-                        </p>
+                        <h3 class="skill-container">
+                            <a ng-repeat="skill in editUserCtrl.selectedSkills" ng-click="editUserCtrl.removeSelected(skill.id)" class="no-underline right"><span class="label label-info">{{ skill.name }} <span class="glyphicon glyphicon-remove"></span></span></a>
+                        </h3>
                         <select name="skillsSelection" class="form-control" ng-model="editUserCtrl.skillIdToAdd" ng-change="editUserCtrl.addSelected()">
                             <option value="">{{ 'SELECT_SKILL' | translate }}</option>
                             <option ng-repeat="skill in editUserCtrl.skillsToSelect" value="{{skill.id}}">{{skill.name}}</option>

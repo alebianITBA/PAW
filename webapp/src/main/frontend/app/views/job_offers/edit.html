@@ -13,9 +13,9 @@
                             <textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description"
                                 ng-model="editJobOfferCtrl.offer.description" required></textarea>
                         </div>
-                        <p class="skill-container">
-                            <a ng-repeat="skill in editJobOfferCtrl.selectedSkills" ng-click="editJobOfferCtrl.removeSelected(skill.id)" class="no-underline right"><span class="label label-info">{{ skill.name }}</span></a>
-                        </p>
+                        <h3 class="skill-container">
+                            <a ng-repeat="skill in editJobOfferCtrl.selectedSkills" ng-click="editJobOfferCtrl.removeSelected(skill.id)" class="no-underline right"><span class="label label-info">{{ skill.name }} <span class="glyphicon glyphicon-remove"></span></span></a>
+                        </h3>
                         <select name="skillsSelection" class="form-control" ng-model="editJobOfferCtrl.skillIdToAdd" ng-change="editJobOfferCtrl.addSelected()">
                             <option value="">{{ 'SELECT_SKILL' | translate }}</option>
                             <option ng-repeat="skill in editJobOfferCtrl.skillsToSelect" value="{{skill.id}}">{{skill.name}}</option>

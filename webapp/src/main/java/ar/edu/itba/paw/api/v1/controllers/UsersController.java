@@ -22,7 +22,6 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Set;
 
 @Path("api/v1/users")
 @Component
@@ -93,42 +92,6 @@ public class UsersController extends ApiController {
       GenericEntity<List<JobOfferDTO>> list = new GenericEntity<List<JobOfferDTO>>(JobOfferDTO.fromList(offers, jobApplicationService, getLoggedUser())) {
       };
       return ok(list);
-    } else {
-      return notFound();
-    }
-  }
-
-  @POST
-  @Path("/me/add_skill")
-  public Response addSkill(final SkillParams skillParams) {
-    final User user = getLoggedUser();
-    final Skill skill = skillService.find(skillParams.skillId);
-
-    if (user != null && skill != null) {
-      List<Skill> userSkills = user.getSkills();
-      if (!userSkills.contains(skill)) {
-        userSkills.add(skill);
-        userService.updateSkills(user.getId(), userSkills);
-      }
-      return ok(new UserDTO(user));
-    } else {
-      return notFound();
-    }
-  }
-
-  @DELETE
-  @Path("/me/remove_skill")
-  public Response removeSkill(@QueryParam("skill_id") final long skillId) {
-    final User user = getLoggedUser();
-    final Skill skill = skillService.find(skillId);
-
-    if (user != null && skill != null) {
-      List<Skill> userSkills = user.getSkills();
-      if (userSkills.contains(skill)) {
-        userSkills.remove(skill);
-        userService.updateSkills(user.getId(), userSkills);
-      }
-      return ok(new UserDTO(user));
     } else {
       return notFound();
     }

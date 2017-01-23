@@ -42,6 +42,7 @@ public class WebAuthConfig extends WebSecurityConfigurerAdapter {
       .antMatchers("**/*.css").permitAll()
       .antMatchers("**/*.js").permitAll()
       .antMatchers("/api/v1/login").permitAll()
+      .antMatchers("/api/v1/skills").permitAll()
       // For user registration
       .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
       // For Angular requests

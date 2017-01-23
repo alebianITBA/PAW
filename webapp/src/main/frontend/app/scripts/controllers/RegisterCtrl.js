@@ -13,7 +13,7 @@ define(['connectOn'], function(connectOn) {
                     UserService.login(usr).then(function (response) {
                         localStorageService.set(connectOn.constants.TOKEN_KEY, response.data.token);
                         $scope.logged = true;
-                        $location.path('/index');
+                        $location.path('/onboarding');
                     });
                 });
             };

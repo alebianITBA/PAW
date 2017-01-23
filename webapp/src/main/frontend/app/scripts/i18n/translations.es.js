@@ -38,6 +38,9 @@ define([], function() {
         JOB_OFFERS_CREATED: 'Ofertas creadas',
         ALREADY_APPLIED: 'Aplicado',
         FINISH: 'Finalizar',
-        REOPEN: 'Activar'
+        REOPEN: 'Activar',
+        WELCOME: 'Bienvenido',
+        ONBOARDING_MSG: 'Para tener una excelente experiencia usando conectOn te recomendamos que agregues habilidades a tu perfil!',
+        CONTINUE: 'Continuar'
     };
 });

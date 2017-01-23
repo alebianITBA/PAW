@@ -38,6 +38,9 @@ define([], function() {
         JOB_OFFERS_CREATED: 'Job offers created',
         ALREADY_APPLIED: 'Applied',
         FINISH: 'Finish',
-        REOPEN: 'Activate'
+        REOPEN: 'Activate',
+        WELCOME: 'Welcome',
+        ONBOARDING_MSG: 'In order to have a great experience using conectOn we recommend adding some skills to your profile!',
+        CONTINUE: 'Continue'
     };
 });

@@ -1,0 +1,23 @@
+<div class="content" ng-controller="OnboardingCtrl as onboardingCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 praesent">
+                <div class="l_g_r">
+                    <div class="dapibus center">
+                        <h1>{{ 'WELCOME' | translate }} {{ onboardingCtrl.user.first_name }}!</h1>
+                        <h3 class="subtitle">{{ 'ONBOARDING_MSG' | translate }}</h3>
+                        <h3 class="skill-container">
+                            <a ng-repeat="skill in onboardingCtrl.selectedSkills" ng-click="onboardingCtrl.removeSelected(skill.id)" class="no-underline right"><span class="label label-info">{{ skill.name }} <span class="glyphicon glyphicon-remove"></span></span></a>
+                        </h3>
+                        <select name="skillsSelection" class="form-control" ng-model="onboardingCtrl.skillIdToAdd" ng-change="onboardingCtrl.addSelected()">
+                            <option value="">{{ 'SELECT_SKILL' | translate }}</option>
+                            <option ng-repeat="skill in onboardingCtrl.skillsToSelect" value="{{skill.id}}">{{skill.name}}</option>
+                        </select>
+                        <br>
+                        <a ng-href="/index"><button class="btn btn-primary">{{ 'CONTINUE' | translate }}</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

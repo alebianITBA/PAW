@@ -32,6 +32,10 @@ define([], function() {
                 templateUrl: 'views/users/edit.html',
                 controller: 'EditUserCtrl'
             },
+            '/onboarding': {
+                templateUrl: 'views/users/onboarding.html',
+                controller: 'OnboardingCtrl'
+            },
             '/job_offers': {
                 templateUrl: 'views/job_offers/index.html',
                 controller: 'JobOffersCtrl'
