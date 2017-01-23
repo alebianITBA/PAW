@@ -3,8 +3,7 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.service(
         'CommonService',
-        ['$http', 'localStorageService',
-        function($http, localStorageService) {
+        function() {
             // Function used to reload any array of data with new data
             // It is necessary to use push() and pop() so the dom gets refreshed
             var reloadData = function(oldData, newData) {
@@ -108,6 +107,6 @@ define(['connectOn'], function(connectOn) {
                 includes: includes
             };
 
-        }]
+        }
     );
 });

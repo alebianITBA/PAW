@@ -144,7 +144,7 @@ public class UsersController extends ApiController {
   @Path("/me")
   public Response edit(final UserParams input) {
     User user = getLoggedUser();
-    user = userService.update(user.getId(), input.firstName, input.lastName);
+    user = userService.update(user.getId(), input.firstName, input.lastName, input.skillIds);
     return ok(new UserDTO(user));
   }
 }

@@ -28,6 +28,10 @@ define([], function() {
                 templateUrl: 'views/users/show.html',
                 controller: 'UserCtrl'
             },
+            '/users/me/edit': {
+                templateUrl: 'views/users/edit.html',
+                controller: 'EditUserCtrl'
+            },
             '/job_offers': {
                 templateUrl: 'views/job_offers/index.html',
                 controller: 'JobOffersCtrl'

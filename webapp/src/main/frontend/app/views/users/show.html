@@ -17,7 +17,7 @@
                             <p class="skill-container">
                                 <a ng-repeat="skill in userCtrl.user.skills" class="no-underline right skill" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
                             </p>
-                            <button type="button" class="btn btn-xs btn-primary top-right-edit-button edit-button" ng-show="userCtrl.belongsToUser">{{ 'EDIT' | translate }}</button>
+                            <a ng-href="/users/me/edit"><span class="glyphicon glyphicon-pencil top-right-edit-button edit-button remove-button" ng-show="userCtrl.belongsToUser"></span></a>
                         </div>
                     </div>
                 </div>

@@ -24,6 +24,13 @@ define(['connectOn'], function(connectOn) {
                 },
                 me: function() {
                     return $http.get(connectOn.constants.API_V1_BASE_URL + '/users/me', headers);
+                },
+                edit: function(user) {
+                    var getId = function(element) {
+                        return element.id;
+                    };
+                    user.skillIds = user.skillIds.map(getId).join(',');
+                    return $http.put(connectOn.constants.API_V1_BASE_URL + '/users/me', JSON.stringify(user), headers);
                 }
             };
 
