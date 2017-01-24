@@ -49,6 +49,7 @@ define(['routes',
 
 		connectOn.constants = {
 			TOKEN_KEY: 'token',
+			SESSION_STATUS_KEY: 'session_status',
 			API_V1_BASE_URL: 'http://localhost:8080/api/v1',
 			LOGGED_USER: 'logged_user',
 

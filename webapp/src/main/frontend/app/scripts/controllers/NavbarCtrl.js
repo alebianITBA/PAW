@@ -7,20 +7,38 @@ define(['connectOn'], function(connectOn) {
         function($scope, $http, $location, SessionService, $timeout) {
             var that = this;
             this.constants = connectOn.constants;
-            this.login = {};
             this.user = {};
+            this.login = {};
             $scope.logged = SessionService.isLogged();
 
-            this.updateBar = function() {
-                $timeout(function() {
-                    if (!SessionService.isLogged()) {
-                        that.updateBar();
-                    } else {
-                        $scope.logged = true;
-                    }
-                }, 1000);
+            // Subscribe to the user session service
+            this.canRedirect = false;
+            var updateUserInfo = function() {
+                var updatedUserData = SessionService.loggedUser();
+                that.user.id = updatedUserData.id;
+                return true;
             };
-            this.updateBar();
+            var onLogin = function() {
+                $scope.logged = true;
+                updateUserInfo();
+                if (that.canRedirect) {
+                    // This is needed in case we are logging from register
+                    $location.path(that.constants.PATH_INDEX);
+                }
+                return true;
+            };
+            var onLogout = function() {
+                $scope.logged = false;
+                $location.path(that.constants.PATH_ROOT);
+                that.login.email = null;
+                that.login.password = null;
+                return true;
+            };
+            var onUserUpdate = function() {
+                updateUserInfo();
+                return true;
+            };
+            SessionService.subscribe(onLogin, onLogout, onUserUpdate, 'NavbarCtrl');
 
             this.redirect = function(path) {
                 if ($scope.logged) {
@@ -30,30 +48,19 @@ define(['connectOn'], function(connectOn) {
                 }
             };
 
-            if ($scope.logged) {
-                that.user = SessionService.loggedUser();
+            if (!$scope.logged && $location.$$path !== that.constants.PATH_ROOT) {
+                $location.path(that.constants.PATH_ROOT);
             } else {
-                if ($location.$$path !== that.constants.PATH_ROOT) {
-                    $location.path(that.constants.PATH_ROOT);
-                }
+                updateUserInfo();
             }
 
             this.login = function() {
+                that.canRedirect = true;
                 SessionService.login(that.login.email, that.login.password);
-                $timeout(function() {
-                    if (!SessionService.isLogged()) {
-                        login();
-                    } else {
-                        $scope.logged = true;
-                        $location.path(that.constants.PATH_INDEX);
-                    }
-                }, 1000);
             };
 
             this.logout = function() {
                 SessionService.logout();
-                $scope.logged = false;
-                $location.path(this.constants.PATH_ROOT);
             };
 
         }]

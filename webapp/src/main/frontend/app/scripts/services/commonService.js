@@ -3,7 +3,8 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.service(
         'CommonService',
-        function() {
+        ['SessionService',
+        function(SessionService) {
             // Function used to reload any array of data with new data
             // It is necessary to use push() and pop() so the dom gets refreshed
             var reloadData = function(oldData, newData) {
@@ -98,15 +99,27 @@ define(['connectOn'], function(connectOn) {
                 return false;
             };
 
+            // Subscribe to the user session service
+            var headers = SessionService.headers();
+            var getHeaders = function() {
+                return headers;
+            };
+            var onLogin = function() {
+                headers = SessionService.headers();
+                return true;
+            };
+            SessionService.subscribe(onLogin, SessionService.doNothing, SessionService.doNothing, 'UserService');
+
             return {
                 reloadData: reloadData,
                 previousPage: previousPage,
                 nextPage: nextPage,
                 addQueryToUrl: addQueryToUrl,
                 moveElements: moveElements,
-                includes: includes
+                includes: includes,
+                headers: getHeaders
             };
 
         }
-    );
+    ]);
 });

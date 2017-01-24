@@ -5,7 +5,7 @@ define(['connectOn'], function(connectOn) {
         'OnboardingCtrl',
         ['$scope', 'UserService', 'SkillService', 'CommonService', 'SessionService', '$timeout',
         function($scope, UserService, SkillService, CommonService, SessionService, $timeout) {
-            this.selectedSkills = SessionService.loggedUser().skills;
+            this.selectedSkills = SessionService.loggedUser().skills || [];
             this.skillsToSelect = [];
             this.skillIdToAdd = null;
 

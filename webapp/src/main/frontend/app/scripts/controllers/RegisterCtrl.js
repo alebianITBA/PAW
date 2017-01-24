@@ -9,23 +9,21 @@ define(['connectOn'], function(connectOn) {
             this.constants = connectOn.constants;
             var that = this;
 
-            var login = function() {
-                SessionService.login(that.user.email, that.user.password);
-                $timeout(function() {
-                    if (!SessionService.isLogged()) {
-                        login();
-                    } else {
-                        $scope.logged = true;
-                        $location.path('/onboarding');
-                    }
-                }, 1000);
+            // Subscribe to the user session service
+            this.redirect = false;
+            var onUserUpdate = function() {
+                if (that.redirect) {
+                    $location.path('/onboarding');
+                }
+                return true;
             };
+            SessionService.subscribe(SessionService.doNothing, SessionService.doNothing, onUserUpdate, 'RegisterCtrl');
 
             this.register = function() {
-                var usr = this.user;
-                UserService.createUser(usr).then(function (response) {
+                UserService.createUser(that.user).then(function (response) {
                     if (response.status === 201) {
-                        login();
+                        that.redirect = true;
+                        SessionService.login(that.user.email, that.user.password);
                     }
                 });
             };

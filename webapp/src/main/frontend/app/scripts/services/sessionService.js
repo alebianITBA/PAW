@@ -3,45 +3,97 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.service(
         'SessionService',
-        ['$http', 'localStorageService', 'CommonService',
-        function($http, localStorageService, CommonService) {
+        ['$http', 'localStorageService',
+        function($http, localStorageService) {
             var constants = connectOn.constants;
             var storage = localStorageService;
-            var user = {
-                token: storage.get(constants.TOKEN_KEY),
-                skills: []
-            };
 
-            var headers = function() {
-                return {headers: {'Authorization': user.token}};
+            var statuses = {
+                LOGGED_OUT: 'LOGGED_OUT',
+                LOGGED_IN: 'LOGGED_IN',
+                USER_INFO_UPDATED: 'USER_INFO_UPDATED'
             };
+            var currentStatus = storage.get(constants.SESSION_STATUS_KEY);
+            var observers = [];
 
-            var isLogged = function() {
-                if (user.token === null) {
-                    return false;
+            var changeStatus = function(newState) {
+                if (statuses[newState] !== undefined) {
+                    currentStatus = statuses[newState];
+                    storage.set(constants.SESSION_STATUS_KEY, statuses[newState]);
+                    notifyObservers();
                 }
-                updateUserInfo();
+            };
+
+            var notifyObservers = function() {
+                var currentObserver = undefined;
+                var response = false;
+                for (var i = 0; i < observers.length; i++) {
+                    currentObserver = observers[i];
+                    if (currentObserver.active) {
+                        switch (currentStatus) {
+                            case statuses.LOGGED_IN:
+                                response = currentObserver.onLogin();
+                                break;
+                            case statuses.LOGGED_OUT:
+                                response = currentObserver.onLogout();
+                                break;
+                            case statuses.USER_INFO_UPDATED:
+                                response = currentObserver.onUserUpdate();
+                                break;
+                            default:
+                                break;
+                        }
+                        if (!response) {
+                            currentObserver.active = false;
+                        }
+                    }
+                }
+                // TODO remove observers if they do not respond true
+            };
+
+            var doNothing = function() {
                 return true;
             };
 
+            var subscribe = function(onLogin, onLogout, onUserUpdate, debugName) {
+                observers.push({
+                    name: debugName,
+                    active: true,
+                    onLogin: onLogin,
+                    onLogout: onLogout,
+                    onUserUpdate: onUserUpdate
+                });
+            };
+
+            var token = storage.get(constants.TOKEN_KEY);
+
+            var user = {};
+
+            var headers = function() {
+                return {headers: {'Authorization': token}};
+            };
+
+            var isLogged = function() {
+                if (currentStatus !== statuses.LOGGED_OUT) {
+                    updateUserInfo();
+                    return true;
+                }
+                return false;
+            };
+
             var updateUserInfo = function() {
-                $http.get(constants.API_V1_BASE_URL + '/users/me', headers())
-                    .then(function(result) {
+                $http.get(constants.API_V1_BASE_URL + '/users/me', headers()).then(function(result) {
                         if (result.status === 200) {
-                            user.id = result.data.id;
-                            user.first_name = result.data.first_name;
-                            user.last_name = result.data.last_name;
-                            user.email = result.data.email;
-                            CommonService.reloadData(user.skills, result.data.skills);
+                            user = result.data;
+                            changeStatus(statuses.USER_INFO_UPDATED);
                         }
                         if (result.status === 401 || result.status === 403) {
-                            user.token = null;
+                            logout();
                         }
                     });
             };
 
             var loggedUser = function() {
-                updateUserInfo();
                 return user;
             };
 
@@ -50,8 +102,9 @@ define(['connectOn'], function(connectOn) {
                     .then(function(result) {
                         if (result.status === 200) {
                             storage.set(constants.TOKEN_KEY, result.data.token);
-                            user.token = result.data.token;
+                            token = result.data.token;
                             updateUserInfo();
+                            changeStatus(statuses.LOGGED_IN);
                         }
                     });
             };
@@ -59,15 +112,19 @@ define(['connectOn'], function(connectOn) {
             var logout = function() {
                 storage.set(constants.TOKEN_KEY, null);
                 storage.clearAll();
-                user.token = null;
+                token = null;
+                changeStatus(statuses.LOGGED_OUT);
             };
 
             return {
+                statuses: statuses,
+                subscribe: subscribe,
                 isLogged: isLogged,
                 loggedUser: loggedUser,
                 login: login,
                 logout: logout,
-                headers: headers
+                headers: headers,
+                doNothing: doNothing
             };
 
         }]
