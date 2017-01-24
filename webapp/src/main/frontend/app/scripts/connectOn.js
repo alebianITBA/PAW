@@ -47,10 +47,12 @@ define(['routes',
 					localStorageServiceProvider.setPrefix('connectOn');
 				}]);
 
+		var devUrl = 'http://localhost:8080/api/v1';
+		var prodUrl = 'pawserver.it.itba.edu.ar/grupo5/api/v1';
 		connectOn.constants = {
 			TOKEN_KEY: 'token',
 			SESSION_STATUS_KEY: 'session_status',
-			API_V1_BASE_URL: 'http://localhost:8080/api/v1',
+			API_V1_BASE_URL: devUrl,
 			LOGGED_USER: 'logged_user',
 
 			PATH_ROOT: '/',
