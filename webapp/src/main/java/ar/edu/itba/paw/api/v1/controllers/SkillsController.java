@@ -20,7 +20,7 @@ public class SkillsController extends ApiController {
   private SkillService skillService;
 
   @GET
-  public Response index(@QueryParam("page") Integer pageParam) {
+  public Response index() {
     final List<Skill> allSkills = skillService.all();
     GenericEntity<List<SkillDTO>> list = new GenericEntity<List<SkillDTO>>(SkillDTO.fromList(allSkills)) {
     };

@@ -3,11 +3,11 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.controller(
         'JobOfferCtrl',
-        ['$scope', 'JobOfferService', '$routeParams', 'localStorageService', 'CommonService', '$location', 'JobApplicationService',
-        function($scope, JobOfferService, $routeParams, localStorageService, CommonService, $location, JobApplicationService) {
+        ['$scope', 'JobOfferService', '$routeParams', 'SessionService', 'CommonService', '$location', 'JobApplicationService',
+        function($scope, JobOfferService, $routeParams, SessionService, CommonService, $location, JobApplicationService) {
             var that = this;
             this.belongsToUser = false;
-            this.loggedUserId = localStorageService.get(connectOn.constants.LOGGED_USER).id;
+            this.loggedUserId = SessionService.loggedUser().id;
 
             // OFFER
             this.offer = {};

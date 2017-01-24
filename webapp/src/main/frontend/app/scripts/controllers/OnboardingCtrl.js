@@ -3,35 +3,29 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.controller(
         'OnboardingCtrl',
-        ['$scope', 'UserService', 'SkillService', 'CommonService',
-        function($scope, UserService, SkillService, CommonService) {
-            this.selectedSkills = [];
+        ['$scope', 'UserService', 'SkillService', 'CommonService', 'SessionService', '$timeout',
+        function($scope, UserService, SkillService, CommonService, SessionService, $timeout) {
+            this.selectedSkills = SessionService.loggedUser().skills;
             this.skillsToSelect = [];
             this.skillIdToAdd = null;
 
             // USER
-            this.user = {};
+            this.user = SessionService.loggedUser();
             var that = this;
 
-            this.getUser = function() {
-                UserService.me().then(function(result) {
-                    that.user = result.data;
-                    that.user.lastName = that.user.last_name;
-                    that.user.firstName = that.user.first_name;
-                    CommonService.reloadData(that.selectedSkills, result.data.skills);
-                    SkillService.all().then(function(response) {
-                        var skillEquals = function(skill1, skill2) {
-                            return skill1.id === skill2.id;
-                        };
-                        for (var i = 0; i < response.data.length; i++) {
-                            if (!CommonService.includes(that.selectedSkills, response.data[i], skillEquals)) {
-                                that.skillsToSelect.push(response.data[i]);
-                            }
-                        };
-                    });
+            this.getSkills = function() {
+                SkillService.all().then(function(response) {
+                    var skillEquals = function(skill1, skill2) {
+                        return skill1.id === skill2.id;
+                    };
+                    for (var i = 0; i < response.data.length; i++) {
+                        if (!CommonService.includes(that.selectedSkills, response.data[i], skillEquals)) {
+                            that.skillsToSelect.push(response.data[i]);
+                        }
+                    };
                 });
             };
-            this.getUser();
+            this.getSkills();
 
             this.removeSelected = function(skillId) {
                 var check = function(element) {

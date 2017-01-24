@@ -3,9 +3,9 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.service(
         'JobOfferService',
-        ['$http', 'localStorageService', 'CommonService',
-        function($http, localStorageService, CommonService) {
-            var headers = {headers: {'Authorization': localStorageService.get(connectOn.constants.TOKEN_KEY)}};
+        ['$http', 'SessionService', 'CommonService',
+        function($http, SessionService, CommonService) {
+            var headers = SessionService.headers();
 
             var getId = function(element) {
                 return element.id;

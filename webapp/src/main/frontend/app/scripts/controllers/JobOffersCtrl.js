@@ -3,10 +3,10 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.controller(
         'JobOffersCtrl',
-        ['$scope', 'JobOfferService', 'JobApplicationService', 'CommonService', 'localStorageService', '$location', 'SkillService',
-        function($scope, JobOfferService, JobApplicationService, CommonService, localStorageService, $location, SkillService) {
+        ['$scope', 'JobOfferService', 'JobApplicationService', 'CommonService', 'SessionService', '$location', 'SkillService',
+        function($scope, JobOfferService, JobApplicationService, CommonService, SessionService, $location, SkillService) {
             this.perPage = 10;
-            this.loggedUserId = localStorageService.get(connectOn.constants.LOGGED_USER).id;
+            this.loggedUserId = SessionService.loggedUser().id;
 
             var that = this;
 

@@ -3,9 +3,9 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.service(
         'PostService',
-        ['$http', 'localStorageService', 'CommonService',
-        function($http, localStorageService, CommonService) {
-            var headers = {headers: {'Authorization': localStorageService.get(connectOn.constants.TOKEN_KEY)}};
+        ['$http', 'CommonService', 'SessionService',
+        function($http, CommonService, SessionService) {
+            var headers = SessionService.headers();
 
             return {
                 createPost: function(post) {

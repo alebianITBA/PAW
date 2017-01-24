@@ -3,9 +3,9 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.service(
         'SkillService',
-        ['$http', 'localStorageService',
-        function($http, localStorageService) {
-            var headers = {headers: {'Authorization': localStorageService.get(connectOn.constants.TOKEN_KEY)}};
+        ['$http', 'SessionService',
+        function($http, SessionService) {
+            var headers = SessionService.headers();
 
             return {
                 all: function() {

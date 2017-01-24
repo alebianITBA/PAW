@@ -3,16 +3,13 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.service(
         'UserService',
-        ['$http', 'localStorageService', 'CommonService',
-        function($http, localStorageService, CommonService) {
-            var headers = {headers: {'Authorization': localStorageService.get(connectOn.constants.TOKEN_KEY)}};
+        ['$http', 'CommonService', 'SessionService',
+        function($http, CommonService, SessionService) {
+            var headers = SessionService.headers();
 
             return {
                 createUser: function(user) {
                     return $http.post(connectOn.constants.API_V1_BASE_URL + '/users', JSON.stringify(user));
-                },
-                login: function(params) {
-                    return $http.post(connectOn.constants.API_V1_BASE_URL + '/login', {email: params.email, password: params.password});
                 },
                 list: function(page) {
                     var url = connectOn.constants.API_V1_BASE_URL + '/users';

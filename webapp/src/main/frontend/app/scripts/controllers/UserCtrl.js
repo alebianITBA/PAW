@@ -3,10 +3,9 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.controller(
         'UserCtrl',
-        ['$scope', 'UserService', 'PostService', 'JobApplicationService', 'JobOfferService', 'CommonService', 'localStorageService', '$routeParams',
-        function($scope, UserService, PostService, JobApplicationService, JobOfferService, CommonService, localStorageService, $routeParams) {
+        ['$scope', 'UserService', 'PostService', 'JobApplicationService', 'JobOfferService', 'CommonService', 'SessionService', '$routeParams',
+        function($scope, UserService, PostService, JobApplicationService, JobOfferService, CommonService, SessionService, $routeParams) {
             this.belongsToUser = false;
-            this.loggedUserId = localStorageService.get(connectOn.constants.LOGGED_USER).id;
             var that = this;
             var defaultPerPage = 3;
 
@@ -16,7 +15,7 @@ define(['connectOn'], function(connectOn) {
             this.getUser = function() {
                 UserService.show($routeParams.userId).then(function(result) {
                     that.user = result.data;
-                    var isOwner = that.loggedUserId === result.data.id;
+                    var isOwner = SessionService.loggedUser().id === result.data.id;
                     that.belongsToUser = isOwner;
                     if (isOwner) {
                         that.currentApplications();

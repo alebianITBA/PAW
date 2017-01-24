@@ -3,12 +3,24 @@ define(['connectOn'], function(connectOn) {
 
     connectOn.controller(
         'NavbarCtrl',
-        ['$scope', '$http', 'localStorageService', '$location', 'UserService',
-        function($scope, $http, localStorageService, $location, UserService) {
+        ['$scope', '$http', '$location', 'SessionService', '$timeout',
+        function($scope, $http, $location, SessionService, $timeout) {
+            var that = this;
             this.constants = connectOn.constants;
             this.login = {};
             this.user = {};
-            $scope.logged = localStorageService.get(this.constants.TOKEN_KEY) !== null;
+            $scope.logged = SessionService.isLogged();
+
+            this.updateBar = function() {
+                $timeout(function() {
+                    if (!SessionService.isLogged()) {
+                        that.updateBar();
+                    } else {
+                        $scope.logged = true;
+                    }
+                }, 1000);
+            };
+            this.updateBar();
 
             this.redirect = function(path) {
                 if ($scope.logged) {
@@ -18,34 +30,30 @@ define(['connectOn'], function(connectOn) {
                 }
             };
 
-            // TODO: Remove this hack :P
-            var that = this;
-            var me = UserService.me()
-                        .then(function(result) {
-                            if (result.status !== 200 && $location.$$path !== that.constants.PATH_ROOT) {
-                                that.logout();
-                            }
-                            if (result.status === 200) {
-                                that.user = result.data;
-                            }
-                        }).catch(function(error) {
-                            that.logout();
-                        });
+            if ($scope.logged) {
+                that.user = SessionService.loggedUser();
+            } else {
+                if ($location.$$path !== that.constants.PATH_ROOT) {
+                    $location.path(that.constants.PATH_ROOT);
+                }
+            }
 
             this.login = function() {
-                var that = this;
-                UserService.login(that.login).then(function (response) {
-                    localStorageService.set(that.constants.TOKEN_KEY, response.data.token);
-                    localStorageService.set(that.constants.LOGGED_USER, response.data.user);
-                    $scope.logged = true;
-                    that.redirect(that.constants.PATH_INDEX);
-                });
+                SessionService.login(that.login.email, that.login.password);
+                $timeout(function() {
+                    if (!SessionService.isLogged()) {
+                        login();
+                    } else {
+                        $scope.logged = true;
+                        $location.path(that.constants.PATH_INDEX);
+                    }
+                }, 1000);
             };
 
             this.logout = function() {
-                localStorageService.clearAll();
+                SessionService.logout();
                 $scope.logged = false;
-                this.redirect(this.constants.PATH_ROOT);
+                $location.path(this.constants.PATH_ROOT);
             };
 
         }]

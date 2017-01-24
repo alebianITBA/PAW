@@ -85,6 +85,7 @@ require([
         'services/jobApplicationService',
         'services/jobOfferService',
         'services/postService',
+        'services/sessionService',
         'services/skillService',
         'services/userService'
     ],
