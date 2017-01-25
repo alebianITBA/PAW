@@ -1,19 +1,28 @@
 <div class="content" ng-controller="EditPostCtrl as editPostCtrl">
     <div class="container">
-        <div class="col-md-12 praesent f-left">
+        <div class="praesent">
             <div class="l_g_r biography-into">
                 <div class="dapibus">
-                    <h4>{{ 'EDIT' | translate }}</h4>
-                    <form name="postForm" ng-submit="postForm.$valid && editPostCtrl.editPost()" novalidate>
-                        <div class="form-group">
-                            <input class="form-control input-lg" type="text" placeholder="{{ 'TITLE' | translate }}*" name="title" ng-model="editPostCtrl.post.title"
-                                required></input>
-                        </div>
-                        <div class="form-group form-group-shadow">
-                            <textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description"
-                                ng-model="editPostCtrl.post.description" required></textarea>
-                        </div>
-                        <input type="submit" class="btn btn-primary btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
+                    <h4>{{ 'EDIT_POST' | translate }}</h4>
+					<hr>
+                    <form class="form-horizontal" name="postForm" ng-submit="postForm.$valid && editPostCtrl.editPost()" novalidate>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">{{ 'TITLE' | translate }}*</label>
+							<div class="col-sm-9">
+								<input class="form-control input-lg" type="text" placeholder="{{ 'TITLE' | translate }}*" name="title" ng-model="editPostCtrl.post.title" required></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">{{ 'CONTENT' | translate }}*</label>
+							<div class="col-sm-9">
+								<textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description" ng-model="editPostCtrl.post.description" required></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-9">
+								<input type="submit" class="btn btn-primary btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
+							</div>
+						</div>
                     </form>
                 </div>
             </div>
