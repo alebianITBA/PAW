@@ -3,15 +3,21 @@
 
         <div class="col-md-3 praesent">
             <div class="l_g_r">
-                <div class="dapibus biography-into center">
-                    <a ng-href="/users/{{ offerCtrl.offer.user.id }}">
-                        <img class="user-placeholder" ng-src="{{ offerCtrl.offer.user.avatar }}" height="150" />
-                        <h4>{{ offerCtrl.offer.user.first_name }} {{ offerCtrl.offer.user.last_name }}</h4>
-                        <p class="center">{{ offerCtrl.offer.user.email }}</p>
-                        <h3 ng-show="offerCtrl.belongsToUser">
-                            <span class="label label-info">{{ offerCtrl.offer.applications }} {{ 'APPLICANTS' | translate }}</span>
-                        </h3>
-                    </a>
+                <div class="dapibus biography-into">
+                    <a class="center-fullwidth" ng-href="/users/{{ offerCtrl.offer.user.id }}">
+                        <img class="user-image" ng-src="{{ offerCtrl.offer.user.avatar }}" height="150" />
+					</a>
+                    <a class="center-fullwidth" ng-href="/users/{{ offerCtrl.offer.user.id }}">
+						<h3 class="no-padding">{{ offerCtrl.offer.user.first_name }} {{ offerCtrl.offer.user.last_name }}</h3>
+					</a>
+					<p>
+					<a class="center-fullwidth" ng-href="/users/{{ offerCtrl.offer.user.id }}">
+						<center><i>{{ offerCtrl.offer.user.email }}</i></center>
+					</a>
+					</p>
+					<h3 class="no-padding  center-fullwidth" ng-show="offerCtrl.belongsToUser">
+						<span class="label label-info">{{ offerCtrl.offer.applications }} {{ 'APPLICANTS' | translate }}</span>
+					</h3>
                 </div>
             </div>
         </div>
@@ -21,7 +27,7 @@
             <div class="l_g_r b-margin">
                 <div class="dapibus biography-into">
                     <div ng-show="offerCtrl.belongsToUser">
-                        <div class="btn-group top-right-edit-button">
+                        <div class="btn-group apply-button">
                                 <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ 'ACTION' | translate }}
                                     <span class="caret"></span>
@@ -40,12 +46,15 @@
                                 </ul>
                         </div>
                     </div>
-
+					
                     <h2 class="media-heading">{{ offerCtrl.offer.title }}</h2>
+					<hr>
+					
                     <p>{{ offerCtrl.offer.description }}</p>
-                    <h3>
-                        <a ng-repeat="skill in offerCtrl.offer.skills" class="no-underline right" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
-                    </h3>
+					<br>
+                    <div class="skill-container">
+                        <a ng-repeat="skill in offerCtrl.offer.skills" class="no-underline right skill" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
+					</div>
                 </div>
             </div>
             <button ng-hide="offerCtrl.belongsToUser" class="btn btn-primary" type="submit" ng-click="offerCtrl.createApplication(offerCtrl.offer.id)">{{ 'APPLY' | translate }}</button>
@@ -64,7 +73,7 @@
                             <h3>{{ application.user.first_name }} {{ application.user.last_name }}</h3>
                             <h4 class="media-heading">{{ application.user.email }}</h4>
                             <p class="skill-container">
-                                <a ng-repeat="skill in application.user.skills" class="no-underline right" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
+                                <a ng-repeat="skill in application.user.skills" class="no-underline right skill" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
                             </p>
                         </div>
                         <hr>
