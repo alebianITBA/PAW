@@ -45,6 +45,8 @@ define([], function() {
 
 		SKILLS: 'Habilidades',
 		EDIT_PROFILE: 'Editar perfil',
+		EDIT_OFFER: 'Editar oferta',
+		EDIT_POST: 'Editar publicacion',
 		SAVE : 'Guardar',
 		
         ERROR_500: 'Error en la base de datos',

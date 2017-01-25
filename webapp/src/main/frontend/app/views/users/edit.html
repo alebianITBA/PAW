@@ -8,19 +8,19 @@
                     <form class="form-horizontal" name="userForm" ng-submit="userForm.$valid && editUserCtrl.editUser()" novalidate>
                         
 						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">{{ 'FIRST_NAME' | translate }}*</label>
+							<label class="col-sm-2 control-label">{{ 'FIRST_NAME' | translate }}*</label>
 							<div class="col-sm-9">
 								<input class="form-control input-lg" type="text" placeholder="{{ 'FIRST_NAME' | translate }}*" name="title" ng-model="editUserCtrl.user.first_name" required></input>
 							</div>
 						</div>
   						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">{{ 'LAST_NAME' | translate }}*</label>
+							<label class="col-sm-2 control-label">{{ 'LAST_NAME' | translate }}*</label>
 							<div class="col-sm-9">
 								<input class="form-control input-lg" type="text" placeholder="{{ 'LAST_NAME' | translate }}*" name="title" ng-model="editUserCtrl.user.last_name" required></input>
 							</div>
 						</div>
     					<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">{{ 'SKILLS' | translate }}</label>
+							<label class="col-sm-2 control-label">{{ 'SKILLS' | translate }}</label>
 							<div class="col-sm-9">
 								<select name="skillsSelection" class="form-control" ng-model="editUserCtrl.skillIdToAdd" ng-change="editUserCtrl.addSelected()">
 									<option value="">{{ 'SELECT_SKILL' | translate }}</option>

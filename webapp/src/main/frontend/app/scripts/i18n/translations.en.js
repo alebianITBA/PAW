@@ -45,6 +45,8 @@ define([], function() {
 
 		SKILLS: 'Skills',
 		EDIT_PROFILE: 'Edit profile',
+		EDIT_OFFER: 'Edit job offer',
+		EDIT_POST: 'Edit post',
 		SAVE : 'Save',
 
         ERROR_500: 'Database error',
