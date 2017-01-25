@@ -43,6 +43,10 @@ define([], function() {
         ONBOARDING_MSG: 'In order to have a great experience using conectOn we recommend adding some skills to your profile!',
         CONTINUE: 'Continue',
 
+		SKILLS: 'Skills',
+		EDIT_PROFILE: 'Edit profile',
+		SAVE : 'Save',
+
         ERROR_500: 'Database error',
         ERROR_501: 'Resource not owned.',
         ERROR_1000: 'Email already in use.',
