@@ -5,15 +5,16 @@
             <div class="dapibus">
                <h4>{{ 'SHARE_POST' | translate}}</h4>
 
-               <form name="postForm" ng-submit="postForm.$valid && mainCtrl.createPost()" novalidate>
-                    <div class="form-group">
-                        <input class="form-control input-lg" type="text" placeholder="{{ 'TITLE' | translate }}*" name="title" ng-model="mainCtrl.post.title" required></input>
-                    </div>
-                    <div class="form-group form-group-shadow">
-                        <textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description" ng-model="mainCtrl.post.description" required></textarea>
-                    </div>
-                    <input type="submit" class="btn btn-primary btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
-               </form>
+			   <form name="postForm" ng-submit="postForm.$valid && mainCtrl.createPost()" novalidate>
+					<div class="form-group">
+						<input class="form-control input-lg" type="text" placeholder="{{ 'TITLE' | translate }}*" name="title" ng-model="mainCtrl.post.title" required></input>
+					</div>
+					<div class="form-group form-group-shadow">
+						<textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description" ng-model="mainCtrl.post.description" required></textarea>
+					</div>
+					<input type="submit" class="btn btn-primary btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
+			   </form>
+			   <hr>
 
                <div ng-repeat="post in mainCtrl.posts">
                   <hr>
@@ -26,7 +27,6 @@
                     </hr>
                </div>
             </div>
-
             <div class="row center">
                <div id="pagination">
                    <ul class="pagination">
@@ -42,7 +42,7 @@
     <div class="col-md-4 praesent">
         <div class="l_g_r biography-into">
             <div class="dapibus">
-                <h4>{{ 'RECOMMENDED_OFFERS' | translate }}</h4>
+                <h4 class="no-padding">{{ 'RECOMMENDED_OFFERS' | translate }}</h4>
                 <div class="alert alert-success" role="alert" ng-show="mainCtrl.showSuccessfulApplication"><b>{{ 'APPLIED_SUCCESSFULLY' | translate}}</b></div>
 
                 <div ng-repeat="offer in mainCtrl.offers">

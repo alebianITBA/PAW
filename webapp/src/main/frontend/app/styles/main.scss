@@ -445,7 +445,7 @@ hr {
 }
 
 .biography-into h4, .biography-into h3 {
-    padding-right: 60px !important;
+    padding-right: 60px ;
 }
 
 .skill-container{
@@ -454,10 +454,6 @@ hr {
 
 .user-item{
 	float:left;
-}
-
-.biography-into h3{
-	padding-right: 0px !important;
 }
 
 .dapibus > a{
@@ -470,4 +466,13 @@ hr {
 
 .relative{
 	position:relative !important;
+}
+
+.no-padding{
+	padding: 0px !important;
+}
+
+.center-fullwidth{
+	text-align: center;
+    width: 100%;
 }
