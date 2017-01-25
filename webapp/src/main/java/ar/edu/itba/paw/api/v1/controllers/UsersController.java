@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.api.v1.controllers;
 
+import ar.edu.itba.paw.api.v1.ErrorCodes;
 import ar.edu.itba.paw.api.v1.dto.JobOfferDTO;
 import ar.edu.itba.paw.api.v1.dto.UserDTO;
 import ar.edu.itba.paw.api.v1.parameters.SkillParams;
@@ -52,9 +53,9 @@ public class UsersController extends ApiController {
   public Response create(final UserParams input) {
     User existUser = userService.findByEmail(input.email);
     if (existUser != null) {
-      return badRequest(USER_DOES_NOT_EXIST);
+      return badRequest(ErrorCodes.EMAIL_ALREADY_IN_USE);
     } else {
-      Pair<Boolean, String> validation = UserPasswordValidator.validate(input.password, input.passwordConfirmation);
+      Pair<Boolean, ErrorCodes> validation = UserPasswordValidator.validate(input.password, input.passwordConfirmation);
 
       if (!validation.getLeft()) {
         return badRequest(validation.getRight());
@@ -63,7 +64,7 @@ public class UsersController extends ApiController {
       User user = userService.create(input.firstName, input.lastName, input.email, input.password);
 
       if (user.getId() == null) {
-        return badRequest("User already exists.");
+        return badRequest(ErrorCodes.DATABASE_ERROR);
       }
 
       return created(user);

@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.api.v1.controllers;
 
+import ar.edu.itba.paw.api.v1.ErrorCodes;
 import ar.edu.itba.paw.api.v1.dto.JobApplicationDTO;
 import ar.edu.itba.paw.api.v1.dto.JobOfferDTO;
 import ar.edu.itba.paw.api.v1.parameters.JobOfferParams;
@@ -53,7 +54,7 @@ public class JobOffersController extends ApiController {
   public Response applicationsOf(@PathParam("id") final long id) {
     final JobOffer jobOffer = jobOfferService.find(id);
     if (jobOffer.getUser().getId() != getLoggedUser().getId()) {
-      return forbidden();
+      return forbidden(ErrorCodes.RESOURCE_NOT_OWNED);
     }
     List<JobApplication> applications = jobApplicationService.jobOfferApplications(id);
 
@@ -96,7 +97,7 @@ public class JobOffersController extends ApiController {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   public Response create(final JobOfferParams input) {
-    Pair<Boolean, String> validation = JobOfferValidator.validate(input);
+    Pair<Boolean, ErrorCodes> validation = JobOfferValidator.validate(input);
     if (!validation.getLeft()) {
       return badRequest(validation.getRight());
     }
@@ -108,10 +109,10 @@ public class JobOffersController extends ApiController {
   @Path("/{id}")
   public Response edit(@PathParam("id") final long id, final JobOfferParams input) {
     if (!isUserOwner(id)) {
-      return forbidden();
+      return forbidden(ErrorCodes.RESOURCE_NOT_OWNED);
     }
 
-    Pair<Boolean, String> validation = JobOfferValidator.validate(input);
+    Pair<Boolean, ErrorCodes> validation = JobOfferValidator.validate(input);
     if (!validation.getLeft()) {
       return badRequest(validation.getRight());
     }
@@ -124,7 +125,7 @@ public class JobOffersController extends ApiController {
   @Path("/{id}/add_skill")
   public Response addSkill(@PathParam("id") final long id, final SkillParams skillParams) {
     if (!isUserOwner(id)) {
-      return forbidden();
+      return forbidden(ErrorCodes.RESOURCE_NOT_OWNED);
     }
     return ok();
   }
@@ -133,7 +134,7 @@ public class JobOffersController extends ApiController {
   @Path("/{id}/remove_skill")
   public Response removeSkill(@PathParam("id") final long id, @QueryParam("skill_id") final long skillId) {
     if (!isUserOwner(id)) {
-      return forbidden();
+      return forbidden(ErrorCodes.RESOURCE_NOT_OWNED);
     }
     return ok();
   }
@@ -142,7 +143,7 @@ public class JobOffersController extends ApiController {
   @Path("/{id}")
   public Response destroy(@PathParam("id") final long id) {
     if (!isUserOwner(id)) {
-      return forbidden();
+      return forbidden(ErrorCodes.RESOURCE_NOT_OWNED);
     }
 
     jobOfferService.delete(id);
@@ -153,7 +154,7 @@ public class JobOffersController extends ApiController {
   @Path("/{id}/open")
   public Response open(@PathParam("id") final long id) {
     if (!isUserOwner(id)) {
-      return forbidden();
+      return forbidden(ErrorCodes.RESOURCE_NOT_OWNED);
     }
 
     jobOfferService.update(id, null);
@@ -164,7 +165,7 @@ public class JobOffersController extends ApiController {
   @Path("/{id}/finish")
   public Response finish(@PathParam("id") final long id) {
     if (!isUserOwner(id)) {
-      return forbidden();
+      return forbidden(ErrorCodes.RESOURCE_NOT_OWNED);
     }
 
     jobOfferService.update(id, new Date());

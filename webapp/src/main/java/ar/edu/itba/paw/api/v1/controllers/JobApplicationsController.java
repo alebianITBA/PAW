@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.api.v1.controllers;
 
+import ar.edu.itba.paw.api.v1.ErrorCodes;
 import ar.edu.itba.paw.api.v1.dto.JobApplicationDTO;
 import ar.edu.itba.paw.api.v1.parameters.JobApplicationParams;
 import ar.edu.itba.paw.helpers.PaginationHelper;
@@ -36,7 +37,7 @@ public class JobApplicationsController extends ApiController {
   public Response create(final JobApplicationParams input) {
     JobOffer jobOffer = jobOfferService.find(input.jobOfferId);
     if (jobOffer.getUser().getId() == getLoggedUser().getId()) {
-      return forbidden();
+      return forbidden(ErrorCodes.APPLICATION_YOURSELF);
     }
 
     jobApplicationService.create("Basic application", getLoggedUser(), jobOffer);
@@ -48,7 +49,7 @@ public class JobApplicationsController extends ApiController {
   public Response destroy(@PathParam("id") final long id) {
     JobApplication application = jobApplicationService.find(id);
     if (application.getUser().getId() != getLoggedUser().getId()) {
-      return forbidden();
+      return forbidden(ErrorCodes.RESOURCE_NOT_OWNED);
     }
 
     jobApplicationService.delete(id);

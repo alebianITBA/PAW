@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.api.v1.controllers;
 
+import ar.edu.itba.paw.api.v1.ErrorCodes;
 import ar.edu.itba.paw.api.v1.dto.TokenDTO;
 import ar.edu.itba.paw.api.v1.parameters.UserParams;
 import ar.edu.itba.paw.interfaces.UserService;
@@ -25,6 +26,6 @@ public class SessionsController extends ApiController {
     if (user != null && user.getPassword().equals(input.password)) {
       return ok(new TokenDTO(user));
     }
-    return unauthorized();
+    return unauthorized(ErrorCodes.LOGIN_ERROR);
   }
 }

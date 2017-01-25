@@ -41,6 +41,20 @@ define([], function() {
         REOPEN: 'Activate',
         WELCOME: 'Welcome',
         ONBOARDING_MSG: 'In order to have a great experience using conectOn we recommend adding some skills to your profile!',
-        CONTINUE: 'Continue'
+        CONTINUE: 'Continue',
+
+        ERROR_500: 'Database error',
+        ERROR_501: 'Resource not owned.',
+        ERROR_1000: 'Email already in use.',
+        ERROR_1001: 'Passwords don\'t match.',
+        ERROR_1002: 'Password must not contain whitespaces.',
+        ERROR_1003: 'Password lenght must be 8 or more.',
+        ERROR_1004: 'Password missing.',
+        ERROR_1005: 'Email or password do not match.',
+        ERROR_1006: 'Title should not be blank or longer than 255 characters.',
+        ERROR_1007: 'Description cannot be blank.',
+        ERROR_1008: 'Title should not be blank or longer than 255 characters.',
+        ERROR_1009: 'Description cannot be blank.',
+        ERROR_1010: 'You can\'t apply to an offer you own.'
     };
 });

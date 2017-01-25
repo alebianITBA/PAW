@@ -11,6 +11,7 @@ define(['connectOn'], function(connectOn) {
             var statuses = {
                 LOGGED_OUT: 'LOGGED_OUT',
                 LOGGED_IN: 'LOGGED_IN',
+                LOG_IN_ERROR: 'LOG_IN_ERROR',
                 USER_INFO_UPDATED: 'USER_INFO_UPDATED'
             };
             var currentStatus = storage.get(constants.SESSION_STATUS_KEY);
@@ -40,6 +41,9 @@ define(['connectOn'], function(connectOn) {
                             case statuses.USER_INFO_UPDATED:
                                 response = currentObserver.onUserUpdate();
                                 break;
+                            case statuses.LOG_IN_ERROR:
+                                response = currentObserver.onLogInError('ERROR_1005');
+                                break;
                             default:
                                 break;
                         }
@@ -55,13 +59,14 @@ define(['connectOn'], function(connectOn) {
                 return true;
             };
 
-            var subscribe = function(onLogin, onLogout, onUserUpdate, debugName) {
+            var subscribe = function(onLogin, onLogout, onUserUpdate, debugName, onLogInError) {
                 observers.push({
                     name: debugName,
                     active: true,
                     onLogin: onLogin,
                     onLogout: onLogout,
-                    onUserUpdate: onUserUpdate
+                    onUserUpdate: onUserUpdate,
+                    onLogInError: (onLogInError || doNothing)
                 });
             };
 
@@ -106,6 +111,9 @@ define(['connectOn'], function(connectOn) {
                             updateUserInfo();
                             changeStatus(statuses.LOGGED_IN);
                         }
+                    })
+                    .catch(function(result) {
+                        changeStatus(statuses.LOG_IN_ERROR);
                     });
             };
 

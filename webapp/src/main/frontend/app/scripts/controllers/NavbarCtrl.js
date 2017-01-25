@@ -11,6 +11,9 @@ define(['connectOn'], function(connectOn) {
             this.login = {};
             $scope.logged = SessionService.isLogged();
 
+            this.showError = SessionService.showLoginError;
+            this.errorCode = SessionService.loginErrorCode;
+
             // Subscribe to the user session service
             this.canRedirect = false;
             var updateUserInfo = function() {
@@ -27,6 +30,14 @@ define(['connectOn'], function(connectOn) {
                 }
                 return true;
             };
+            var onLogInError = function(error) {
+                that.showError = true;
+                that.errorCode = error;
+                $timeout(function() {
+                    that.showError = false;
+                }, 3000);
+                return true;
+            };
             var onLogout = function() {
                 $scope.logged = false;
                 $location.path(that.constants.PATH_ROOT);
@@ -38,7 +49,7 @@ define(['connectOn'], function(connectOn) {
                 updateUserInfo();
                 return true;
             };
-            SessionService.subscribe(onLogin, onLogout, onUserUpdate, 'NavbarCtrl');
+            SessionService.subscribe(onLogin, onLogout, onUserUpdate, 'NavbarCtrl', onLogInError);
 
             this.redirect = function(path) {
                 if ($scope.logged) {

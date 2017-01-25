@@ -41,6 +41,20 @@ define([], function() {
         REOPEN: 'Activar',
         WELCOME: 'Bienvenido',
         ONBOARDING_MSG: 'Para tener una excelente experiencia usando conectOn te recomendamos que agregues habilidades a tu perfil!',
-        CONTINUE: 'Continuar'
+        CONTINUE: 'Continuar',
+
+        ERROR_500: 'Error en la base de datos',
+        ERROR_501: 'No es el dueño del recurso.',
+        ERROR_1000: 'El e-mail ya esta siendo utilizado.',
+        ERROR_1001: 'Las contraseñas no coinciden.',
+        ERROR_1002: 'La contraseña no puede contener espacios en blanco.',
+        ERROR_1003: 'La longitud de la contraseña debe ser mayor o igual a 8 caracteres.',
+        ERROR_1004: 'Falta ingresar la password.',
+        ERROR_1005: 'Email o contraseña inválidos.',
+        ERROR_1006: 'El titulo no debe tener mas de 255 caracteres y no puede estar en blanco.',
+        ERROR_1007: 'La descripción no puede estar en blanco.',
+        ERROR_1008: 'El titulo no debe tener mas de 255 caracteres y no puede estar en blanco.',
+        ERROR_1009: 'La descripción no puede estar en blanco.',
+        ERROR_1010: 'No puedes aplicar a una oferta que te pertenece.'
     };
 });
