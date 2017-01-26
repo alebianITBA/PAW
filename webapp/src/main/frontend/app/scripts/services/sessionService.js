@@ -14,7 +14,7 @@ define(['connectOn'], function(connectOn) {
                 LOG_IN_ERROR: 'LOG_IN_ERROR',
                 USER_INFO_UPDATED: 'USER_INFO_UPDATED'
             };
-            var currentStatus = storage.get(constants.SESSION_STATUS_KEY);
+            var currentStatus = storage.get(constants.SESSION_STATUS_KEY) || statuses.LOGGED_OUT;
             var observers = [];
 
             var changeStatus = function(newState) {
