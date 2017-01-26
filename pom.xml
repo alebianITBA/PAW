@@ -105,25 +105,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.flywaydb</groupId>
-        <artifactId>flyway-maven-plugin</artifactId>
-        <version>${flyway-maven-plugin.version}</version>
-        <configuration>
-          <driver>org.postgresql.Driver</driver>
-          <url>jdbc:postgresql://localhost:5432/paw</url>
-          <user>paw</user>
-          <password>paw</password>
-          <outOfOrder>true</outOfOrder>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${org.postgresql.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>${maven-war-plugin.version}</version>

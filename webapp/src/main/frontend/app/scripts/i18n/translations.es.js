@@ -42,13 +42,12 @@ define([], function() {
         WELCOME: 'Bienvenido',
         ONBOARDING_MSG: 'Para tener una excelente experiencia usando conectOn te recomendamos que agregues habilidades a tu perfil!',
         CONTINUE: 'Continuar',
+        SKILLS: 'Habilidades',
+        EDIT_PROFILE: 'Editar perfil',
+        EDIT_OFFER: 'Editar oferta',
+        EDIT_POST: 'Editar publicacion',
+        SAVE : 'Guardar',
 
-		SKILLS: 'Habilidades',
-		EDIT_PROFILE: 'Editar perfil',
-		EDIT_OFFER: 'Editar oferta',
-		EDIT_POST: 'Editar publicacion',
-		SAVE : 'Guardar',
-		
         ERROR_500: 'Error en la base de datos',
         ERROR_501: 'No es el dueño del recurso.',
         ERROR_1000: 'El e-mail ya esta siendo utilizado.',

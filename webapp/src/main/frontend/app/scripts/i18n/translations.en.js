@@ -42,12 +42,11 @@ define([], function() {
         WELCOME: 'Welcome',
         ONBOARDING_MSG: 'In order to have a great experience using conectOn we recommend adding some skills to your profile!',
         CONTINUE: 'Continue',
-
-		SKILLS: 'Skills',
-		EDIT_PROFILE: 'Edit profile',
-		EDIT_OFFER: 'Edit job offer',
-		EDIT_POST: 'Edit post',
-		SAVE : 'Save',
+        SKILLS: 'Skills',
+        EDIT_PROFILE: 'Edit profile',
+        EDIT_OFFER: 'Edit job offer',
+        EDIT_POST: 'Edit post',
+        SAVE: 'Save',
 
         ERROR_500: 'Database error',
         ERROR_501: 'Resource not owned.',
