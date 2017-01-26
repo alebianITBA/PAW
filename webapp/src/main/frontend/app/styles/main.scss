@@ -477,7 +477,7 @@ hr {
     width: 100%;
 }
 
-.alert {
+.fixed-alert {
     -moz-transition: 0.5s linear all;
     -o-transition: 0.5s linear all;
     -webkit-transition: 0.5s linear all;
@@ -503,7 +503,7 @@ hr {
 	position: absolute;
 }
 
-.alert.ng-hide {
+.fixed-alert.ng-hide {
     opacity: 0;
 }
 
