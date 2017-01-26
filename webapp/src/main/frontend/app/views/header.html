@@ -10,19 +10,19 @@
         <ul class="cl-effect-16">
             <div ng-hide="logged">
                 <li>
-                    <form class="navbar-form navbar-left" name="loginForm"
+                    <form class="navbar-form navbar-left relative" name="loginForm"
                         ng-submit="loginForm.$valid && navbarCtrl.login()" novalidate>
 
-                    <div class="form-group alert alert-danger" role="alert" ng-show="navbarCtrl.showError"><b>{{ navbarCtrl.errorCode | translate }}</b></div>
-                    <div class="form-group">
-                        <input type="text" name="email" class="form-control" placeholder="{{ 'EMAIL' | translate }}"
-                            ng-model="navbarCtrl.login.email" required></input>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="{{ 'PASSWORD' | translate }}"
-                            ng-model="navbarCtrl.login.password" required></input>
-                    </div>
-                    <input type="submit" class="btn btn-info btn-lg submit-button" value="{{ 'LOG_IN' | translate }}"></input>
+						<div class="form-group alert alert-danger absolute m-bottom2 right0" role="alert" ng-show="navbarCtrl.showError"><b>{{ navbarCtrl.errorCode | translate }}</b></div>
+						<div class="form-group">
+							<input type="text" name="email" class="form-control" placeholder="{{ 'EMAIL' | translate }}"
+								ng-model="navbarCtrl.login.email" required></input>
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" class="form-control" placeholder="{{ 'PASSWORD' | translate }}"
+								ng-model="navbarCtrl.login.password" required></input>
+						</div>
+						<input type="submit" class="btn btn-info btn-lg submit-button" value="{{ 'LOG_IN' | translate }}"></input>
 
                     </form>
                 </li>

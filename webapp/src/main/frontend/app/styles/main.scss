@@ -476,3 +476,41 @@ hr {
 	text-align: center;
     width: 100%;
 }
+
+.alert {
+    -moz-transition: 0.5s linear all;
+    -o-transition: 0.5s linear all;
+    -webkit-transition: 0.5s linear all;
+    transition: 0.5s linear all;
+
+    display: block !important;
+    opacity: 1;
+	min-height : 52px;
+}
+
+.m-bottom2{
+    margin-top: 50px;
+}
+
+.relative{
+	position: relative;
+}
+
+.right0{
+	right: 0px;
+}
+.absolute{
+	position: absolute;
+}
+
+.alert.ng-hide {
+    opacity: 0;
+}
+
+.begin-now-index{
+    text-shadow: 0 0 1px #777777, 0 0 10px #000000;
+}
+
+.navbar-form{
+	padding-right: 0px !important;
+}
