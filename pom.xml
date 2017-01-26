@@ -259,6 +259,10 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
           </exclusion>
+          <exclusion>
+            <artifactId>jboss-logging</artifactId>
+            <groupId>org.jboss.logging</groupId>
+          </exclusion>
         </exclusions>
       </dependency>
       <dependency>
@@ -282,6 +286,17 @@
         <groupId>org.glassfish.jersey.ext</groupId>
         <artifactId>jersey-spring4</artifactId>
         <version>${jersey.version}</version>
+        <exclusions>
+            <exclusion>
+                <groupId>org.glassfish.hk2.external</groupId>
+                <artifactId>bean-validator</artifactId>
+            </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.ext</groupId>
+          <artifactId>jersey-bean-validation</artifactId>
+          <version>${jersey.version}</version>
       </dependency>
       <dependency>
         <groupId>org.glassfish.jersey.core</groupId>
