@@ -48,11 +48,11 @@ define(['routes',
 				}]);
 
 		var devUrl = 'http://localhost:8080/webapp/api/v1';
-		var prodUrl = 'pawserver.it.itba.edu.ar/grupo5/api/v1';
+		var prodUrl = 'http://pawserver.it.itba.edu.ar/grupo5/api/v1';
 		connectOn.constants = {
 			TOKEN_KEY: 'token',
 			SESSION_STATUS_KEY: 'session_status',
-			API_V1_BASE_URL: devUrl,
+			API_V1_BASE_URL: prodUrl,
 			LOGGED_USER: 'logged_user',
 
 			PATH_ROOT: '/',
