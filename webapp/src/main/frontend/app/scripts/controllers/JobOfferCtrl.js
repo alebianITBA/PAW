@@ -7,6 +7,8 @@ define(['connectOn'], function(connectOn) {
         function($scope, JobOfferService, $routeParams, SessionService, CommonService, $location, JobApplicationService) {
             var that = this;
             this.belongsToUser = false;
+            this.showApply = false;
+            this.showApplied = false;
             this.loggedUserId = SessionService.loggedUser().id;
 
             // OFFER
@@ -23,6 +25,9 @@ define(['connectOn'], function(connectOn) {
                                 CommonService.reloadData(that.applications, response.data);
                             }
                         });
+                    } else {
+                      that.showApply = !that.offer.user_applied;
+                      that.showApplied = that.offer.user_applied;
                     }
                 })
                 .catch(function() {
@@ -40,6 +45,8 @@ define(['connectOn'], function(connectOn) {
             this.createApplication = function(jobOfferId) {
                 JobApplicationService.create(jobOfferId).then(function (response) {
                     if (response.status === 201) {
+                        that.showApply = false;
+                        that.showApplied = true;
                         $location.path('/job_offers/' + that.offer.id);
                     }
                 });
