@@ -42,9 +42,8 @@ public class JobOffer {
 			@JoinColumn(name = "job_offer_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "skill_id", referencedColumnName = "id") })
 	@OrderBy("name ASC")
-	@JoinColumn()
 	private List<Skill> skills;
-	
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinTable(name = "job_applications", joinColumns = {
 			@JoinColumn(name = "job_offer_id", referencedColumnName = "id") }, inverseJoinColumns = {
@@ -56,7 +55,7 @@ public class JobOffer {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@Column(name = "closed_at")
 	private Date closedAt;
 
@@ -184,11 +183,11 @@ public class JobOffer {
 	public Date getClosedAt() {
 		return closedAt;
 	}
-	
+
 	public void setClosedAt(Date closedAt) {
 		this.closedAt = closedAt;
 	}
-	
+
 	public boolean containsAll(List<Skill> otherSkills) {
 		if (skills == null) {
 			return (otherSkills == null);
