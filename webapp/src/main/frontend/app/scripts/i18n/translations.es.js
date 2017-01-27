@@ -46,7 +46,7 @@ define([], function() {
         EDIT_PROFILE: 'Editar perfil',
         EDIT_OFFER: 'Editar oferta',
         EDIT_POST: 'Editar publicacion',
-        SAVE : 'Guardar',
+        SAVE: 'Guardar',
 
         ERROR_500: 'Error en la base de datos',
         ERROR_501: 'No es el dueño del recurso.',

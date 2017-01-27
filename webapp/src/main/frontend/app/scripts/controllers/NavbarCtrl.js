@@ -61,6 +61,8 @@ define(['connectOn'], function(connectOn) {
 
             if (!$scope.logged && $location.$$path !== that.constants.PATH_ROOT) {
                 $location.path(that.constants.PATH_ROOT);
+            } else if ($scope.logged && ($location.$$path === '/' || $location.$$path === '/onboarding')) {
+                $location.path(that.constants.PATH_INDEX);
             } else {
                 updateUserInfo();
             }
