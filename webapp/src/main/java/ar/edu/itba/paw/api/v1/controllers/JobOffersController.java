@@ -117,7 +117,7 @@ public class JobOffersController extends ApiController {
       return badRequest(validation.getRight());
     }
 
-    JobOffer jobOffer = jobOfferService.update(id, input.title, input.description);
+    JobOffer jobOffer = jobOfferService.update(id, input.title, input.description, input.skillIds);
     return ok(new JobOfferDTO(jobOffer));
   }
 
