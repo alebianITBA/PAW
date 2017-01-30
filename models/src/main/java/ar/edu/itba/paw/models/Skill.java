@@ -7,82 +7,82 @@ import java.util.Date;
 @Table(name = "skills")
 public class Skill {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "skills_id_seq")
-	@SequenceGenerator(sequenceName = "skills_id_seq", name = "skills_id_seq", allocationSize = 1)
-	@Column(name = "id")
-	private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "skills_id_seq")
+  @SequenceGenerator(sequenceName = "skills_id_seq", name = "skills_id_seq", allocationSize = 1)
+  @Column(name = "id")
+  private Long id;
 
-	@Column(name = "name", length = 255)
-	private String name;
+  @Column(name = "name", length = 255)
+  private String name;
 
-	@Column(name = "created_at")
-	private Date createdAt;
-	
-	protected Skill(){
-		/* Just for Hibernate */
-	}
+  @Column(name = "created_at")
+  private Date createdAt;
+  
+  protected Skill(){
+    /* Just for Hibernate */
+  }
 
-	public Skill(Long id, String name, Date createdAt) {
-		this.id = id;
-		this.name = name;
-		this.createdAt = createdAt;
-	}
-	
-	public Skill(String name, Date createdAt) {
-		this.name = name;
-		this.createdAt = createdAt;
-	}
-	
-	@Override
+  public Skill(Long id, String name, Date createdAt) {
+    this.id = id;
+    this.name = name;
+    this.createdAt = createdAt;
+  }
+  
+  public Skill(String name, Date createdAt) {
+    this.name = name;
+    this.createdAt = createdAt;
+  }
+  
+  @Override
     public int hashCode() {
         return id.hashCode();
     }
 
-	@Override
-	public boolean equals(Object other) {
-		if (other == null) {
-			return false;
-		}
-		if (other == this) {
-			return true;
-		}
-		if (!(other instanceof Skill)) {
-			return false;
-		}
+  @Override
+  public boolean equals(Object other) {
+    if (other == null) {
+      return false;
+    }
+    if (other == this) {
+      return true;
+    }
+    if (!(other instanceof Skill)) {
+      return false;
+    }
 
-		Skill otherSkill = (Skill) other;
+    Skill otherSkill = (Skill) other;
 
-		if (!(id == otherSkill.id)) {
-			return false;
-		}
+    if (!(id == otherSkill.id)) {
+      return false;
+    }
 
-		if (!(name == otherSkill.name)) {
-			return false;
-		}
+    if (!(name == otherSkill.name)) {
+      return false;
+    }
 
-		return true;
-	}
-	
-	@Override
-	public String toString() {
-		return "[ SKILL: " + name + " ]";
-	}
+    return true;
+  }
+  
+  @Override
+  public String toString() {
+    return "[ SKILL: " + name + " ]";
+  }
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
+  public String getName() {
+    return name;
+  }
+  
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public Date getCreatedAt() {
-		return createdAt;
-	}
+  public Date getCreatedAt() {
+    return createdAt;
+  }
 
 }

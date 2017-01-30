@@ -33,7 +33,7 @@
                             <h3>{{ 'RECENT_POSTS' | translate }}</h3>
                             <div ng-repeat="post in userCtrl.posts">
                                 <hr>
-								<div ng-show="userCtrl.belongsToUser">
+                <div ng-show="userCtrl.belongsToUser">
                                     <div class="apply-button">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,7 +82,7 @@
                             <h3>{{ 'JOB_OFFERS_CREATED' | translate }}</h3>
                             <div ng-repeat="offer in userCtrl.jobOffers">
                                 <hr>
-								    <div ng-show="userCtrl.belongsToUser">
+                    <div ng-show="userCtrl.belongsToUser">
                                     <div class="apply-button">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -147,7 +147,7 @@
                                 <div ng-repeat="application in userCtrl.applications">
                                     <hr>
                                     <div class="media">
-										<div class="apply-button">
+                    <div class="apply-button">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{ 'ACTION' | translate }}

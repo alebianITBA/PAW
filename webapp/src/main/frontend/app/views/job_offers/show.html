@@ -8,18 +8,18 @@
                 <div class="dapibus biography-into">
                     <a class="center-fullwidth" ng-href="/users/{{ offerCtrl.offer.user.id }}">
                         <img class="user-image" ng-src="{{ offerCtrl.offer.user.avatar }}" height="150" />
-					</a>
+          </a>
                     <a class="center-fullwidth" ng-href="/users/{{ offerCtrl.offer.user.id }}">
-						<h3 class="no-padding">{{ offerCtrl.offer.user.first_name }} {{ offerCtrl.offer.user.last_name }}</h3>
-					</a>
-					<p>
-					<a class="center-fullwidth" ng-href="/users/{{ offerCtrl.offer.user.id }}">
-						<center><i>{{ offerCtrl.offer.user.email }}</i></center>
-					</a>
-					</p>
-					<h3 class="no-padding  center-fullwidth" ng-show="offerCtrl.belongsToUser">
-						<span class="label label-info">{{ offerCtrl.offer.applications }} {{ 'APPLICANTS' | translate }}</span>
-					</h3>
+            <h3 class="no-padding">{{ offerCtrl.offer.user.first_name }} {{ offerCtrl.offer.user.last_name }}</h3>
+          </a>
+          <p>
+          <a class="center-fullwidth" ng-href="/users/{{ offerCtrl.offer.user.id }}">
+            <center><i>{{ offerCtrl.offer.user.email }}</i></center>
+          </a>
+          </p>
+          <h3 class="no-padding  center-fullwidth" ng-show="offerCtrl.belongsToUser">
+            <span class="label label-info">{{ offerCtrl.offer.applications }} {{ 'APPLICANTS' | translate }}</span>
+          </h3>
                 </div>
             </div>
         </div>
@@ -50,13 +50,13 @@
                     </div>
 
                     <h2 class="media-heading">{{ offerCtrl.offer.title }}</h2>
-					<hr>
+          <hr>
 
                     <p>{{ offerCtrl.offer.description }}</p>
-					<br>
+          <br>
                     <div class="skill-container">
                         <a ng-repeat="skill in offerCtrl.offer.skills" class="no-underline right skill" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
-					</div>
+          </div>
                 </div>
             </div>
             <button ng-show="offerCtrl.showApply" class="btn btn-primary" type="submit" ng-click="offerCtrl.createApplication(offerCtrl.offer.id)">{{ 'APPLY' | translate }}</button>

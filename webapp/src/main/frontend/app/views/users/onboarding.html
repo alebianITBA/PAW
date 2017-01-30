@@ -7,22 +7,22 @@
                 <div class="l_g_r">
                     <div class="dapibus center">
                         <h1>{{ 'WELCOME' | translate }} {{ onboardingCtrl.user.first_name }}!</h1>
-						<hr>
+            <hr>
                         <h3 class="subtitle">{{ 'ONBOARDING_MSG' | translate }}</h3>
-						<br>
+            <br>
 
                         <select name="skillsSelection" class="form-control" ng-model="onboardingCtrl.skillIdToAdd" ng-change="onboardingCtrl.addSelected()">
                             <option value="">{{ 'SELECT_SKILL' | translate }}</option>
                             <option ng-repeat="skill in onboardingCtrl.skillsToSelect" value="{{skill.id}}">{{skill.name}}</option>
                         </select>
-						<h3 class="skill-container">
+            <h3 class="skill-container">
                             <a ng-repeat="skill in onboardingCtrl.selectedSkills" ng-click="onboardingCtrl.removeSelected(skill.id)" class="no-underline right skill"><span class="label label-info">{{ skill.name }} <span class="glyphicon glyphicon-remove"></span></span></a>
                         </h3>
                         <br>
 
-						<div class="form-group">
-							 <button class="btn-lg btn-primary" ng-click="onboardingCtrl.goToIndex()">{{ 'CONTINUE' | translate }}</button>
-						</div>
+            <div class="form-group">
+               <button class="btn-lg btn-primary" ng-click="onboardingCtrl.goToIndex()">{{ 'CONTINUE' | translate }}</button>
+            </div>
                     </div>
                 </div>
             </div>

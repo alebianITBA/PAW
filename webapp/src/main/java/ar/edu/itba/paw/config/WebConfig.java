@@ -32,75 +32,75 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	private static final int CACHE_DURATION_SECONDS = 5;
-	private static final String RESOURCES_DIR = "/resources/";
-	private static final String RESOURCES_PATH = "/**";
-	private final static String PREFIX_VIEW_RESOLVER = "/WEB-INF/jsp/";
-	private final static String SUFFIX_VIEW_RESOLVER = ".jsp";
+  private static final int CACHE_DURATION_SECONDS = 5;
+  private static final String RESOURCES_DIR = "/resources/";
+  private static final String RESOURCES_PATH = "/**";
+  private final static String PREFIX_VIEW_RESOLVER = "/WEB-INF/jsp/";
+  private final static String SUFFIX_VIEW_RESOLVER = ".jsp";
 
-	@Value("classpath:schema.sql")
-	private Resource schemaSql;
+  @Value("classpath:schema.sql")
+  private Resource schemaSql;
 
-	@Bean
-	public ViewResolver viewResolver() {
-		final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix(PREFIX_VIEW_RESOLVER);
-		viewResolver.setSuffix(SUFFIX_VIEW_RESOLVER);
-		return viewResolver;
-	}
+  @Bean
+  public ViewResolver viewResolver() {
+    final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+    viewResolver.setViewClass(JstlView.class);
+    viewResolver.setPrefix(PREFIX_VIEW_RESOLVER);
+    viewResolver.setSuffix(SUFFIX_VIEW_RESOLVER);
+    return viewResolver;
+  }
 
-	@Bean
-	public DataSource dataSource() throws ClassNotFoundException {
-		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
-		if (System.getenv().containsKey("PAW_ENVIRONMENT") && System.getenv("PAW_ENVIRONMENT").equals("development")) {
-			ds.setDriverClass(org.postgresql.Driver.class);
-			ds.setUrl("jdbc:postgresql://localhost:5432/paw");
-			ds.setUsername("paw");
-			ds.setPassword("paw");
-		} else {
-			ds.setDriverClass(org.postgresql.Driver.class);
-			ds.setUrl("jdbc:postgresql://10.16.1.110:5432/grupo5");
-			ds.setUsername("grupo5");
-			ds.setPassword("yoo9oTh0");
-		}
-		return ds;
-	}
+  @Bean
+  public DataSource dataSource() throws ClassNotFoundException {
+    final SimpleDriverDataSource ds = new SimpleDriverDataSource();
+    if (System.getenv().containsKey("PAW_ENVIRONMENT") && System.getenv("PAW_ENVIRONMENT").equals("development")) {
+      ds.setDriverClass(org.postgresql.Driver.class);
+      ds.setUrl("jdbc:postgresql://localhost:5432/paw");
+      ds.setUsername("paw");
+      ds.setPassword("paw");
+    } else {
+      ds.setDriverClass(org.postgresql.Driver.class);
+      ds.setUrl("jdbc:postgresql://10.16.1.110:5432/grupo5");
+      ds.setUsername("grupo5");
+      ds.setPassword("yoo9oTh0");
+    }
+    return ds;
+  }
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
-		final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-		factoryBean.setPackagesToScan("ar.edu.itba.paw.models");
-		factoryBean.setDataSource(dataSource());
+  @Bean
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
+    final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+    factoryBean.setPackagesToScan("ar.edu.itba.paw.models");
+    factoryBean.setDataSource(dataSource());
 
-		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		factoryBean.setJpaVendorAdapter(vendorAdapter);
+    final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+    factoryBean.setJpaVendorAdapter(vendorAdapter);
 
-		final Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
+    final Properties properties = new Properties();
+    properties.setProperty("hibernate.hbm2ddl.auto", "update");
+    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
 
-		factoryBean.setJpaProperties(properties);
+    factoryBean.setJpaProperties(properties);
 
-		return factoryBean;
-	}
+    return factoryBean;
+  }
 
-	@Bean
-	public PlatformTransactionManager transactionManager(final EntityManagerFactory emf) {
-		return new JpaTransactionManager(emf);
-	}
+  @Bean
+  public PlatformTransactionManager transactionManager(final EntityManagerFactory emf) {
+    return new JpaTransactionManager(emf);
+  }
 
-	@Bean
-	public MessageSource messageSource() {
-		final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+  @Bean
+  public MessageSource messageSource() {
+    final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:i18n/messages");
-		messageSource.setDefaultEncoding(StandardCharsets.UTF_8.displayName());
-		messageSource.setCacheSeconds(CACHE_DURATION_SECONDS);
-		return messageSource;
-	}
+    messageSource.setDefaultEncoding(StandardCharsets.UTF_8.displayName());
+    messageSource.setCacheSeconds(CACHE_DURATION_SECONDS);
+    return messageSource;
+  }
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler(RESOURCES_PATH).addResourceLocations(RESOURCES_DIR);
-	}
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler(RESOURCES_PATH).addResourceLocations(RESOURCES_DIR);
+  }
 }

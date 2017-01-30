@@ -14,7 +14,7 @@
                                 </a>
                             </div>
 
-							<div class="apply-button">
+              <div class="apply-button">
                                 <div ng-show="offersCtrl.loggedUserId === offer.user.id">
                                     <!--EDIT-->
                                     <a ng-href="/job_offers/{{ offer.id }}/edit">
@@ -70,25 +70,25 @@
             </div>
             <div class="l_g_r">
                 <div class="dapibus biography-into">
-					<h4 class="no-padding">{{ 'NEED_TO_HIRE' | translate }}</h4>
-					<form name="offerForm" ng-submit="offerForm.$valid && offersCtrl.createOffer()" novalidate>
-						<div class="form-group">
-							<input class="form-control input-lg" type="text" placeholder="{{ 'TITLE' | translate }}*" name="title" ng-model="offersCtrl.offer.title" required></input>
-						</div>
-						<div class="form-group form-group-shadow">
-							<textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description" ng-model="offersCtrl.offer.description" required></textarea>
-						</div>
-						<p class="skill-container">
-							<a ng-repeat="skill in offersCtrl.selectedSkills" ng-click="offersCtrl.removeSelected(skill.id)" class="no-underline right skill"><span class="label label-info">{{ skill.name }}</span></a>
-						</p>
-						<select name="skillsSelection" class="form-control input-lg" ng-model="offersCtrl.skillIdToAdd" ng-change="offersCtrl.addSelected()">
-							<option value="">{{ 'SELECT_SKILL' | translate }}</option>
-							<option ng-repeat="skill in offersCtrl.skillsToSelect" value="{{skill.id}}">{{skill.name}}</option>
-						</select>
-						<br>
-						<input type="submit" class="btn btn-primary btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
-					</form>
-				</div>
+          <h4 class="no-padding">{{ 'NEED_TO_HIRE' | translate }}</h4>
+          <form name="offerForm" ng-submit="offerForm.$valid && offersCtrl.createOffer()" novalidate>
+            <div class="form-group">
+              <input class="form-control input-lg" type="text" placeholder="{{ 'TITLE' | translate }}*" name="title" ng-model="offersCtrl.offer.title" required></input>
+            </div>
+            <div class="form-group form-group-shadow">
+              <textarea class="form-control input-lg post-textarea" type="text" placeholder="{{ 'CONTENT' | translate }}*" name="description" ng-model="offersCtrl.offer.description" required></textarea>
+            </div>
+            <p class="skill-container">
+              <a ng-repeat="skill in offersCtrl.selectedSkills" ng-click="offersCtrl.removeSelected(skill.id)" class="no-underline right skill"><span class="label label-info">{{ skill.name }}</span></a>
+            </p>
+            <select name="skillsSelection" class="form-control input-lg" ng-model="offersCtrl.skillIdToAdd" ng-change="offersCtrl.addSelected()">
+              <option value="">{{ 'SELECT_SKILL' | translate }}</option>
+              <option ng-repeat="skill in offersCtrl.skillsToSelect" value="{{skill.id}}">{{skill.name}}</option>
+            </select>
+            <br>
+            <input type="submit" class="btn btn-primary btn-block btn-lg" value="{{ 'SUBMIT' | translate }}">
+          </form>
+        </div>
             </div>
         </div>
     </div>

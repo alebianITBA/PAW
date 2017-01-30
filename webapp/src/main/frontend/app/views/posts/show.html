@@ -5,39 +5,39 @@
         <div class="praesent">
             <div class="l_g_r b-margin">
                 <div class="dapibus biography-into relative">
-					<div ng-show="postCtrl.belongsToUser">
-						<div class="apply-button">
-							<div class="btn-group">
-								<button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									{{ 'ACTION' | translate }}
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu dropdown-menu-right">
-									<li>
-										<a ng-href="/posts/{{postCtrl.post.id}}/edit">
-											{{ 'EDIT' | translate }}
-										</a>
-									</li>
-									<li>
-										<a class="remove-button" ng-click="postCtrl.delete()">
-											{{ 'DELETE' | translate }}
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div>
-						<div class="media-body">
-							<h4>{{ postCtrl.post.title }}</h4>
-							<p class="adm">
-								{{ 'POSTED_BY' | translate }}
-								<a ng-href="/users/{{postCtrl.post.user.id}}">{{ postCtrl.post.user.first_name }} {{ postCtrl.post.user.last_name }}</a>
-							</p>
-							<hr>
-							<p>{{ postCtrl.post.description }}</p>
-						</div>
-					</div>
+          <div ng-show="postCtrl.belongsToUser">
+            <div class="apply-button">
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ 'ACTION' | translate }}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li>
+                    <a ng-href="/posts/{{postCtrl.post.id}}/edit">
+                      {{ 'EDIT' | translate }}
+                    </a>
+                  </li>
+                  <li>
+                    <a class="remove-button" ng-click="postCtrl.delete()">
+                      {{ 'DELETE' | translate }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="media-body">
+              <h4>{{ postCtrl.post.title }}</h4>
+              <p class="adm">
+                {{ 'POSTED_BY' | translate }}
+                <a ng-href="/users/{{postCtrl.post.user.id}}">{{ postCtrl.post.user.first_name }} {{ postCtrl.post.user.last_name }}</a>
+              </p>
+              <hr>
+              <p>{{ postCtrl.post.description }}</p>
+            </div>
+          </div>
                 </div>
             </div>
         </div>

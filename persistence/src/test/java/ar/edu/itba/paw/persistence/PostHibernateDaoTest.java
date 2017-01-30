@@ -26,137 +26,137 @@ import ar.edu.itba.paw.models.User;
 @Transactional
 public class PostHibernateDaoTest extends DaoTest {
 
-	private static final String TABLE_NAME = "posts";
-	private static final String TITLE = "test";
-	private static final String DESCRIPTION = "test";
-	private User creator;
+  private static final String TABLE_NAME = "posts";
+  private static final String TITLE = "test";
+  private static final String DESCRIPTION = "test";
+  private User creator;
 
-	@Autowired
-	private PostDao postDao;
+  @Autowired
+  private PostDao postDao;
 
-	@Autowired
-	private UserDao userDao;
+  @Autowired
+  private UserDao userDao;
 
-	@PersistenceContext
-	private EntityManager em;
+  @PersistenceContext
+  private EntityManager em;
 
-	@Before
-	public void setUp() {
-		cleanUp();
-		if (creator == null) {
-			creator = userDao.create("test", "creator", "test@creator.com", "123");
-		}
-	}
+  @Before
+  public void setUp() {
+    cleanUp();
+    if (creator == null) {
+      creator = userDao.create("test", "creator", "test@creator.com", "123");
+    }
+  }
 
-	@Test
-	public void testCreate() {
-		assertEquals(0, rowCount());
+  @Test
+  public void testCreate() {
+    assertEquals(0, rowCount());
 
-		Post post = postDao.create(TITLE, DESCRIPTION, creator);
+    Post post = postDao.create(TITLE, DESCRIPTION, creator);
 
-		assertEquals(1, rowCount());
-		assertNotNull(post.getId());
-		assertEquals(TITLE, post.getTitle());
-		assertEquals(DESCRIPTION, post.getDescription());
-		assertEquals(creator, post.getUser());
-	}
+    assertEquals(1, rowCount());
+    assertNotNull(post.getId());
+    assertEquals(TITLE, post.getTitle());
+    assertEquals(DESCRIPTION, post.getDescription());
+    assertEquals(creator, post.getUser());
+  }
 
-	@Test
-	public void testDelete() {
-		Post post = postDao.create(TITLE, DESCRIPTION, creator);
-		assertEquals(1, rowCount());
+  @Test
+  public void testDelete() {
+    Post post = postDao.create(TITLE, DESCRIPTION, creator);
+    assertEquals(1, rowCount());
 
-		postDao.delete(post.getId());
+    postDao.delete(post.getId());
 
-		assertEquals(0, rowCount());
-	}
+    assertEquals(0, rowCount());
+  }
 
-	@Test
-	public void testUpdate() {
-		Post post = postDao.create(TITLE, DESCRIPTION, creator);
-		String newTitle = TITLE + "2";
-		String newDescription = DESCRIPTION + "2";
+  @Test
+  public void testUpdate() {
+    Post post = postDao.create(TITLE, DESCRIPTION, creator);
+    String newTitle = TITLE + "2";
+    String newDescription = DESCRIPTION + "2";
 
-		Post result = postDao.update(post.getId(), newTitle, newDescription);
+    Post result = postDao.update(post.getId(), newTitle, newDescription);
 
-		assertEquals(post.getId(), result.getId());
-		assertEquals(newTitle, result.getTitle());
-		assertEquals(newDescription, result.getDescription());
+    assertEquals(post.getId(), result.getId());
+    assertEquals(newTitle, result.getTitle());
+    assertEquals(newDescription, result.getDescription());
 
-		Post check = postDao.find(post.getId());
-		assertEquals(check.getId(), result.getId());
-		assertEquals(check, result);
+    Post check = postDao.find(post.getId());
+    assertEquals(check.getId(), result.getId());
+    assertEquals(check, result);
 
-		result = postDao.update(post.getId(), null, newDescription);
-		assertEquals(newTitle, result.getTitle());
-		result = postDao.update(post.getId(), "", newDescription);
-		assertEquals(newTitle, result.getTitle());
+    result = postDao.update(post.getId(), null, newDescription);
+    assertEquals(newTitle, result.getTitle());
+    result = postDao.update(post.getId(), "", newDescription);
+    assertEquals(newTitle, result.getTitle());
 
-		result = postDao.update(post.getId(), newTitle, null);
-		assertEquals(newDescription, result.getDescription());
-		result = postDao.update(post.getId(), newTitle, "");
-		assertEquals(newDescription, result.getDescription());
-	}
+    result = postDao.update(post.getId(), newTitle, null);
+    assertEquals(newDescription, result.getDescription());
+    result = postDao.update(post.getId(), newTitle, "");
+    assertEquals(newDescription, result.getDescription());
+  }
 
-	@Test
-	public void testCount() {
-		postDao.create(TITLE, DESCRIPTION, creator);
-		postDao.create(TITLE, DESCRIPTION, creator);
+  @Test
+  public void testCount() {
+    postDao.create(TITLE, DESCRIPTION, creator);
+    postDao.create(TITLE, DESCRIPTION, creator);
 
-		assertEquals(2, postDao.count().intValue());
-	}
+    assertEquals(2, postDao.count().intValue());
+  }
 
-	@Test
-	public void testFind() {
-		Post post = postDao.create(TITLE, DESCRIPTION, creator);
+  @Test
+  public void testFind() {
+    Post post = postDao.create(TITLE, DESCRIPTION, creator);
 
-		Post found = postDao.find(post.getId());
+    Post found = postDao.find(post.getId());
 
-		assertEquals(post, found);
-	}
+    assertEquals(post, found);
+  }
 
-	@Test
-	public void testAll() throws InterruptedException {
-		postDao.create(TITLE, DESCRIPTION, creator);
-		postDao.create(TITLE, DESCRIPTION, creator);
+  @Test
+  public void testAll() throws InterruptedException {
+    postDao.create(TITLE, DESCRIPTION, creator);
+    postDao.create(TITLE, DESCRIPTION, creator);
 
-		List<Post> result = postDao.all();
+    List<Post> result = postDao.all();
 
-		assertEquals(2, result.size());
-	}
+    assertEquals(2, result.size());
+  }
 
-	@Test
-	public void testPaginatedAll() {
-		postDao.create(TITLE, DESCRIPTION, creator);
-		postDao.create(TITLE, DESCRIPTION, creator);
+  @Test
+  public void testPaginatedAll() {
+    postDao.create(TITLE, DESCRIPTION, creator);
+    postDao.create(TITLE, DESCRIPTION, creator);
 
-		List<Post> result = postDao.all(0, 1);
+    List<Post> result = postDao.all(0, 1);
 
-		assertEquals(1, result.size());
-	}
-	
-	@Test
-	public void testUserPosts() throws InterruptedException {
-		postDao.create(TITLE, DESCRIPTION, creator);
-		postDao.create(TITLE, DESCRIPTION, creator);
+    assertEquals(1, result.size());
+  }
+  
+  @Test
+  public void testUserPosts() throws InterruptedException {
+    postDao.create(TITLE, DESCRIPTION, creator);
+    postDao.create(TITLE, DESCRIPTION, creator);
 
-		List<Post> result = postDao.userPosts(creator.getId());
+    List<Post> result = postDao.userPosts(creator.getId());
 
-		assertEquals(2, result.size());
-	}
+    assertEquals(2, result.size());
+  }
 
-	@Test
-	public void testPaginatedUserPosts() {
-		postDao.create(TITLE, DESCRIPTION, creator);
-		postDao.create(TITLE, DESCRIPTION, creator);
+  @Test
+  public void testPaginatedUserPosts() {
+    postDao.create(TITLE, DESCRIPTION, creator);
+    postDao.create(TITLE, DESCRIPTION, creator);
 
-		List<Post> result = postDao.userPosts(creator.getId(), 0, 1);
+    List<Post> result = postDao.userPosts(creator.getId(), 0, 1);
 
-		assertEquals(1, result.size());
-	}
+    assertEquals(1, result.size());
+  }
 
-	@Override
-	protected String tableName() {
-		return TABLE_NAME;
-	}
+  @Override
+  protected String tableName() {
+    return TABLE_NAME;
+  }
 }

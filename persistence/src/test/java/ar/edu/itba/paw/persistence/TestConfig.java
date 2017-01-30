@@ -23,40 +23,40 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class TestConfig {
 
-	@Value("classpath:schema.sql")
-	private Resource schemaSql;
+  @Value("classpath:schema.sql")
+  private Resource schemaSql;
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
-		final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-		factoryBean.setPackagesToScan("ar.edu.itba.paw.models");
-		factoryBean.setDataSource(dataSource());
+  @Bean
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
+    final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+    factoryBean.setPackagesToScan("ar.edu.itba.paw.models");
+    factoryBean.setDataSource(dataSource());
 
-		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		factoryBean.setJpaVendorAdapter(vendorAdapter);
+    final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+    factoryBean.setJpaVendorAdapter(vendorAdapter);
 
-		final Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
+    final Properties properties = new Properties();
+    properties.setProperty("hibernate.hbm2ddl.auto", "update");
+    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
 
-		factoryBean.setJpaProperties(properties);
+    factoryBean.setJpaProperties(properties);
 
-		return factoryBean;
-	}
+    return factoryBean;
+  }
 
-	@Bean
-	public PlatformTransactionManager transactionManager(final EntityManagerFactory emf) {
-		return new JpaTransactionManager(emf);
-	}
+  @Bean
+  public PlatformTransactionManager transactionManager(final EntityManagerFactory emf) {
+    return new JpaTransactionManager(emf);
+  }
 
-	@Bean
-	public DataSource dataSource() {
-		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
-		ds.setDriverClass(org.postgresql.Driver.class);
-		ds.setUrl("jdbc:postgresql://localhost:5432/paw_test");
-		ds.setUsername("paw");
-		ds.setPassword("paw");
-		return ds;
-	}
-	
+  @Bean
+  public DataSource dataSource() {
+    final SimpleDriverDataSource ds = new SimpleDriverDataSource();
+    ds.setDriverClass(org.postgresql.Driver.class);
+    ds.setUrl("jdbc:postgresql://localhost:5432/paw_test");
+    ds.setUsername("paw");
+    ds.setPassword("paw");
+    return ds;
+  }
+  
 }

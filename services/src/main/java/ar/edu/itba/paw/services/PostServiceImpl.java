@@ -15,56 +15,56 @@ import ar.edu.itba.paw.models.User;
 @Transactional
 public class PostServiceImpl implements PostService {
 
-	@Autowired
-	private PostDao postDao;
+  @Autowired
+  private PostDao postDao;
 
-	public void setPostDao(PostDao postDao) {
-		this.postDao = postDao;
-	}
+  public void setPostDao(PostDao postDao) {
+    this.postDao = postDao;
+  }
 
-	@Override
-	public Post create(String title, String description, User user) {
-		return postDao.create(title, description, user);
-	}
+  @Override
+  public Post create(String title, String description, User user) {
+    return postDao.create(title, description, user);
+  }
 
-	@Override
-	public void delete(Long id) {
-		postDao.delete(id);
-	}
+  @Override
+  public void delete(Long id) {
+    postDao.delete(id);
+  }
 
-	@Override
-	public Post update(Long id, String title, String description) {
-		return postDao.update(id, title, description);
-	}
+  @Override
+  public Post update(Long id, String title, String description) {
+    return postDao.update(id, title, description);
+  }
 
-	@Override
-	public Long count() {
-		return postDao.count();
-	}
+  @Override
+  public Long count() {
+    return postDao.count();
+  }
 
-	@Override
-	public Post find(Long id) {
-		return postDao.find(id);
-	}
+  @Override
+  public Post find(Long id) {
+    return postDao.find(id);
+  }
 
-	@Override
-	public List<Post> all() {
-		return postDao.all();
-	}
+  @Override
+  public List<Post> all() {
+    return postDao.all();
+  }
 
-	@Override
-	public List<Post> all(Integer page, Integer perPage) {
-		return postDao.all(page, perPage);
-	}
+  @Override
+  public List<Post> all(Integer page, Integer perPage) {
+    return postDao.all(page, perPage);
+  }
 
-	@Override
-	public List<Post> userPosts(Long userId) {
-		return postDao.userPosts(userId);
-	}
+  @Override
+  public List<Post> userPosts(Long userId) {
+    return postDao.userPosts(userId);
+  }
 
-	@Override
-	public List<Post> userPosts(Long userId, Integer page, Integer perPage) {
-		return postDao.userPosts(userId, page, perPage);
-	}
+  @Override
+  public List<Post> userPosts(Long userId, Integer page, Integer perPage) {
+    return postDao.userPosts(userId, page, perPage);
+  }
 
 }

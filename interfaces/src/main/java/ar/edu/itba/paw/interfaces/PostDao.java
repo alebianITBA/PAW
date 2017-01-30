@@ -7,22 +7,22 @@ import ar.edu.itba.paw.models.User;
 
 public interface PostDao {
 
-	Post create(String title, String description, User user);
+  Post create(String title, String description, User user);
 
-	void delete(Long id);
+  void delete(Long id);
 
-	Post update(Long id, String title, String description);
+  Post update(Long id, String title, String description);
 
-	Long count();
+  Long count();
 
-	Post find(Long id);
+  Post find(Long id);
 
-	List<Post> all();
+  List<Post> all();
 
-	List<Post> all(Integer page, Integer perPage);
+  List<Post> all(Integer page, Integer perPage);
 
-	List<Post> userPosts(Long userId);
+  List<Post> userPosts(Long userId);
 
-	List<Post> userPosts(Long userId, Integer page, Integer perPage);
+  List<Post> userPosts(Long userId, Integer page, Integer perPage);
 
 }
