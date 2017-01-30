@@ -1,5 +1,5 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/jobOfferService', 'services/jobApplicationService', 'services/commonService', 'services/sessionService', 'services/skillService'], function(connectOn) {
 
     connectOn.controller(
         'JobOffersCtrl',

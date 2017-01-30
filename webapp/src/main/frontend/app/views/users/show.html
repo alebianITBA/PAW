@@ -1,4 +1,6 @@
-<div class="content" ng-controller="UserCtrl as userCtrl">
+<div ng-controller="UserCtrl as userCtrl">
+  <navbar></navbar>
+  <div class="content">
     <div class="container">
 
         <div class="row">
@@ -59,7 +61,7 @@
                                         <p>{{ post.description }}</p>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="row center">
                                 <div id="pagination">
@@ -113,8 +115,8 @@
                                 <div class="media">
                                     <div class="media-body">
                                         <h4>
-                                            <img ng-src="/images/on.png" ng-show="offer.closed_at === undefined"/>
-                                            <img ng-src="/images/off.png" ng-hide="offer.closed_at === undefined"/>
+                                            <img ng-src="{{ userCtrl.onUrl }}" ng-show="offer.closed_at === undefined"/>
+                                            <img ng-src="{{ userCtrl.offUrl }}" ng-hide="offer.closed_at === undefined"/>
                                             <a class="no-underline" ng-href="/job_offers/{{offer.id}}">{{ offer.title }}</a>
                                         </h4>
                                         <p>{{ offer.description }}</p>
@@ -165,7 +167,7 @@
                                             <p>{{ 'POSTED_BY' | translate }} {{ application.job_offer.user.email }}</p>
                                             <p>{{ application.job_offer.description }}</p>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="row center">
@@ -187,4 +189,5 @@
         </div>
 
     </div>
+</div>
 </div>

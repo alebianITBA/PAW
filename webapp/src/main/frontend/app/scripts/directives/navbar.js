@@ -6,9 +6,7 @@ define(['connectOn'], function(connectOn) {
         function() {
             return {
                 restrict: 'E',
-                templateUrl: 'views/header.html',
-                controller: 'NavbarCtrl',
-                controllerAs: 'ctrl'
+                templateUrl: 'grupo5/views/header.html'
             };
         }
     );

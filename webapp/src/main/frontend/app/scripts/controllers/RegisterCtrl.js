@@ -1,5 +1,5 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/userService', 'services/sessionService'], function(connectOn) {
 
     connectOn.controller(
         'RegisterCtrl',
@@ -7,6 +7,7 @@ define(['connectOn'], function(connectOn) {
         function($scope, UserService, SessionService, $location, $timeout) {
             this.user = {};
             this.constants = connectOn.constants;
+            this.backgroundImageUrl = connectOn.constants.BASE_URL + '/images/register-background.jpg';
             var that = this;
 
             this.showError = false;
@@ -14,13 +15,13 @@ define(['connectOn'], function(connectOn) {
 
             // Subscribe to the user session service
             this.redirect = false;
-            var onUserUpdate = function() {
+            var onLogin = function() {
                 if (that.redirect) {
-                    $location.path('/onboarding');
+                    $location.path(that.constants.PATH_ONBOARDING);
                 }
                 return true;
             };
-            SessionService.subscribe(SessionService.doNothing, SessionService.doNothing, onUserUpdate, 'RegisterCtrl');
+            SessionService.subscribe(onLogin, SessionService.doNothing, SessionService.doNothing, 'RegisterCtrl');
 
             this.register = function() {
                 UserService.createUser(that.user)

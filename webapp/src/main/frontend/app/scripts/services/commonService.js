@@ -1,5 +1,5 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', 'services/sessionService'], function(connectOn) {
 
     connectOn.service(
         'CommonService',

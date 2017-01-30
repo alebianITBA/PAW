@@ -13,7 +13,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("api/v1/skills")
+@Path("v1/skills")
 @Component
 public class SkillsController extends ApiController {
   @Autowired

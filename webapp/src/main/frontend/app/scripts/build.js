@@ -1,7 +1,7 @@
 /* global paths */
 'use strict';
 require.config({
-    baseUrl: '/scripts',
+    baseUrl: 'grupo5/scripts',
     paths: {
         affix: '../../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix',
         alert: '../../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert',
@@ -78,16 +78,7 @@ if (paths) {
 require([
         'angular',
         'angular-local-storage',
-        'connectOn',
-        'controllers/NavbarCtrl',
-        'directives/navbar',
-        'services/commonService',
-        'services/jobApplicationService',
-        'services/jobOfferService',
-        'services/postService',
-        'services/sessionService',
-        'services/skillService',
-        'services/userService'
+        'connectOn'
     ],
     function() {
         angular.bootstrap(document, ['connectOn']);

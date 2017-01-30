@@ -13,7 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-@Path("api/v1")
+@Path("v1")
 @Component
 public class SessionsController extends ApiController {
   @Autowired

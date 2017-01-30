@@ -1,4 +1,6 @@
-<div class="content" ng-controller="OnboardingCtrl as onboardingCtrl">
+<div ng-controller="OnboardingCtrl as onboardingCtrl">
+  <navbar></navbar>
+  <div class="content">
     <div class="container">
         <div class="row">
             <div class="col-md-12 praesent">
@@ -17,13 +19,14 @@
                             <a ng-repeat="skill in onboardingCtrl.selectedSkills" ng-click="onboardingCtrl.removeSelected(skill.id)" class="no-underline right skill"><span class="label label-info">{{ skill.name }} <span class="glyphicon glyphicon-remove"></span></span></a>
                         </h3>
                         <br>
-						
+
 						<div class="form-group">
-							 <a ng-href="/index"><button class="btn-lg btn-primary">{{ 'CONTINUE' | translate }}</button></a>
+							 <button class="btn-lg btn-primary" ng-click="onboardingCtrl.goToIndex()">{{ 'CONTINUE' | translate }}</button>
 						</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

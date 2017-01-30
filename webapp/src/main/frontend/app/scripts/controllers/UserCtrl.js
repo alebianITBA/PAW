@@ -1,5 +1,5 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/userService', 'services/postService', 'services/jobApplicationService', 'services/jobOfferService', 'services/commonService', 'services/sessionService'], function(connectOn) {
 
     connectOn.controller(
         'UserCtrl',
@@ -8,6 +8,9 @@ define(['connectOn'], function(connectOn) {
             this.belongsToUser = false;
             var that = this;
             var defaultPerPage = 3;
+
+            this.onUrl = connectOn.constants.BASE_URL + '/images/on.ba5bc526.png';
+            this.offUrl = connectOn.constants.BASE_URL + '/images/off.dd64f230.png';
 
             // USER
             this.user = {};

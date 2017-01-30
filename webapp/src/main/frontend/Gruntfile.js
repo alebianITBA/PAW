@@ -7,12 +7,101 @@ module.exports = function (grunt) {
 
   require('time-grunt')(grunt);
 
+  grunt.loadNpmTasks('grunt-regex-replace');
+
   var appConfig = {
     app: 'app',
     dist: '../../../target/webapp/'
   };
 
   grunt.initConfig({
+
+    'regex-replace': {
+      controllers: {
+        src: ['<%= yeoman.dist %>/**/path*'],
+        actions: [
+          {
+            name: 'controllerRegex',
+            search: ':"controllers',
+            replace: ':"/grupo5/scripts/controllers',
+            flags: 'g'
+          }
+        ]
+      },
+
+      directive: {
+        src: ['<%= yeoman.dist %>/**/path*'],
+        actions: [
+          {
+            name: 'controllerRegex',
+            search: ':"directives',
+            replace: ':"/grupo5/scripts/directives',
+            flags: 'g'
+          }
+        ]
+      },
+
+      services: {
+        src: ['<%= yeoman.dist %>/**/path*'],
+        actions: [
+          {
+            name: 'controllerRegex',
+            search: ':"services',
+            replace: ':"/grupo5/scripts/services',
+            flags: 'g'
+          }
+        ]
+      },
+
+      views: {
+        src: ['<%= yeoman.dist %>/**/build*'],
+        actions: [
+          {
+            name: 'buildRegex',
+            search: 'templateUrl:"/views',
+            replace: 'templateUrl:"/grupo5/views',
+            flags: 'g'
+          }
+        ]
+      },
+
+     jquery: {
+       src: ['<%= yeoman.dist %>/**/path*'],
+       actions: [
+         {
+           name: 'jquery-ui',
+           search: ':"jquery-ui',
+           replace: ':"/grupo5/scripts/jquery-ui',
+           flags: 'g'
+         }
+       ]
+     },
+
+     scripts: {
+        src: ['<%= yeoman.dist %>/*.html'],
+        actions: [
+          {
+            name: 'paths',
+            search: '/scripts',
+            replace: 'grupo5/scripts',
+            flags: 'g'
+          }
+        ]
+      },
+
+      bower: {
+         src: ['<%= yeoman.dist %>/*.html'],
+         actions: [
+           {
+             name: 'paths',
+             search: '/bower_components',
+             replace: 'grupo5/bower_components',
+             flags: 'g'
+           }
+         ]
+        }
+    },
+
     yeoman: appConfig,
     connect: {
       options: {
@@ -359,7 +448,7 @@ module.exports = function (grunt) {
           removeCombined: true,
           preserveLicenseComments: false,
           findNestedDependencies: true,
-          dir: 'dist/scripts',
+          dir: '<%= yeoman.dist %>/scripts',
           modules: [
             {
               name: 'build'
@@ -504,7 +593,8 @@ module.exports = function (grunt) {
       // uses filerev data to rewrire file urls
       'usemin',
       // minify html
-      'htmlmin'
+      'htmlmin',
+      'regex-replace'
     ]);
   });
 

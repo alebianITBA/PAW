@@ -16,7 +16,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("api/v1/job_applications")
+@Path("v1/job_applications")
 @Component
 public class JobApplicationsController extends ApiController {
   @Autowired

@@ -1,11 +1,12 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/jobOfferService', 'services/sessionService', 'services/commonService', 'services/jobApplicationService'], function(connectOn) {
 
     connectOn.controller(
         'JobOfferCtrl',
         ['$scope', 'JobOfferService', '$routeParams', 'SessionService', 'CommonService', '$location', 'JobApplicationService',
         function($scope, JobOfferService, $routeParams, SessionService, CommonService, $location, JobApplicationService) {
             var that = this;
+            var constants = connectOn.constants;
             this.belongsToUser = false;
             this.showApply = false;
             this.showApplied = false;
@@ -31,13 +32,13 @@ define(['connectOn'], function(connectOn) {
                     }
                 })
                 .catch(function() {
-                    $location.path('/job_offers/');
+                    $location.path(that.constants.BASE_PATH + '/job_offers/');
                 });
 
             this.delete = function() {
                 JobOfferService.delete($routeParams.offerId).then(function(response) {
                     if (response.status === 200) {
-                        $location.path('/job_offers/');
+                        $location.path(that.constants.BASE_PATH + '/job_offers/');
                     }
                 });
             };
@@ -47,7 +48,7 @@ define(['connectOn'], function(connectOn) {
                     if (response.status === 201) {
                         that.showApply = false;
                         that.showApplied = true;
-                        $location.path('/job_offers/' + that.offer.id);
+                        $location.path(that.constants.BASE_PATH + '/job_offers/' + that.offer.id);
                     }
                 });
             };

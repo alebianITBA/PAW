@@ -1,5 +1,5 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', 'services/sessionService'], function(connectOn) {
 
     connectOn.controller(
         'NavbarCtrl',
@@ -13,6 +13,8 @@ define(['connectOn'], function(connectOn) {
 
             this.showError = SessionService.showLoginError;
             this.errorCode = SessionService.loginErrorCode;
+
+            this.logoUrl = this.constants.BASE_URL + '/images/logo.1fe69a09.png';
 
             // Subscribe to the user session service
             this.canRedirect = false;
@@ -61,8 +63,6 @@ define(['connectOn'], function(connectOn) {
 
             if (!$scope.logged && $location.$$path !== that.constants.PATH_ROOT) {
                 $location.path(that.constants.PATH_ROOT);
-            } else if ($scope.logged && ($location.$$path === '/' || $location.$$path === '/onboarding')) {
-                $location.path(that.constants.PATH_INDEX);
             } else {
                 updateUserInfo();
             }

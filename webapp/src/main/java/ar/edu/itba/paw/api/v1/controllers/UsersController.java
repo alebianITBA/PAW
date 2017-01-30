@@ -24,7 +24,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("api/v1/users")
+@Path("v1/users")
 @Component
 public class UsersController extends ApiController {
 

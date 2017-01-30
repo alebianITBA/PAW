@@ -1,11 +1,12 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/postService'], function(connectOn) {
 
     connectOn.controller(
         'EditPostCtrl',
         ['$scope', 'PostService', '$routeParams', '$location',
         function($scope, PostService, $routeParams, $location) {
             this.post = {};
+            this.constants = connectOn.constants;
 
             var that = this;
             PostService.show($routeParams.postId).then(function(result) {
@@ -14,7 +15,7 @@ define(['connectOn'], function(connectOn) {
 
             this.editPost = function() {
                 PostService.edit(that.post).then(function(result) {
-                    $location.path('/posts/' + that.post.id);
+                    $location.path(that.constants.BASE_PATH + '/posts/' + that.post.id);
                 });
             };
         }]

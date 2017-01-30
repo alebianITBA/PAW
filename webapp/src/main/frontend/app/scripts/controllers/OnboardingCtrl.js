@@ -1,17 +1,18 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/userService', 'services/skillService', 'services/commonService', 'services/sessionService'], function(connectOn) {
 
     connectOn.controller(
         'OnboardingCtrl',
-        ['$scope', 'UserService', 'SkillService', 'CommonService', 'SessionService', '$timeout',
-        function($scope, UserService, SkillService, CommonService, SessionService, $timeout) {
-            this.selectedSkills = SessionService.loggedUser().skills || [];
+        ['$scope', 'UserService', 'SkillService', 'CommonService', 'SessionService', '$timeout', '$location',
+        function($scope, UserService, SkillService, CommonService, SessionService, $timeout, $location) {
+            var that = this;
+            this.selectedSkills = null;
             this.skillsToSelect = [];
             this.skillIdToAdd = null;
+            this.constants = connectOn.constants;
 
             // USER
-            this.user = SessionService.loggedUser();
-            var that = this;
+            this.user = {};
 
             this.getSkills = function() {
                 SkillService.all().then(function(response) {
@@ -25,7 +26,14 @@ define(['connectOn'], function(connectOn) {
                     };
                 });
             };
-            this.getSkills();
+
+            var onUserUpdate = function() {
+                that.user = SessionService.loggedUser();
+                that.selectedSkills = SessionService.loggedUser().skills || [];
+                that.getSkills();
+                return true;
+            };
+            SessionService.subscribe(SessionService.doNothing, SessionService.doNothing, onUserUpdate, 'RegisterCtrl');
 
             this.removeSelected = function(skillId) {
                 var check = function(element) {
@@ -60,6 +68,10 @@ define(['connectOn'], function(connectOn) {
                         CommonService.moveElements(that.selectedSkills, that.skillsToSelect, check);
                     }
                 });
+            };
+
+            this.goToIndex = function() {
+                $location.path(that.constants.PATH_INDEX);
             };
 
         }]

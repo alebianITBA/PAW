@@ -1,5 +1,5 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/postService', 'services/sessionService'], function(connectOn) {
 
     connectOn.controller(
         'PostCtrl',

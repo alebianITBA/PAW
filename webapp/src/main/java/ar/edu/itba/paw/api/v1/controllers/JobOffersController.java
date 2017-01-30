@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Path("api/v1/job_offers")
+@Path("v1/job_offers")
 @Component
 public class JobOffersController extends ApiController {
   @Autowired

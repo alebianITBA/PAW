@@ -1,5 +1,5 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/jobOfferService', 'services/commonService', 'services/skillService'], function(connectOn) {
 
     connectOn.controller(
         'EditJobOfferCtrl',
@@ -9,6 +9,7 @@ define(['connectOn'], function(connectOn) {
             this.selectedSkills = [];
             this.skillsToSelect = [];
             this.skillIdToAdd = null;
+            this.constants = connectOn.constants;
 
             var that = this;
             this.getOffer = function() {
@@ -53,7 +54,7 @@ define(['connectOn'], function(connectOn) {
             this.editOffer = function() {
                 that.offer.skillIds = that.selectedSkills;
                 JobOfferService.edit(that.offer).then(function(result) {
-                    $location.path('/job_offers/' + that.offer.id);
+                    $location.path(that.constants.BASE_PATH + '/job_offers/' + that.offer.id);
                 });
             };
         }]

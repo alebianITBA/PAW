@@ -1,5 +1,5 @@
 'use strict';
-define(['connectOn'], function(connectOn) {
+define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/userService', 'services/commonService', 'services/skillService'], function(connectOn) {
 
     connectOn.controller(
         'EditUserCtrl',
@@ -9,6 +9,7 @@ define(['connectOn'], function(connectOn) {
             this.selectedSkills = [];
             this.skillsToSelect = [];
             this.skillIdToAdd = null;
+            this.constants = connectOn.constants;
 
             var that = this;
             this.getUser = function() {
@@ -55,7 +56,7 @@ define(['connectOn'], function(connectOn) {
                 that.user.lastName = that.user.last_name;
                 that.user.firstName = that.user.first_name;
                 UserService.edit(that.user).then(function(result) {
-                    $location.path('/users/' + that.user.id);
+                    $location.path(that.constants.BASE_PATH + '/users/' + that.user.id);
                 });
             };
         }]

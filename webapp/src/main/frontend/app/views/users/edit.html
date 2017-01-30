@@ -1,4 +1,6 @@
-<div class="content" ng-controller="EditUserCtrl as editUserCtrl">
+<div ng-controller="EditUserCtrl as editUserCtrl">
+  <navbar></navbar>
+  <div class="content">
     <div class="container">
         <div class="praesent">
             <div class="l_g_r biography-into">
@@ -6,7 +8,7 @@
                     <h4>{{ 'EDIT_PROFILE' | translate }}</h4>
 					<hr>
                     <form class="form-horizontal" name="userForm" ng-submit="userForm.$valid && editUserCtrl.editUser()" novalidate>
-                        
+
 						<div class="form-group">
 							<label class="col-sm-2 control-label">{{ 'FIRST_NAME' | translate }}*</label>
 							<div class="col-sm-9">
@@ -41,4 +43,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
