@@ -50,7 +50,11 @@ define(['routes',
     var devBaseUrl = 'http://localhost:8080/grupo5';
     var prodBaseUrl = 'http://pawserver.it.itba.edu.ar/grupo5';
     var basePath = '';
+    //
+    // Change this to switch environments
     var baseUrl = prodBaseUrl;
+    // Change this to switch environments
+    //
     var apiBaseUrl = baseUrl + '/api/v1';
     connectOn.constants = {
       TOKEN_KEY: 'token',

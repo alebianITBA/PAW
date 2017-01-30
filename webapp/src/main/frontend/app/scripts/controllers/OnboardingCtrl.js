@@ -10,6 +10,7 @@ define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/userServi
             this.skillsToSelect = [];
             this.skillIdToAdd = null;
             this.constants = connectOn.constants;
+            this.alreadyLoaded = false;
 
             // USER
             this.user = {};
@@ -28,9 +29,12 @@ define(['connectOn', './NavbarCtrl', '../directives/navbar', 'services/userServi
             };
 
             var onUserUpdate = function() {
-                that.user = SessionService.loggedUser();
-                that.selectedSkills = SessionService.loggedUser().skills || [];
-                that.getSkills();
+                if (!that.alreadyLoaded) {
+                    that.user = SessionService.loggedUser();
+                    that.selectedSkills = SessionService.loggedUser().skills || [];
+                    that.getSkills();
+                    that.alreadyLoaded = true;
+                }
                 return true;
             };
             SessionService.subscribe(SessionService.doNothing, SessionService.doNothing, onUserUpdate, 'RegisterCtrl');
