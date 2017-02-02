@@ -2,6 +2,8 @@ package ar.edu.itba.paw.models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Table(name = "skills")
@@ -18,9 +20,19 @@ public class Skill {
 
   @Column(name = "created_at")
   private Date createdAt;
-  
+
   protected Skill(){
     /* Just for Hibernate */
+  }
+
+  public static Skill nullSkill() {
+    return new Skill(0L, "NULL", new Date());
+  }
+
+  public static List<Skill> nullList() {
+    List<Skill> skills = new LinkedList<>();
+    skills.add(nullSkill());
+    return skills;
   }
 
   public Skill(Long id, String name, Date createdAt) {
@@ -28,12 +40,12 @@ public class Skill {
     this.name = name;
     this.createdAt = createdAt;
   }
-  
+
   public Skill(String name, Date createdAt) {
     this.name = name;
     this.createdAt = createdAt;
   }
-  
+
   @Override
     public int hashCode() {
         return id.hashCode();
@@ -63,7 +75,7 @@ public class Skill {
 
     return true;
   }
-  
+
   @Override
   public String toString() {
     return "[ SKILL: " + name + " ]";
@@ -76,7 +88,7 @@ public class Skill {
   public String getName() {
     return name;
   }
-  
+
   public void setName(String name) {
     this.name = name;
   }

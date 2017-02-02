@@ -16,9 +16,9 @@ public interface JobOfferService {
   void delete(Long id);
 
   JobOffer update(Long id, String title, String description);
-  
+
   JobOffer update(Long id, String title, String description, String skills);
-  
+
   JobOffer update(Long id, Date closedAt);
 
   Long count();
@@ -36,19 +36,21 @@ public interface JobOfferService {
   List<JobOffer> withSkills(List<Skill> skills);
 
   List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage);
-  
+
   Long withSkillsCount(List<Skill> skills);
 
   List<JobOffer> notFromUser(Long userId);
 
   List<JobOffer> notFromUser(Long userId, Integer page, Integer perPage);
-  
+
   List<JobOffer> notApplied(Long userId);
-  
+
   List<JobOffer> notApplied(Long userId, Integer page, Integer perPage);
-  
+
   List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills);
-  
+
   List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills, Integer page, Integer perPage);
+
+  List<JobOffer> recommendedFor(User user, int page, int perPage);
 
 }

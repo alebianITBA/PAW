@@ -4,6 +4,7 @@ import ar.edu.itba.paw.utils.MD5Util;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -40,6 +41,16 @@ public class User {
 
   protected User() {
     /* Just for Hibernate */
+  }
+
+  public static User nullUser() {
+    return new User(0L, "NULL", "NULL", "NULL", "NULL", new Date());
+  }
+
+  public static List<User> nullList() {
+    List<User> users = new LinkedList<>();
+    users.add(nullUser());
+    return users;
   }
 
   public User(Long id, String firstName, String lastName, String email, String password, Date createdAt) {

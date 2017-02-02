@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.models;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -61,6 +62,16 @@ public class JobOffer {
 
   protected JobOffer() {
     /* Just for Hibernate */
+  }
+
+  public static JobOffer nullOffer() {
+    return new JobOffer(0L, "NULL", "NULL", User.nullUser(), new Date(), new Date());
+  }
+
+  public static List<JobOffer> nullList() {
+    List<JobOffer> offers = new LinkedList<>();
+    offers.add(nullOffer());
+    return offers;
   }
 
   public JobOffer(Long id, String title, String description, User user, Date createdAt, Date closedAt) {

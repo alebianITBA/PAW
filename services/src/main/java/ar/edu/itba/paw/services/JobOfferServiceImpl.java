@@ -160,9 +160,9 @@ public class JobOfferServiceImpl implements JobOfferService {
   @Override
   public List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills) {
     List<JobOffer> result = null;
-    
+
     List<JobApplication> applications = jobApplicationService.userJobApplications(userId);
-    
+
     if (applications != null && !applications.isEmpty()) {
       if (skills != null && !skills.isEmpty()) {
         result = jobOfferDao.notAppliedWithSkills(userId, applications, skills);
@@ -171,20 +171,20 @@ public class JobOfferServiceImpl implements JobOfferService {
         }
       } else {
         result = notApplied(userId);
-      }  
+      }
     } else {
       result = notFromUser(userId);
     }
-    
+
     return result;
   }
 
   @Override
   public List<JobOffer> notAppliedWithSkills(Long userId, List<Skill> skills, Integer page, Integer perPage) {
 List<JobOffer> result = null;
-    
+
     List<JobApplication> applications = jobApplicationService.userJobApplications(userId);
-    
+
     if (applications != null && !applications.isEmpty()) {
       if (skills != null && !skills.isEmpty()) {
         result = jobOfferDao.notAppliedWithSkills(userId, applications, skills, page, perPage);
@@ -193,12 +193,28 @@ List<JobOffer> result = null;
         }
       } else {
         result = notApplied(userId, page, perPage);
-      }  
+      }
     } else {
       result = notFromUser(userId, page, perPage);
     }
-    
+
     return result;
+  }
+
+  @Override
+  public List<JobOffer> recommendedFor(User user, int page, int perPage) {
+    List<JobOffer> offers;
+    if (user.getSkills().isEmpty()) {
+      offers = notApplied(user.getId(), page, perPage);
+    } else {
+      // We give the user personalized offers
+      offers = notAppliedWithSkills(user.getId(), user.getSkills(), page, perPage);
+    }
+    // Finally, if we couldn't find any offers for that user
+    if (offers.isEmpty()) {
+      offers = notFromUser(user.getId(), page, perPage);
+    }
+    return offers;
   }
 
   private List<Skill> skillListFromString(String skills) {

@@ -1,21 +1,19 @@
 package ar.edu.itba.paw.persistence;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
-import org.springframework.stereotype.Repository;
-
 import ar.edu.itba.paw.interfaces.JobOfferDao;
 import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
 import ar.edu.itba.paw.models.User;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Repository
 public class JobOfferHibernateDao implements JobOfferDao {
@@ -38,7 +36,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
   }
 
   @Override
-  public void delete(Long id) { 
+  public void delete(Long id) {
       // Por Hibernate, esta query elimina las skills.
       Query queryOffer = em.createQuery("delete from JobOffer where id = :id");
       queryOffer.setParameter("id", id);
@@ -60,7 +58,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
     em.persist(jobOffer);
     return jobOffer;
   }
-  
+
   @Override
   public JobOffer update(Long id, String title, String description, List<Skill> skills) {
     JobOffer jobOffer = find(id);
@@ -77,7 +75,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
     em.persist(jobOffer);
     return jobOffer;
   }
-  
+
   @Override
   public JobOffer update(Long id, Date closedAt) {
     JobOffer jobOffer = find(id);
@@ -139,6 +137,10 @@ public class JobOfferHibernateDao implements JobOfferDao {
 
   @Override
   public List<JobOffer> withSkills(List<Skill> skills) {
+    if (skills == null || skills.isEmpty()) {
+      skills = Skill.nullList();
+    }
+
     final TypedQuery<JobOffer> query = em.createQuery(
         "select o from JobOffer o join o.skills s where s.id in (:skills) and o.closedAt is null ORDER BY o.createdAt DESC",
         JobOffer.class);
@@ -148,6 +150,10 @@ public class JobOfferHibernateDao implements JobOfferDao {
 
   @Override
   public List<JobOffer> withSkills(List<Skill> skills, Integer page, Integer perPage) {
+    if (skills == null || skills.isEmpty()) {
+      skills = Skill.nullList();
+    }
+
     final TypedQuery<JobOffer> query = em.createQuery(
         "select o from JobOffer o join o.skills s where s.id in (:skills) and o.closedAt is null ORDER BY o.createdAt DESC",
         JobOffer.class);
@@ -156,9 +162,13 @@ public class JobOfferHibernateDao implements JobOfferDao {
     query.setMaxResults(perPage);
     return query.getResultList();
   }
-  
+
   @Override
   public Long withSkillsCount(List<Skill> skills) {
+    if (skills == null || skills.isEmpty()) {
+      skills = Skill.nullList();
+    }
+
     Query query = em.createQuery("SELECT count(*) FROM JobOffer o join o.skills s where s.id in (:skills) and o.closedAt is null");
     query.setParameter("skills", skillsIds(skills));
     return (Long) query.getSingleResult();
@@ -189,18 +199,26 @@ public class JobOfferHibernateDao implements JobOfferDao {
     query.setMaxResults(perPage);
     return query.getResultList();
   }
-  
+
   @Override
   public List<JobOffer> notApplied(Long userId, List<JobApplication> applications) {
+    if (applications == null || applications.isEmpty()) {
+      applications = JobApplication.nullList();
+    }
+
     final TypedQuery<JobOffer> query = em.createQuery(
         "from JobOffer o where o.id not in (:applied) and o.user.id != :userId and o.closedAt is null ORDER BY o.createdAt DESC", JobOffer.class);
     query.setParameter("userId", userId);
     query.setParameter("applied", applicationOfferIds(applications));
     return query.getResultList();
   }
-  
+
   @Override
   public List<JobOffer> notApplied(Long userId, List<JobApplication> applications, Integer page, Integer perPage) {
+    if (applications == null || applications.isEmpty()) {
+      applications = JobApplication.nullList();
+    }
+
     final TypedQuery<JobOffer> query = em.createQuery(
         "from JobOffer o where o.id not in (:applied) and o.user.id != :userId and o.closedAt is null ORDER BY o.createdAt DESC", JobOffer.class);
     query.setParameter("userId", userId);
@@ -209,9 +227,16 @@ public class JobOfferHibernateDao implements JobOfferDao {
     query.setMaxResults(perPage);
     return query.getResultList();
   }
-  
+
   @Override
   public List<JobOffer> notAppliedWithSkills(Long userId, List<JobApplication> applications, List<Skill> skills) {
+    if (applications == null || applications.isEmpty()) {
+      applications = JobApplication.nullList();
+    }
+    if (skills == null || skills.isEmpty()) {
+      skills = Skill.nullList();
+    }
+
     final TypedQuery<JobOffer> query = em.createQuery(
         "select o from JobOffer o join o.skills s where s.id in (:skills) and (o.id not in (:applied) and o.user.id != :userId) and o.closedAt is null ORDER BY o.createdAt DESC", JobOffer.class);
     query.setParameter("skills", skillsIds(skills));
@@ -219,9 +244,16 @@ public class JobOfferHibernateDao implements JobOfferDao {
     query.setParameter("applied", applicationOfferIds(applications));
     return query.getResultList();
   }
-  
+
   @Override
   public List<JobOffer> notAppliedWithSkills(Long userId, List<JobApplication> applications, List<Skill> skills, Integer page, Integer perPage) {
+    if (applications == null || applications.isEmpty()) {
+      applications = JobApplication.nullList();
+    }
+    if (skills == null || skills.isEmpty()) {
+      skills = Skill.nullList();
+    }
+
     final TypedQuery<JobOffer> query = em.createQuery(
         "select o from JobOffer o join o.skills s where s.id in (:skills) and (o.id not in (:applied) and o.user.id != :userId) and o.closedAt is null ORDER BY o.createdAt DESC", JobOffer.class);
     query.setParameter("skills", skillsIds(skills));
@@ -231,7 +263,7 @@ public class JobOfferHibernateDao implements JobOfferDao {
     query.setMaxResults(perPage);
     return query.getResultList();
   }
-  
+
   private List<Long> applicationOfferIds(List<JobApplication> applications) {
     List<Long> result = new LinkedList<Long>();
     for (JobApplication application : applications) {

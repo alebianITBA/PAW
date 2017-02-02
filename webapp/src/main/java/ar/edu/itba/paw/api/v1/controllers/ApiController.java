@@ -3,6 +3,8 @@ package ar.edu.itba.paw.api.v1.controllers;
 import ar.edu.itba.paw.api.v1.ErrorCodes;
 import ar.edu.itba.paw.api.v1.dto.ErrorDTO;
 import ar.edu.itba.paw.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.ws.rs.Produces;
@@ -11,6 +13,8 @@ import javax.ws.rs.core.Response;
 
 @Produces(MediaType.APPLICATION_JSON)
 public class ApiController {
+  protected static final Logger logger = LoggerFactory.getLogger(ApiController.class);
+
   protected User getLoggedUser() {
     return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }

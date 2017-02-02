@@ -1,6 +1,8 @@
 package ar.edu.itba.paw.models;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,6 +43,16 @@ public class JobApplication {
     /* Just for Hibernate */
   }
 
+  public static JobApplication nullApplication() {
+    return new JobApplication(0L, "NULL", User.nullUser(), JobOffer.nullOffer(), new Date());
+  }
+
+  public static List<JobApplication> nullList() {
+    List<JobApplication> applications = new LinkedList<>();
+    applications.add(nullApplication());
+    return applications;
+  }
+
   public JobApplication(Long id, String description, User user, JobOffer jobOffer, Date createdAt) {
     this.id = id;
     this.description = description;
@@ -55,7 +67,7 @@ public class JobApplication {
     this.jobOffer = jobOffer;
     this.createdAt = createdAt;
   }
-  
+
   @Override
     public int hashCode() {
         return id.hashCode();

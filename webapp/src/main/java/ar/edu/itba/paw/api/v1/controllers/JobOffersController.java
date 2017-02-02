@@ -12,6 +12,7 @@ import ar.edu.itba.paw.interfaces.SkillService;
 import ar.edu.itba.paw.models.JobApplication;
 import ar.edu.itba.paw.models.JobOffer;
 import ar.edu.itba.paw.models.Skill;
+import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.utils.Pair;
 import ar.edu.itba.paw.validators.JobOfferValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +89,8 @@ public class JobOffersController extends ApiController {
   @GET
   @Path("/not_applied")
   public Response notApplied(@QueryParam("page") Integer page, @QueryParam("per_page") Integer perPage) {
-    final List<JobOffer> allJobOffers = jobOfferService.notApplied(getLoggedUser().getId(), PaginationHelper.INSTANCE.page(page), PaginationHelper.INSTANCE.perPage(perPage));
-    GenericEntity<List<JobOfferDTO>> list = new GenericEntity<List<JobOfferDTO>>(JobOfferDTO.fromList(allJobOffers, jobApplicationService, getLoggedUser())) {
+    final List<JobOffer> offers = jobOfferService.recommendedFor(getLoggedUser(), PaginationHelper.INSTANCE.page(page), PaginationHelper.INSTANCE.perPage(perPage));
+    GenericEntity<List<JobOfferDTO>> list = new GenericEntity<List<JobOfferDTO>>(JobOfferDTO.fromList(offers, jobApplicationService, getLoggedUser())) {
     };
     return ok(list);
   }

@@ -1,6 +1,8 @@
 package ar.edu.itba.paw.models;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +40,16 @@ public class Post {
 
   protected Post() {
     /* Just for Hibernate */
+  }
+
+  public static Post nullPost() {
+    return new Post(0L, "NULL", "NULL", User.nullUser(), new Date());
+  }
+
+  public static List<Post> nullList() {
+    List<Post> posts = new LinkedList<>();
+    posts.add(nullPost());
+    return posts;
   }
 
   public Post(Long id, String title, String description, User user, Date createdAt) {
