@@ -48,6 +48,10 @@ define([], function() {
         EDIT_POST: 'Editar publicacion',
         SAVE: 'Guardar',
 
+		NO_POSTS:'Todavia no posees ninguna publicacion!',
+		NO_APPLICATIONS:'Todavia no has aplicado a ninguna oferta',
+		NO_OFFERS:'Todavia no has publicado una oferta',
+		
         ERROR_500: 'Error en la base de datos',
         ERROR_501: 'No es el dueño del recurso.',
         ERROR_1000: 'El e-mail ya esta siendo utilizado.',

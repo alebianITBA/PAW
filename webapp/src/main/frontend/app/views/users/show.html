@@ -16,7 +16,7 @@
                             <div class="center-fullwidth">
                                 <h3 class="no-padding"><i>{{ userCtrl.user.email }}</i></h3>
                             </div>
-                            <p class="skill-container">
+                            <p class="skill-container in-block">
                                 <a ng-repeat="skill in userCtrl.user.skills" class="no-underline right skill" ng-href="/job_offers?skill_id={{ skill.id }}"><span class="label label-info">{{ skill.name }}</span></a>
                             </p>
                             <a ng-href="/users/me/edit"><span class="glyphicon glyphicon-pencil top-right-edit-button edit-button remove-button" ng-show="userCtrl.belongsToUser"></span></a>
@@ -27,10 +27,19 @@
 
             <div class="col-md-8 praesent">
                 <!-- POSTS -->
-                <div ng-show="userCtrl.posts.length > 0">
                     <div class="biography-into praesent">
                         <div class="dapibus">
                             <h3>{{ 'RECENT_POSTS' | translate }}</h3>
+							
+							<div ng-show="userCtrl.posts.length = 0">
+                                <hr>
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="center">{{ 'NO_POSTS' | translate }}</p>
+                                    </div>
+                                </div>
+							</div>
+	
                             <div ng-repeat="post in userCtrl.posts">
                                 <hr>
                 <div ng-show="userCtrl.belongsToUser">
@@ -74,12 +83,20 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 <!-- OFFERS -->
-                <div ng-show="userCtrl.jobOffers.length > 0">
                     <div class="biography-into praesent">
                         <div class="dapibus">
                             <h3>{{ 'JOB_OFFERS_CREATED' | translate }}</h3>
+							
+							<div ng-show="userCtrl.jobOffers.length = 0">
+                                <hr>
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="center">{{ 'NO_OFFERS' | translate }}</p>
+                                    </div>
+                                </div>
+							</div>
+							
                             <div ng-repeat="offer in userCtrl.jobOffers">
                                 <hr>
                     <div ng-show="userCtrl.belongsToUser">
@@ -137,13 +154,21 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 <!-- APPLICATIONS -->
-                <div ng-show="userCtrl.applications.length > 0">
                     <div class="biography-into praesent">
                         <div class="biography-into praesent">
                             <div class="dapibus">
                                 <h3>{{ 'JOB_OFFERS_APPLIED' | translate }}</h3>
+								
+								<div ng-show="userCtrl.applications.length = 0">
+									<hr>
+									<div class="media">
+										<div class="media-body">
+											<p class="center">{{ 'NO_APPLICATIONS' | translate }}</p>
+										</div>
+									</div>
+								</div>
+							
                                 <div ng-repeat="application in userCtrl.applications">
                                     <hr>
                                     <div class="media">
@@ -182,7 +207,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
             </div>
 

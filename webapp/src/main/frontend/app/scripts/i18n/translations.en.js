@@ -48,6 +48,10 @@ define([], function() {
         EDIT_POST: 'Edit post',
         SAVE: 'Save',
 
+		NO_POSTS:'You have yet to published a post!',
+		NO_APPLICATIONS:'You have yet to apply to an offer',
+		NO_OFFERS:'You have yet to publish to an offer',
+		
         ERROR_500: 'Database error',
         ERROR_501: 'Resource not owned.',
         ERROR_1000: 'Email already in use.',
