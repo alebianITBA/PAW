@@ -31,7 +31,7 @@
                         <div class="dapibus">
                             <h3>{{ 'RECENT_POSTS' | translate }}</h3>
 							
-							<div ng-show="userCtrl.posts.length = 0">
+							<div ng-show="userCtrl.posts.length == 0">
                                 <hr>
                                 <div class="media">
                                     <div class="media-body">
@@ -88,7 +88,7 @@
                         <div class="dapibus">
                             <h3>{{ 'JOB_OFFERS_CREATED' | translate }}</h3>
 							
-							<div ng-show="userCtrl.jobOffers.length = 0">
+							<div ng-show="userCtrl.jobOffers.length == 0">
                                 <hr>
                                 <div class="media">
                                     <div class="media-body">
@@ -160,7 +160,7 @@
                             <div class="dapibus">
                                 <h3>{{ 'JOB_OFFERS_APPLIED' | translate }}</h3>
 								
-								<div ng-show="userCtrl.applications.length = 0">
+								<div ng-show="userCtrl.applications.length == 0">
 									<hr>
 									<div class="media">
 										<div class="media-body">

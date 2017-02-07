@@ -48,9 +48,9 @@ define([], function() {
         EDIT_POST: 'Editar publicacion',
         SAVE: 'Guardar',
 
-		NO_POSTS:'Todavia no posees ninguna publicacion!',
-		NO_APPLICATIONS:'Todavia no has aplicado a ninguna oferta',
-		NO_OFFERS:'Todavia no has publicado una oferta',
+		NO_POSTS:'No se ha encontrado ninguna publicacion',
+		NO_APPLICATIONS:'No se ha encontrado ninguna aplicacion',
+		NO_OFFERS:'No se ha encontrado ninguna oferta de trabajo',
 		
         ERROR_500: 'Error en la base de datos',
         ERROR_501: 'No es el dueño del recurso.',
