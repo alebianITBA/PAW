@@ -2,7 +2,7 @@
 
 define([], function() {
     return {
-        GROUP: 'Done by Alejandro Bezdjian and Damian Rizzotto',
+        GROUP: 'Done by Alejandro Bezdjian',
         USERS: 'Users',
         JOB_OFFERS: 'Job offers',
         MY_PROFILE: 'My profile',
@@ -47,11 +47,10 @@ define([], function() {
         EDIT_OFFER: 'Edit job offer',
         EDIT_POST: 'Edit post',
         SAVE: 'Save',
+        NO_POSTS: 'No posts found',
+        NO_APPLICATIONS: 'No Applications found',
+        NO_OFFERS: 'No job offers found',
 
-		NO_POSTS:'No posts found',
-		NO_APPLICATIONS:'No Applications found',
-		NO_OFFERS:'No job offers found',
-		
         ERROR_500: 'Database error',
         ERROR_501: 'Resource not owned.',
         ERROR_1000: 'Email already in use.',
